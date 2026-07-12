@@ -7,7 +7,7 @@ import time
 VPS_HOST = "91.108.125.253"
 VPS_PORT = 22
 VPS_USER = "root"
-VPS_PASS = "doHtFib1poV+f0F7"
+VPS_PASS = "Thiagutz061121@"
 
 # Configuracion del Proyecto
 REPO_URL     = "https://github.com/RichGutz/web.geeksoft.git"
