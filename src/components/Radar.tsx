@@ -54,6 +54,14 @@ export default function Radar() {
         setCurrentColor(prev => prev !== nextColor ? nextColor : prev);
       }
       
+      // Matrix Pills Illumination (3 PM to 9 PM = 0 deg to 180 deg)
+      const pills = document.querySelectorAll('.matrix-pill');
+      if (currentAngle >= 0 && currentAngle <= 180) {
+        pills.forEach(p => p.classList.add('illuminated'));
+      } else {
+        pills.forEach(p => p.classList.remove('illuminated'));
+      }
+      
       animationFrameId = requestAnimationFrame(checkIntersection);
     };
 

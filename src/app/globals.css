@@ -210,3 +210,269 @@ body {
   border-color: var(--node-color);
   text-shadow: 0 0 8px var(--node-color);
 }
+
+/* =========================================
+   PAGE SCROLL & LAYOUT
+   ========================================= */
+.main-scroll-container {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+/* Evitar scrollbars feas en el contenedor principal */
+.main-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.main-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.radar-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  scroll-snap-align: start;
+}
+
+/* =========================================
+   MATRIX PILLS
+   ========================================= */
+.matrix-pills-container {
+  position: absolute;
+  bottom: 4rem;
+  display: flex;
+  gap: 2rem;
+  z-index: 50;
+}
+
+.matrix-pill {
+  position: relative;
+  padding: 16px 30px; /* Incrementado para hacerlas menos flacas */
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pill-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pill-divider {
+  width: 2px;
+  height: 16px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.pill-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+  z-index: 1;
+  filter: blur(15px);
+  opacity: 0.5;
+}
+
+.pill-tooltip {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--glass-border);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.matrix-pill:hover .pill-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Red Pill Specifics */
+.red-pill {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+.red-pill:hover, .red-pill.illuminated {
+  border-color: #ff003c;
+  box-shadow: 0 0 30px rgba(255, 0, 60, 0.6);
+  text-shadow: 0 0 5px #ff003c;
+}
+.red-pill:hover {
+  /* Glitch effect only on hover */
+  animation: pill-glitch 0.2s linear infinite alternate;
+}
+.red-pill .pill-glow {
+  background: #ff003c;
+}
+.red-pill:hover .pill-glow, .red-pill.illuminated .pill-glow {
+  width: 120%;
+  height: 300%;
+}
+
+@keyframes pill-glitch {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(1px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Blue Pill Specifics */
+.blue-pill {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+.blue-pill:hover, .blue-pill.illuminated {
+  border-color: #0055ff;
+  box-shadow: 0 0 30px rgba(0, 85, 255, 0.6);
+  text-shadow: 0 0 5px #0055ff;
+}
+.blue-pill .pill-glow {
+  background: #0055ff;
+}
+.blue-pill:hover .pill-glow, .blue-pill.illuminated .pill-glow {
+  width: 120%;
+  height: 300%;
+}
+
+/* =========================================
+   EL INFRAMUNDO PRE-IA (Costo del Caos)
+   ========================================= */
+.chaos-section {
+  width: 100vw;
+  min-height: 100vh;
+  background: #050505; /* Un poco más oscuro que el fondo normal */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem 2rem;
+  scroll-snap-align: start;
+  border-top: 1px solid rgba(0, 85, 255, 0.2);
+  box-shadow: inset 0 20px 50px rgba(0, 85, 255, 0.05);
+}
+
+.chaos-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.chaos-title {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(0, 85, 255, 0.5);
+}
+
+.chaos-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.villains-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.villain-card {
+  background: rgba(25, 25, 25, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.villain-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(0, 85, 255, 0.3);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 85, 255, 0.1);
+}
+
+.villain-visual {
+  width: 100%;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+.villain-name {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.villain-copy {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
