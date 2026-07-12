@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700;900&family=Syncopate:wght@400;700&display=swap');
+
+:root {
+  /* Manual de Estilos: GEEKSOFT Radar */
+  --bg-base: #030303;
+  --text-main: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* Colores de Categorías (Neon Glowing) */
+  --color-default: #E71D36; /* Martian Red (Geeksoft Base) */
+  --color-saas: #00e3fd;    /* Cyan */
+  --color-dashboards: #fa02ea; /* Pink */
+  --color-ai: #b0ff00;      /* Neon Green */
+  --color-scrappers: #ff8c00; /* Orange */
+
+  --font-display: 'Syncopate', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow: hidden; /* Prevent scrolling for the radar view */
+  /* Grid pattern background */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center center;
+}
+
+/* Radar Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0% { filter: drop-shadow(0 0 5px currentColor); }
+  50% { filter: drop-shadow(0 0 15px currentColor); }
+  100% { filter: drop-shadow(0 0 5px currentColor); }
+}
+
+@keyframes pulse-glow-logo {
+  0% { 
+    filter: drop-shadow(0 0 10px var(--current-color, var(--color-default))); 
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 35px var(--current-color, var(--color-default))); 
+    transform: scale(1.05);
+  }
+  100% { 
+    filter: drop-shadow(0 0 10px var(--current-color, var(--color-default))); 
+    transform: scale(1);
+  }
+}
+
+.radar-logo-head {
+  animation: pulse-glow-logo 3s infinite alternate ease-in-out;
+  transition: all 0.3s ease;
+}
+
+/* Stencil/Mask classes para el logo */
+.logo-mask-text {
+  width: 100%;
+  height: 100%;
+  background-color: var(--current-color);
+  -webkit-mask: url('/images/GEEKSOFT.LETRAS_transparent.png') no-repeat left center / contain;
+  mask: url('/images/GEEKSOFT.LETRAS_transparent.png') no-repeat left center / contain;
+}
+
+.logo-mask-head {
+  width: 80%;
+  height: 80%;
+  background-color: var(--current-color);
+  -webkit-mask: url('/images/CABEZA.GEEKSOFT_transparent.png') no-repeat center / contain;
+  mask: url('/images/CABEZA.GEEKSOFT_transparent.png') no-repeat center / contain;
+  animation: pulse-glow-logo 3s infinite alternate ease-in-out;
+}
+
+.radar-container {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Radar concentric circles */
+.radar-container::before,
+.radar-container::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.radar-container::before { width: 66%; height: 66%; }
+.radar-container::after { width: 33%; height: 33%; }
+
+/* The Sweep (Manecilla) */
+.radar-sweep-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: spin 12s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+  /* Halo tipo radar: Intenso en la manecilla (90deg) y se difumina hacia atrás (0deg) */
+  background: conic-gradient(from 0deg, transparent 0deg, var(--current-color) 90deg, transparent 90deg);
+  opacity: 0.3; /* Ajusta intensidad del halo */
+}
+
+.radar-sweep {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  transform-origin: left center;
+  /* La línea brillante principal */
+  background: linear-gradient(90deg, transparent 0%, var(--current-color) 100%);
+  box-shadow: 0 0 20px 2px var(--current-color);
+}
+
+/* The Center Logo container */
+.radar-center {
+  position: absolute;
+  z-index: 20;
+  background: var(--bg-base);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(0,0,0,0.8);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Category Nodes */
+.radar-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.radar-node-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-base);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--node-color);
+  animation: pulse-glow 3s infinite;
+  transition: all 0.3s ease;
+}
+
+.radar-node:hover .radar-node-icon {
+  transform: scale(1.2);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 20px var(--node-color);
+}
+
+.radar-node-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.6);
+  background: var(--bg-base);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.radar-node:hover .radar-node-label {
+  color: #fff;
+  border-color: var(--node-color);
+  text-shadow: 0 0 8px var(--node-color);
+}
