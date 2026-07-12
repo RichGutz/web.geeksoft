@@ -27,12 +27,13 @@ def ssh_run(client, cmd, desc=""):
     while not stdout.channel.exit_status_ready():
         if stdout.channel.recv_ready():
             line = stdout.channel.recv(1024).decode('utf-8', errors='replace')
-            sys.stdout.write(line)
+            # Evitar crashear la consola de Windows con simbolos raros de Next.js
+            sys.stdout.write(line.encode('ascii', 'replace').decode('ascii'))
             out_lines.append(line)
             sys.stdout.flush()
         if stderr.channel.recv_stderr_ready():
             line = stderr.channel.recv_stderr(1024).decode('utf-8', errors='replace')
-            sys.stdout.write(line)
+            sys.stdout.write(line.encode('ascii', 'replace').decode('ascii'))
             sys.stdout.flush()
         time.sleep(0.1)
     
