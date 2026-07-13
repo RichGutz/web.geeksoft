@@ -1,4 +1,7 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Carpeta de scraping local — no subir al repo
+HTTrack/
+
+
 
 # dependencies
 /node_modules
