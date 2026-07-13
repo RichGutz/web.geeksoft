@@ -1,0 +1,30 @@
+HTTrack3.49-2+htsswf+htsjava launched on Mon, 13 Jul 2026 08:46:51 at https://mesh3d.gallery/the-state-of-the-gallery +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://mesh3d.gallery/the-state-of-the-gallery -O1 "I:\Mi unidad\TRABAJOS.SOMBRA\Clonacion.WEB.DHARMA\WEB.GEEKSOFT" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+08:49:09	Error: 	"Not Found" (404) at link https://mesh3d.gallery/tatic/chunks/014b-j4l-jtzg.js?dpl=fdfaa32c1876d9c503f89944e29fe0bed1326ad2 (from https://mesh3d.gallery/the-state-of-the-gallery)
+08:49:09	Error: 	"Not Found" (404) at link https://mesh3d.gallery/static/chunks/0bq9li6_0w4m~.css?dpl=fdfaa32c1876d9c503f89944e29fe0bed1326ad2 (from https://mesh3d.gallery/the-state-of-the-gallery)
+09:31:45	Error: 	"Not Found" (404) at link https://mesh3d.gallery/022twyq-h~f0b.js?dpl=fdfaa32c1876d9c503f89944e29fe0bed1326ad2 (from https://mesh3d.gallery/websites?sort=featured)
+09:41:41	Error: 	"Not Found" (404) at link https://mesh3d.gallery/experiment/hunks/0yx4gry-k9~.b.js?dpl=fdfaa32c1876d9c503f89944e29fe0bed1326ad2 (from https://mesh3d.gallery/experiment/ground-projected-env-map-demos-faraz-shaikh)
+09:49:27	Error: 	"Not Found" (404) at link https://mesh3d.gallery/makers/erdong-chen.com (from https://mesh3d.gallery/makers/andrew-chen)
+09:51:02	Error: 	"Not Found" (404) at link https://mesh3d.gallery/makers/toyfight.co (from https://mesh3d.gallery/makers/toyfight)
+09:53:56	Error: 	"Not Found" (404) at link https://mesh3d.gallery/makers/hertzwerk.ch (from https://mesh3d.gallery/makers/hertzwerk)
+09:54:43	Error: 	"Not Found" (404) at link https://mesh3d.gallery/404 (from https://mesh3d.gallery/makers/mesh3d)
+09:56:06	Warning: 	Retry after error -4 (Interrupted transfer) at link https://x.com/intent/tweet?url=https%3A%2F%2Fmesh3d.gallery%2Fwebsite%2Fthree-js-journey-learn-webgl-with-three-js&text=Three.js%20Journey%20%E2%80%94%20Learn%20WebGL%20with%20Three.js (from https://mesh3d.gallery/website/three-js-journey-learn-webgl-with-three-js)
+09:59:14	Warning: 	Retry after error -5 (error:00000005:lib(0):func(0):DH lib) at link https://mesh3d.gallery/_next/image?url=https%3A%2F%2Fcdn.mesh3d.gallery%2Fpreviews%2F1777541076973-3100q5o-motionsynth.sweriko.com_.webp&w=3840&q=90 (from https://mesh3d.gallery/experiment/ai4animation-webgpu)
+09:59:14	Warning: 	Retry after error -5 (error:00000005:lib(0):func(0):DH lib) at link https://mesh3d.gallery/experiments?tags=AI (from https://mesh3d.gallery/experiment/ai4animation-webgpu)
+09:59:14	Warning: 	Retry after error -4 (No data (connection closed)) at link https://mesh3d.gallery/website/ai4animation-webgpu (from https://mesh3d.gallery/experiment/ai4animation-webgpu)
+09:59:14	Warning: 	Retry after error -5 (error:00000005:lib(0):func(0):DH lib) at link https://mesh3d.gallery/_next/image?url=https%3A%2F%2Fcdn.mesh3d.gallery%2Fpreviews%2F1778678432157-r1iyaln-threejs-image-slider.netlify.app_.webp&w=3840&q=90 (from https://mesh3d.gallery/experiment/three-js-image-slider)
+09:59:22	Warning: 	Retry after error -4 (No data (connection closed)) at link https://mesh3d.gallery/website/three-js-image-slider (from https://mesh3d.gallery/experiment/three-js-image-slider)
+09:59:39	Error: 	"Not Found" (404) at link https://mesh3d.gallery/404?utm_source=mesh3d.gallery&utm_medium=referral (from https://mesh3d.gallery/experiment/mesh3d-404-page)
+09:59:42	Error: 	"Not Found" (404) at link https://mesh3d.gallery/404?utm_source=mesh3d.gallery (from https://mesh3d.gallery/experiment/mesh3d-404-page)
+09:59:52	Warning: 	Retry after error -4 (Interrupted transfer) at link https://x.com/intent/tweet?url=https%3A%2F%2Fmesh3d.gallery%2Fwebsite%2Fthree-js-journey-learn-webgl-with-three-js&text=Three.js%20Journey%20%E2%80%94%20Learn%20WebGL%20with%20Three.js (from https://mesh3d.gallery/website/three-js-journey-learn-webgl-with-three-js)
+10:00:06	Warning: 	Retry after error -4 (Interrupted transfer) at link https://mesh3d.gallery/_next/image?url=https%3A%2F%2Fcdn.mesh3d.gallery%2Fpreviews%2F1778678432157-r1iyaln-threejs-image-slider.netlify.app_.webp&w=3840&q=90 (from https://mesh3d.gallery/experiment/three-js-image-slider)
+10:00:08	Error: 	"Interrupted transfer" (-4) after 2 retries at link https://x.com/intent/tweet?url=https%3A%2F%2Fmesh3d.gallery%2Fwebsite%2Fthree-js-journey-learn-webgl-with-three-js&text=Three.js%20Journey%20%E2%80%94%20Learn%20WebGL%20with%20Three.js (from https://mesh3d.gallery/website/three-js-journey-learn-webgl-with-three-js)
+
+HTTrack Website Copier/3.49-2 mirror complete in 1 hours 13 minutes 20 seconds : 2197 links scanned, 2176 files written (324740306 bytes overall) [178177579 bytes received at 40494 bytes/sec], 325093624 bytes transferred using HTTP compression in 2181 files, ratio 53%, 24.3 requests per connection
+(11 errors, 8 warnings, 0 messages)

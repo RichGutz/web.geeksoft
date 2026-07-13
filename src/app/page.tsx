@@ -1,6 +1,8 @@
 "use client";
 
 import Radar from "@/components/Radar";
+import VibeLottie from "@/components/VibeLottie";
+import MilkyWay from "@/components/MilkyWay";
 
 
 export default function Home() {
@@ -15,28 +17,29 @@ export default function Home() {
     <main className="main-scroll-container">
       {/* SECCIÓN 1: EL RADAR (Status Quo / Cyberpunk) */}
       <section className="radar-section">
+        <MilkyWay />
         <Radar />
         
         {/* The Matrix Pills */}
         <div className="matrix-pills-container">
-          <button className="matrix-pill red-pill" onClick={() => alert("Wake up, Neo. (Acción pendiente)")}>
+          <button className="matrix-pill red-pill" onClick={scrollToInframundo}>
             <span className="pill-text">
               <span>RED</span>
               <span className="pill-divider"></span>
               <span>PILL</span>
             </span>
             <div className="pill-glow"></div>
-            <div className="pill-tooltip">Salir de la Matrix (Contacto)</div>
+            <div className="pill-tooltip">Despertar a la realidad PRE-IA</div>
           </button>
           
-          <button className="matrix-pill blue-pill" onClick={scrollToInframundo}>
+          <button className="matrix-pill blue-pill" onClick={() => alert("Ignorance is bliss... (Acción pendiente)")}>
             <span className="pill-text">
               <span>BLUE</span>
               <span className="pill-divider"></span>
               <span>PILL</span>
             </span>
             <div className="pill-glow"></div>
-            <div className="pill-tooltip">Explorar el dolor PRE-IA</div>
+            <div className="pill-tooltip">Seguir en la ilusión</div>
           </button>
         </div>
       </section>
@@ -45,15 +48,16 @@ export default function Home() {
       <section id="inframundo" className="chaos-section">
         <div className="chaos-header">
           <h2 className="chaos-title">El Costo del Caos</h2>
-          <p className="chaos-subtitle">Bienvenido a la realidad de las empresas sin IA.</p>
+          <p className="chaos-subtitle">
+            Bienvenidos al inframundo PRE-IA. Donde el tiempo muere, los datos se pierden y tus empleados sufren en silencio.
+          </p>
         </div>
 
         <div className="villains-grid">
           {/* Villano 1: Excel Zombie */}
           <div className="villain-card">
             <div className="villain-visual lottie-placeholder">
-              {/* Lottie/Meme placeholder */}
-              <span>[Lottie: Excel Zombie]</span>
+              <VibeLottie url="/excel-zombie.json" />
             </div>
             <h3 className="villain-name">El "Excel Zombie"</h3>
             <p className="villain-copy">
@@ -64,8 +68,7 @@ export default function Home() {
           {/* Villano 2: Data-Entry Ghost */}
           <div className="villain-card">
             <div className="villain-visual lottie-placeholder">
-              {/* Lottie/Meme placeholder */}
-              <span>[Lottie: Data-Entry Ghost]</span>
+              <VibeLottie url="/lottie-surprise.json" />
             </div>
             <h3 className="villain-name">El "Data-Entry Ghost"</h3>
             <p className="villain-copy">
@@ -76,8 +79,7 @@ export default function Home() {
           {/* Villano 3: Email Hole */}
           <div className="villain-card">
             <div className="villain-visual lottie-placeholder">
-              {/* Lottie/Meme placeholder */}
-              <span>[Lottie: Email Hole]</span>
+              <VibeLottie url="/lottie-surprise.json" />
             </div>
             <h3 className="villain-name">El "Email Hole"</h3>
             <p className="villain-copy">

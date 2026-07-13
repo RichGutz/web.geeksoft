@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mesh3d</title>
+    <link>https://mesh3d.gallery/websites</link>
+    <atom:link href="https://mesh3d.gallery/feed" rel="self" type="application/rss+xml" />
+    <description>A curated gallery of Three.js, WebGL, and AI-powered interactive 3D websites. Real-time inspiration for designers, developers, and creative directors.</description>
+    <language>en</language>
+    <lastBuildDate>Mon, 13 Jul 2026 13:49:10 GMT</lastBuildDate>
+    <generator>mesh3d</generator>
+    <item>
+      <title>mckp.live — Interactive Mockups That Move</title>
+      <link>https://mesh3d.gallery/website/mckp-live-interactive-mockups-that-move</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/mckp-live-interactive-mockups-that-move</guid>
+      <pubDate>Mon, 13 Jul 2026 09:16:05 GMT</pubDate>
+      <description>Beyond the screenshot. Render videos or embed live, interactive mockups anywhere — from your portfolio to your client&apos;s homepage.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783934152348-mp5d8qr-mckp.live.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>The state of the gallery | mesh3d</title>
+      <link>https://mesh3d.gallery/website/the-state-of-the-gallery-mesh3d</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/the-state-of-the-gallery-mesh3d</guid>
+      <pubDate>Mon, 13 Jul 2026 09:10:35 GMT</pubDate>
+      <description>mesh3d - &quot;The state of the gallery&quot; is an overiew of the gallery in numbers and picks. What&apos;s catalogued, who is making the strongest Three.js work and what&apos;s at the top today.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783933845750-1ei2xv9-mesh3d.gallery.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Zero — Human Infrastructure to Get Hired</title>
+      <link>https://mesh3d.gallery/website/zero-human-infrastructure-to-get-hired</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/zero-human-infrastructure-to-get-hired</guid>
+      <pubDate>Thu, 09 Jul 2026 09:18:39 GMT</pubDate>
+      <description>Zero is building human infrastructure for the AI era. Learn, build, and get hired through immersive, AI-native experiences designed by reverse-engineering real jobs.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783588680172-n6kofaf-why.zero.university.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Ecctrl</title>
+      <link>https://mesh3d.gallery/experiment/ecctrl</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/ecctrl</guid>
+      <pubDate>Thu, 09 Jul 2026 08:48:20 GMT</pubDate>
+      <description>A physics-driven controller toolkit for R3F + Rapier.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783589045063-b7mfvld-ecctrl.app.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>ECSpace</title>
+      <link>https://mesh3d.gallery/website/ecspace</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/ecspace</guid>
+      <pubDate>Thu, 09 Jul 2026 08:47:39 GMT</pubDate>
+      <description>A Self-taught creative developer living in Canada. Let me know what you think about my portfolio webpage :)</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783586784874-7mn8wu8-erdong-chen.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>scask</title>
+      <link>https://mesh3d.gallery/website/scask</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/scask</guid>
+      <pubDate>Wed, 08 Jul 2026 15:14:45 GMT</pubDate>
+      <description>SCASK was born in 2020 as an evolution of Samaroli, the legendary Italian independent bottler. By joining S CASK you become part of a community of enthusiasts and lovers of quality spirits, carefully selected by Samaroli&apos;s Master Blender Antonio Bleve.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783523651631-t40tp5x-www.scaskworld.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Coffee Toppers</title>
+      <link>https://mesh3d.gallery/website/coffee-toppers</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/coffee-toppers</guid>
+      <pubDate>Tue, 07 Jul 2026 16:08:58 GMT</pubDate>
+      <description>Hot or cold make it bold! Coffee Toppers cold foam is the at home barista&apos;s best buddy. You can top off up to 20 cups of your favorite coffee, tea or soda</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783440510648-4a3g42n-www.alamancefoods.com_brands_coffee-toppers.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Laser Drift - Neon Blast</title>
+      <link>https://mesh3d.gallery/website/laser-drift-neon-blast</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/laser-drift-neon-blast</guid>
+      <pubDate>Tue, 07 Jul 2026 16:02:07 GMT</pubDate>
+      <description>Laser Drift - Neon Blast is my first solo project, where I set out to create something fresh and original by combining several of my passions — synthwave music, retro aesthetics, game design, and animation.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783439999296-pk17xvb-laserdrift.com (1).webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Ambar Fi</title>
+      <link>https://mesh3d.gallery/website/ambar-fi</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/ambar-fi</guid>
+      <pubDate>Tue, 07 Jul 2026 15:55:44 GMT</pubDate>
+      <description>Generated by create next app. Focusing on fixing liquidity fragmentation and overcoming interoperability barriers in digital assets, creating vast, efficient, and interconnected markets.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783439676711-g48cgx9-ambar.fi.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Santioni Spirits | Cocktails to Indulge Now, Atone Later</title>
+      <link>https://mesh3d.gallery/website/santioni-spirits-cocktails-to-indulge-now-atone-later</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/santioni-spirits-cocktails-to-indulge-now-atone-later</guid>
+      <pubDate>Fri, 03 Jul 2026 14:03:26 GMT</pubDate>
+      <description>Choose pleasure with Santioni Spirits: where intentional indulgence meets effortless enjoyment. Refined, ready-to-pour cocktails to help you savor the moment.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783087194834-rlyzng9-santionispirits.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Unstable Solid</title>
+      <link>https://mesh3d.gallery/experiment/unstable-solid</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/unstable-solid</guid>
+      <pubDate>Fri, 03 Jul 2026 09:31:54 GMT</pubDate>
+      <description>Slide your mouse over the mesh and the form jolts, softening into a shiny, unsettled chunk of matter. Tap through the matcaps to swap its skin, then let the little loading pause and the tribute to Area Unstable settle in like a nod to old Flash demos reborn in real time.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783071060706-9sb8tck-dasprinzip.com_tinker_day39.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Spectrum Field</title>
+      <link>https://mesh3d.gallery/experiment/spectrum-field</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/spectrum-field</guid>
+      <pubDate>Fri, 03 Jul 2026 09:30:48 GMT</pubDate>
+      <description>Hover across the blocks and the field wakes in little ripples, then a click kicks spectrum sound into the air. The page keeps things spare and tactile, with a grid of blocks, a drifting loading state, and a cursor-led rhythm that feels more like playing an instrument than browsing a page.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783071014323-hm8itgt-dasprinzip.com_tinker_day37.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Learning TSL: Doppelhelix</title>
+      <link>https://mesh3d.gallery/experiment/learning-tsl-doppelhelix</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/learning-tsl-doppelhelix</guid>
+      <pubDate>Fri, 03 Jul 2026 09:29:46 GMT</pubDate>
+      <description>Twist the helix and the whole form seems to breathe, two strands winding around each other in a tight little loop. Day 28 of Tinker keeps it spare and focused, with the title Doppelhelix. floating over a dark field and a single arrow back to the previous day, like a sketch pinned to a studio wall.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1783070860758-e6ze46l-dasprinzip.com_tinker_day28.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Stefanos Tsitsipas</title>
+      <link>https://mesh3d.gallery/website/stefanos-tsitsipas</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/stefanos-tsitsipas</guid>
+      <pubDate>Wed, 01 Jul 2026 11:40:18 GMT</pubDate>
+      <description>Official site of Stefanos Tsitsipas, Greek professional tennis player. Explore career highlights, rankings, off-court initiatives, and family legacy.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782905956431-ktdjxew-tsitsipas.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Sounds Fun</title>
+      <link>https://mesh3d.gallery/website/sounds-fun</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/sounds-fun</guid>
+      <pubDate>Wed, 01 Jul 2026 07:49:06 GMT</pubDate>
+      <description>Sounds Fun is a full-service creative agency specializing in influencer marketing, content strategy, and cultural intelligence for brands like Lenovo, Microsoft, Coca-Cola, Coors Light, and Fortnite. Adweek 2025 Breakthrough Agency shortlist.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782892138278-p0mr5tg-www.soundsfun.co.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>VAT Flowers</title>
+      <link>https://mesh3d.gallery/experiment/vat-flowers</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/vat-flowers</guid>
+      <pubDate>Wed, 01 Jul 2026 07:38:32 GMT</pubDate>
+      <description>A WebGL experiment exploring how VAT can scale on the web. Hundreds of flowers, each with thousands of animated vertices rendered in real time on the GPU. Scrolling across the plane triggers their life cycle — blooming, growing, lingering, and eventually die along your path.
+It’s exciting to see how this technique might be applied in future WebGL experiences.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782891480949-3pf9kzb-vat-flowers.pages.dev.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Immersive Tamatar</title>
+      <link>https://mesh3d.gallery/website/immersive-tamatar</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/immersive-tamatar</guid>
+      <pubDate>Tue, 30 Jun 2026 17:06:40 GMT</pubDate>
+      <description>Step into a reimagined digital present. The Silence, a special initiative dedicated to Cubist art. Our newly designed website brings the Cubist spirit to life with geometric forms and vibrant colors, offering a truly modern experience for a new generation of art lovers.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782839069783-jtteint-btow.vercel.app.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>GRAIR — Immersive Luxury Jewelry Experience</title>
+      <link>https://mesh3d.gallery/website/grair-immersive-luxury-jewelry-experience</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/grair-immersive-luxury-jewelry-experience</guid>
+      <pubDate>Tue, 30 Jun 2026 16:58:00 GMT</pubDate>
+      <description>GRAIR is a cinematic luxury jewelry concept experience developed by Undream Studio using Blender and Three.js.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782838631419-wjvq9co-grair.undreamstudio.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>OREO &amp; BTS — Biggest Love Letter</title>
+      <link>https://mesh3d.gallery/website/oreo-bts-biggest-love-letter</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/oreo-bts-biggest-love-letter</guid>
+      <pubDate>Tue, 30 Jun 2026 10:02:28 GMT</pubDate>
+      <description>Help create the world&apos;s largest love letter to BTS. The first 10 letters shared each day are eligible to win exclusive prizes.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782813626618-v5j6cjh-us.oreobts.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Grassy Blob</title>
+      <link>https://mesh3d.gallery/experiment/grassy-blob</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/grassy-blob</guid>
+      <pubDate>Mon, 29 Jun 2026 12:03:21 GMT</pubDate>
+      <description>Watch the tufted mound breathe and sway, a soft green mass that feels caught in a warm gust. Grassy Blob takes Faraz Shaikh&apos;s March 2022 experiment and turns it into a simple, hypnotic patch of WebGL turf, all texture and motion, with the scene doing the talking.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782734582121-6n92vnt-farazzshaikh.com_demos_demo-2022-grass.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Ground Projected Env map | Demos | Faraz Shaikh</title>
+      <link>https://mesh3d.gallery/experiment/ground-projected-env-map-demos-faraz-shaikh</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/ground-projected-env-map-demos-faraz-shaikh</guid>
+      <pubDate>Mon, 29 Jun 2026 12:01:49 GMT</pubDate>
+      <description>Real-time 3D scene built with React Three Fiber. Yellow Porsche 911 Turbo (930) staged under an open shelter with HDRI sun lighting, sharp directional shadows, and a PBR clearcoat paint shader picking up environment reflections off cones and ground. Static photo-mode camera framing, GLTF car model dropped into a custom prop set of dirt, pallets, and concrete debris.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782734384899-cnpsecq-farazzshaikh.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Rain Puddle | Demos | Faraz Shaikh</title>
+      <link>https://mesh3d.gallery/experiment/rain-puddle-demos-faraz-shaikh</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/rain-puddle-demos-faraz-shaikh</guid>
+      <pubDate>Mon, 29 Jun 2026 11:56:46 GMT</pubDate>
+      <description>A demo of rain puddle simulation using Three.js and React Three Fiber. Uses my  Three-Custom-Shader-Material library to add the puddle shader to the road material.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782734187252-sdebfut-farazzshaikh.com_demos_demo-2023-rain-puddle.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>ThreeJS Recorder | Demos | Faraz Shaikh</title>
+      <link>https://mesh3d.gallery/experiment/threejs-recorder-demos-faraz-shaikh</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/threejs-recorder-demos-faraz-shaikh</guid>
+      <pubDate>Mon, 29 Jun 2026 11:55:13 GMT</pubDate>
+      <description>Demos the usage of MediaRecorder API to capture video of the ThreeJS canvas as an webm video and save it to device using navigator.share. Also demos how on iOS, saving the WEBM as .mp4 lets you share it on social media.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782734090972-xrw9jpe-farazzshaikh.com_demos_demo-2025-threejs-media-recorder (1).webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>R3F w/ WebGPU Inspector</title>
+      <link>https://mesh3d.gallery/experiment/r3f-w-webgpu-inspector</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/r3f-w-webgpu-inspector</guid>
+      <pubDate>Mon, 29 Jun 2026 11:52:29 GMT</pubDate>
+      <description>Open the panel and the scene turns into a live debugging bench, with Three.js&apos; WebGPU Inspector and control controls laid bare inside Faraz Shaikh&apos;s demo. It reads like a technical notebook in motion, an experiment where the interface stays spare and the inspection tools do the talking.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782733963444-gcrcqpj-farazzshaikh.com_demos_demo-2026-r3f-inspector.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>homunculus Inc.</title>
+      <link>https://mesh3d.gallery/website/homunculus-inc</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/homunculus-inc</guid>
+      <pubDate>Mon, 29 Jun 2026 08:59:34 GMT</pubDate>
+      <description>homunculus Inc, a digital production studio.
+
+From concept development and interactive implementation to backend engineering, thry work across every aspect of digital content creation.
+
+Exploring new forms of expression that communicate deeply and reach widely—creating user experiences that leave a lasting impression on everyone who sees and engages with them.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782723515117-fmo200d-homunculus.jp.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Anatolii Grashchenko</title>
+      <link>https://mesh3d.gallery/experiment/anatolii-grashchenko</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/anatolii-grashchenko</guid>
+      <pubDate>Fri, 26 Jun 2026 09:33:45 GMT</pubDate>
+      <description>Anatolii Grashchenko - Creative Technology Director sits beside Founder @Afterimage and Teacher @Creative Coding Class.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782466332176-ny6g300-agrshch.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Remix - A Web Framework for Building Anything</title>
+      <link>https://mesh3d.gallery/website/remix-a-web-framework-for-building-anything</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/remix-a-web-framework-for-building-anything</guid>
+      <pubDate>Fri, 26 Jun 2026 09:23:46 GMT</pubDate>
+      <description>Remix is a batteries-included, ultra-productive, zero dependencies and bundler-free framework, ready to develop with in a agent-first world.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782465668262-lfnpq9e-remix.run.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Totem.earth</title>
+      <link>https://mesh3d.gallery/website/totem-earth</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/totem-earth</guid>
+      <pubDate>Fri, 26 Jun 2026 09:02:35 GMT</pubDate>
+      <description>Website by itsoffbrand.com --- &gt; Totem is a collective of artists, technicians, and builders, creating an ecosystem. One built by and for us, and we&apos;re filling it with platforms &amp; products that feel more in tune with peoples&apos; hearts and the planet!</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782464527027-nduf5zf-totem.itsoffbrand.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Skaald | Design studio for brands in motion</title>
+      <link>https://mesh3d.gallery/website/skaald-design-studio-for-brands-in-motion</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/skaald-design-studio-for-brands-in-motion</guid>
+      <pubDate>Fri, 26 Jun 2026 08:57:23 GMT</pubDate>
+      <description>Skaald turns ambition into clear strategy, strong branding, and high-impact websites, built to grow. Design studio that help fast-growing
+companies turn investor confidence into Brand Credibility.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782464168573-pzv2h61-www.skaald.com_.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Ciao Kombucha – Naturelle, faible en sucre, riche en probiotiques</title>
+      <link>https://mesh3d.gallery/website/ciao-kombucha-naturelle-faible-en-sucre-riche-en-probiotiques</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/ciao-kombucha-naturelle-faible-en-sucre-riche-en-probiotiques</guid>
+      <pubDate>Fri, 26 Jun 2026 08:52:19 GMT</pubDate>
+      <description>Created by Squeezie, Ciao Kombucha is natural, rich in probiotics, and low in sugar and calories. A healthy, fun, and flavorful drink! ☀️🍹</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782463921505-absh7d8-www.ciaokombucha.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Ciao Energy - L’energy drink parfaite</title>
+      <link>https://mesh3d.gallery/website/ciao-energy-l-energy-drink-parfaite</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/ciao-energy-l-energy-drink-parfaite</guid>
+      <pubDate>Fri, 26 Jun 2026 08:49:15 GMT</pubDate>
+      <description>Ciao Energy, a zero-bullshit energy drink range. Less sugar. Natural flavors. Plant-based caffeine. Vitamins. Stevia extracts. 6 flavors.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782463746239-uyddurp-www.ciaoenergy.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Blood Donation - What happens when you give blood?</title>
+      <link>https://mesh3d.gallery/website/blood-donation-what-happens-when-you-give-blood</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/blood-donation-what-happens-when-you-give-blood</guid>
+      <pubDate>Fri, 26 Jun 2026 08:45:15 GMT</pubDate>
+      <description>Thinking about giving blood but unsure what to expect? This interactive 3D guide walks you through the full process from start to finish.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782463502022-hj3j907-blood-donation.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Plato&apos;s Cove</title>
+      <link>https://mesh3d.gallery/experiment/plato-s-cove</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/plato-s-cove</guid>
+      <pubDate>Fri, 26 Jun 2026 08:41:11 GMT</pubDate>
+      <description>An interactive 3D game/experience inside a Vaporwave world.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782463255100-cc7q7dk-vaporwave-world.pages.dev.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>APECHAIN</title>
+      <link>https://mesh3d.gallery/website/apechain</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/apechain</guid>
+      <pubDate>Fri, 26 Jun 2026 08:36:29 GMT</pubDate>
+      <description>ApeChain provides developers and users with the best possible experience on the blockchain by focusing on ecosystem discovery, unique web3 rails, and top of funnel exposure. ApeChain is a dedicated infrastructure layer to power the ApeCoin ecosystem. ApeChain utilizes $APE as its native gas token. This integration significantly enhances $APE&apos;s utility, fostering a robust and dynamic economy driven by $APE, and positioning ApeChain as a premier platform.
+
+ApeChain at its core is an Arbitrum Orbit chain.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782462904376-qgz6pi4-apechain.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Biine - Demo</title>
+      <link>https://mesh3d.gallery/experiment/biine-demo</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/biine-demo</guid>
+      <pubDate>Thu, 25 Jun 2026 16:33:18 GMT</pubDate>
+      <description>Hover into Biine Lab and the insect model comes alive in pieces, with Idle, Hover, Fly, and Wax processing shifting the mood of the page. Mandibula, thorax, abdomen, and wing articulation read like a specimen tray turned kinetic, while the cursor seems to coax each section into motion. It feels part study, part mechanical tease.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782405153529-hj8i464-lab.patrickheintzmann.com_demo_demoBee.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Demo - Formula</title>
+      <link>https://mesh3d.gallery/experiment/demo-formula</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/demo-formula</guid>
+      <pubDate>Thu, 25 Jun 2026 16:29:45 GMT</pubDate>
+      <description>Tap Drive and the page snaps into motion, with WASD or the arrow keys steering a Formula car through the lab. Formula Lab keeps the interface spare, then lets the typography, navigation labels, and 3D scene do the talking as Kit, Drive, and Studio flick between states like test notes on a workbench.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782404914992-mbbd6x3-lab.patrickheintzmann.com_demo_demoFormula.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Vizcom | Turn Sketches into Full-Fidelity 3D Renders, Instantly</title>
+      <link>https://mesh3d.gallery/website/vizcom-turn-sketches-into-full-fidelity-3d-renders-instantly</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/vizcom-turn-sketches-into-full-fidelity-3d-renders-instantly</guid>
+      <pubDate>Thu, 25 Jun 2026 16:27:09 GMT</pubDate>
+      <description>AI-powered design tool for real world product designers and their teams. Go from sketch to photorealistic 3D render in seconds. Start creating for free.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782404789233-mgk461x-vizcom.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Vello Ventures — Speed is engineering.</title>
+      <link>https://mesh3d.gallery/website/vello-ventures-speed-is-engineering</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/vello-ventures-speed-is-engineering</guid>
+      <pubDate>Thu, 25 Jun 2026 16:20:14 GMT</pubDate>
+      <description>Vello Ventures — venture studio. We build high-performance companies alongside founders. Speed is engineering.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1782404399322-1613s6j-velloventures.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>LVMH - The Tech Playground</title>
+      <link>https://mesh3d.gallery/website/lvmh-the-tech-playground</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/lvmh-the-tech-playground</guid>
+      <pubDate>Fri, 19 Jun 2026 10:02:41 GMT</pubDate>
+      <description>Discover the experts who drive innovation at LVMH. An ode to digital savoir-faire, and testament to LVMH&apos;s commitment to pushing the boundaries of luxury through technology, the LVMH Tech Playground unveils the diversity, scale, and impact of projects launched across LVMH and its 75 Maisons.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781863282493-iyj6st1-lvmh-the-tech-playground.cosmicshelter.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>P__work Prototype</title>
+      <link>https://mesh3d.gallery/experiment/p-work-prototype</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/experiment/p-work-prototype</guid>
+      <pubDate>Fri, 19 Jun 2026 10:01:07 GMT</pubDate>
+      <description>Drag through P__work and the page keeps reconfiguring itself, like a workbench test running in public. With no headline to lean on, the piece speaks through motion alone, shifting between restrained pauses and quick interactive snaps that feel half sketch, half proof of concept.</description>
+      <category>experiment</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781863233216-y2zz0fg-julienrenau.com_experiments_p_work.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Noomo Showcase — Immersive 3D &amp; WebGL Work</title>
+      <link>https://mesh3d.gallery/website/noomo-showcase-immersive-3d-webgl-work</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/noomo-showcase-immersive-3d-webgl-work</guid>
+      <pubDate>Fri, 19 Jun 2026 09:59:43 GMT</pubDate>
+      <description>The latest from Noomo — immersive web design, 3D, and motion for brands like Salesforce, AMD, and Red Bull.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781863154714-0e9637z-showcase.noomoagency.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Shopify Editions | Spring ’26</title>
+      <link>https://mesh3d.gallery/website/shopify-editions-spring-26</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/shopify-editions-spring-26</guid>
+      <pubDate>Fri, 19 Jun 2026 09:59:03 GMT</pubDate>
+      <description>Sell face to face, online, in social channels, and AI chats with 150+ updates to Shopify. The only platform you need to sell everywhere.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781863114649-294pkpa-shopify.com.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Studio K95 |  Brand &amp; Digital Design Studio based in Italy</title>
+      <link>https://mesh3d.gallery/website/studio-k95-brand-digital-design-studio-based-in-italy</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/studio-k95-brand-digital-design-studio-based-in-italy</guid>
+      <pubDate>Fri, 19 Jun 2026 09:47:20 GMT</pubDate>
+      <description>K95 is an Italian brand and digital design studio creating brand identities, UX/UI systems, and high-performance websites for growth-focused companies.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781862403662-v1s454f-k95.it.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>3D Timeline Portfolio with AI</title>
+      <link>https://mesh3d.gallery/website/3d-timeline-portfolio-with-ai</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/3d-timeline-portfolio-with-ai</guid>
+      <pubDate>Fri, 19 Jun 2026 09:46:17 GMT</pubDate>
+      <description>Portfolio of Yusef Nsar — full stack creative developer crafting immersive 3D web experiences with Three.js, WebGPU, and React.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781862354623-kmm9307-www.yusef-nsar.dev.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Spatial</title>
+      <link>https://mesh3d.gallery/website/spatial</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/spatial</guid>
+      <pubDate>Fri, 19 Jun 2026 09:10:21 GMT</pubDate>
+      <description>With no traditional stage and no best seat, the boundary between audience and artwork dissolves. The entire Funkhaus becomes the instrument. 
+Most works will unfold in total darkness, offering a rare chance to step away from the noise and fragmentation of screen-based life. Instead, listeners are invited into a spacious, immersive experience—rooted in sound and space in their purest form.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781860104730-d6sbnz2-spatial-festival.program.studio.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Solais • A visibility platform that monitors AI-driven discovery</title>
+      <link>https://mesh3d.gallery/website/solais-a-visibility-platform-that-monitors-ai-driven-discovery</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/solais-a-visibility-platform-that-monitors-ai-driven-discovery</guid>
+      <pubDate>Fri, 12 Jun 2026 10:37:03 GMT</pubDate>
+      <description>People don&apos;t search for information the way they used to. They ask questions, and AI answers. Solais shows how your brand appears within those answers, and how that visibility shifts over time. It&apos;s clarity for a new kind of discovery.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781260443097-pxg6lam-solais.ai.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Garden Eight</title>
+      <link>https://mesh3d.gallery/website/garden-eight</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/garden-eight</guid>
+      <pubDate>Fri, 12 Jun 2026 10:27:22 GMT</pubDate>
+      <description>Garden Eight is a digital design studio based in Tokyo.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781259986689-h1bg24r-garden-eight.com_.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Kenichi Aikawa - Photographer</title>
+      <link>https://mesh3d.gallery/website/kenichi-aikawa-photographer</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/kenichi-aikawa-photographer</guid>
+      <pubDate>Fri, 12 Jun 2026 10:22:36 GMT</pubDate>
+      <description>Portfolio of Kenichi Aikawa, a Photographer based in Tokyo. Active in Fashion, Portrait, Life style, Food, Corporate Advertising.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781259540240-frvovqy-aikawakenichi.com (1).webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>Operating System for the Creator Economy | Steven.com</title>
+      <link>https://mesh3d.gallery/website/operating-system-for-the-creator-economy-steven-com</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/operating-system-for-the-creator-economy-steven-com</guid>
+      <pubDate>Fri, 12 Jun 2026 10:03:41 GMT</pubDate>
+      <description>The operating system for the creator economy. Connecting creators to resources, platforms, community and technology where trust shifts to individuals.</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781258559656-ww7brme-steven.com_.webp" type="image/webp" length="0" />
+    </item>
+    <item>
+      <title>They Call Me Giulio :: Creative Technologist</title>
+      <link>https://mesh3d.gallery/website/they-call-me-giulio-creative-technologist</link>
+      <guid isPermaLink="true">https://mesh3d.gallery/website/they-call-me-giulio-creative-technologist</guid>
+      <pubDate>Fri, 12 Jun 2026 10:00:20 GMT</pubDate>
+      <description>Creative Technologist building high-performance digital experiences through interactive design and advanced front-end engineering</description>
+      <category>website</category>
+      <enclosure url="https://cdn.mesh3d.gallery/previews/1781258406385-2ygdojp-www.theycallmegiulio.com_.webp" type="image/webp" length="0" />
+    </item>
+  </channel>
+</rss>

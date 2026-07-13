@@ -1,0 +1,9 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+.x.com	TRUE	/	FALSE	1999999999	guest_id_marketing	v1%3A178395456911850674
+.x.com	TRUE	/	FALSE	1999999999	guest_id_ads	v1%3A178395456911850674
+.x.com	TRUE	/	FALSE	1999999999	personalization_id	v1_NdftXECR+NZEYWCUlRZEaw=="
+.x.com	TRUE	/	FALSE	1999999999	guest_id	v1%3A178395456911850674
+x.com	TRUE	/	FALSE	1999999999	__cf_bm	OOkfA8zLc9L8enJaEwYZs5xZnBN6YGBfaJeojJchaRc-1783954569.07025-1.0.1.1-KEcluYfISNiKTjzLDWIDDN_Edk3Nkl.H8BcatkcgE3ePDe0jhWlCgyK6Quh59_SpDXpSvRItr3UeKqOFMlM9pGH9cMhvS2sX8N25LeY39KqZijGfJGAMawkHaSwCsoDM
+x.com	TRUE	/	FALSE	1999999999	SameSite	None
+

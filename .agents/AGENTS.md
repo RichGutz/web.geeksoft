@@ -10,3 +10,6 @@ Para realizar un despliegue de la aplicación a producción (geeksoft.tech), se 
 - Comando: `python scripts/deploy_geeksoft.py` (ejecutado desde la raíz del proyecto).
 - Este script se encarga de: asegurar commit/push a GitHub, sincronizar el VPS, instalar dependencias de Node.js, compilar Next.js (`npm run build`), reiniciar el servidor mediante `pm2` en el puerto interno 3050, y recargar la configuración de Nginx / Certbot.
 - **Lecciones Aprendidas de la Terminal (Crash Unicode)**: Next.js imprime caracteres especiales en su salida (como el triángulo `▲`). Al capturar el `stdout` por SSH (Paramiko) y mandarlo a la consola de Windows, Python arroja un `UnicodeEncodeError` crasheando a la mitad del despliegue. El script fue corregido aplicando `.encode('ascii', 'replace')`. ¡Cualquier futuro script que orqueste servidores remotos desde Windows debe implementar este filtro para no morir por caracteres extraños!
+
+## Restricción de Navegador
+Queda estrictamente prohibido utilizar la herramienta de navegación web (`browser_subagent`) o intentar abrir y controlar el navegador del usuario de manera automática bajo ninguna circunstancia, salvo que exista una solicitud directa, explícita e inequívoca del usuario en el chat.
