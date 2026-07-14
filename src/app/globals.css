@@ -90,8 +90,8 @@ body {
 
 .radar-container {
   position: relative;
-  width: 600px;
-  height: 600px;
+  width: 750px;
+  height: 750px;
   border-radius: 50%;
   border: 1px solid var(--glass-border);
   background: radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, transparent 70%);

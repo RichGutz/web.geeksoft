@@ -36,8 +36,8 @@ export default function DustParticles({ count = 150 }) {
     const p = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       const x = (Math.random() - 0.5) * 200;
-      const y = (Math.random() - 0.5) * 120 - 15; 
-      const z = (Math.random() - 0.5) * 500 - 100; 
+      const y = (Math.random() - 0.5) * 120 - 15;
+      const z = (Math.random() - 0.5) * 500 - 100;
 
       p[i * 3] = x;
       p[i * 3 + 1] = y;
@@ -50,7 +50,7 @@ export default function DustParticles({ count = 150 }) {
     if (pointsRef.current) {
       pointsRef.current.rotation.z += delta * 0.012;
       pointsRef.current.rotation.y += delta * 0.004;
-      
+
       const time = state.clock.getElapsedTime();
       pointsRef.current.position.x = Math.sin(time * 0.12) * 2.0;
       pointsRef.current.position.y = Math.cos(time * 0.08) * 1.5;
@@ -65,12 +65,12 @@ export default function DustParticles({ count = 150 }) {
           args={[positions, 3]}
         />
       </bufferGeometry>
-      <pointsMaterial 
-        transparent 
+      <pointsMaterial
+        transparent
         color="#00ff80" // Verde neón a juego con el radar
         size={2.5} // Puntos DUST gruesos
-        sizeAttenuation={true} 
-        depthWrite={false} 
+        sizeAttenuation={true}
+        depthWrite={false}
         opacity={0.65}
         fog={true}
         map={circleTexture || undefined} // Mapear el círculo difuso
