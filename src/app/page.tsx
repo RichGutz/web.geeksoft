@@ -341,34 +341,61 @@ export default function SandboxRadarPage() {
             <div className="awakened-list">
               {/* NEO */}
               <div className="awakened-item">
-                <div className="awakened-item-name">
-                  <span>NEO</span>
-                  <span className="awakened-item-role">FINTECH // FACTORING</span>
+                <div className="awakened-avatar-wrapper">
+                  <img
+                    src="/images/neo_head.jpg"
+                    alt="Neo"
+                    className="awakened-avatar-img"
+                  />
                 </div>
-                <div className="awakened-item-desc">
-                  Empresa financiera de factoring que construyó un ERP a la medida de sus necesidades operativas y de cobranza.
+                <div className="awakened-content">
+                  <div className="awakened-item-name">
+                    <span>NEO</span>
+                    <span className="awakened-item-role">FINTECH // FACTORING</span>
+                  </div>
+                  <div className="awakened-item-desc">
+                    Empresa financiera de factoring que construyó un ERP a la medida de sus necesidades operativas y de cobranza.
+                  </div>
                 </div>
               </div>
 
               {/* MORPHEUS */}
               <div className="awakened-item">
-                <div className="awakened-item-name">
-                  <span>MORPHEUS</span>
-                  <span className="awakened-item-role">LOGÍSTICA NAVIERA</span>
+                <div className="awakened-avatar-wrapper">
+                  <img
+                    src="/images/morpheus_head.jpg"
+                    alt="Morpheus"
+                    className="awakened-avatar-img"
+                  />
                 </div>
-                <div className="awakened-item-desc">
-                  Empresa naviera que construyó <em>Delfos</em>, un CRM inteligente para multicotizaciones, gestión de pedidos y analítica en tiempo real.
+                <div className="awakened-content">
+                  <div className="awakened-item-name">
+                    <span>MORPHEUS</span>
+                    <span className="awakened-item-role">LOGÍSTICA NAVIERA</span>
+                  </div>
+                  <div className="awakened-item-desc">
+                    Empresa naviera que construyó <em>Delfos</em>, un CRM inteligente para multicotizaciones, gestión de pedidos y analítica en tiempo real.
+                  </div>
                 </div>
               </div>
 
               {/* TRINITY */}
               <div className="awakened-item">
-                <div className="awakened-item-name">
-                  <span>TRINITY</span>
-                  <span className="awakened-item-role">ACTIVOS & PATRIMONIO</span>
+                <div className="awakened-avatar-wrapper">
+                  <img
+                    src="/images/trinity_head.jpg"
+                    alt="Trinity"
+                    className="awakened-avatar-img"
+                  />
                 </div>
-                <div className="awakened-item-desc">
-                  Asociación que tomó el control integral de sus activos reales creándoles un Gemelo Digital a medida.
+                <div className="awakened-content">
+                  <div className="awakened-item-name">
+                    <span>TRINITY</span>
+                    <span className="awakened-item-role">ACTIVOS & PATRIMONIO</span>
+                  </div>
+                  <div className="awakened-item-desc">
+                    Asociación que tomó el control integral de sus activos reales creándoles un Gemelo Digital a medida.
+                  </div>
                 </div>
               </div>
             </div>
