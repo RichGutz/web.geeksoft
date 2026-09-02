@@ -1,0 +1,34 @@
+================================================================================
+GEKSOFT WEB - GEMINI WORK LOG
+Fecha: 2026-09-02
+Versión: v1.1.0-matrix-awakened-villanos
+================================================================================
+
+RESUMEN DE LOGROS DE LA SESIÓN:
+
+1. Favicon Oficial de Geeksoft:
+   - Configuración de `public/FAVICON.GEEKSOFT.png` y generación de iconos estáticos para Next.js 16 (`icon.png`, `apple-icon.png`, `favicon.ico`).
+
+2. Rediseño Semántico de Píldoras Matrix:
+   - Blue Pill (Izquierda): Redirige a `/inframundo` ("Seguir dormido en el inframundo PRE-IA").
+   - Red Pill (Derecha): Abre WhatsApp con Geeksoft (+51 991010016) para iniciar el despertar con IA.
+
+3. Sección Holográfica THE AWAKENED (+50% Tamaño + Fotos Aisladas B/N):
+   - Popover de 580px al hacer hover sobre la Red Pill.
+   - Retratos aislados en blanco y negro sin fondo (`neo_head.jpg`, `morpheus_head.jpg`, `trinity_head.jpg`).
+   - Casos de éxito con orden y copys oficiales:
+     1. MORPHEUS (Logística Naviera): DELFOS (CRM inteligente multicotizaciones, rutas navieras y analítica profunda).
+     2. NEO (Fintech // Factoring): DEFACTO (ERP a la medida para operaciones, cobranza y relaciones con inversionistas).
+     3. TRINITY (Activos & Patrimonio): PROPTWIN (Gemelo digital de propiedades y activos reales).
+
+4. La Simulación PRE-IA / Blue Pill (/inframundo):
+   - Escena 3D oceánica en azul neón abisal (#0077ff / #000818).
+   - Subtítulo en una sola línea continua: "Donde el tiempo muere, los datos se pierden y crees que tus procesos manuales están bajo control."
+   - 4 Villanos de la automatización con animaciones Lottie y visuales activas:
+     1. El "Excel Zombie" (Domador de celdas vs Empresario).
+     2. El "Data-Entry Ghost" (Tortura de datos copiando PDFs).
+     3. The "EMAIL BLACK HOLE" (Bandeja de entrada saturada).
+     4. El "WhatsApp Slave" (Animación interactiva WhatsApp Hell Desk 60 FPS con notificaciones 99+ y alertas urgentes).
+
+5. Despliegue y Validación en VPS:
+   - Pipeline de despliegue automatizado `scripts/deploy_geeksoft.py` ejecutado y validado en https://geeksoft.tech y https://geeksoft.tech/inframundo con PM2, Nginx y SSL Certbot.
