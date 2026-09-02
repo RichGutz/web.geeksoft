@@ -106,9 +106,10 @@
 - [x] 🔴 **Red Pill (Despertar a la Realidad)**: Abrir WhatsApp/Contacto con Geeksoft (transformación con IA).
 - [x] Sincronizar tooltips y estilos en `src/app/page.tsx` y `src/app/sandbox-radar/page.tsx`.
 
-### 3. Clientes: "The Awakened / Zion Network"
-- [ ] Crear sección temática para clientes que ya despertaron y automatizaron con IA.
-- [ ] Opciones de diseño:
-  - Botón holográfico en esquina superior derecha `[ ZION // THE AWAKENED ]` con modal/drawer de casos de éxito.
-  - Satélites interactivos orbitando el Radar.
-  - Marquee holográfico inferior con logos de empresas aliadas.
+### 3. Clientes: "THE AWAKENED" ✅ COMPLETADO
+- [x] Burbuja holográfica emergente al hacer hover sobre la **Red Pill** sin apretarla.
+- [x] Fichas temáticas de clientes/proyectos:
+  - **NEO**: Empresa financiera de factoring (ERP a medida).
+  - **MORPHEUS**: Empresa naviera (CRM Inteligente *Delfos*).
+  - **TRINITY**: Asociación patrimonial (Gemelo Digital de activos reales).
+- [x] Click en la Red Pill mantiene la llamada a la acción hacia WhatsApp (`+51 991010016`).

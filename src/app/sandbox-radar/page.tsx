@@ -329,23 +329,66 @@ export default function SandboxRadarPage() {
           <div className="pill-tooltip">Seguir dormido en el inframundo PRE-IA</div>
         </Link>
 
-        {/* ─── RED PILL: esquina inferior derecha (Despertar a la realidad con IA) ─── */}
-        <button
-          className="matrix-pill red-pill"
-          onClick={() => window.open("https://wa.me/51991010016", "_blank")}
-          style={{
-            pointerEvents: "auto",
-            position: "absolute",
-            bottom: "2.5rem",
-            right: "2.5rem",
-          }}
-        >
-          <span className="pill-text">
-            <span>RED</span><span className="pill-divider"></span><span>PILL</span>
-          </span>
-          <div className="pill-glow"></div>
-          <div className="pill-tooltip">Despertar a la realidad (Habla con Geeksoft)</div>
-        </button>
+        {/* ─── RED PILL: esquina inferior derecha (Despertar a la realidad con IA + Hover Popover The Awakened) ─── */}
+        <div className="red-pill-wrapper">
+          {/* Popover holográfico de clientes */}
+          <div className="awakened-popover">
+            <div className="awakened-header">
+              <div className="awakened-tag">● THE AWAKENED</div>
+              <div className="awakened-title">Empresas que ya despertaron</div>
+            </div>
+
+            <div className="awakened-list">
+              {/* NEO */}
+              <div className="awakened-item">
+                <div className="awakened-item-name">
+                  <span>NEO</span>
+                  <span className="awakened-item-role">FINTECH // FACTORING</span>
+                </div>
+                <div className="awakened-item-desc">
+                  Empresa financiera de factoring que construyó un ERP a la medida de sus necesidades operativas y de cobranza.
+                </div>
+              </div>
+
+              {/* MORPHEUS */}
+              <div className="awakened-item">
+                <div className="awakened-item-name">
+                  <span>MORPHEUS</span>
+                  <span className="awakened-item-role">LOGÍSTICA NAVIERA</span>
+                </div>
+                <div className="awakened-item-desc">
+                  Empresa naviera que construyó <em>Delfos</em>, un CRM inteligente para multicotizaciones, gestión de pedidos y analítica en tiempo real.
+                </div>
+              </div>
+
+              {/* TRINITY */}
+              <div className="awakened-item">
+                <div className="awakened-item-name">
+                  <span>TRINITY</span>
+                  <span className="awakened-item-role">ACTIVOS & PATRIMONIO</span>
+                </div>
+                <div className="awakened-item-desc">
+                  Asociación que tomó el control integral de sus activos reales creándoles un Gemelo Digital a medida.
+                </div>
+              </div>
+            </div>
+
+            <div className="awakened-footer">
+              Haz click en la píldora para iniciar tu despertar →
+            </div>
+          </div>
+
+          <button
+            className="matrix-pill red-pill"
+            onClick={() => window.open("https://wa.me/51991010016", "_blank")}
+          >
+            <span className="pill-text">
+              <span>RED</span><span className="pill-divider"></span><span>PILL</span>
+            </span>
+            <div className="pill-glow"></div>
+            <div className="pill-tooltip">Despertar a la realidad (Habla con Geeksoft)</div>
+          </button>
+        </div>
 
       </div>
     </main>
