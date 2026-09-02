@@ -108,8 +108,8 @@
 
 ### 3. Clientes: "THE AWAKENED" ✅ COMPLETADO
 - [x] Burbuja holográfica emergente al hacer hover sobre la **Red Pill** sin apretarla.
-- [x] Fichas temáticas de clientes/proyectos:
-  - **NEO**: Empresa financiera de factoring (ERP a medida).
-  - **MORPHEUS**: Empresa naviera (CRM Inteligente *Delfos*).
-  - **TRINITY**: Asociación patrimonial (Gemelo Digital de activos reales).
+- [x] Fichas temáticas con retratos aislados de personajes de Matrix:
+  - **NEO** (`FINTECH // FACTORING`): *DEFACTO* (ERP a medida de operaciones, cobranza y relaciones con inversionistas).
+  - **MORPHEUS** (`LOGÍSTICA NAVIERA`): *Delfos* (CRM inteligente para multicotizaciones, rutas navieras y analítica profunda).
+  - **TRINITY** (`ACTIVOS & PATRIMONIO`): *PROPTWIN* (Gemelo digital de propiedades y activos reales).
 - [x] Click en la Red Pill mantiene la llamada a la acción hacia WhatsApp (`+51 991010016`).

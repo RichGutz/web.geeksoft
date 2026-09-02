@@ -354,7 +354,7 @@ export default function SandboxRadarPage() {
                     <span className="awakened-item-role">FINTECH // FACTORING</span>
                   </div>
                   <div className="awakened-item-desc">
-                    Empresa financiera de factoring que construyó un ERP a la medida de sus necesidades operativas y de cobranza.
+                    Empresa financiera de factoring que construyó <em>DEFACTO</em>, un ERP a la medida de sus necesidades operativas, de cobranza y relaciones con sus inversionistas.
                   </div>
                 </div>
               </div>
@@ -374,7 +374,7 @@ export default function SandboxRadarPage() {
                     <span className="awakened-item-role">LOGÍSTICA NAVIERA</span>
                   </div>
                   <div className="awakened-item-desc">
-                    Empresa naviera que construyó <em>Delfos</em>, un CRM inteligente para multicotizaciones, gestión de pedidos y analítica en tiempo real.
+                    Empresa naviera que construyó <em>Delfos</em>, un CRM inteligente para multicotizaciones, gestión de rutas navieras y analítica profunda de sus márgenes y operaciones.
                   </div>
                 </div>
               </div>
@@ -394,7 +394,7 @@ export default function SandboxRadarPage() {
                     <span className="awakened-item-role">ACTIVOS & PATRIMONIO</span>
                   </div>
                   <div className="awakened-item-desc">
-                    Asociación que tomó el control integral de sus activos reales creándoles un Gemelo Digital a medida.
+                    Asociación Religiosa que tomó el control integral de sus activos reales creándoles <em>PROPTWIN</em>, un gemelo digital de sus propiedades.
                   </div>
                 </div>
               </div>
