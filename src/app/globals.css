@@ -643,3 +643,23 @@ body {
   text-transform: uppercase;
   text-align: center;
 }
+
+@keyframes bubble-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-6px) rotate(2deg); }
+}
+
+@keyframes bubble-float-rev {
+  0%, 100% { transform: translateY(0) rotate(1deg); }
+  50% { transform: translateY(5px) rotate(-2deg); }
+}
+
+@keyframes badge-pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px #ff003c); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 12px #ff003c); }
+}
+
+@keyframes pulse-aura {
+  0%, 100% { transform: scale(0.9); opacity: 0.4; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
