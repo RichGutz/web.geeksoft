@@ -339,26 +339,6 @@ export default function SandboxRadarPage() {
             </div>
 
             <div className="awakened-list">
-              {/* NEO */}
-              <div className="awakened-item">
-                <div className="awakened-avatar-wrapper">
-                  <img
-                    src="/images/neo_head.jpg"
-                    alt="Neo"
-                    className="awakened-avatar-img"
-                  />
-                </div>
-                <div className="awakened-content">
-                  <div className="awakened-item-name">
-                    <span>NEO</span>
-                    <span className="awakened-item-role">FINTECH // FACTORING</span>
-                  </div>
-                  <div className="awakened-item-desc">
-                    Empresa financiera de factoring que construyó <em>DEFACTO</em>, un ERP a la medida de sus necesidades operativas, de cobranza y relaciones con sus inversionistas.
-                  </div>
-                </div>
-              </div>
-
               {/* MORPHEUS */}
               <div className="awakened-item">
                 <div className="awakened-avatar-wrapper">
@@ -375,6 +355,26 @@ export default function SandboxRadarPage() {
                   </div>
                   <div className="awakened-item-desc">
                     Empresa naviera que construyó <em>DELFOS</em>, un CRM inteligente para multicotizaciones, gestión de rutas navieras y analítica profunda de sus márgenes y operaciones.
+                  </div>
+                </div>
+              </div>
+
+              {/* NEO */}
+              <div className="awakened-item">
+                <div className="awakened-avatar-wrapper">
+                  <img
+                    src="/images/neo_head.jpg"
+                    alt="Neo"
+                    className="awakened-avatar-img"
+                  />
+                </div>
+                <div className="awakened-content">
+                  <div className="awakened-item-name">
+                    <span>NEO</span>
+                    <span className="awakened-item-role">FINTECH // FACTORING</span>
+                  </div>
+                  <div className="awakened-item-desc">
+                    Empresa financiera de factoring que construyó <em>DEFACTO</em>, un ERP a la medida de sus necesidades operativas, de cobranza y relaciones con sus inversionistas.
                   </div>
                 </div>
               </div>
