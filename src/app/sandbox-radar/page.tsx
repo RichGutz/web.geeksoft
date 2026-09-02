@@ -307,10 +307,10 @@ export default function SandboxRadarPage() {
           )}
         </div>
 
-        {/* ─── RED PILL: esquina inferior izquierda ─── */}
+        {/* ─── BLUE PILL: esquina inferior izquierda (Seguir dormido en el inframundo PRE-IA) ─── */}
         <Link
           href="/inframundo"
-          className="matrix-pill red-pill"
+          className="matrix-pill blue-pill"
           style={{
             pointerEvents: "auto",
             position: "absolute",
@@ -323,15 +323,15 @@ export default function SandboxRadarPage() {
           }}
         >
           <span className="pill-text">
-            <span>RED</span><span className="pill-divider"></span><span>PILL</span>
+            <span>BLUE</span><span className="pill-divider"></span><span>PILL</span>
           </span>
           <div className="pill-glow"></div>
-          <div className="pill-tooltip">Despertar a la realidad PRE-IA</div>
+          <div className="pill-tooltip">Seguir dormido en el inframundo PRE-IA</div>
         </Link>
 
-        {/* ─── BLUE PILL: esquina inferior derecha ─── */}
+        {/* ─── RED PILL: esquina inferior derecha (Despertar a la realidad con IA) ─── */}
         <button
-          className="matrix-pill blue-pill"
+          className="matrix-pill red-pill"
           onClick={() => window.open("https://wa.me/51991010016", "_blank")}
           style={{
             pointerEvents: "auto",
@@ -341,10 +341,10 @@ export default function SandboxRadarPage() {
           }}
         >
           <span className="pill-text">
-            <span>BLUE</span><span className="pill-divider"></span><span>PILL</span>
+            <span>RED</span><span className="pill-divider"></span><span>PILL</span>
           </span>
           <div className="pill-glow"></div>
-          <div className="pill-tooltip">Habla con nosotros</div>
+          <div className="pill-tooltip">Despertar a la realidad (Habla con Geeksoft)</div>
         </button>
 
       </div>

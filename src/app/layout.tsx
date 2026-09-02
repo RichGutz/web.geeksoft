@@ -8,6 +8,10 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   title: "GEEKSOFT | Software Engineering",
   description: "Next-gen Software Solutions, Dashboards, AI Agents, and SaaS.",
+  icons: {
+    icon: "/FAVICON.GEEKSOFT.png",
+    apple: "/FAVICON.GEEKSOFT.png",
+  },
 };
 
 export default function RootLayout({

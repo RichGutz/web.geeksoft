@@ -10,10 +10,11 @@
 - **WebGL**: React Three Fiber (`@react-three/fiber`) + Drei
 - **CSS**: Vanilla CSS en `globals.css` (sin Tailwind)
 - **Rutas activas**:
-  - `/` → Home (Radar + fondo negro con MilkyWay CSS)
-  - `/sandbox` → Terreno 3D original experimental
-  - `/sandbox-gems` → Fondo 3D nuevo (terrain + gems + fog verde)
-  - `/sandbox-radar` → **HÍBRIDO ACTIVO**: Radar HTML encima del fondo 3D ← *trabajo en curso*
+  - `/` → **NUEVA HOME (Radar 3D Híbrido)**: Radar HTML (`750px`) sobre el fondo 3D (terrain, gems, fog verde).
+  - `/inframundo` → **Sección Inferno**: Terreno 3D volcánico naranja fuego (`#ff4400`) y niebla con las tarjetas de villanos PRE-IA en Lottie.
+  - `/sandbox` → Terreno 3D original experimental.
+  - `/sandbox-gems` → Fondo 3D solo (terrain + gems + fog verde).
+  - `/sandbox-radar` → Ruta duplicada de prueba de la home híbrida.
 
 ---
 
@@ -27,6 +28,8 @@
 | `GreenFogCamera.tsx` | `src/components/webgl/` | Cámara + niebla verde `#001408` con scroll 3D. **Backup**: `GreenFogCamera_V2_STABLE.tsx` |
 | `GreenFogVolume.tsx` | `src/components/webgl/` | Niebla volumétrica de partículas gigantes. **Backup**: `GreenFogVolume_V2_STABLE.tsx` |
 | `StaticFogCamera.tsx` | `src/components/webgl/` | Cámara fija + niebla verde (sin ScrollControls, para el híbrido) |
+| `InfernoTerrain.tsx` | `src/components/webgl/` | Terreno de curvas de nivel de color naranja fuego (`#ff4400`) para `/inframundo`. |
+| `InfernoFogCamera.tsx` | `src/components/webgl/` | Cámara fija + niebla volcánica oscura (`#1a0500`) para `/inframundo`. |
 
 ### ⚠️ Reglas Críticas para Shaders GLSL
 - **NUNCA** combinar declaración manual de `vViewPosition` con `#include <fog_pars_vertex>` — genera doble declaración y crash silencioso de GPU.
@@ -35,48 +38,23 @@
 
 ---
 
-## Plan de Features: `/sandbox-radar` (Trabajo en Curso)
+## Features Implementadas (Sprint Completado)
 
-### Feature 1: Centrar el Radar en Pantalla ✅ PENDIENTE
-- El `Radar.tsx` actualmente usa posicionamiento absoluto relativo al viewport.
-- Se debe verificar que el `radar-container` en `globals.css` esté centrado con `margin: auto` o `top/left: 50%; transform: translate(-50%, -50%)`.
-- El título "GEEKSOFT" debe seguir apareciendo en la esquina superior izquierda.
+### Feature 1: Agrandar y Centrar el Radar en Pantalla ✅ COMPLETADO
+- El Radar aumentó su diámetro de `600px` a `750px` en `src/app/globals.css`.
+- Los radios de los nodos de categorías en `Radar.tsx` fueron recalculados proporcionalmente (`saas: 260`, `dashboards: 190`, `ai: 300`, `scrappers: 230`).
+- El centro de posicionamiento en el plano polar de `Radar.tsx` se actualizó a `375px`.
+- El título **GEEKSOFT** se colocó de forma estática y absoluta en el viewport (arriba a la izquierda) en `page.tsx` para no moverse con el radar. Su color cambia dinámicamente con `onColorChange`.
 
-### Feature 2: Re-agregar Red Pill & Blue Pill ✅ PENDIENTE
-- Existían en la home original (`src/app/page.tsx`) como botones debajo del Radar.
-- La **Red Pill** hacía scroll suave hasta la sección `#inframundo`.
-- La **Blue Pill** mostraba un `alert()` (acción pendiente por definir).
-- En `/sandbox-radar` deben aparecer en la misma posición pero adaptadas al nuevo fondo oscuro/verde.
+### Feature 2: Red Pill & Blue Pill en las Esquinas ✅ COMPLETADO
+- **RED PILL**: Se colocó de manera absoluta en la esquina inferior izquierda. Ahora es un `<Link>` que viaja a `/inframundo`.
+- **BLUE PILL**: Se colocó en la esquina inferior derecha. Abre la conversación con WhatsApp directo al número `+51 991010016` con `window.open`.
+- Se liberó el centro de la pantalla para permitir al radar crecer al máximo.
 
-### Feature 3: Interacción Click en Nodos del Radar → Panel Lateral 🎯 PRÓXIMO SPRINT
-
-**Flujo de UX:**
-1. Usuario está en la pantalla con el Radar centrado + fondo 3D.
-2. Usuario hace **click en un nodo** del radar (SaaS / Dashboards / AI / Scrappers).
-3. El Radar se **desplaza horizontalmente a la izquierda** con una animación CSS suave.
-4. A la derecha aparece un **Panel de Contenido** con:
-   - Título de la categoría seleccionada
-   - Descripción / Cards de servicios
-   - CTA (Call to Action)
-5. Usuario puede hacer click en un botón de "volver" para regresar al estado inicial.
-
-**Implementación técnica:**
-```tsx
-// Estado en sandbox-radar/page.tsx
-const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-// CSS: radar se desplaza a la izquierda
-.radar-wrapper {
-  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-  transform: selectedCategory ? 'translateX(-30vw)' : 'translateX(0)';
-}
-
-// Panel de contenido aparece desde la derecha
-.content-panel {
-  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-  transform: selectedCategory ? 'translateX(0)' : 'translateX(100%)';
-}
-```
+### Feature 3: Interacción Click en Nodos del Radar → Panel Lateral ✅ COMPLETADO
+- Al hacer click en un nodo (SaaS / Dashboards / AI / Scrappers), el radar se traslada a la izquierda con animación suave `cubic-bezier`.
+- El Panel Lateral de contenido aparece desde la derecha mostrando información de servicios, cards con efectos de hover, y CTA.
+- Se puede cerrar pulsando la **✕** o volviendo a hacer click en el nodo.
 
 ---
 
@@ -91,6 +69,8 @@ const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 --color-ai: #b0ff00;          /* Neon Green */
 --color-scrappers: #ff8c00;   /* Orange */
 --neon-terrain: #00ff80;      /* Verde neón del terreno 3D */
+--curvas-infierno: #ff4400;    /* Naranja fuego del inframundo */
+--niebla-infierno: #1a0500;    /* Niebla volcánica */
 ```
 
 ---
@@ -102,14 +82,33 @@ const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 3. **Verificar con tsc**: Después de cada cambio, correr `npx tsc --noEmit` desde `C:\Users\rguti\Web.Geeksoft`.
 4. **No usar browser_subagent**: Prohibido en este proyecto (ver `.agents/AGENTS.md`).
 5. **Idioma**: Siempre responder en español.
-6. **Servidor**: `npm run dev` desde `C:\Users\rguti\Web.Geeksoft`.
+6. **Despliegues a producción**: Siempre correr `python scripts/deploy_geeksoft.py` desde la raíz. No hacer git push manual a production.
 
 ---
 
-## Estado al Último Checkpoint (2026-07-13)
+## Estado al Último Checkpoint (2026-07-14)
 
-- ✅ Fondo 3D funcional con shader limpio (sin macros de niebla en el ShaderMaterial).
-- ✅ Ruta `/sandbox-radar` creada con Radar + Canvas 3D en capas.
-- ⏳ Radar no está centrado en la pantalla del híbrido.
-- ⏳ Red Pill / Blue Pill no integradas aún en el híbrido.
-- ⏳ Interacción click → panel lateral no implementada.
+- ✅ **La home principal (`/`) ahora tiene el Radar Gigante de 750px sobre el fondo 3D**.
+- ✅ **Sección `/inframundo` totalmente operativa con tema 3D volcánico**.
+- ✅ **Pills en esquinas inferiores e integración de WhatsApp/Inframundo en onClick**.
+- ✅ **Panel lateral animado para categorías interactivo**.
+- ✅ **Todo compilado y desplegado con éxito en el VPS (`geeksoft.tech`)**.
+
+---
+
+## 🎯 Próximo Sprint: Ajustes Matrix, Favicon & Sección de Clientes
+
+### 1. Favicon Oficial ✅ COMPLETADO
+- [x] Configurar `public/FAVICON.GEEKSOFT.png` en `src/app/layout.tsx` (metadata `icons`).
+
+### 2. Corrección de Analogía Matrix (Red Pill vs. Blue Pill) ✅ COMPLETADO
+- [x] 🔵 **Blue Pill (Seguir Dormido)**: Redirigir a `/inframundo` (pesadilla de tareas manuales PRE-IA).
+- [x] 🔴 **Red Pill (Despertar a la Realidad)**: Abrir WhatsApp/Contacto con Geeksoft (transformación con IA).
+- [x] Sincronizar tooltips y estilos en `src/app/page.tsx` y `src/app/sandbox-radar/page.tsx`.
+
+### 3. Clientes: "The Awakened / Zion Network"
+- [ ] Crear sección temática para clientes que ya despertaron y automatizaron con IA.
+- [ ] Opciones de diseño:
+  - Botón holográfico en esquina superior derecha `[ ZION // THE AWAKENED ]` con modal/drawer de casos de éxito.
+  - Satélites interactivos orbitando el Radar.
+  - Marquee holográfico inferior con logos de empresas aliadas.

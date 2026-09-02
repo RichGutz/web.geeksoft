@@ -76,7 +76,7 @@ export default function InframundoPage() {
 
         {/* Botón volver */}
         <Link
-          href="/sandbox-radar"
+          href="/"
           style={{
             position: "absolute",
             top: "2rem",
@@ -199,7 +199,7 @@ export default function InframundoPage() {
         {/* CTA inferior */}
         <div style={{ marginTop: "2.5rem", textAlign: "center" }}>
           <Link
-            href="/sandbox-radar"
+            href="/"
             style={{
               display: "inline-block",
               background: "linear-gradient(135deg, #ff4400, #ff8800)",
