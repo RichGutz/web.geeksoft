@@ -374,7 +374,7 @@ export default function SandboxRadarPage() {
                     <span className="awakened-item-role">LOGÍSTICA NAVIERA</span>
                   </div>
                   <div className="awakened-item-desc">
-                    Empresa naviera que construyó <em>Delfos</em>, un CRM inteligente para multicotizaciones, gestión de rutas navieras y analítica profunda de sus márgenes y operaciones.
+                    Empresa naviera que construyó <em>DELFOS</em>, un CRM inteligente para multicotizaciones, gestión de rutas navieras y analítica profunda de sus márgenes y operaciones.
                   </div>
                 </div>
               </div>
