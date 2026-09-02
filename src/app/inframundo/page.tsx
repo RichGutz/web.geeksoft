@@ -15,22 +15,29 @@ const VILLANOS = [
     id: "excel",
     nombre: 'El "Excel Zombie"',
     lottie: "/excel-zombie.json",
-    copy: "¿Sigues usando Excel para gestionar tu empresa? No eres contador, eres un domador de celdas. Deja que nosotros lo automaticemos.",
+    copy: "¿Sigues usando Excel para gestionar tu empresa? No eres empresario, eres un domador de celdas. Deja que nosotros lo automaticemos.",
     color: "#00d2ff",
   },
   {
     id: "ghost",
     nombre: 'El "Data-Entry Ghost"',
-    lottie: "/lottie-surprise.json",
+    lottie: "/data-entry-ghost.json",
     copy: "¿Tus empleados pasan horas copiando PDFs? Eso no es trabajo, es tortura de datos. Deja que nuestras APIs lo hagan en milisegundos.",
     color: "#3388ff",
   },
   {
     id: "email",
-    nombre: 'El "Email Hole"',
-    lottie: "/lottie-surprise.json",
+    nombre: 'The "EMAIL BLACK HOLE"',
+    lottie: "/email-black-hole.json",
     copy: "Si la mitad de tu día es responder lo mismo, no necesitas más tiempo, necesitas un bot.",
     color: "#00a2ff",
+  },
+  {
+    id: "whatsapp",
+    nombre: 'El "WhatsApp Slave"',
+    lottie: "/whatsapp-slave.json",
+    copy: "¿Tus clientes te hacen sentir un HELL DESK pidiéndote cosas por WhatsApp? ¡Deja que un BOT se haga cargo de ellos!",
+    color: "#25d366",
   },
 ];
 
@@ -71,7 +78,7 @@ export default function InframundoPage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "2rem",
+        padding: "1.5rem",
       }}>
 
         {/* Botón volver */}
@@ -99,20 +106,20 @@ export default function InframundoPage() {
         </Link>
 
         {/* Título */}
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "2.2rem" }}>
           <p style={{
             color: "#00c8ff",
             fontFamily: "var(--font-display)",
             fontSize: "0.65rem",
             letterSpacing: "4px",
             textTransform: "uppercase",
-            marginBottom: "0.75rem",
+            marginBottom: "0.6rem",
           }}>
             ● LA SIMULACIÓN PRE-IA // BLUE PILL
           </p>
           <h1 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(1.8rem, 4vw, 3rem)",
+            fontSize: "clamp(1.8rem, 3.8vw, 2.8rem)",
             color: "#fff",
             textShadow: "0 0 40px #0066ff, 0 0 80px rgba(0, 102, 255, 0.4)",
             margin: 0,
@@ -123,21 +130,22 @@ export default function InframundoPage() {
           <p style={{
             color: "rgba(150, 200, 255, 0.75)",
             fontFamily: "var(--font-body)",
-            fontSize: "0.9rem",
-            marginTop: "0.75rem",
-            maxWidth: "520px",
+            fontSize: "0.95rem",
+            marginTop: "0.6rem",
+            whiteSpace: "nowrap",
           }}>
             Donde el tiempo muere, los datos se pierden y crees que tus procesos manuales están bajo control.
           </p>
         </div>
 
-        {/* Grid de Villanos */}
+        {/* Grid de Villanos (4 columnas) */}
         <div style={{
           display: "flex",
-          gap: "1.5rem",
-          flexWrap: "wrap",
+          gap: "1.2rem",
+          flexWrap: "nowrap",
           justifyContent: "center",
-          maxWidth: "1000px",
+          maxWidth: "1280px",
+          width: "100%",
         }}>
           {VILLANOS.map((v) => (
             <div
@@ -146,8 +154,9 @@ export default function InframundoPage() {
                 background: "rgba(0, 12, 30, 0.85)",
                 border: `1px solid ${v.color}44`,
                 borderRadius: "12px",
-                padding: "1.5rem",
-                width: "280px",
+                padding: "1.25rem 1.1rem",
+                width: "260px",
+                flex: "0 1 260px",
                 backdropFilter: "blur(20px)",
                 boxShadow: `0 0 30px ${v.color}22, inset 0 0 20px rgba(0,0,0,0.6)`,
                 transition: "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease",
