@@ -111,7 +111,7 @@ export default function InfernoTerrain() {
 
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
-    uColor: { value: new THREE.Color("#0077ff") }, // 🔵 Azul Matrix / Abismo
+    uColor: { value: new THREE.Color("#ff4400") }, // 🔥 Naranja fuego
     uMousePos: { value: new THREE.Vector3(0, 0, 0) },
     uRippleIntensity: { value: 0 }
   }), []);

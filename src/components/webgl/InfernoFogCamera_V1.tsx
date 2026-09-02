@@ -8,8 +8,8 @@ export default function InfernoFogCamera() {
   const { camera, scene } = useThree();
 
   useEffect(() => {
-    // Niebla azul profunda para la simulación / abismo
-    scene.fog = new THREE.FogExp2("#000818", 0.009);
+    // Niebla naranja oscura — más densa que la verde para efecto sofocante
+    scene.fog = new THREE.FogExp2("#1a0500", 0.009);
     camera.position.set(0, 0, 50);
     camera.rotation.set(0, 0, 0);
   }, [camera, scene]);

@@ -16,21 +16,21 @@ const VILLANOS = [
     nombre: 'El "Excel Zombie"',
     lottie: "/excel-zombie.json",
     copy: "¿Sigues usando Excel para gestionar tu empresa? No eres contador, eres un domador de celdas. Deja que nosotros lo automaticemos.",
-    color: "#00d2ff",
+    color: "#ff4400",
   },
   {
     id: "ghost",
     nombre: 'El "Data-Entry Ghost"',
     lottie: "/lottie-surprise.json",
     copy: "¿Tus empleados pasan horas copiando PDFs? Eso no es trabajo, es tortura de datos. Deja que nuestras APIs lo hagan en milisegundos.",
-    color: "#3388ff",
+    color: "#ff6600",
   },
   {
     id: "email",
     nombre: 'El "Email Hole"',
     lottie: "/lottie-surprise.json",
     copy: "Si la mitad de tu día es responder lo mismo, no necesitas más tiempo, necesitas un bot.",
-    color: "#00a2ff",
+    color: "#ff8800",
   },
 ];
 
@@ -39,25 +39,25 @@ export default function InframundoPage() {
     <main style={{
       width: "100vw",
       height: "100vh",
-      backgroundColor: "#000814",
+      backgroundColor: "#0d0200",
       position: "relative",
       overflow: "hidden",
     }}>
 
-      {/* ─── CAPA 0: Canvas 3D Simulación Azul ───────────────────────────────── */}
+      {/* ─── CAPA 0: Canvas 3D Infierno ─────────────────────────────────────── */}
       <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
         <Canvas
           style={{ width: "100%", height: "100%" }}
           camera={{ position: [0, 0, 50], fov: 75 }}
           gl={{ powerPreference: "high-performance", antialias: false, alpha: false }}
         >
-          <ambientLight intensity={0.25} color="#0055ff" />
-          <pointLight position={[0, 10, 10]} intensity={3.0} color="#0088ff" />
-          <pointLight position={[-20, -5, 5]} intensity={1.5} color="#0044ff" />
+          <ambientLight intensity={0.2} color="#ff4400" />
+          <pointLight position={[0, 10, 10]} intensity={3.0} color="#ff6600" />
+          <pointLight position={[-20, -5, 5]} intensity={1.5} color="#ff2200" />
 
           <InfernoFogCamera />
-          {/* Estrellas azules en vez de rojas */}
-          <StarField count={2000} color="#00aaff" />
+          {/* Estrellas rojas en vez de verdes */}
+          <StarField count={2000} color="#ff4400" />
           <InfernoTerrain />
         </Canvas>
       </div>
@@ -81,16 +81,16 @@ export default function InframundoPage() {
             position: "absolute",
             top: "2rem",
             left: "2rem",
-            color: "#00c8ff",
+            color: "#ff8800",
             textDecoration: "none",
             fontFamily: "var(--font-display)",
             fontSize: "0.7rem",
             letterSpacing: "2px",
             textTransform: "uppercase",
-            border: "1px solid rgba(0, 200, 255, 0.3)",
+            border: "1px solid rgba(255,136,0,0.3)",
             padding: "0.5rem 1rem",
             borderRadius: "4px",
-            background: "rgba(0, 15, 35, 0.6)",
+            background: "rgba(0,0,0,0.5)",
             backdropFilter: "blur(10px)",
             transition: "border-color 0.2s ease",
           }}
@@ -101,33 +101,33 @@ export default function InframundoPage() {
         {/* Título */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <p style={{
-            color: "#00c8ff",
+            color: "#ff4400",
             fontFamily: "var(--font-display)",
             fontSize: "0.65rem",
             letterSpacing: "4px",
             textTransform: "uppercase",
             marginBottom: "0.75rem",
           }}>
-            ● LA SIMULACIÓN PRE-IA // BLUE PILL
+            ● EL INFRAMUNDO PRE-IA
           </p>
           <h1 style={{
             fontFamily: "var(--font-display)",
             fontSize: "clamp(1.8rem, 4vw, 3rem)",
             color: "#fff",
-            textShadow: "0 0 40px #0066ff, 0 0 80px rgba(0, 102, 255, 0.4)",
+            textShadow: "0 0 40px #ff4400, 0 0 80px #ff220066",
             margin: 0,
             lineHeight: 1.1,
           }}>
-            Sigue durmiendo en el caos
+            El Costo del Caos
           </h1>
           <p style={{
-            color: "rgba(150, 200, 255, 0.75)",
+            color: "rgba(255,120,0,0.7)",
             fontFamily: "var(--font-body)",
             fontSize: "0.9rem",
             marginTop: "0.75rem",
-            maxWidth: "520px",
+            maxWidth: "500px",
           }}>
-            Donde el tiempo muere, los datos se pierden y crees que tus procesos manuales están bajo control.
+            Donde el tiempo muere, los datos se pierden y tus empleados sufren en silencio.
           </p>
         </div>
 
@@ -143,26 +143,26 @@ export default function InframundoPage() {
             <div
               key={v.id}
               style={{
-                background: "rgba(0, 12, 30, 0.85)",
+                background: "rgba(13,2,0,0.8)",
                 border: `1px solid ${v.color}44`,
                 borderRadius: "12px",
                 padding: "1.5rem",
                 width: "280px",
                 backdropFilter: "blur(20px)",
-                boxShadow: `0 0 30px ${v.color}22, inset 0 0 20px rgba(0,0,0,0.6)`,
+                boxShadow: `0 0 30px ${v.color}22, inset 0 0 20px rgba(0,0,0,0.5)`,
                 transition: "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease",
                 cursor: "default",
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLDivElement;
                 el.style.borderColor = v.color;
-                el.style.boxShadow = `0 0 50px ${v.color}55, inset 0 0 20px rgba(0,0,0,0.6)`;
+                el.style.boxShadow = `0 0 50px ${v.color}44, inset 0 0 20px rgba(0,0,0,0.5)`;
                 el.style.transform = "translateY(-6px)";
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLDivElement;
                 el.style.borderColor = `${v.color}44`;
-                el.style.boxShadow = `0 0 30px ${v.color}22, inset 0 0 20px rgba(0,0,0,0.6)`;
+                el.style.boxShadow = `0 0 30px ${v.color}22, inset 0 0 20px rgba(0,0,0,0.5)`;
                 el.style.transform = "translateY(0)";
               }}
             >
@@ -185,7 +185,7 @@ export default function InframundoPage() {
 
               {/* Descripción */}
               <p style={{
-                color: "rgba(200, 225, 255, 0.7)",
+                color: "rgba(255,200,150,0.65)",
                 fontFamily: "var(--font-body)",
                 fontSize: "0.8rem",
                 lineHeight: 1.6,
@@ -202,7 +202,7 @@ export default function InframundoPage() {
             href="/"
             style={{
               display: "inline-block",
-              background: "linear-gradient(135deg, #0055ff, #00c8ff)",
+              background: "linear-gradient(135deg, #ff4400, #ff8800)",
               color: "#000",
               textDecoration: "none",
               fontFamily: "var(--font-display)",
@@ -212,11 +212,11 @@ export default function InframundoPage() {
               fontWeight: 700,
               padding: "0.85rem 2rem",
               borderRadius: "4px",
-              boxShadow: "0 0 30px rgba(0, 136, 255, 0.4)",
+              boxShadow: "0 0 30px rgba(255,68,0,0.4)",
               transition: "opacity 0.2s ease, transform 0.2s ease",
             }}
           >
-            Salir de la Simulación →
+            Salir del Infierno →
           </Link>
         </div>
 
