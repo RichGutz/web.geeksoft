@@ -42,9 +42,10 @@ Versión: v1.1.1-mobile-isolated-responsiveness
    - Se restableció la versión de escritorio 100% blindada e inmutable sin alteraciones en el layout web.
 
 2. Aislamiento Riguroso de Responsividad Móvil (< 768px):
-   - Radar concéntrico escalado proporcionalmente a 86vw / 350px centrado en la cabeza de Geeksoft.
+   - Radar concéntrico escalado proporcionalmente a 94vw ocupando el ancho completo del celular centrado en la cabeza de Geeksoft.
    - Píldoras Matrix táctiles ancladas limpiamente en esquinas inferiores móviles (`bottom: calc(env(safe-area-inset-bottom) + 1.2rem)`).
-   - Modal Takeover 'The Awakened' a pantalla completa con 5s de countdown y enlace directo a WhatsApp al tocar la Red Pill en móvil.
+   - Modal Takeover 'The Awakened' a pantalla completa con 5s de countdown y pausa automática al poner el dedo/touch sobre las fichas de los héroes.
    - Inframundo (`/inframundo`) en 1 columna vertical fluida con texto expandible y sin desborde horizontal.
-   - Compilación exitosa en Next.js Turbopack (`exit code 0`, 0 errores).
+   - Corrección del número oficial de WhatsApp a 991090016 (+51 991090016) en Web y Móvil.
+   - Despliegue a producción y verificación en vivo en https://geeksoft.tech completado con éxito.
 

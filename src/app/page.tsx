@@ -80,6 +80,9 @@ const AWAKENED_HEROES = [
   }
 ];
 
+// Enlace oficial de WhatsApp con mensaje
+const WHATSAPP_URL = "https://wa.me/51991090016?text=Hola%20Geeksoft%2C%20quiero%20despertar%2C%20dame%20el%20red%20pill";
+
 export default function SandboxRadarPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentColor, setCurrentColor] = useState("var(--color-default)");
@@ -102,7 +105,7 @@ export default function SandboxRadarPage() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          window.open("https://wa.me/51991090016", "_blank");
+          window.open(WHATSAPP_URL, "_blank");
           setShowAwakenedModal(false);
           return 0;
         }
@@ -116,7 +119,7 @@ export default function SandboxRadarPage() {
     if (typeof window !== "undefined" && window.innerWidth <= 768) {
       setShowAwakenedModal(true);
     } else {
-      window.open("https://wa.me/51991090016", "_blank");
+      window.open(WHATSAPP_URL, "_blank");
     }
   };
 
@@ -344,7 +347,7 @@ export default function SandboxRadarPage() {
                   alignSelf: "flex-start",
                   transition: "opacity 0.2s ease, transform 0.2s ease",
                 }}
-                onClick={() => window.open("https://wa.me/51991090016", "_blank")}
+                onClick={() => window.open(WHATSAPP_URL, "_blank")}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
                   (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
@@ -598,7 +601,7 @@ export default function SandboxRadarPage() {
             {/* Botón WhatsApp directo */}
             <button
               onClick={() => {
-                window.open("https://wa.me/51991090016", "_blank");
+                window.open(WHATSAPP_URL, "_blank");
                 setShowAwakenedModal(false);
               }}
               style={{

@@ -726,8 +726,6 @@ body {
     width: 750px !important;
     height: 750px !important;
     position: absolute !important;
-    transform: scale(calc(min(94vw, 430px) / 750)) !important;
-    transform-origin: center center !important;
   }
 
   /* Píldoras Matrix en esquinas inferiores móviles */
