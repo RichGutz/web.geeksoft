@@ -118,7 +118,7 @@ export default function SandboxRadarPage() {
   return (
     <main style={{
       width: "100vw",
-      height: "100dvh",
+      height: "100vh",
       backgroundColor: "#001408",
       position: "relative",
       overflow: "hidden",
@@ -195,12 +195,12 @@ export default function SandboxRadarPage() {
             right: 0,
             top: 0,
             width: "42vw",
-            height: "100dvh",
+            height: "100vh",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             padding: "3rem",
-            background: "linear-gradient(135deg, rgba(0,10,5,0.94) 0%, rgba(0,20,10,0.88) 100%)",
+            background: "linear-gradient(135deg, rgba(0,10,5,0.92) 0%, rgba(0,20,10,0.85) 100%)",
             backdropFilter: "blur(20px)",
             borderLeft: `1px solid ${panel?.color ?? "transparent"}`,
             boxShadow: panel ? `-20px 0 60px rgba(0,0,0,0.6)` : "none",
@@ -252,7 +252,7 @@ export default function SandboxRadarPage() {
               {/* Título */}
               <h2 style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.4rem, 3vw, 2rem)",
+                fontSize: "2rem",
                 fontWeight: 700,
                 color: "#fff",
                 marginBottom: "0.5rem",
@@ -265,8 +265,8 @@ export default function SandboxRadarPage() {
               {/* Tagline */}
               <p style={{
                 color: panel.color,
-                fontSize: "0.9rem",
-                marginBottom: "2rem",
+                fontSize: "0.95rem",
+                marginBottom: "2.5rem",
                 fontFamily: "var(--font-body)",
                 letterSpacing: "0.5px",
               }}>
@@ -274,7 +274,7 @@ export default function SandboxRadarPage() {
               </p>
 
               {/* Cards de servicios */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {panel.items.map((item, i) => (
                   <div
                     key={i}
@@ -282,9 +282,9 @@ export default function SandboxRadarPage() {
                       background: "rgba(255,255,255,0.03)",
                       border: `1px solid rgba(255,255,255,0.08)`,
                       borderRadius: "8px",
-                      padding: "0.9rem 1.1rem",
+                      padding: "1rem 1.25rem",
                       display: "flex",
-                      gap: "0.9rem",
+                      gap: "1rem",
                       alignItems: "flex-start",
                       transition: "border-color 0.2s ease, background 0.2s ease",
                     }}
@@ -297,22 +297,22 @@ export default function SandboxRadarPage() {
                       (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.03)";
                     }}
                   >
-                    <span style={{ fontSize: "1.3rem", lineHeight: 1 }}>{item.icon}</span>
+                    <span style={{ fontSize: "1.4rem", lineHeight: 1 }}>{item.icon}</span>
                     <div>
                       <div style={{
                         color: "#fff",
                         fontFamily: "var(--font-display)",
-                        fontSize: "0.78rem",
+                        fontSize: "0.8rem",
                         letterSpacing: "1px",
-                        marginBottom: "0.25rem",
+                        marginBottom: "0.3rem",
                       }}>
                         {item.title}
                       </div>
                       <div style={{
-                        color: "rgba(255,255,255,0.6)",
+                        color: "rgba(255,255,255,0.55)",
                         fontFamily: "var(--font-body)",
-                        fontSize: "0.8rem",
-                        lineHeight: 1.45,
+                        fontSize: "0.82rem",
+                        lineHeight: 1.5,
                       }}>
                         {item.desc}
                       </div>
@@ -324,7 +324,7 @@ export default function SandboxRadarPage() {
               {/* CTA */}
               <button
                 style={{
-                  marginTop: "1.8rem",
+                  marginTop: "2rem",
                   padding: "0.85rem 2rem",
                   background: panel.color,
                   border: "none",
@@ -339,7 +339,6 @@ export default function SandboxRadarPage() {
                   alignSelf: "flex-start",
                   transition: "opacity 0.2s ease, transform 0.2s ease",
                 }}
-                onClick={() => window.open("https://wa.me/51991010016", "_blank")}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
                   (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";

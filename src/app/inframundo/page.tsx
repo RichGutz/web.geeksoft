@@ -119,7 +119,6 @@ export default function InframundoPage() {
             background: "rgba(0, 15, 35, 0.6)",
             backdropFilter: "blur(10px)",
             transition: "border-color 0.2s ease, background 0.2s ease",
-            zIndex: 20,
           }}
           onMouseEnter={e => {
             (e.currentTarget as HTMLAnchorElement).style.borderColor = "#00c8ff";
@@ -134,7 +133,7 @@ export default function InframundoPage() {
         </Link>
 
         {/* Título y subtítulo */}
-        <div style={{ textAlign: "center", marginBottom: "1.4rem", marginTop: "1rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "1.4rem" }}>
           <p style={{
             color: "#00c8ff",
             fontFamily: "var(--font-display)",
@@ -147,7 +146,7 @@ export default function InframundoPage() {
           </p>
           <h1 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(1.5rem, 3.2vw, 2.4rem)",
+            fontSize: "clamp(1.6rem, 3.2vw, 2.4rem)",
             color: "#fff",
             textShadow: "0 0 35px #0066ff, 0 0 70px rgba(0, 102, 255, 0.4)",
             margin: 0,
@@ -169,7 +168,7 @@ export default function InframundoPage() {
           </p>
         </div>
 
-        {/* Grid 2x2 de Villanos (En Desktop 2x2, en Mobile 1 columna apilada) */}
+        {/* Grid 2x2 de Villanos (Expandido a 1360px con padding exterior simétrico) */}
         <div
           className="inframundo-grid"
           style={{
@@ -183,7 +182,7 @@ export default function InframundoPage() {
           {VILLANOS.map((v) => {
             const isLeft = v.side === "left";
 
-            // Componente Lottie
+            // Componente Lottie (Libre, transparente, con ancho holgado de 126px)
             const lottieNode = (
               <div
                 key="lottie"
@@ -212,7 +211,7 @@ export default function InframundoPage() {
               </div>
             );
 
-            // Componente Avatar del Villano
+            // Componente Avatar del Villano (Circular estilo Awakened)
             const avatarNode = (
               <div
                 key="avatar"
@@ -305,8 +304,8 @@ export default function InframundoPage() {
                   border: `1px solid ${v.color}33`,
                   borderRadius: "14px",
                   padding: isLeft
-                    ? "1.45rem 1.45rem 1.45rem 1.95rem"
-                    : "1.45rem 1.95rem 1.45rem 1.45rem",
+                    ? "1.45rem 1.45rem 1.45rem 1.95rem" // Crecimiento hacia la izquierda en Lottie
+                    : "1.45rem 1.95rem 1.45rem 1.45rem", // Crecimiento hacia la derecha en Lottie
                   minHeight: "140px",
                   backdropFilter: "blur(20px)",
                   boxShadow: `0 0 25px ${v.color}15, inset 0 0 20px rgba(0,0,0,0.7)`,
@@ -348,7 +347,7 @@ export default function InframundoPage() {
         </div>
 
         {/* CTA inferior */}
-        <div style={{ marginTop: "1.8rem", textAlign: "center", paddingBottom: "1.5rem" }}>
+        <div style={{ marginTop: "1.8rem", textAlign: "center" }}>
           <Link
             href="/"
             style={{

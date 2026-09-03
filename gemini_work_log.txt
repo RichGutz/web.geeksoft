@@ -32,3 +32,19 @@ RESUMEN DE LOGROS DE LA SESIÓN:
 
 5. Despliegue y Validación en VPS:
    - Pipeline de despliegue automatizado `scripts/deploy_geeksoft.py` ejecutado y validado en https://geeksoft.tech y https://geeksoft.tech/inframundo con PM2, Nginx y SSL Certbot.
+
+================================================================================
+Fecha: 2026-09-03
+Versión: v1.1.1-mobile-isolated-responsiveness
+================================================================================
+
+1. Restauración Canónica desde Tag `PRE.RESPONSIVIDAD.WEB.100.PERCENT`:
+   - Se restableció la versión de escritorio 100% blindada e inmutable sin alteraciones en el layout web.
+
+2. Aislamiento Riguroso de Responsividad Móvil (< 768px):
+   - Radar concéntrico escalado proporcionalmente a 86vw / 350px centrado en la cabeza de Geeksoft.
+   - Píldoras Matrix táctiles ancladas limpiamente en esquinas inferiores móviles (`bottom: calc(env(safe-area-inset-bottom) + 1.2rem)`).
+   - Modal Takeover 'The Awakened' a pantalla completa con 5s de countdown y enlace directo a WhatsApp al tocar la Red Pill en móvil.
+   - Inframundo (`/inframundo`) en 1 columna vertical fluida con texto expandible y sin desborde horizontal.
+   - Compilación exitosa en Next.js Turbopack (`exit code 0`, 0 errores).
+
