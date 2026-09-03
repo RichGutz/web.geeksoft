@@ -173,43 +173,57 @@ export default function InframundoPage() {
           {VILLANOS.map((v) => {
             const isLeft = v.side === "left";
 
-            // Componente Lottie
+            // Componente Lottie (con contención de desborde y escala adecuada)
             const lottieNode = (
               <div
                 key="lottie"
                 style={{
-                  width: "105px",
-                  height: "105px",
+                  width: "90px",
+                  height: "90px",
+                  minWidth: "90px",
                   flexShrink: 0,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  background: "rgba(0, 20, 50, 0.4)",
-                  borderRadius: "10px",
+                  background: "rgba(0, 20, 50, 0.45)",
+                  borderRadius: "12px",
                   padding: "6px",
                   border: `1px solid ${v.color}22`,
+                  overflow: "hidden",
+                  position: "relative",
                 }}
               >
-                <div style={{ width: "100%", height: "100%" }}>
+                <div style={{
+                  width: "100%",
+                  height: "100%",
+                  transform: v.id === "whatsapp" ? "scale(0.82)" : "scale(1)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>
                   <VibeLottie url={v.lottie} />
                 </div>
               </div>
             );
 
-            // Componente Avatar del Villano
+            // Componente Avatar del Villano (CIRCULAR como los Awakened Heroes)
             const avatarNode = (
               <div
                 key="avatar"
                 style={{
-                  width: "105px",
-                  height: "105px",
+                  width: "82px",
+                  height: "82px",
+                  minWidth: "82px",
                   flexShrink: 0,
-                  borderRadius: "10px",
+                  borderRadius: "50%",
                   overflow: "hidden",
-                  border: `2px solid ${v.color}88`,
-                  boxShadow: `0 0 25px ${v.color}44, inset 0 0 15px rgba(0,0,0,0.8)`,
+                  border: `2px solid ${v.color}`,
+                  boxShadow: `0 0 20px ${v.color}66, inset 0 0 10px rgba(0,0,0,0.8)`,
                   position: "relative",
                   background: "#000",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <img
@@ -221,6 +235,7 @@ export default function InframundoPage() {
                     objectFit: "cover",
                     display: "block",
                     filter: "contrast(1.05)",
+                    transition: "transform 0.3s ease",
                   }}
                 />
               </div>
@@ -289,6 +304,7 @@ export default function InframundoPage() {
                   gap: "1.2rem",
                   transition: "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease",
                   cursor: "default",
+                  overflow: "hidden",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLDivElement;
