@@ -23,7 +23,7 @@ export default function VibeLottie({ url }: { url: string }) {
 
   if (url.includes("whatsapp")) {
     return (
-      <div style={{
+      <div className="interactive-vibe-mobile" style={{
         width: "100%",
         display: "flex",
         flexDirection: "column",
@@ -144,7 +144,7 @@ export default function VibeLottie({ url }: { url: string }) {
 
   if (url.includes("toll") || url.includes("trainman")) {
     return (
-      <div style={{
+      <div className="interactive-vibe-mobile" style={{
         width: "100%",
         display: "flex",
         flexDirection: "column",
