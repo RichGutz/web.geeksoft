@@ -162,25 +162,25 @@ export default function InframundoPage() {
           </p>
         </div>
 
-        {/* Grid 2x2 de Villanos (Más ancho y con +20% altura en cada card) */}
+        {/* Grid 2x2 de Villanos (Expandido a 1360px con padding exterior simétrico) */}
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
           gap: "1.4rem",
-          maxWidth: "1340px",
+          maxWidth: "1360px",
           width: "100%",
         }}>
           {VILLANOS.map((v) => {
             const isLeft = v.side === "left";
 
-            // Componente Lottie (Libre, transparente, sin cuadro encapsulador)
+            // Componente Lottie (Libre, transparente, con ancho holgado de 126px)
             const lottieNode = (
               <div
                 key="lottie"
                 style={{
-                  width: "120px",
+                  width: "126px",
                   height: "95px",
-                  minWidth: "120px",
+                  minWidth: "126px",
                   flexShrink: 0,
                   display: "flex",
                   alignItems: "center",
@@ -291,7 +291,9 @@ export default function InframundoPage() {
                   background: "rgba(0, 12, 30, 0.85)",
                   border: `1px solid ${v.color}33`,
                   borderRadius: "14px",
-                  padding: "1.45rem 1.6rem",
+                  padding: isLeft
+                    ? "1.45rem 1.45rem 1.45rem 1.95rem" // Crecimiento hacia la izquierda en Lottie
+                    : "1.45rem 1.95rem 1.45rem 1.45rem", // Crecimiento hacia la derecha en Lottie
                   minHeight: "140px",
                   backdropFilter: "blur(20px)",
                   boxShadow: `0 0 25px ${v.color}15, inset 0 0 20px rgba(0,0,0,0.7)`,
