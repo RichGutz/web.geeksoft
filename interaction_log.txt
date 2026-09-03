@@ -16,3 +16,4 @@ Fecha: 2026-09-02
 [2026-09-02] - Cierre de sesión, etiquetado de versión Git (TAG) y guardado de bitácoras.
 [2026-09-02 19:23:57] [INFRAMUNDO] Implementado nuevo layout 2x2 en espejo para /inframundo con avatares de Smith, Merovingio y Gemelos #1 y #2 (twin1_head.jpg y twin2_head.jpg). Safe point guardado en page_legacy.tsx. Compilacion Next.js exitosa.
 [2026-09-02 19:28:38] [DEPLOY] Despliegue automatico a produccion (geeksoft.tech) completado con exito via deploy_geeksoft.py. PM2 online en puerto 3050, Nginx reloaded y SSL activo.
+[2026-09-02 21:00:45] [DEPLOY] Despliegue completado con exito en VPS (geeksoft.tech). Avatares circulares de villanos, gemelos en escala 1:1 espejo perfecta y contencion de Lottie WhatsApp aplicados en vivo.

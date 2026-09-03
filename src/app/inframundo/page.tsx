@@ -130,7 +130,7 @@ export default function InframundoPage() {
         </Link>
 
         {/* Título y subtítulo */}
-        <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "1.4rem" }}>
           <p style={{
             color: "#00c8ff",
             fontFamily: "var(--font-display)",
@@ -162,41 +162,36 @@ export default function InframundoPage() {
           </p>
         </div>
 
-        {/* Grid 2x2 de Villanos */}
+        {/* Grid 2x2 de Villanos (Más ancho y con +20% altura en cada card) */}
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-          gap: "1.2rem",
-          maxWidth: "1280px",
+          gap: "1.4rem",
+          maxWidth: "1340px",
           width: "100%",
         }}>
           {VILLANOS.map((v) => {
             const isLeft = v.side === "left";
 
-            // Componente Lottie (con contención de desborde y escala adecuada)
+            // Componente Lottie (Libre, transparente, sin cuadro encapsulador)
             const lottieNode = (
               <div
                 key="lottie"
                 style={{
-                  width: "90px",
-                  height: "90px",
-                  minWidth: "90px",
+                  width: "120px",
+                  height: "95px",
+                  minWidth: "120px",
                   flexShrink: 0,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  background: "rgba(0, 20, 50, 0.45)",
-                  borderRadius: "12px",
-                  padding: "6px",
-                  border: `1px solid ${v.color}22`,
-                  overflow: "hidden",
+                  background: "transparent",
                   position: "relative",
                 }}
               >
                 <div style={{
                   width: "100%",
                   height: "100%",
-                  transform: v.id === "whatsapp" ? "scale(0.82)" : "scale(1)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -206,19 +201,19 @@ export default function InframundoPage() {
               </div>
             );
 
-            // Componente Avatar del Villano (CIRCULAR como los Awakened Heroes)
+            // Componente Avatar del Villano (Circular estilo Awakened)
             const avatarNode = (
               <div
                 key="avatar"
                 style={{
-                  width: "82px",
-                  height: "82px",
-                  minWidth: "82px",
+                  width: "84px",
+                  height: "84px",
+                  minWidth: "84px",
                   flexShrink: 0,
                   borderRadius: "50%",
                   overflow: "hidden",
                   border: `2px solid ${v.color}`,
-                  boxShadow: `0 0 20px ${v.color}66, inset 0 0 10px rgba(0,0,0,0.8)`,
+                  boxShadow: `0 0 22px ${v.color}66, inset 0 0 10px rgba(0,0,0,0.8)`,
                   position: "relative",
                   background: "#000",
                   display: "flex",
@@ -257,31 +252,31 @@ export default function InframundoPage() {
                 {/* Nombre y alias */}
                 <div style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "0.62rem",
+                  fontSize: "0.64rem",
                   letterSpacing: "2px",
                   color: v.color,
                   textTransform: "uppercase",
-                  marginBottom: "0.2rem",
+                  marginBottom: "0.25rem",
                   textShadow: `0 0 8px ${v.color}aa`,
                 }}>
                   {v.villano}
                 </div>
                 <h3 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "0.85rem",
+                  fontSize: "0.88rem",
                   letterSpacing: "1px",
                   color: "#fff",
-                  margin: "0 0 0.4rem 0",
+                  margin: "0 0 0.45rem 0",
                   lineHeight: 1.2,
                 }}>
                   {v.alias}
                 </h3>
                 {/* Copy */}
                 <p style={{
-                  color: "rgba(200, 225, 255, 0.72)",
+                  color: "rgba(200, 225, 255, 0.75)",
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.78rem",
-                  lineHeight: 1.45,
+                  fontSize: "0.80rem",
+                  lineHeight: 1.5,
                   margin: 0,
                 }}>
                   {v.copy}
@@ -296,15 +291,15 @@ export default function InframundoPage() {
                   background: "rgba(0, 12, 30, 0.85)",
                   border: `1px solid ${v.color}33`,
                   borderRadius: "14px",
-                  padding: "1rem 1.25rem",
+                  padding: "1.45rem 1.6rem",
+                  minHeight: "140px",
                   backdropFilter: "blur(20px)",
                   boxShadow: `0 0 25px ${v.color}15, inset 0 0 20px rgba(0,0,0,0.7)`,
                   display: "flex",
                   alignItems: "center",
-                  gap: "1.2rem",
+                  gap: "1.4rem",
                   transition: "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease",
                   cursor: "default",
-                  overflow: "hidden",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLDivElement;

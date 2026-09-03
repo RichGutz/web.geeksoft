@@ -25,18 +25,18 @@ export default function VibeLottie({ url }: { url: string }) {
     return (
       <div style={{
         width: "100%",
+        height: "140px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         position: "relative",
-        padding: "2px 0",
       }}>
-        {/* Animated WhatsApp Phone & Hell Desk UI (Horizontal Layout) */}
+        {/* Animated WhatsApp Phone & Hell Desk UI */}
         <div style={{
           position: "relative",
-          width: "135px",
-          height: "64px",
+          width: "120px",
+          height: "100px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -44,57 +44,55 @@ export default function VibeLottie({ url }: { url: string }) {
           {/* Pulsing Aura */}
           <div style={{
             position: "absolute",
-            width: "60px",
-            height: "60px",
+            width: "85px",
+            height: "85px",
             borderRadius: "50%",
             background: "radial-gradient(circle, rgba(37, 211, 102, 0.4) 0%, transparent 70%)",
             animation: "pulse-aura 2s infinite ease-in-out",
           }} />
 
           {/* WhatsApp Main Icon */}
-          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" style={{ filter: "drop-shadow(0 0 16px rgba(37,211,102,0.7))" }}>
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" style={{ filter: "drop-shadow(0 0 16px rgba(37,211,102,0.7))" }}>
             <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 6.46 17.5 2 12.04 2Z" fill="#25D366" />
             <path d="M17.5 14.33C17.2 14.18 15.73 13.46 15.45 13.36C15.18 13.26 14.98 13.21 14.78 13.51C14.58 13.81 14.01 14.48 13.83 14.68C13.66 14.88 13.48 14.91 13.18 14.76C12.88 14.61 11.92 14.3 10.78 13.28C9.9 12.49 9.3 11.52 9.13 11.22C8.95 10.92 9.11 10.76 9.26 10.61C9.4 10.48 9.56 10.26 9.71 10.09C9.86 9.91 9.91 9.79 10.01 9.59C10.11 9.39 10.06 9.21 9.98 9.06C9.91 8.91 9.31 7.43 9.06 6.83C8.81 6.26 8.57 6.33 8.38 6.33C8.21 6.33 8.01 6.31 7.81 6.31C7.61 6.31 7.28 6.38 7.01 6.68C6.73 6.98 5.96 7.71 5.96 9.18C5.96 10.66 7.03 12.08 7.18 12.28C7.33 12.48 9.29 15.51 12.3 16.81C13.01 17.12 13.58 17.31 14.01 17.44C14.73 17.67 15.38 17.64 15.9 17.56C16.48 17.47 17.69 16.83 17.94 16.13C18.19 15.43 18.19 14.83 18.11 14.71C18.04 14.58 17.81 14.48 17.5 14.33Z" fill="white" />
           </svg>
 
-          {/* Floating Urgent Message Bubble 1 (Horizontalized to the Right) */}
+          {/* Floating Urgent Message Bubble 1 */}
           <div style={{
             position: "absolute",
-            top: "2px",
-            right: "-16px",
+            top: "-10px",
+            right: "-26px",
             background: "rgba(255, 20, 60, 0.95)",
             color: "#fff",
             fontFamily: "var(--font-display)",
-            fontSize: "0.55rem",
+            fontSize: "0.58rem",
             fontWeight: 800,
-            padding: "2px 7px",
-            borderRadius: "8px",
+            padding: "3px 8px",
+            borderRadius: "10px",
             border: "1px solid #ff4466",
-            boxShadow: "0 0 12px rgba(255,20,60,0.7)",
+            boxShadow: "0 0 14px rgba(255,20,60,0.7)",
             animation: "bubble-float 2.5s infinite ease-in-out",
             whiteSpace: "nowrap",
-            zIndex: 2,
           }}>
             URGENTE!! 🚨
           </div>
 
-          {/* Floating Message Bubble 2 (Horizontalized to the Left) */}
+          {/* Floating Message Bubble 2 */}
           <div style={{
             position: "absolute",
-            bottom: "4px",
-            left: "-18px",
+            bottom: "-8px",
+            left: "-28px",
             background: "rgba(0, 15, 30, 0.92)",
             color: "#25D366",
             fontFamily: "var(--font-display)",
-            fontSize: "0.52rem",
+            fontSize: "0.55rem",
             fontWeight: 700,
-            padding: "2px 7px",
-            borderRadius: "8px",
+            padding: "3px 8px",
+            borderRadius: "10px",
             border: "1px solid rgba(37, 211, 102, 0.6)",
             boxShadow: "0 0 10px rgba(37,211,102,0.4)",
             animation: "bubble-float-rev 3s infinite ease-in-out",
             whiteSpace: "nowrap",
-            zIndex: 2,
           }}>
             ¿Dónde está mi pedido?
           </div>
@@ -102,22 +100,21 @@ export default function VibeLottie({ url }: { url: string }) {
           {/* Pulsing Hell Desk Badge 99+ */}
           <div style={{
             position: "absolute",
-            top: "-2px",
-            left: "28px",
+            top: "2px",
+            left: "-10px",
             background: "#ff003c",
             color: "#fff",
             fontFamily: "var(--font-display)",
-            fontSize: "0.48rem",
+            fontSize: "0.52rem",
             fontWeight: 900,
-            width: "19px",
-            height: "19px",
+            width: "22px",
+            height: "22px",
             borderRadius: "50%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 0 12px #ff003c",
+            boxShadow: "0 0 15px #ff003c",
             animation: "badge-pulse 1.2s infinite ease-in-out",
-            zIndex: 3,
           }}>
             99+
           </div>
@@ -127,14 +124,14 @@ export default function VibeLottie({ url }: { url: string }) {
         <div style={{
           display: "flex",
           alignItems: "center",
-          gap: "5px",
-          marginTop: "4px",
+          gap: "6px",
+          marginTop: "8px",
           background: "rgba(37, 211, 102, 0.12)",
           border: "1px solid rgba(37, 211, 102, 0.35)",
-          borderRadius: "10px",
-          padding: "2px 8px",
+          borderRadius: "12px",
+          padding: "2px 10px",
         }}>
-          <span style={{ fontSize: "0.52rem", color: "#25D366", fontFamily: "var(--font-display)", letterSpacing: "1px", fontWeight: 700 }}>
+          <span style={{ fontSize: "0.55rem", color: "#25D366", fontFamily: "var(--font-display)", letterSpacing: "1.2px", fontWeight: 700 }}>
             BOT ATENDIENDO ⚡
           </span>
         </div>
@@ -156,7 +153,7 @@ export default function VibeLottie({ url }: { url: string }) {
 
   return (
     <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <Lottie animationData={animationData} loop={true} style={{ height: "100%", width: "100%" }} />
+      <Lottie animationData={animationData} loop={true} style={{ height: "140px", width: "100%", maxWidth: "180px" }} />
     </div>
   );
 }
