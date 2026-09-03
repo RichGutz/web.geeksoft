@@ -11,33 +11,49 @@ import StarField from "@/components/webgl/StarField";
 const VibeLottie = dynamic(() => import("@/components/VibeLottie"), { ssr: false });
 
 const VILLANOS = [
+  // Fila 1 - Izquierda
   {
-    id: "excel",
-    nombre: 'El "Excel Zombie"',
+    id: "smith",
+    side: "left", // Lottie afuera (izq) -> Texto -> Avatar adentro (der)
+    villano: "AGENT SMITH",
+    alias: 'EL "EXCEL ZOMBIE"',
+    avatar: "/images/smith_head.jpg",
     lottie: "/excel-zombie.json",
-    copy: "¿Sigues usando Excel para gestionar tu empresa? No eres empresario, eres un domador de celdas. Deja que nosotros lo automaticemos.",
+    copy: "¿Sigues gestionando tu empresa en hojas de cálculo infinitas? No eres un líder, eres un domador de celdas atrapado en un bucle que se multiplica como clones de Smith.",
     color: "#00d2ff",
   },
+  // Fila 1 - Derecha
   {
-    id: "ghost",
-    nombre: 'El "Data-Entry Ghost"',
-    lottie: "/data-entry-ghost.json",
-    copy: "¿Tus empleados pasan horas copiando PDFs? Eso no es trabajo, es tortura de datos. Deja que nuestras APIs lo hagan en milisegundos.",
-    color: "#3388ff",
-  },
-  {
-    id: "email",
-    nombre: 'The "EMAIL BLACK HOLE"',
-    lottie: "/email-black-hole.json",
-    copy: "Si la mitad de tu día es responder lo mismo, no necesitas más tiempo, necesitas un bot.",
-    color: "#00a2ff",
-  },
-  {
-    id: "whatsapp",
-    nombre: 'El "WhatsApp Slave"',
+    id: "merovingio",
+    side: "right", // Avatar adentro (izq) -> Texto -> Lottie afuera (der)
+    villano: "EL MEROVINGIO",
+    alias: 'EL "WHATSAPP SLAVE"',
+    avatar: "/images/merovingian_head.jpg",
     lottie: "/whatsapp-slave.json",
-    copy: "¿Tus clientes te hacen sentir un HELL DESK pidiéndote cosas por WhatsApp? ¡Deja que un BOT se haga cargo de ellos!",
-    color: "#25d366",
+    copy: "¿Tus clientes te exigen atención 24/7 convirtiendo tu chat en un infierno de intermediación? En la simulación tú sirves al sistema. Deja que agentes inteligentes tomen el mando.",
+    color: "#ff3366",
+  },
+  // Fila 2 - Izquierda
+  {
+    id: "twin1",
+    side: "left", // Lottie afuera (izq) -> Texto -> Avatar adentro (der, mirando al centro)
+    villano: "TWIN #1",
+    alias: 'EL "DATA-ENTRY GHOST"',
+    avatar: "/images/twin1_head.jpg",
+    lottie: "/data-entry-ghost.json",
+    copy: "¿Tus empleados pasan horas copiando PDFs y datos a mano? Eso no es trabajo, es tortura de datos. Deja que nuestras APIs procesen todo en milisegundos.",
+    color: "#00f0ff",
+  },
+  // Fila 2 - Derecha
+  {
+    id: "twin2",
+    side: "right", // Avatar adentro (izq, mirando al centro) -> Texto -> Lottie afuera (der)
+    villano: "TWIN #2",
+    alias: 'THE "EMAIL BLACK HOLE"',
+    avatar: "/images/twin2_head.jpg",
+    lottie: "/email-black-hole.json",
+    copy: "Si la mitad de tu día es responder lo mismo y tus correos críticos mueren sin trazabilidad, no necesitas más tiempo: necesitas un flujo automatizado.",
+    color: "#3388ff",
   },
 ];
 
@@ -78,7 +94,7 @@ export default function InframundoPage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "1.5rem",
+        padding: "1.2rem 2rem",
       }}>
 
         {/* Botón volver */}
@@ -86,7 +102,7 @@ export default function InframundoPage() {
           href="/"
           style={{
             position: "absolute",
-            top: "2rem",
+            top: "1.5rem",
             left: "2rem",
             color: "#00c8ff",
             textDecoration: "none",
@@ -95,33 +111,41 @@ export default function InframundoPage() {
             letterSpacing: "2px",
             textTransform: "uppercase",
             border: "1px solid rgba(0, 200, 255, 0.3)",
-            padding: "0.5rem 1rem",
+            padding: "0.45rem 0.9rem",
             borderRadius: "4px",
             background: "rgba(0, 15, 35, 0.6)",
             backdropFilter: "blur(10px)",
-            transition: "border-color 0.2s ease",
+            transition: "border-color 0.2s ease, background 0.2s ease",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = "#00c8ff";
+            (e.currentTarget as HTMLAnchorElement).style.background = "rgba(0, 200, 255, 0.15)";
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(0, 200, 255, 0.3)";
+            (e.currentTarget as HTMLAnchorElement).style.background = "rgba(0, 15, 35, 0.6)";
           }}
         >
           ← VOLVER AL RADAR
         </Link>
 
-        {/* Título */}
-        <div style={{ textAlign: "center", marginBottom: "2.2rem" }}>
+        {/* Título y subtítulo */}
+        <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
           <p style={{
             color: "#00c8ff",
             fontFamily: "var(--font-display)",
             fontSize: "0.65rem",
             letterSpacing: "4px",
             textTransform: "uppercase",
-            marginBottom: "0.6rem",
+            marginBottom: "0.4rem",
           }}>
             ● LA SIMULACIÓN PRE-IA // BLUE PILL
           </p>
           <h1 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(1.8rem, 3.8vw, 2.8rem)",
+            fontSize: "clamp(1.6rem, 3.2vw, 2.4rem)",
             color: "#fff",
-            textShadow: "0 0 40px #0066ff, 0 0 80px rgba(0, 102, 255, 0.4)",
+            textShadow: "0 0 35px #0066ff, 0 0 70px rgba(0, 102, 255, 0.4)",
             margin: 0,
             lineHeight: 1.1,
           }}>
@@ -130,83 +154,175 @@ export default function InframundoPage() {
           <p style={{
             color: "rgba(150, 200, 255, 0.75)",
             fontFamily: "var(--font-body)",
-            fontSize: "0.95rem",
-            marginTop: "0.6rem",
+            fontSize: "0.88rem",
+            marginTop: "0.4rem",
             whiteSpace: "nowrap",
           }}>
             Donde el tiempo muere, los datos se pierden y crees que tus procesos manuales están bajo control.
           </p>
         </div>
 
-        {/* Grid de Villanos (4 columnas) */}
+        {/* Grid 2x2 de Villanos */}
         <div style={{
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
           gap: "1.2rem",
-          flexWrap: "nowrap",
-          justifyContent: "center",
           maxWidth: "1280px",
           width: "100%",
         }}>
-          {VILLANOS.map((v) => (
-            <div
-              key={v.id}
-              style={{
-                background: "rgba(0, 12, 30, 0.85)",
-                border: `1px solid ${v.color}44`,
-                borderRadius: "12px",
-                padding: "1.25rem 1.1rem",
-                width: "260px",
-                flex: "0 1 260px",
-                backdropFilter: "blur(20px)",
-                boxShadow: `0 0 30px ${v.color}22, inset 0 0 20px rgba(0,0,0,0.6)`,
-                transition: "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease",
-                cursor: "default",
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLDivElement;
-                el.style.borderColor = v.color;
-                el.style.boxShadow = `0 0 50px ${v.color}55, inset 0 0 20px rgba(0,0,0,0.6)`;
-                el.style.transform = "translateY(-6px)";
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLDivElement;
-                el.style.borderColor = `${v.color}44`;
-                el.style.boxShadow = `0 0 30px ${v.color}22, inset 0 0 20px rgba(0,0,0,0.6)`;
-                el.style.transform = "translateY(0)";
-              }}
-            >
-              {/* Animación Lottie */}
-              <div style={{ height: "140px", marginBottom: "1rem" }}>
-                <VibeLottie url={v.lottie} />
+          {VILLANOS.map((v) => {
+            const isLeft = v.side === "left";
+
+            // Componente Lottie
+            const lottieNode = (
+              <div
+                key="lottie"
+                style={{
+                  width: "105px",
+                  height: "105px",
+                  flexShrink: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "rgba(0, 20, 50, 0.4)",
+                  borderRadius: "10px",
+                  padding: "6px",
+                  border: `1px solid ${v.color}22`,
+                }}
+              >
+                <div style={{ width: "100%", height: "100%" }}>
+                  <VibeLottie url={v.lottie} />
+                </div>
               </div>
+            );
 
-              {/* Nombre del villano */}
-              <h3 style={{
-                color: v.color,
-                fontFamily: "var(--font-display)",
-                fontSize: "0.85rem",
-                letterSpacing: "1px",
-                marginBottom: "0.75rem",
-                textShadow: `0 0 10px ${v.color}`,
-              }}>
-                {v.nombre}
-              </h3>
+            // Componente Avatar del Villano
+            const avatarNode = (
+              <div
+                key="avatar"
+                style={{
+                  width: "105px",
+                  height: "105px",
+                  flexShrink: 0,
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                  border: `2px solid ${v.color}88`,
+                  boxShadow: `0 0 25px ${v.color}44, inset 0 0 15px rgba(0,0,0,0.8)`,
+                  position: "relative",
+                  background: "#000",
+                }}
+              >
+                <img
+                  src={v.avatar}
+                  alt={v.villano}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                    filter: "contrast(1.05)",
+                  }}
+                />
+              </div>
+            );
 
-              {/* Descripción */}
-              <p style={{
-                color: "rgba(200, 225, 255, 0.7)",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.8rem",
-                lineHeight: 1.6,
-              }}>
-                {v.copy}
-              </p>
-            </div>
-          ))}
+            // Componente Texto
+            const textNode = (
+              <div
+                key="text"
+                style={{
+                  flex: 1,
+                  minWidth: 0,
+                  textAlign: isLeft ? "left" : "right",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {/* Nombre y alias */}
+                <div style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.62rem",
+                  letterSpacing: "2px",
+                  color: v.color,
+                  textTransform: "uppercase",
+                  marginBottom: "0.2rem",
+                  textShadow: `0 0 8px ${v.color}aa`,
+                }}>
+                  {v.villano}
+                </div>
+                <h3 style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.85rem",
+                  letterSpacing: "1px",
+                  color: "#fff",
+                  margin: "0 0 0.4rem 0",
+                  lineHeight: 1.2,
+                }}>
+                  {v.alias}
+                </h3>
+                {/* Copy */}
+                <p style={{
+                  color: "rgba(200, 225, 255, 0.72)",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.78rem",
+                  lineHeight: 1.45,
+                  margin: 0,
+                }}>
+                  {v.copy}
+                </p>
+              </div>
+            );
+
+            return (
+              <div
+                key={v.id}
+                style={{
+                  background: "rgba(0, 12, 30, 0.85)",
+                  border: `1px solid ${v.color}33`,
+                  borderRadius: "14px",
+                  padding: "1rem 1.25rem",
+                  backdropFilter: "blur(20px)",
+                  boxShadow: `0 0 25px ${v.color}15, inset 0 0 20px rgba(0,0,0,0.7)`,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1.2rem",
+                  transition: "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease",
+                  cursor: "default",
+                }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.borderColor = v.color;
+                  el.style.boxShadow = `0 0 40px ${v.color}44, inset 0 0 20px rgba(0,0,0,0.6)`;
+                  el.style.transform = "translateY(-4px)";
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.borderColor = `${v.color}33`;
+                  el.style.boxShadow = `0 0 25px ${v.color}15, inset 0 0 20px rgba(0,0,0,0.7)`;
+                  el.style.transform = "translateY(0)";
+                }}
+              >
+                {isLeft ? (
+                  <>
+                    {lottieNode}
+                    {textNode}
+                    {avatarNode}
+                  </>
+                ) : (
+                  <>
+                    {avatarNode}
+                    {textNode}
+                    {lottieNode}
+                  </>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* CTA inferior */}
-        <div style={{ marginTop: "2.5rem", textAlign: "center" }}>
+        <div style={{ marginTop: "1.8rem", textAlign: "center" }}>
           <Link
             href="/"
             style={{
@@ -215,13 +331,13 @@ export default function InframundoPage() {
               color: "#000",
               textDecoration: "none",
               fontFamily: "var(--font-display)",
-              fontSize: "0.75rem",
+              fontSize: "0.72rem",
               letterSpacing: "2px",
               textTransform: "uppercase",
               fontWeight: 700,
-              padding: "0.85rem 2rem",
+              padding: "0.75rem 1.8rem",
               borderRadius: "4px",
-              boxShadow: "0 0 30px rgba(0, 136, 255, 0.4)",
+              boxShadow: "0 0 25px rgba(0, 136, 255, 0.4)",
               transition: "opacity 0.2s ease, transform 0.2s ease",
             }}
           >
