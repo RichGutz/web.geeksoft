@@ -48,7 +48,6 @@ Versión: v1.1.1-mobile-isolated-responsiveness
    - Textos pulidos: Morpheus ("gestión de rutas marítimas") y Trinity ("el gemelo digital de sus propiedades").
    - Apertura nativa de WhatsApp: Universal Link `https://api.whatsapp.com/send?phone=51991090016&text=...` mediante `window.location.href` en móvil.
    - Inframundo PRE-IA (`/inframundo`) expandido a 6 villanos:
-     * Cypher: rostro completo re-encuadrado con márgenes armónicos.
-     * The Trainman: rostro centrado y completo localizado mediante OpenCV.
+     * Avatares de Cypher y Trainman re-escalados al 72% con fondo ambiente oscuro y viñeta suave: cabezas completas 100% dentro del círculo con margen amplio y simétrico.
      * Animación de TRANQUERA DE PEAJE interactiva creada para The Trainman: semáforo de peaje estroboscópico, tranquera rayada pivotante de bloqueo con señal STOP, burbuja 'SOLO SI ÉL QUIERE ⛔' y status 'DATA EN SU PC 🔒'.
    - Despliegue a producción en https://geeksoft.tech completado con éxito.
