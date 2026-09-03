@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import Link from "next/link";
 import StarField from "@/components/webgl/StarField";
@@ -59,61 +59,10 @@ const PANEL_CONTENT: Record<string, {
   }
 };
 
-const AWAKENED_HEROES = [
-  {
-    name: "MORPHEUS",
-    role: "LOGÍSTICA NAVIERA",
-    avatar: "/images/morpheus_head.jpg",
-    desc: "Empresa naviera que construyó DELFOS, un CRM inteligente para multicotizaciones, gestión de rutas navieras y analítica profunda de sus márgenes y operaciones."
-  },
-  {
-    name: "NEO",
-    role: "FINTECH // FACTORING",
-    avatar: "/images/neo_head.jpg",
-    desc: "Empresa financiera de factoring que construyó DEFACTO, un ERP a la medida de sus necesidades operativas, de cobranza y relaciones con sus inversionistas."
-  },
-  {
-    name: "TRINITY",
-    role: "ACTIVOS & PATRIMONIO",
-    avatar: "/images/trinity_head.jpg",
-    desc: "Asociación Religiosa que tomó el control integral de sus activos reales creándoles PROPTWIN, un gemelo digital de sus propiedades."
-  }
-];
-
 export default function SandboxRadarPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentColor, setCurrentColor] = useState("var(--color-default)");
-  const [showAwakenedModal, setShowAwakenedModal] = useState(false);
-  const [countdown, setCountdown] = useState(5);
   const panel = selectedCategory ? PANEL_CONTENT[selectedCategory] : null;
-
-  // Temporizador de 5 segundos para redirigir a WhatsApp en móvil
-  useEffect(() => {
-    if (!showAwakenedModal) {
-      setCountdown(5);
-      return;
-    }
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          window.open("https://wa.me/51991010016", "_blank");
-          setShowAwakenedModal(false);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [showAwakenedModal]);
-
-  const handleRedPillClick = () => {
-    if (typeof window !== "undefined" && window.innerWidth <= 768) {
-      setShowAwakenedModal(true);
-    } else {
-      window.open("https://wa.me/51991010016", "_blank");
-    }
-  };
 
   return (
     <main style={{
@@ -124,16 +73,16 @@ export default function SandboxRadarPage() {
       overflow: "hidden",
     }}>
 
-      {/* Título GEEKSOFT absoluto arriba a la izquierda del viewport — fluido */}
+      {/* Título GEEKSOFT absoluto arriba a la izquierda del viewport — estático */}
       <div style={{
         position: "absolute",
-        top: "clamp(1.2rem, 2.5vh, 2rem)",
-        left: "clamp(1.2rem, 2.5vw, 2rem)",
+        top: "2rem",
+        left: "2rem",
         zIndex: 100,
       }}>
         <h1 style={{
           fontFamily: "var(--font-orbitron), sans-serif",
-          fontSize: "clamp(1.6rem, 4vw, 2.5rem)",
+          fontSize: "2.5rem",
           fontWeight: 800,
           letterSpacing: "0.15em",
           color: currentColor,
@@ -193,7 +142,6 @@ export default function SandboxRadarPage() {
 
         {/* PANEL LATERAL — aparece desde la derecha al seleccionar un nodo */}
         <div
-          className="category-panel-mobile"
           style={{
             pointerEvents: selectedCategory ? "auto" : "none",
             position: "absolute",
@@ -205,7 +153,7 @@ export default function SandboxRadarPage() {
             flexDirection: "column",
             justifyContent: "center",
             padding: "3rem",
-            background: "linear-gradient(135deg, rgba(0,10,5,0.94) 0%, rgba(0,20,10,0.88) 100%)",
+            background: "linear-gradient(135deg, rgba(0,10,5,0.92) 0%, rgba(0,20,10,0.85) 100%)",
             backdropFilter: "blur(20px)",
             borderLeft: `1px solid ${panel?.color ?? "transparent"}`,
             boxShadow: panel ? `-20px 0 60px rgba(0,0,0,0.6)` : "none",
@@ -257,7 +205,7 @@ export default function SandboxRadarPage() {
               {/* Título */}
               <h2 style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.4rem, 3vw, 2rem)",
+                fontSize: "2rem",
                 fontWeight: 700,
                 color: "#fff",
                 marginBottom: "0.5rem",
@@ -270,8 +218,8 @@ export default function SandboxRadarPage() {
               {/* Tagline */}
               <p style={{
                 color: panel.color,
-                fontSize: "0.9rem",
-                marginBottom: "2rem",
+                fontSize: "0.95rem",
+                marginBottom: "2.5rem",
                 fontFamily: "var(--font-body)",
                 letterSpacing: "0.5px",
               }}>
@@ -279,7 +227,7 @@ export default function SandboxRadarPage() {
               </p>
 
               {/* Cards de servicios */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {panel.items.map((item, i) => (
                   <div
                     key={i}
@@ -287,9 +235,9 @@ export default function SandboxRadarPage() {
                       background: "rgba(255,255,255,0.03)",
                       border: `1px solid rgba(255,255,255,0.08)`,
                       borderRadius: "8px",
-                      padding: "0.9rem 1.1rem",
+                      padding: "1rem 1.25rem",
                       display: "flex",
-                      gap: "0.9rem",
+                      gap: "1rem",
                       alignItems: "flex-start",
                       transition: "border-color 0.2s ease, background 0.2s ease",
                     }}
@@ -302,22 +250,22 @@ export default function SandboxRadarPage() {
                       (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.03)";
                     }}
                   >
-                    <span style={{ fontSize: "1.3rem", lineHeight: 1 }}>{item.icon}</span>
+                    <span style={{ fontSize: "1.4rem", lineHeight: 1 }}>{item.icon}</span>
                     <div>
                       <div style={{
                         color: "#fff",
                         fontFamily: "var(--font-display)",
-                        fontSize: "0.78rem",
+                        fontSize: "0.8rem",
                         letterSpacing: "1px",
-                        marginBottom: "0.25rem",
+                        marginBottom: "0.3rem",
                       }}>
                         {item.title}
                       </div>
                       <div style={{
-                        color: "rgba(255,255,255,0.6)",
+                        color: "rgba(255,255,255,0.55)",
                         fontFamily: "var(--font-body)",
-                        fontSize: "0.8rem",
-                        lineHeight: 1.45,
+                        fontSize: "0.82rem",
+                        lineHeight: 1.5,
                       }}>
                         {item.desc}
                       </div>
@@ -329,7 +277,7 @@ export default function SandboxRadarPage() {
               {/* CTA */}
               <button
                 style={{
-                  marginTop: "1.8rem",
+                  marginTop: "2rem",
                   padding: "0.85rem 2rem",
                   background: panel.color,
                   border: "none",
@@ -344,7 +292,6 @@ export default function SandboxRadarPage() {
                   alignSelf: "flex-start",
                   transition: "opacity 0.2s ease, transform 0.2s ease",
                 }}
-                onClick={() => window.open("https://wa.me/51991010016", "_blank")}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
                   (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
@@ -360,7 +307,7 @@ export default function SandboxRadarPage() {
           )}
         </div>
 
-        {/* ─── BLUE PILL: esquina inferior izquierda ─── */}
+        {/* ─── BLUE PILL: esquina inferior izquierda (Seguir dormido en el inframundo PRE-IA) ─── */}
         <Link
           href="/inframundo"
           className="matrix-pill blue-pill"
@@ -382,9 +329,9 @@ export default function SandboxRadarPage() {
           <div className="pill-tooltip">Seguir dormido en el inframundo PRE-IA</div>
         </Link>
 
-        {/* ─── RED PILL: esquina inferior derecha (Hover Popover Desktop + Modal Takeover Mobile) ─── */}
+        {/* ─── RED PILL: esquina inferior derecha (Despertar a la realidad con IA + Hover Popover The Awakened) ─── */}
         <div className="red-pill-wrapper">
-          {/* Popover holográfico de clientes (Solo Desktop) */}
+          {/* Popover holográfico de clientes */}
           <div className="awakened-popover">
             <div className="awakened-header">
               <div className="awakened-tag">● THE AWAKENED</div>
@@ -392,26 +339,65 @@ export default function SandboxRadarPage() {
             </div>
 
             <div className="awakened-list">
-              {AWAKENED_HEROES.map((hero, idx) => (
-                <div key={idx} className="awakened-item">
-                  <div className="awakened-avatar-wrapper">
-                    <img
-                      src={hero.avatar}
-                      alt={hero.name}
-                      className="awakened-avatar-img"
-                    />
+              {/* MORPHEUS */}
+              <div className="awakened-item">
+                <div className="awakened-avatar-wrapper">
+                  <img
+                    src="/images/morpheus_head.jpg"
+                    alt="Morpheus"
+                    className="awakened-avatar-img"
+                  />
+                </div>
+                <div className="awakened-content">
+                  <div className="awakened-item-name">
+                    <span>MORPHEUS</span>
+                    <span className="awakened-item-role">LOGÍSTICA NAVIERA</span>
                   </div>
-                  <div className="awakened-content">
-                    <div className="awakened-item-name">
-                      <span>{hero.name}</span>
-                      <span className="awakened-item-role">{hero.role}</span>
-                    </div>
-                    <div className="awakened-item-desc">
-                      {hero.desc}
-                    </div>
+                  <div className="awakened-item-desc">
+                    Empresa naviera que construyó <em>DELFOS</em>, un CRM inteligente para multicotizaciones, gestión de rutas navieras y analítica profunda de sus márgenes y operaciones.
                   </div>
                 </div>
-              ))}
+              </div>
+
+              {/* NEO */}
+              <div className="awakened-item">
+                <div className="awakened-avatar-wrapper">
+                  <img
+                    src="/images/neo_head.jpg"
+                    alt="Neo"
+                    className="awakened-avatar-img"
+                  />
+                </div>
+                <div className="awakened-content">
+                  <div className="awakened-item-name">
+                    <span>NEO</span>
+                    <span className="awakened-item-role">FINTECH // FACTORING</span>
+                  </div>
+                  <div className="awakened-item-desc">
+                    Empresa financiera de factoring que construyó <em>DEFACTO</em>, un ERP a la medida de sus necesidades operativas, de cobranza y relaciones con sus inversionistas.
+                  </div>
+                </div>
+              </div>
+
+              {/* TRINITY */}
+              <div className="awakened-item">
+                <div className="awakened-avatar-wrapper">
+                  <img
+                    src="/images/trinity_head.jpg"
+                    alt="Trinity"
+                    className="awakened-avatar-img"
+                  />
+                </div>
+                <div className="awakened-content">
+                  <div className="awakened-item-name">
+                    <span>TRINITY</span>
+                    <span className="awakened-item-role">ACTIVOS & PATRIMONIO</span>
+                  </div>
+                  <div className="awakened-item-desc">
+                    Asociación Religiosa que tomó el control integral de sus activos reales creándoles <em>PROPTWIN</em>, un gemelo digital de sus propiedades.
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="awakened-footer">
@@ -421,7 +407,7 @@ export default function SandboxRadarPage() {
 
           <button
             className="matrix-pill red-pill"
-            onClick={handleRedPillClick}
+            onClick={() => window.open("https://wa.me/51991010016", "_blank")}
           >
             <span className="pill-text">
               <span>RED</span><span className="pill-divider"></span><span>PILL</span>
@@ -432,195 +418,6 @@ export default function SandboxRadarPage() {
         </div>
 
       </div>
-
-      {/* ─── MODAL TAKEOVER MÓVIL: THE AWAKENED (5 segundos + CTA WhatsApp) ─── */}
-      {showAwakenedModal && (
-        <div style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 999,
-          background: "rgba(0, 5, 2, 0.94)",
-          backdropFilter: "blur(25px)",
-          display: "flex",
-          flexDirection: "column",
-          padding: "1.5rem 1.2rem",
-          overflowY: "auto",
-          animation: "fadeIn 0.3s ease",
-        }}>
-          {/* Header del Modal */}
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: "1.2rem",
-            borderBottom: "1px solid rgba(255, 0, 60, 0.3)",
-            paddingBottom: "0.8rem",
-          }}>
-            <div>
-              <div style={{
-                color: "#ff003c",
-                fontFamily: "var(--font-display)",
-                fontSize: "0.65rem",
-                letterSpacing: "3px",
-                fontWeight: 700,
-              }}>
-                ● THE AWAKENED
-              </div>
-              <div style={{
-                color: "#fff",
-                fontFamily: "var(--font-display)",
-                fontSize: "0.95rem",
-                fontWeight: 700,
-                letterSpacing: "1px",
-                marginTop: "0.2rem",
-              }}>
-                Empresas que ya despertaron
-              </div>
-            </div>
-            <button
-              onClick={() => setShowAwakenedModal(false)}
-              style={{
-                background: "rgba(255, 255, 255, 0.08)",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                color: "#fff",
-                width: "34px",
-                height: "34px",
-                borderRadius: "50%",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "1rem",
-              }}
-            >
-              ✕
-            </button>
-          </div>
-
-          {/* Lista de Héroes */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", flex: 1 }}>
-            {AWAKENED_HEROES.map((hero, idx) => (
-              <div
-                key={idx}
-                style={{
-                  background: "rgba(255, 255, 255, 0.03)",
-                  border: "1px solid rgba(255, 0, 60, 0.25)",
-                  borderLeft: "3px solid #ff003c",
-                  borderRadius: "10px",
-                  padding: "0.85rem 0.95rem",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.85rem",
-                }}
-              >
-                <div style={{
-                  width: "56px",
-                  height: "56px",
-                  minWidth: "56px",
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  border: "1.5px solid rgba(255, 0, 60, 0.6)",
-                  boxShadow: "0 0 15px rgba(255, 0, 60, 0.3)",
-                  background: "#000",
-                }}>
-                  <img
-                    src={hero.avatar}
-                    alt={hero.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginBottom: "0.2rem",
-                  }}>
-                    <span style={{
-                      color: "#fff",
-                      fontFamily: "var(--font-display)",
-                      fontSize: "0.8rem",
-                      fontWeight: 700,
-                      letterSpacing: "1.5px",
-                    }}>
-                      {hero.name}
-                    </span>
-                    <span style={{
-                      color: "#ff003c",
-                      fontSize: "0.58rem",
-                      fontWeight: 600,
-                      letterSpacing: "1px",
-                    }}>
-                      {hero.role}
-                    </span>
-                  </div>
-                  <div style={{
-                    color: "rgba(255, 255, 255, 0.72)",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.75rem",
-                    lineHeight: 1.4,
-                  }}>
-                    {hero.desc}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Barra de progreso y temporizador */}
-          <div style={{ marginTop: "1.2rem", textAlign: "center" }}>
-            <div style={{
-              color: "rgba(255, 255, 255, 0.6)",
-              fontFamily: "var(--font-display)",
-              fontSize: "0.68rem",
-              letterSpacing: "1.5px",
-              marginBottom: "0.5rem",
-            }}>
-              Conectando con Geeksoft en <span style={{ color: "#ff003c", fontWeight: 700 }}>{countdown}s</span>...
-            </div>
-            <div style={{
-              width: "100%",
-              height: "4px",
-              background: "rgba(255, 255, 255, 0.1)",
-              borderRadius: "2px",
-              overflow: "hidden",
-              marginBottom: "1rem",
-            }}>
-              <div style={{
-                width: `${((5 - countdown) / 5) * 100}%`,
-                height: "100%",
-                background: "linear-gradient(90deg, #ff003c, #ff3366)",
-                transition: "width 1s linear",
-              }} />
-            </div>
-
-            {/* Botón WhatsApp directo */}
-            <button
-              onClick={() => {
-                window.open("https://wa.me/51991010016", "_blank");
-                setShowAwakenedModal(false);
-              }}
-              style={{
-                width: "100%",
-                padding: "0.85rem",
-                background: "linear-gradient(135deg, #ff003c, #ff2a5f)",
-                border: "none",
-                borderRadius: "6px",
-                color: "#fff",
-                fontFamily: "var(--font-display)",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                boxShadow: "0 0 25px rgba(255, 0, 60, 0.4)",
-              }}
-            >
-              Hablar con Geeksoft por WhatsApp ⚡
-            </button>
-          </div>
-        </div>
-      )}
     </main>
   );
 }

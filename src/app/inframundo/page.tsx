@@ -86,16 +86,19 @@ export default function InframundoPage() {
       </div>
 
       {/* ─── CAPA 1: UI flotante ────────────────────────────────────────────── */}
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        zIndex: 10,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "1.2rem 2rem",
-      }}>
+      <div
+        className="inframundo-ui-container"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 10,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "1.2rem 2rem",
+        }}
+      >
 
         {/* Botón volver */}
         <Link
@@ -116,6 +119,7 @@ export default function InframundoPage() {
             background: "rgba(0, 15, 35, 0.6)",
             backdropFilter: "blur(10px)",
             transition: "border-color 0.2s ease, background 0.2s ease",
+            zIndex: 20,
           }}
           onMouseEnter={e => {
             (e.currentTarget as HTMLAnchorElement).style.borderColor = "#00c8ff";
@@ -130,7 +134,7 @@ export default function InframundoPage() {
         </Link>
 
         {/* Título y subtítulo */}
-        <div style={{ textAlign: "center", marginBottom: "1.4rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "1.4rem", marginTop: "1rem" }}>
           <p style={{
             color: "#00c8ff",
             fontFamily: "var(--font-display)",
@@ -143,7 +147,7 @@ export default function InframundoPage() {
           </p>
           <h1 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(1.6rem, 3.2vw, 2.4rem)",
+            fontSize: "clamp(1.5rem, 3.2vw, 2.4rem)",
             color: "#fff",
             textShadow: "0 0 35px #0066ff, 0 0 70px rgba(0, 102, 255, 0.4)",
             margin: 0,
@@ -151,32 +155,39 @@ export default function InframundoPage() {
           }}>
             Sigue durmiendo en el caos
           </h1>
-          <p style={{
-            color: "rgba(150, 200, 255, 0.75)",
-            fontFamily: "var(--font-body)",
-            fontSize: "0.88rem",
-            marginTop: "0.4rem",
-            whiteSpace: "nowrap",
-          }}>
+          <p
+            className="inframundo-subtitle"
+            style={{
+              color: "rgba(150, 200, 255, 0.75)",
+              fontFamily: "var(--font-body)",
+              fontSize: "0.88rem",
+              marginTop: "0.4rem",
+              whiteSpace: "nowrap",
+            }}
+          >
             Donde el tiempo muere, los datos se pierden y crees que tus procesos manuales están bajo control.
           </p>
         </div>
 
-        {/* Grid 2x2 de Villanos (Expandido a 1360px con padding exterior simétrico) */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-          gap: "1.4rem",
-          maxWidth: "1360px",
-          width: "100%",
-        }}>
+        {/* Grid 2x2 de Villanos (En Desktop 2x2, en Mobile 1 columna apilada) */}
+        <div
+          className="inframundo-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            gap: "1.4rem",
+            maxWidth: "1360px",
+            width: "100%",
+          }}
+        >
           {VILLANOS.map((v) => {
             const isLeft = v.side === "left";
 
-            // Componente Lottie (Libre, transparente, con ancho holgado de 126px)
+            // Componente Lottie
             const lottieNode = (
               <div
                 key="lottie"
+                className="inframundo-lottie"
                 style={{
                   width: "126px",
                   height: "95px",
@@ -201,10 +212,11 @@ export default function InframundoPage() {
               </div>
             );
 
-            // Componente Avatar del Villano (Circular estilo Awakened)
+            // Componente Avatar del Villano
             const avatarNode = (
               <div
                 key="avatar"
+                className="inframundo-avatar"
                 style={{
                   width: "84px",
                   height: "84px",
@@ -287,13 +299,14 @@ export default function InframundoPage() {
             return (
               <div
                 key={v.id}
+                className="inframundo-card"
                 style={{
                   background: "rgba(0, 12, 30, 0.85)",
                   border: `1px solid ${v.color}33`,
                   borderRadius: "14px",
                   padding: isLeft
-                    ? "1.45rem 1.45rem 1.45rem 1.95rem" // Crecimiento hacia la izquierda en Lottie
-                    : "1.45rem 1.95rem 1.45rem 1.45rem", // Crecimiento hacia la derecha en Lottie
+                    ? "1.45rem 1.45rem 1.45rem 1.95rem"
+                    : "1.45rem 1.95rem 1.45rem 1.45rem",
                   minHeight: "140px",
                   backdropFilter: "blur(20px)",
                   boxShadow: `0 0 25px ${v.color}15, inset 0 0 20px rgba(0,0,0,0.7)`,
@@ -335,7 +348,7 @@ export default function InframundoPage() {
         </div>
 
         {/* CTA inferior */}
-        <div style={{ marginTop: "1.8rem", textAlign: "center" }}>
+        <div style={{ marginTop: "1.8rem", textAlign: "center", paddingBottom: "1.5rem" }}>
           <Link
             href="/"
             style={{
