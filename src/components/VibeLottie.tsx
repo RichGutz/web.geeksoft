@@ -8,7 +8,7 @@ export default function VibeLottie({ url }: { url: string }) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (url.includes("whatsapp")) return; // Usamos la animación vectorial optimizada
+    if (url.includes("whatsapp") || url.includes("toll") || url.includes("trainman")) return; // Usamos las animaciones vectoriales optimizadas
     fetch(url)
       .then((res) => {
         if (!res.ok) throw new Error("Network error");
@@ -136,6 +136,127 @@ export default function VibeLottie({ url }: { url: string }) {
         }}>
           <span style={{ fontSize: "0.52rem", color: "#25D366", fontFamily: "var(--font-display)", letterSpacing: "1px", fontWeight: 700 }}>
             BOT ATENDIENDO ⚡
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  if (url.includes("toll") || url.includes("trainman")) {
+    return (
+      <div style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        padding: "0",
+      }}>
+        {/* Animated Toll Barrier (Tranquera de Peaje Matrix) */}
+        <div style={{
+          position: "relative",
+          width: "135px",
+          height: "76px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          {/* Pulsing Strobe Aura */}
+          <div style={{
+            position: "absolute",
+            width: "58px",
+            height: "58px",
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%)",
+            animation: "pulse-aura 2s infinite ease-in-out",
+          }} />
+
+          {/* SVG Toll Barrier & Control Post */}
+          <svg width="110" height="60" viewBox="0 0 110 60" fill="none" style={{ filter: "drop-shadow(0 0 12px rgba(168,85,247,0.6))", zIndex: 1, overflow: "visible" }}>
+            {/* Toll Booth / Base Post */}
+            <rect x="12" y="18" width="16" height="38" rx="3" fill="#120524" stroke="#a855f7" strokeWidth="2" />
+            <circle cx="20" cy="28" r="4" fill="#ff003c" style={{ animation: "toll-strobe 1s infinite alternate" }} />
+            <circle cx="20" cy="42" r="3" fill="#331045" stroke="#a855f7" strokeWidth="1" />
+
+            {/* Red Strobe Siren on top */}
+            <path d="M16 18 L24 18 L22 10 L18 10 Z" fill="#ff003c" style={{ animation: "toll-strobe 0.8s infinite alternate" }} />
+            <circle cx="20" cy="8" r="4" fill="#ff003c" style={{ filter: "drop-shadow(0 0 10px #ff003c)", animation: "toll-strobe 0.8s infinite alternate" }} />
+
+            {/* Animated Barrier Arm (Tranquera con rayas diagonales) */}
+            <g style={{ transformOrigin: "20px 30px", animation: "barrier-swing 4s infinite cubic-bezier(0.77, 0, 0.175, 1)" }}>
+              {/* Barrier Bar with Diagonal Hazard Stripes */}
+              <defs>
+                <pattern id="tollStripes" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                  <line x1="0" y1="0" x2="0" y2="12" stroke="#ff003c" strokeWidth="6" />
+                  <line x1="6" y1="0" x2="6" y2="12" stroke="#ffffff" strokeWidth="6" />
+                </pattern>
+              </defs>
+              <rect x="20" y="27" width="84" height="7" rx="2" fill="url(#tollStripes)" stroke="#a855f7" strokeWidth="1" style={{ filter: "drop-shadow(0 0 8px rgba(255,0,60,0.5))" }} />
+              <circle cx="20" cy="30.5" r="5" fill="#3b0764" stroke="#a855f7" strokeWidth="2" />
+
+              {/* Stop Octagon hanging from the middle of the barrier */}
+              <polygon points="62,20 70,20 75,25 75,33 70,38 62,38 57,33 57,25" fill="#ff003c" stroke="#ffffff" strokeWidth="1" />
+              <text x="66" y="31" fill="#ffffff" fontSize="6.5" fontWeight="900" fontFamily="var(--font-display)" textAnchor="middle">STOP</text>
+            </g>
+          </svg>
+
+          {/* Floating Urgent Badge 1 */}
+          <div style={{
+            position: "absolute",
+            top: "-10px",
+            right: "-12px",
+            background: "rgba(168, 85, 247, 0.95)",
+            color: "#fff",
+            fontFamily: "var(--font-display)",
+            fontSize: "0.52rem",
+            fontWeight: 800,
+            padding: "2px 7px",
+            borderRadius: "8px",
+            border: "1px solid #c084fc",
+            boxShadow: "0 0 14px rgba(168,85,247,0.7)",
+            animation: "bubble-float 2.8s infinite ease-in-out",
+            whiteSpace: "nowrap",
+            zIndex: 2,
+          }}>
+            SOLO SI ÉL QUIERE ⛔
+          </div>
+
+          {/* Floating Message Bubble 2 */}
+          <div style={{
+            position: "absolute",
+            bottom: "-6px",
+            left: "-12px",
+            background: "rgba(20, 5, 35, 0.92)",
+            color: "#e879f9",
+            fontFamily: "var(--font-display)",
+            fontSize: "0.50rem",
+            fontWeight: 700,
+            padding: "2px 7px",
+            borderRadius: "8px",
+            border: "1px solid rgba(168, 85, 247, 0.6)",
+            boxShadow: "0 0 10px rgba(168,85,247,0.4)",
+            animation: "bubble-float-rev 3.2s infinite ease-in-out",
+            whiteSpace: "nowrap",
+            zIndex: 2,
+          }}>
+            ¿Mis PDFs escaneados?
+          </div>
+        </div>
+
+        {/* Status Bar */}
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "5px",
+          marginTop: "14px",
+          background: "rgba(168, 85, 247, 0.14)",
+          border: "1px solid rgba(168, 85, 247, 0.4)",
+          borderRadius: "10px",
+          padding: "2px 8px",
+        }}>
+          <span style={{ fontSize: "0.52rem", color: "#d8b4fe", fontFamily: "var(--font-display)", letterSpacing: "1px", fontWeight: 700 }}>
+            DATA EN SU PC 🔒
           </span>
         </div>
       </div>

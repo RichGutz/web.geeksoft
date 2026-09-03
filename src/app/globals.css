@@ -659,6 +659,17 @@ body {
   50% { transform: scale(1.15); filter: drop-shadow(0 0 12px #ff003c); }
 }
 
+@keyframes barrier-swing {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(-30deg); }
+  70% { transform: rotate(0deg); }
+}
+
+@keyframes toll-strobe {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 14px #ff003c); }
+  50% { opacity: 0.2; filter: drop-shadow(0 0 2px #ff003c); }
+}
+
 .radar-viewport-box {
   width: 750px;
   height: 750px;
