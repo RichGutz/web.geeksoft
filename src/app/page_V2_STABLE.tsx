@@ -1,9 +1,3 @@
-// ============================================================================
-// BACKUP HITOS CANÓNICO: page_V2_STABLE.tsx
-// Versión Web 100% Blindada e Intocable + Responsividad Móvil Aislada
-// Fecha: 2026-09-03
-// ============================================================================
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -91,19 +85,24 @@ export default function SandboxRadarPage() {
   const [currentColor, setCurrentColor] = useState("var(--color-default)");
   const [showAwakenedModal, setShowAwakenedModal] = useState(false);
   const [countdown, setCountdown] = useState(5);
+  const [isTimerPaused, setIsTimerPaused] = useState(false);
   const panel = selectedCategory ? PANEL_CONTENT[selectedCategory] : null;
 
-  // Temporizador de 5 segundos para redirigir a WhatsApp en móvil
+  // Temporizador de 5 segundos para redirigir a WhatsApp en móvil (Pausable al tocar con el dedo)
   useEffect(() => {
     if (!showAwakenedModal) {
       setCountdown(5);
+      setIsTimerPaused(false);
       return;
+    }
+    if (isTimerPaused) {
+      return; // Pausado mientras el usuario mantiene el dedo / lee las fichas
     }
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          window.open("https://wa.me/51991010016", "_blank");
+          window.open("https://wa.me/51991090016", "_blank");
           setShowAwakenedModal(false);
           return 0;
         }
@@ -111,13 +110,13 @@ export default function SandboxRadarPage() {
       });
     }, 1000);
     return () => clearInterval(timer);
-  }, [showAwakenedModal]);
+  }, [showAwakenedModal, isTimerPaused]);
 
   const handleRedPillClick = () => {
     if (typeof window !== "undefined" && window.innerWidth <= 768) {
       setShowAwakenedModal(true);
     } else {
-      window.open("https://wa.me/51991010016", "_blank");
+      window.open("https://wa.me/51991090016", "_blank");
     }
   };
 
@@ -345,6 +344,7 @@ export default function SandboxRadarPage() {
                   alignSelf: "flex-start",
                   transition: "opacity 0.2s ease, transform 0.2s ease",
                 }}
+                onClick={() => window.open("https://wa.me/51991090016", "_blank")}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
                   (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
@@ -487,8 +487,14 @@ export default function SandboxRadarPage() {
             </button>
           </div>
 
-          {/* Lista de Héroes */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", flex: 1 }}>
+          {/* Lista de Héroes — Pausa la cuenta regresiva al poner el dedo encima */}
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "0.85rem", flex: 1 }}
+            onTouchStart={() => setIsTimerPaused(true)}
+            onTouchEnd={() => setIsTimerPaused(false)}
+            onMouseEnter={() => setIsTimerPaused(true)}
+            onMouseLeave={() => setIsTimerPaused(false)}
+          >
             {AWAKENED_HEROES.map((hero, idx) => (
               <div
                 key={idx}
@@ -560,13 +566,18 @@ export default function SandboxRadarPage() {
           {/* Barra de progreso y temporizador */}
           <div style={{ marginTop: "1.2rem", textAlign: "center" }}>
             <div style={{
-              color: "rgba(255, 255, 255, 0.6)",
+              color: isTimerPaused ? "#00e3fd" : "rgba(255, 255, 255, 0.6)",
               fontFamily: "var(--font-display)",
               fontSize: "0.68rem",
               letterSpacing: "1.5px",
               marginBottom: "0.5rem",
+              transition: "color 0.2s ease",
             }}>
-              Conectando con Geeksoft en <span style={{ color: "#ff003c", fontWeight: 700 }}>{countdown}s</span>...
+              {isTimerPaused ? (
+                <span>⏸ Lectura pausada — <span style={{ color: "#ff003c", fontWeight: 700 }}>{countdown}s</span> restantes</span>
+              ) : (
+                <span>Conectando con Geeksoft en <span style={{ color: "#ff003c", fontWeight: 700 }}>{countdown}s</span>...</span>
+              )}
             </div>
             <div style={{
               width: "100%",
@@ -579,15 +590,15 @@ export default function SandboxRadarPage() {
               <div style={{
                 width: `${((5 - countdown) / 5) * 100}%`,
                 height: "100%",
-                background: "linear-gradient(90deg, #ff003c, #ff3366)",
-                transition: "width 1s linear",
+                background: isTimerPaused ? "#00e3fd" : "linear-gradient(90deg, #ff003c, #ff3366)",
+                transition: "width 1s linear, background 0.3s ease",
               }} />
             </div>
 
             {/* Botón WhatsApp directo */}
             <button
               onClick={() => {
-                window.open("https://wa.me/51991010016", "_blank");
+                window.open("https://wa.me/51991090016", "_blank");
                 setShowAwakenedModal(false);
               }}
               style={{

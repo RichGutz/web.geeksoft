@@ -710,12 +710,12 @@ body {
     letter-spacing: 0.1em !important;
   }
 
-  /* Radar escalado en móvil al 84-88vw centrado en la cabeza */
+  /* Radar escalado en móvil al ancho completo del celular */
   .radar-viewport-box {
-    width: min(86vw, 350px) !important;
-    height: min(86vw, 350px) !important;
-    max-width: 350px !important;
-    max-height: 350px !important;
+    width: min(94vw, 430px) !important;
+    height: min(94vw, 430px) !important;
+    max-width: 94vw !important;
+    max-height: 94vw !important;
     position: relative !important;
     display: flex !important;
     align-items: center !important;
@@ -726,7 +726,7 @@ body {
     width: 750px !important;
     height: 750px !important;
     position: absolute !important;
-    transform: scale(calc(min(86vw, 350px) / 750)) !important;
+    transform: scale(calc(min(94vw, 430px) / 750)) !important;
     transform-origin: center center !important;
   }
 

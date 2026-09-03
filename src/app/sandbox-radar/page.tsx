@@ -407,7 +407,7 @@ export default function SandboxRadarPage() {
 
           <button
             className="matrix-pill red-pill"
-            onClick={() => window.open("https://wa.me/51991010016", "_blank")}
+            onClick={() => window.open("https://wa.me/51991090016", "_blank")}
           >
             <span className="pill-text">
               <span>RED</span><span className="pill-divider"></span><span>PILL</span>
