@@ -47,5 +47,8 @@ Versión: v1.1.1-mobile-isolated-responsiveness
    - Modal Takeover 'The Awakened' a pantalla completa con 5s de countdown y pausa automática al poner el dedo/touch sobre las fichas de los héroes.
    - Textos pulidos: Morpheus ("gestión de rutas marítimas") y Trinity ("el gemelo digital de sus propiedades").
    - Apertura nativa de WhatsApp: Universal Link `https://api.whatsapp.com/send?phone=51991090016&text=...` mediante `window.location.href` en móvil.
-   - Inframundo PRE-IA (`/inframundo`) expandido a 6 villanos: Agregados CYPHER (THE INFORMER) y THE TRAINMAN (THE TOLL EMPLOYEE) debajo de Los Gemelos con avatares procesados y animaciones Lottie dedicadas (`/the-informer-reports.json` y `/the-toll-pdf-scanner.json`).
+   - Inframundo PRE-IA (`/inframundo`) expandido a 6 villanos:
+     * Cypher: rostro completo re-encuadrado con márgenes armónicos.
+     * The Trainman: rostro centrado y completo localizado mediante OpenCV.
+     * Animación de TRANQUERA DE PEAJE interactiva creada para The Trainman: semáforo de peaje estroboscópico, tranquera rayada pivotante de bloqueo con señal STOP, burbuja 'SOLO SI ÉL QUIERE ⛔' y status 'DATA EN SU PC 🔒'.
    - Despliegue a producción en https://geeksoft.tech completado con éxito.
