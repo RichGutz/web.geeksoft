@@ -55,6 +55,28 @@ const VILLANOS = [
     copy: "Si la mitad de tu día es responder lo mismo y tus correos críticos mueren sin trazabilidad, no necesitas más tiempo: necesitas un flujo automatizado.",
     color: "#3388ff",
   },
+  // Fila 3 - Izquierda
+  {
+    id: "cypher",
+    side: "left", // Lottie afuera (izq) -> Texto -> Avatar adentro (der)
+    villano: "CYPHER",
+    alias: 'THE "INFORMER"',
+    avatar: "/images/cypher_head.jpg",
+    lottie: "/the-informer-reports.json",
+    copy: "¿Tienes una persona consolidando manualmente varias fuentes de información para preparar el informe gerencial que tanto deseas? ¿Llega tarde, mal o nunca? Déjanos crear un dashboard personalizado con ingestión descentralizada de información.",
+    color: "#ffaa00",
+  },
+  // Fila 3 - Derecha
+  {
+    id: "trainman",
+    side: "right", // Avatar adentro (izq) -> Texto -> Lottie afuera (der)
+    villano: "THE TRAINMAN",
+    alias: 'THE "TOLL EMPLOYEE"',
+    avatar: "/images/trainman_head.jpg",
+    lottie: "/the-toll-pdf-scanner.json",
+    copy: "¿Hay una persona en tu organización que centraliza toda tu data en su PC? ¿Sientes que sin esa persona tu empresa dejaría de funcionar? Construye un repositorio capaz de leer todos tus PDFs, inclusive los escaneados, y pon esa información a generar valor.",
+    color: "#a855f7",
+  },
 ];
 
 export default function InframundoPage() {
@@ -95,8 +117,9 @@ export default function InframundoPage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          padding: "1.2rem 2rem",
+          justifyContent: "flex-start",
+          padding: "2rem 2rem 3.5rem 2rem",
+          overflowY: "auto",
         }}
       >
 

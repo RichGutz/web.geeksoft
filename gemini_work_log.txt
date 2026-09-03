@@ -42,10 +42,10 @@ Versión: v1.1.1-mobile-isolated-responsiveness
    - Se restableció la versión de escritorio 100% blindada e inmutable sin alteraciones en el layout web.
 
 2. Aislamiento Riguroso de Responsividad Móvil (< 768px):
-   - Corrección forense del Radar: WebKit/Safari invalidaba transform: scale(calc(94vw / 750)). Se reemplazó por cálculo reactivo en cliente con factor adimensional en Radar.tsx (`Math.min(window.innerWidth * 0.94, 430) / 750`).
+   - Corrección forense del Radar: Factor reactivo adimensional en Radar.tsx (`Math.min(window.innerWidth * 0.94, 430) / 750`).
    - Píldoras Matrix táctiles ancladas limpiamente en esquinas inferiores móviles (`bottom: calc(env(safe-area-inset-bottom) + 1.2rem)`).
    - Modal Takeover 'The Awakened' a pantalla completa con 5s de countdown y pausa automática al poner el dedo/touch sobre las fichas de los héroes.
-   - Inframundo (`/inframundo`) en 1 columna vertical fluida con texto expandible y sin desborde horizontal.
-   - Integrado mensaje oficial HEADS UP en WhatsApp: "Hola Geeksoft, quiero despertar, dame el red pill" (+51 991090016).
+   - Textos pulidos: Morpheus ("gestión de rutas marítimas") y Trinity ("el gemelo digital de sus propiedades").
+   - Apertura nativa de WhatsApp: Universal Link `https://api.whatsapp.com/send?phone=51991090016&text=...` mediante `window.location.href` en móvil para abrir directamente la App instalada de WhatsApp en Android/iOS sin desviar a Google Play.
    - Despliegue a producción en https://geeksoft.tech completado con éxito.
 
