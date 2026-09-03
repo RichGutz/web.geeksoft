@@ -354,7 +354,7 @@ export default function SandboxRadarPage() {
                     <span className="awakened-item-role">LOGÍSTICA NAVIERA</span>
                   </div>
                   <div className="awakened-item-desc">
-                    Empresa naviera que construyó <em>DELFOS</em>, un CRM inteligente para multicotizaciones, gestión de rutas navieras y analítica profunda de sus márgenes y operaciones.
+                    Empresa naviera que construyó <em>DELFOS</em>, un CRM inteligente para multicotizaciones, gestión de rutas marítimas y analítica profunda de sus márgenes y operaciones.
                   </div>
                 </div>
               </div>
@@ -394,7 +394,7 @@ export default function SandboxRadarPage() {
                     <span className="awakened-item-role">ACTIVOS & PATRIMONIO</span>
                   </div>
                   <div className="awakened-item-desc">
-                    Asociación Religiosa que tomó el control integral de sus activos reales creándoles <em>PROPTWIN</em>, un gemelo digital de sus propiedades.
+                    Asociación Religiosa que tomó el control integral de sus activos reales creándoles <em>PROPTWIN</em>, el gemelo digital de sus propiedades.
                   </div>
                 </div>
               </div>

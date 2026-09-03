@@ -64,7 +64,7 @@ const AWAKENED_HEROES = [
     name: "MORPHEUS",
     role: "LOGÍSTICA NAVIERA",
     avatar: "/images/morpheus_head.jpg",
-    desc: "Empresa naviera que construyó DELFOS, un CRM inteligente para multicotizaciones, gestión de rutas navieras y analítica profunda de sus márgenes y operaciones."
+    desc: "Empresa naviera que construyó DELFOS, un CRM inteligente para multicotizaciones, gestión de rutas marítimas y analítica profunda de sus márgenes y operaciones."
   },
   {
     name: "NEO",
@@ -76,12 +76,25 @@ const AWAKENED_HEROES = [
     name: "TRINITY",
     role: "ACTIVOS & PATRIMONIO",
     avatar: "/images/trinity_head.jpg",
-    desc: "Asociación Religiosa que tomó el control integral de sus activos reales creándoles PROPTWIN, un gemelo digital de sus propiedades."
+    desc: "Asociación Religiosa que tomó el control integral de sus activos reales creándoles PROPTWIN, el gemelo digital de sus propiedades."
   }
 ];
 
-// Enlace oficial de WhatsApp con mensaje
-const WHATSAPP_URL = "https://wa.me/51991090016?text=Hola%20Geeksoft%2C%20quiero%20despertar%2C%20dame%20el%20red%20pill";
+// Función para abrir WhatsApp directo en la App nativa (Móvil) o Web (Desktop)
+const openWhatsApp = () => {
+  const text = encodeURIComponent("Hola Geeksoft, quiero despertar, dame el red pill");
+  const phone = "51991090016";
+  if (typeof window !== "undefined") {
+    const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    const url = `https://api.whatsapp.com/send?phone=${phone}&text=${text}`;
+    if (isMobile) {
+      // En móvil, asignar a location.href abre directo la app nativa de WhatsApp sin pasar por Google Play
+      window.location.href = url;
+    } else {
+      window.open(url, "_blank");
+    }
+  }
+};
 
 export default function SandboxRadarPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -105,7 +118,7 @@ export default function SandboxRadarPage() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          window.open(WHATSAPP_URL, "_blank");
+          openWhatsApp();
           setShowAwakenedModal(false);
           return 0;
         }
@@ -119,7 +132,7 @@ export default function SandboxRadarPage() {
     if (typeof window !== "undefined" && window.innerWidth <= 768) {
       setShowAwakenedModal(true);
     } else {
-      window.open(WHATSAPP_URL, "_blank");
+      openWhatsApp();
     }
   };
 
@@ -347,7 +360,7 @@ export default function SandboxRadarPage() {
                   alignSelf: "flex-start",
                   transition: "opacity 0.2s ease, transform 0.2s ease",
                 }}
-                onClick={() => window.open(WHATSAPP_URL, "_blank")}
+                onClick={openWhatsApp}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
                   (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
@@ -601,7 +614,7 @@ export default function SandboxRadarPage() {
             {/* Botón WhatsApp directo */}
             <button
               onClick={() => {
-                window.open(WHATSAPP_URL, "_blank");
+                openWhatsApp();
                 setShowAwakenedModal(false);
               }}
               style={{
