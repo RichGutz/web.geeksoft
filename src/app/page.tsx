@@ -118,29 +118,21 @@ export default function SandboxRadarPage() {
   return (
     <main style={{
       width: "100vw",
-      height: "100vh",
+      height: "100dvh",
       backgroundColor: "#001408",
       position: "relative",
       overflow: "hidden",
     }}>
 
-      {/* Título GEEKSOFT absoluto arriba a la izquierda del viewport — fluido */}
-      <div style={{
-        position: "absolute",
-        top: "clamp(1.2rem, 2.5vh, 2rem)",
-        left: "clamp(1.2rem, 2.5vw, 2rem)",
-        zIndex: 100,
-      }}>
-        <h1 style={{
-          fontFamily: "var(--font-orbitron), sans-serif",
-          fontSize: "clamp(1.6rem, 4vw, 2.5rem)",
-          fontWeight: 800,
-          letterSpacing: "0.15em",
-          color: currentColor,
-          textShadow: `0 0 20px ${currentColor}`,
-          transition: "color 0.3s ease, text-shadow 0.3s ease",
-          margin: 0,
-        }}>
+      {/* Título GEEKSOFT absoluto arriba a la izquierda del viewport */}
+      <div className="header-brand-box">
+        <h1
+          className="header-brand-title"
+          style={{
+            color: currentColor,
+            textShadow: `0 0 20px ${currentColor}`,
+          }}
+        >
           GEEKSOFT
         </h1>
       </div>
@@ -174,21 +166,24 @@ export default function SandboxRadarPage() {
         justifyContent: "center",
       }}>
 
-        {/* BLOQUE CENTRAL: Radar + Pills — se desliza a la izquierda al seleccionar */}
+        {/* BLOQUE CENTRAL: Radar con Viewport Box Adaptativo */}
         <div
           style={{
             pointerEvents: "auto",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            justifyContent: "center",
             transition: "transform 0.65s cubic-bezier(0.77, 0, 0.175, 1)",
             transform: selectedCategory ? "translateX(-28vw)" : "translateX(0)",
           }}
         >
-          <Radar 
-            onCategorySelect={(id) => setSelectedCategory(prev => prev === id ? null : id)} 
-            onColorChange={(color) => setCurrentColor(color)}
-          />
+          <div className="radar-viewport-box">
+            <Radar 
+              onCategorySelect={(id) => setSelectedCategory(prev => prev === id ? null : id)} 
+              onColorChange={(color) => setCurrentColor(color)}
+            />
+          </div>
         </div>
 
         {/* PANEL LATERAL — aparece desde la derecha al seleccionar un nodo */}
@@ -200,7 +195,7 @@ export default function SandboxRadarPage() {
             right: 0,
             top: 0,
             width: "42vw",
-            height: "100vh",
+            height: "100dvh",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -363,17 +358,7 @@ export default function SandboxRadarPage() {
         {/* ─── BLUE PILL: esquina inferior izquierda ─── */}
         <Link
           href="/inframundo"
-          className="matrix-pill blue-pill"
-          style={{
-            pointerEvents: "auto",
-            position: "absolute",
-            bottom: "2.5rem",
-            left: "2.5rem",
-            textDecoration: "none",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          className="matrix-pill blue-pill blue-pill-anchor"
         >
           <span className="pill-text">
             <span>BLUE</span><span className="pill-divider"></span><span>PILL</span>
@@ -439,13 +424,13 @@ export default function SandboxRadarPage() {
           position: "fixed",
           inset: 0,
           zIndex: 999,
-          background: "rgba(0, 5, 2, 0.94)",
+          background: "rgba(0, 5, 2, 0.95)",
           backdropFilter: "blur(25px)",
+          WebkitBackdropFilter: "blur(25px)",
           display: "flex",
           flexDirection: "column",
           padding: "1.5rem 1.2rem",
           overflowY: "auto",
-          animation: "fadeIn 0.3s ease",
         }}>
           {/* Header del Modal */}
           <div style={{

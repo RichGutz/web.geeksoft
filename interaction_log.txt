@@ -19,3 +19,4 @@ Fecha: 2026-09-02
 [2026-09-02 21:00:45] [DEPLOY] Despliegue completado con exito en VPS (geeksoft.tech). Avatares circulares de villanos, gemelos en escala 1:1 espejo perfecta y contencion de Lottie WhatsApp aplicados en vivo.
 [2026-09-02 21:18:41] [DEPLOY] Despliegue completado con exito en VPS (geeksoft.tech). Lotties liberados sin caja contenedora, WhatsApp horizontalizado con globitos a los lados y cards +20% altura con mayor ancho (1340px) ya en produccion.
 [2026-09-02 21:59:05] [CLON / SAFE POINT] Creado y empujado tag Git 'PRE.RESPONSIVIDAD.WEB.100.PERCENT' a origin/main. Version Desktop 100% blindada e inmutable.
+[2026-09-02 22:20:05] [NOTA / BENOIT BLANC] Despliegue de Responsividad Movil (Portrait < 768px) completado exitosamente a produccion en geeksoft.tech. Radar adaptativo concéntrico, píldoras táctiles fijadas a 1.2rem, modal Takeover 'The Awakened' con 5s countdown e Inframundo en 1 columna apilada fluida.
