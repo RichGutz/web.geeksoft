@@ -14,16 +14,16 @@
             --bg-card:   #FFFFFF;
             --navy:      #0F172A;
             --navy-mid:  #1E293B;
-            --sky:       #0284C7; /* Sky Blue GeekSoft */
+            --sky:       #0284C7;
             --sky-dim:   rgba(2,132,199,0.10);
             --sky-brd:   rgba(2,132,199,0.28);
-            --emerald:   #059669; /* Emerald Green */
+            --emerald:   #059669;
             --emerald-dim:rgba(5,150,105,0.10);
             --emerald-brd:rgba(5,150,105,0.25);
-            --purple:    #7C3AED; /* Indigo / Purple */
+            --purple:    #7C3AED;
             --purple-dim:rgba(124,58,237,0.10);
             --purple-brd:rgba(124,58,237,0.25);
-            --amber:     #D97706; /* Amber Warning / Flow */
+            --amber:     #D97706;
             --amber-dim: rgba(217,119,6,0.10);
             --amber-brd: rgba(217,119,6,0.25);
             --red:       #E11D48;
@@ -294,9 +294,111 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S3 · ANATOMÍA DE UN AGENTE
+     S3 · LOS 4 PATRONES DE ANDREW NG (NUEVO)
 ══════════════════════════════════ -->
 <section class="slide" id="s3" style="transform:translateX(70px);">
+    <p class="tag">Fundamentos Teóricos de Frontera</p>
+    <h2>Los 4 Patrones de Diseño Agéntico de <span class="hi">Andrew Ng</span></h2>
+    <p class="sub">Cómo flujos de trabajo iterativos con modelos pequeños superan el rendimiento de modelos gigantes en modo zero-shot</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; text-align:left;">
+        <div class="card" style="padding:16px; border-top:5px solid var(--sky);">
+            <div style="font-size:22px;">🪞</div>
+            <div style="font-size:13.5px; font-weight:800; color:var(--navy); margin:4px 0;">1. Reflection (Reflexión)</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                El modelo evalúa críticamente su propio output, detecta errores de sintaxis o lógica y genera una versión refinada en bucle.
+            </div>
+        </div>
+
+        <div class="card" style="padding:16px; border-top:5px solid var(--emerald);">
+            <div style="font-size:22px;">🛠️</div>
+            <div style="font-size:13.5px; font-weight:800; color:var(--navy); margin:4px 0;">2. Tool Use (Herramientas)</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                Otorga capacidades motoras al LLM invocando SQL, terminal, navegadores y APIs externas mediante interfaces estructuradas (MCP).
+            </div>
+        </div>
+
+        <div class="card" style="padding:16px; border-top:5px solid var(--purple);">
+            <div style="font-size:22px;">🗺️</div>
+            <div style="font-size:13.5px; font-weight:800; color:var(--navy); margin:4px 0;">3. Planning (Planificación)</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                Descompone tareas complejas en secuencias de sub-objetivos y re-planifica dinámicamente si un paso intermedio falla.
+            </div>
+        </div>
+
+        <div class="card" style="padding:16px; border-top:5px solid var(--amber);">
+            <div style="font-size:22px;">👥</div>
+            <div style="font-size:13.5px; font-weight:800; color:var(--navy); margin:4px 0;">4. Multi-Agent Collaboration</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                Distribuye la carga entre agentes especializados (Coder, Reviewer, QA Tester) que debaten y auditan mutuamente el resultado.
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Andrew Ng Benchmark:</span> En pruebas de codificación HumanEval, un flujo agéntico con GPT-3.5 superó sustancialmente a GPT-4 en modo un solo paso.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S4 · REGLAS DE KARPATHY: CÓDIGO LIMPIO & CIRUGÍA (NUEVO)
+══════════════════════════════════ -->
+<section class="slide" id="s4" style="transform:translateX(70px);">
+    <p class="tag">Ingeniería de Software para Agentes</p>
+    <h2>Reglas de Oro de <span class="hi">Andrej Karpathy</span>: Anti-Bloat & Cirugía</h2>
+    <p class="sub">Directrices críticas para erradicar asunciones silenciosas, código inflado y refactors destructivos en agentes de IA</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; text-align:left;">
+        <div class="card" style="padding:16px; border-top:5px solid var(--sky);">
+            <div style="font-size:22px;">🧠</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy); margin:4px 0;">1. Think Before Coding</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                • No asumir en silencio.<br/>
+                • Si hay ambigüedad, preguntar.<br/>
+                • Exponer trade-offs antes de escribir código.
+            </div>
+        </div>
+
+        <div class="card" style="padding:16px; border-top:5px solid var(--emerald);">
+            <div style="font-size:22px;">⚡</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy); margin:4px 0;">2. Simplicity First</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                • Mínimo código necesario.<br/>
+                • Cero abstracciones de un solo uso.<br/>
+                • Si 200 líneas entran en 50, reescribe.
+            </div>
+        </div>
+
+        <div class="card" style="padding:16px; border-top:5px solid var(--purple);">
+            <div style="font-size:22px;">🎯</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy); margin:4px 0;">3. Surgical Changes</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                • Tocar SOLO lo necesario.<br/>
+                • No refactorizar código funcional.<br/>
+                • Cero daño a componentes adyacentes.
+            </div>
+        </div>
+
+        <div class="card" style="padding:16px; border-top:5px solid var(--amber);">
+            <div style="font-size:22px;">✅</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy); margin:4px 0;">4. Goal-Driven Execution</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                • Verificación en terminal obligatoria.<br/>
+                • Probar builds y tests antes de cerrar.<br/>
+                • Criterios de éxito demostrables.
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Karpathy Diagnosis:</span> Los LLMs tienden a crear abstracciones monstruosas de 1,000 líneas cuando 100 bastaban; la regla de oro es simplicidad implacable.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S5 · ANATOMÍA DE UN AGENTE
+══════════════════════════════════ -->
+<section class="slide" id="s5" style="transform:translateX(70px);">
     <p class="tag">Arquitectura de Sistemas Autónomos</p>
     <h2>Los <span class="hi">4 Pilares Fundamentales</span> de un Agente en Producción</h2>
     <p class="sub">Un agente de IA no es un prompt largo; es una aplicación de software compuesta por cuatro subsistemas críticos</p>
@@ -354,9 +456,9 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S4 · EL ESTÁNDAR UNIVERSAL: MCP
+     S6 · EL ESTÁNDAR UNIVERSAL: MCP
 ══════════════════════════════════ -->
-<section class="slide" id="s4" style="transform:translateX(70px);">
+<section class="slide" id="s6" style="transform:translateX(70px);">
     <p class="tag">Estándares Abiertos de la Industria</p>
     <h2>Model Context Protocol (<span class="hi">MCP</span>)</h2>
     <p class="sub">El "puerto USB-C" de la inteligencia artificial: cómo Anthropic y la comunidad resolvieron el problema N×M de integraciones</p>
@@ -389,14 +491,14 @@
         <div class="card" style="padding:16px; border-left:5px solid var(--red);">
             <div style="font-size:13.5px; font-weight:800; color:var(--red); margin-bottom:4px;">❌ Antes de MCP (Arquitectura Frágil N×M)</div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
-                Cada framework (LangChain, LlamaIndex, OpenAI Assistant, CrewAI) requería escribir wrappers específicos para cada API. Si la API cambiaba, se rompían todas las implementaciones.
+                Cada framework requería escribir wrappers específicos para cada API. Si la API cambiaba, se rompían todas las implementaciones de los clientes.
             </div>
         </div>
 
         <div class="card" style="padding:16px; border-left:5px solid var(--emerald); background:#f0fdf4;">
             <div style="font-size:13.5px; font-weight:800; color:var(--emerald); margin-bottom:4px;">✅ Con MCP (Estandarización 1 a N)</div>
             <div style="font-size:11.5px; color:var(--navy); line-height:1.5;">
-                Escribes el MCP Server una sola vez (en Python o TypeScript) y cualquier cliente de IA (local, cloud, IDE o bot) puede consumir sus recursos y herramientas automáticamente.
+                Escribes el MCP Server una sola vez y cualquier cliente de IA (local, cloud, IDE o bot) puede consumir sus recursos y herramientas automáticamente.
             </div>
         </div>
     </div>
@@ -407,9 +509,9 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S5 · FRAMEWORKS CORE 2026
+     S7 · FRAMEWORKS CORE 2026
 ══════════════════════════════════ -->
-<section class="slide" id="s5" style="transform:translateX(70px);">
+<section class="slide" id="s7" style="transform:translateX(70px);">
     <p class="tag">Ecosistema de Desarrollo de Agentes</p>
     <h2>Frameworks Core: <span class="hi">Matriz Comparativa 2026</span></h2>
     <p class="sub">No existe una herramienta única para todo; la clave es saber exactamente cuándo elegir cada framework</p>
@@ -459,9 +561,9 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S6 · PYDANTIC AI EN PROFUNDIDAD
+     S8 · PYDANTIC AI EN PROFUNDIDAD
 ══════════════════════════════════ -->
-<section class="slide" id="s6" style="transform:translateX(70px);">
+<section class="slide" id="s8" style="transform:translateX(70px);">
     <p class="tag">Type Safety en Agentes de Producción</p>
     <h2>Deep Dive: <span class="hi">Pydantic AI</span></h2>
     <p class="sub">Cómo garantizar que las respuestas de los LLMs respeten contratos de datos estrictos en tiempo de ejecución</p>
@@ -471,9 +573,9 @@
             <div style="font-size:14px; font-weight:800; color:var(--navy);">✨ Principales Ventajas Arquitectónicas</div>
             
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55;">
-                • <strong style="color:var(--navy);">Validación Estricta en Origen:</strong> Si el LLM retorna un campo faltante o con tipo inválido, Pydantic AI solicita re-corrección automática sin romper el backend.<br/><br/>
-                • <strong style="color:var(--navy);">Inyección de Dependencias (<code class="mono">RunContext[Deps]</code>):</strong> Pasa conexiones a PostgreSQL, clientes HTTP o tokens de sesión de manera segura y tipada a las herramientas del agente.<br/><br/>
-                • <strong style="color:var(--navy);">Compatibilidad Modelo-Agnóstica:</strong> Cambia de Gemini 2.5 Flash a Claude 3.7 Sonnet o OpenAI o3-mini cambiando una sola línea de configuración.
+                • <strong style="color:var(--navy);">Validación Estricta en Origen:</strong> Si el LLM retorna un campo faltante o inválido, Pydantic AI solicita re-corrección automática sin romper el backend.<br/><br/>
+                • <strong style="color:var(--navy);">Inyección de Dependencias (<code class="mono">RunContext[Deps]</code>):</strong> Pasa conexiones a PostgreSQL, clientes HTTP o tokens de sesión de manera tipada a las herramientas.<br/><br/>
+                • <strong style="color:var(--navy);">Compatibilidad Modelo-Agnóstica:</strong> Cambia de Gemini 2.5 Flash a Claude 3.7 Sonnet cambiando una sola línea.
             </div>
 
             <div style="background:#f0f9ff; border:1px solid var(--sky-brd); padding:10px 14px; border-radius:10px; font-size:11px; color:#0369a1;">
@@ -484,21 +586,21 @@
         <div class="code-box">
 <span style="color:#94a3b8;"># Ejemplo Minimalista de Agente con Tipado Estricto</span>
 <span style="color:#38bdf8;">from</span> pydantic <span style="color:#38bdf8;">import</span> BaseModel, Field
-<span style="color:#38bdf8;">from</span> pydantic_ai <span style="color:#38bdf8;">import</span> Agent, RunContext
+<span style="color:#38bdf8;">from</span> pydantic_ai <span style="color:#38bdf8;">import</span> Agent
 
 <span style="color:#38bdf8;">class</span> <span style="color:#4ade80;">RiskEvaluation</span>(BaseModel):
     empresa: <span style="color:#fb923c;">str</span>
     score: <span style="color:#fb923c;">int</span> = Field(ge=<span style="color:#f472b6;">0</span>, le=<span style="color:#f472b6;">1000</span>)
-    decision: <span style="color:#fb923c;">str</span> = Field(pattern=<span style="color:#a7f3d0;">"^(APROBADO|RECHAZADO|OBSERVADO)$"</span>)
+    decision: <span style="color:#fb923c;">str</span> = Field(pattern=<span style="color:#a7f3d0;">"^(APROBADO|RECHAZADO)$"</span>)
 
 agent = Agent(
     <span style="color:#a7f3d0;">'google-gla:gemini-2.5-flash'</span>,
     result_type=RiskEvaluation,
-    system_prompt=<span style="color:#a7f3d0;">"Eres el evaluador de riesgo financiero de GeekSoft."</span>
+    system_prompt=<span style="color:#a7f3d0;">"Eres el evaluador de riesgo de GeekSoft."</span>
 )
 
-result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC con ratio de liquidez 1.8"</span>)
-<span style="color:#38bdf8;">print</span>(result.data.decision)  <span style="color:#94a3b8;"># Totalmente tipado con autocompletado en IDE</span>
+result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC con ratio 1.8"</span>)
+<span style="color:#38bdf8;">print</span>(result.data.decision)
         </div>
     </div>
 
@@ -508,9 +610,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S7 · ORQUESTACIÓN CON LANGGRAPH
+     S9 · ORQUESTACIÓN CON LANGGRAPH
 ══════════════════════════════════ -->
-<section class="slide" id="s7" style="transform:translateX(70px);">
+<section class="slide" id="s9" style="transform:translateX(70px);">
     <p class="tag">Orquestación de Flujos Cíclicos Complejos</p>
     <h2>State Machines & <span class="hi">LangGraph</span></h2>
     <p class="sub">Cómo diseñar grafos de control con memoria transaccional, checkpoints y supervisión humana</p>
@@ -520,7 +622,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:24px;">🔄</div>
             <div style="font-size:14px; font-weight:800; color:var(--navy); margin:4px 0;">1. Grafos Cíclicos con Estado</div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
-                A diferencia de DAGs rígidos (Airflow), permite iterar en bucles de reintento hasta que una condición de parada o umbral de calidad sea satisfecho.
+                A diferencia de DAGs rígidos (Airflow), permite iterar en bucles de reintento hasta que una condición de parada sea satisfecha.
             </div>
         </div>
 
@@ -528,7 +630,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:24px;">💾</div>
             <div style="font-size:14px; font-weight:800; color:var(--navy); margin:4px 0;">2. Checkpointers de Persistencia</div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
-                Guarda el estado completo del grafo en PostgreSQL / SQLite en cada nodo. Si el servidor se reinicia, el agente reanuda exactamente donde se quedó.
+                Guarda el estado completo del grafo en PostgreSQL / SQLite en cada nodo. Si el servidor se reinicia, el agente reanuda sin perder progreso.
             </div>
         </div>
 
@@ -536,7 +638,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:24px;">👤</div>
             <div style="font-size:14px; font-weight:800; color:var(--navy); margin:4px 0;">3. Human-in-the-Loop & Time Travel</div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
-                Pausa la ejecución antes de acciones críticas (ej. transferencias bancarias o emails), solicita aprobación y permite editar el estado pasado para re-ejecutar.
+                Pausa la ejecución antes de acciones críticas, solicita aprobación y permite editar el estado pasado para re-ejecutar.
             </div>
         </div>
     </div>
@@ -569,9 +671,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S8 · NAVEGACIÓN WEB Y COMPUTER USE
+     S10 · NAVEGACIÓN WEB Y COMPUTER USE
 ══════════════════════════════════ -->
-<section class="slide" id="s8" style="transform:translateX(70px);">
+<section class="slide" id="s10" style="transform:translateX(70px);">
     <p class="tag">Automatización Web & Computer Use</p>
     <h2>Navegación Autónoma: <span class="hi">Browser-Use & Obscura</span></h2>
     <p class="sub">Cómo los agentes interactúan con interfaces visuales, resuelven flujos complejos y extraen datos sin APIs</p>
@@ -581,7 +683,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:22px; margin-bottom:4px;">🌐 <strong>Browser-Use</strong> (Playwright + Vision LLM)</div>
             <div style="font-size:12px; color:var(--text-dim); line-height:1.55; margin-top:8px;">
                 • <strong>Percepción Multimodal:</strong> Captura screenshots de la página, numera interactivamente los elementos clickeables (bounding boxes) y le pide al LLM la coordenada exacta de acción.<br/><br/>
-                • <strong>Manejo de Formularios y Modales:</strong> Escribe texto en campos dinámicos, sortea popups y sigue enlaces como un usuario humano.<br/><br/>
+                • <strong>Manejo de Formularios y Modales:</strong> Escribe texto en campos dinámicos y sigue enlaces como un usuario humano.<br/><br/>
                 • <strong>Despliegue Ideal:</strong> Docker container en VPS Contabo con Chromium headless.
             </div>
         </div>
@@ -589,22 +691,22 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
         <div class="card" style="padding:18px; border-top:5px solid var(--purple);">
             <div style="font-size:22px; margin-bottom:4px;">🦀 <strong>Obscura</strong> (Rust Headless Stealth Browser)</div>
             <div style="font-size:12px; color:var(--text-dim); line-height:1.55; margin-top:8px;">
-                • <strong>Ultra-Ligero (30MB RAM):</strong> Escrito en Rust de alto rendimiento para reemplazar instancias pesadas de Chrome que consumen gigabytes de memoria.<br/><br/>
-                • <strong>Anti-Bot Evasión Avanzada:</strong> Modifica fingerprints TLS, Canvas, WebGL y Headers HTTP para navegar sitios protegidos por Cloudflare o Datadome.<br/><br/>
-                • <strong>Ideal Para:</strong> Tareas masivas de web scraping continuo y agentes de recolección en servidores económicos.
+                • <strong>Ultra-Ligero (30MB RAM):</strong> Escrito en Rust de alto rendimiento para reemplazar instancias pesadas de Chrome.<br/><br/>
+                • <strong>Anti-Bot Evasión Avanzada:</strong> Modifica fingerprints TLS, Canvas y Headers HTTP para navegar sitios protegidos.<br/><br/>
+                • <strong>Ideal Para:</strong> Scraping masivo continuo y agentes de recolección en servidores económicos.
             </div>
         </div>
     </div>
 
     <div class="footnote">
-        * <span class="fn-term">Regla de Aislamiento Geeksoft:</span> Toda navegación automatizada debe ejecutarse en Docker remoto en el VPS Contabo para no ralentizar el equipo local ni bloquear sesiones.
+        * <span class="fn-term">Regla de Aislamiento Geeksoft:</span> Toda navegación automatizada debe ejecutarse en Docker remoto en el VPS Contabo para no ralentizar el equipo local.
     </div>
 </section>
 
 <!-- ══════════════════════════════════
-     S9 · AUDIO Y PIPELINES MULTIMEDIA LOCAL
+     S11 · AUDIO Y PIPELINES MULTIMEDIA LOCAL
 ══════════════════════════════════ -->
-<section class="slide" id="s9" style="transform:translateX(70px);">
+<section class="slide" id="s11" style="transform:translateX(70px);">
     <p class="tag">Pipelines de Voz & Multimedia Soberana</p>
     <h2>Voz y Video Local: <span class="hi">VoiceStudio & KrillinAI</span></h2>
     <p class="sub">Clonado de voz instantáneo y doblaje multilingüe autónomo ejecutándose 100% en infraestructura propia</p>
@@ -616,8 +718,8 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
                 <span style="font-size:10.5px; background:var(--emerald-dim); color:var(--emerald); padding:2px 8px; border-radius:6px; font-weight:800;">Zero Latency</span>
             </div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55; margin-top:8px;">
-                • <strong>Clonado de Voz en 3 Segundos:</strong> Requiere una muestra de audio ultra-corta para replicar tono, emoción y cadencia con modelos neurales locales (ChatTTS / F5-TTS).<br/><br/>
-                • <strong>Soberanía Total & Costo Cero por Token:</strong> Elimina pagos recurrentes a APIs propietarias como ElevenLabs, garantizando privacidad total en grabaciones ejecutivas.
+                • <strong>Clonado de Voz en 3 Segundos:</strong> Requiere una muestra de audio ultra-corta para replicar tono y cadencia con modelos neurales locales (ChatTTS / F5-TTS).<br/><br/>
+                • <strong>Soberanía Total & Costo Cero por Token:</strong> Elimina pagos recurrentes a APIs propietarias como ElevenLabs.
             </div>
         </div>
 
@@ -627,8 +729,8 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
                 <span style="font-size:10.5px; background:var(--amber-dim); color:var(--amber); padding:2px 8px; border-radius:6px; font-weight:800;">End-to-End</span>
             </div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55; margin-top:8px;">
-                • <strong>Workflow 100% Automatizado:</strong> Extracción de audio ➔ Transcripción (Whisper) ➔ Traducción contextual (LLM) ➔ Síntesis de voz sincronizada (TTS) ➔ Lip-syncing de video.<br/><br/>
-                • <strong>Localización Global de Contenidos:</strong> Permite transformar masterclasses y capacitaciones técnicas en español a inglés, portugués o mandarín en minutos.
+                • <strong>Workflow 100% Automatizado:</strong> Extracción de audio ➔ Transcripción (Whisper) ➔ Traducción contextual (LLM) ➔ Síntesis TTS ➔ Lip-syncing.<br/><br/>
+                • <strong>Localización Global de Contenidos:</strong> Transforma masterclasses en español a inglés, portugués o mandarín.
             </div>
         </div>
     </div>
@@ -639,9 +741,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S10 · RAG AGÉNTICO Y BÚSQUEDA SEMÁNTICA
+     S12 · RAG AGÉNTICO Y BÚSQUEDA SEMÁNTICA
 ══════════════════════════════════ -->
-<section class="slide" id="s10" style="transform:translateX(70px);">
+<section class="slide" id="s12" style="transform:translateX(70px);">
     <p class="tag">Recuperación de Información de Próxima Generación</p>
     <h2>RAG Agéntico & <span class="hi">Búsqueda Semántica Avanzada</span></h2>
     <p class="sub">Cómo superar las fallas del RAG básico mediante enrutamiento inteligente, re-ranking y grafos de conocimiento</p>
@@ -659,7 +761,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:20px;">🔍</div>
             <div style="font-size:13px; font-weight:800; color:var(--navy);">2. Búsqueda Híbrida</div>
             <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
-                Combina BM25 (palabras clave exactas como IDs o leyes) con Dense Embeddings (significado conceptual).
+                Combina BM25 (palabras clave exactas) con Dense Embeddings (significado conceptual).
             </div>
         </div>
 
@@ -667,7 +769,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:20px;">⚖️</div>
             <div style="font-size:13px; font-weight:800; color:var(--navy);">3. Re-Ranking Neural</div>
             <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
-                Un modelo Cross-Encoder (ej. Cohere / BGE-Reranker) reordena los top-20 resultados para extraer los 3 más precisos.
+                Un modelo Cross-Encoder (Cohere / BGE) reordena los top-20 resultados para extraer los 3 más precisos.
             </div>
         </div>
 
@@ -675,38 +777,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:20px;">🛡️</div>
             <div style="font-size:13px; font-weight:800; color:var(--navy);">4. Self-Correction</div>
             <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
-                El LLM evalúa si los documentos recuperados responden la pregunta. Si son insuficientes, reescribe el query y reintenta.
+                El LLM evalúa si los documentos recuperados responden la pregunta. Si son insuficientes, reescribe el query.
             </div>
         </div>
-    </div>
-
-    <div class="table-container" style="margin-top:14px;">
-        <table>
-            <thead>
-                <tr>
-                    <th>Característica</th>
-                    <th>RAG Tradicional (Naive RAG)</th>
-                    <th>RAG Agéntico (GeekSoft Standard)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Estrategia de Búsqueda</strong></td>
-                    <td style="color:var(--red);">Cosine similarity estático en un solo vector store</td>
-                    <td style="color:var(--emerald); font-weight:700;">Enrutamiento multi-fuente + Hybrid Search + Re-ranking</td>
-                </tr>
-                <tr>
-                    <td><strong>Manejo de Consultas Complejas</strong></td>
-                    <td style="color:var(--red);">Falla al comparar múltiples documentos o periodos</td>
-                    <td style="color:var(--emerald); font-weight:700;">Descompone en sub-preguntas y agrega resultados</td>
-                </tr>
-                <tr>
-                    <td><strong>Tolerancia a Alucinaciones</strong></td>
-                    <td style="color:var(--red);">Alta si los fragmentos contienen ruido</td>
-                    <td style="color:var(--emerald); font-weight:700;">Cita estricta con verificación cruzada en el grafo</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 
     <div class="footnote">
@@ -715,9 +788,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S11 · FRONTEND AGÉNTICO (AG-UI)
+     S13 · FRONTEND AGÉNTICO (AG-UI)
 ══════════════════════════════════ -->
-<section class="slide" id="s11" style="transform:translateX(70px);">
+<section class="slide" id="s13" style="transform:translateX(70px);">
     <p class="tag">Experiencia de Usuario en Tiempo Real</p>
     <h2>Frontend Agéntico: <span class="hi">Streaming & AG-UI</span></h2>
     <p class="sub">Cómo diseñar interfaces interactivas que no se congelen mientras los agentes razonan y ejecutan herramientas</p>
@@ -728,8 +801,8 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
                 ⚡ Protocolo SSE (Server-Sent Events)
             </div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55;">
-                • <strong>Stream de Pensamiento y Tokens:</strong> Transmite tokens de razonamiento en tiempo real al navegador para reducir la percepción de latencia del usuario.<br/><br/>
-                • <strong>Eventos de Estado Estructurados:</strong> El backend emite eventos tipados (<code class="mono">tool_start</code>, <code class="mono">tool_result</code>, <code class="mono">status_update</code>) que el frontend renderiza como badges animados de progreso.
+                • <strong>Stream de Pensamiento y Tokens:</strong> Transmite tokens de razonamiento en tiempo real al navegador.<br/><br/>
+                • <strong>Eventos de Estado Estructurados:</strong> El backend emite eventos tipados (<code class="mono">tool_start</code>, <code class="mono">tool_result</code>) que el frontend renderiza como badges animados.
             </div>
         </div>
 
@@ -738,8 +811,8 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
                 🎨 Renderizado Dinámico de Artefactos
             </div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55;">
-                • <strong>Componentes Vivos (Generative UI):</strong> En lugar de retornar texto plano, el agente emite bloques interactivos (gráficos Chart.js, tablas editables, botones de acción).<br/><br/>
-                • <strong>Formularios Human-in-the-Loop:</strong> Si el agente necesita confirmación de parámetros, renderiza un formulario emergente en el chat antes de continuar el flujo.
+                • <strong>Componentes Vivos (Generative UI):</strong> El agente emite bloques interactivos (gráficos Chart.js, tablas editables, botones de acción).<br/><br/>
+                • <strong>Formularios Human-in-the-Loop:</strong> Si el agente necesita confirmación, renderiza un modal emergente en el chat antes de continuar.
             </div>
         </div>
     </div>
@@ -750,9 +823,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S12 · SEGURIDAD Y SANDBOXING EN VPS
+     S14 · SEGURIDAD Y SANDBOXING EN VPS
 ══════════════════════════════════ -->
-<section class="slide" id="s12" style="transform:translateX(70px);">
+<section class="slide" id="s14" style="transform:translateX(70px);">
     <p class="tag">Infraestructura & Ciberseguridad para Agentes</p>
     <h2>Seguridad Criptográfica & <span class="hi">Sandboxing Remoto</span></h2>
     <p class="sub">El estándar implementado en el VPS Contabo de Geeksoft: aislamiento absoluto, Zero-Trust y gestión de secretos</p>
@@ -781,30 +854,15 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
         </div>
     </div>
 
-    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-top:10px; text-align:left;">
-        <div class="card" style="padding:14px; border-left:4px solid var(--emerald);">
-            <div style="font-weight:800; font-size:12.5px; color:var(--emerald);">1. Cero Exposición de Puertos</div>
-            <div style="font-size:11px; color:var(--text-dim); margin-top:4px;">El contenedor scraper opera hacia afuera y no abre puertos públicos en internet.</div>
-        </div>
-        <div class="card" style="padding:14px; border-left:4px solid var(--sky);">
-            <div style="font-size:12.5px; font-weight:800; color:var(--sky);">2. Inyección de Sesión Segura</div>
-            <div style="font-size:11px; color:var(--text-dim); margin-top:4px;">Tokens como <code class="mono">li_at</code> se montan como volúmenes de solo lectura temporales.</div>
-        </div>
-        <div class="card" style="padding:14px; border-left:4px solid var(--amber);">
-            <div style="font-size:12.5px; font-weight:800; color:var(--amber);">3. Rate Limiting Humano</div>
-            <div style="font-size:11px; color:var(--text-dim); margin-top:4px;">Delays estocásticos (3-7s) y rotación de User-Agents para evitar bloqueos.</div>
-        </div>
-    </div>
-
     <div class="footnote">
         * <span class="fn-term">Zero-Trust:</span> Modelo de seguridad donde ningún componente interno confía implícitamente en otro; cada llamada es autenticada y aislada.
     </div>
 </section>
 
 <!-- ══════════════════════════════════
-     S13 · MATRIZ DE DECISIÓN ESTRATÉGICA
+     S15 · MATRIZ DE DECISIÓN ESTRATÉGICA
 ══════════════════════════════════ -->
-<section class="slide" id="s13" style="transform:translateX(70px);">
+<section class="slide" id="s15" style="transform:translateX(70px);">
     <p class="tag">Guía Definitiva de Arquitectura</p>
     <h2>Matriz Estratégica: <span class="hi">Cuándo SÍ vs Cuándo NO</span></h2>
     <p class="sub">Cheat-Sheet para líderes técnicos y arquitectos de software al seleccionar herramientas de IA</p>
@@ -839,27 +897,22 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
                     <td>Automatizar flujos web interactivos, rellenar formularios en portales legacy y extraer datos sin API pública.</td>
                     <td>Extracciones de alta velocidad donde existe una API REST o endpoint JSON disponible.</td>
                 </tr>
-                <tr>
-                    <td><strong>VoiceStudio</strong></td>
-                    <td>Locución de tutoriales, clonado de voz corporativo y síntesis de audio privada sin pagar suscripciones cloud.</td>
-                    <td>Aplicaciones que requieran latencias ultra-bajas en llamadas telefónicas sin GPU dedicada.</td>
-                </tr>
             </tbody>
         </table>
     </div>
 
     <div class="footnote">
-        * <span class="fn-term">Arquitectura Pragmática:</span> El mejor ingeniero no es el que usa la herramienta más de moda, sino el que elige la herramienta más simple y robusta para el problema.
+        * <span class="fn-term">Arquitectura Pragmática:</span> El mejor ingeniero elige la herramienta más simple y robusta para el problema.
     </div>
 </section>
 
 <!-- ══════════════════════════════════
-     S14 · SCRAPING INTELIGENTE HEADLESS
+     S16 · SCRAPING INTELIGENTE HEADLESS
 ══════════════════════════════════ -->
-<section class="slide" id="s14" style="transform:translateX(70px);">
+<section class="slide" id="s16" style="transform:translateX(70px);">
     <p class="tag">Caso de Estudio Real Geeksoft</p>
     <h2>Scraper Headless en <span class="hi">VPS Contabo</span></h2>
-    <p class="sub">Cómo construimos el sistema automatizado que vigila a los 11 líderes globales de IA sin abrir navegadores locales</p>
+    <p class="sub">Cómo construimos el sistema automatizado que vigila a los líderes globales de IA sin abrir navegadores locales</p>
 
     <div class="flow-grid">
         <div class="flow-card" style="border-top:4px solid var(--sky);">
@@ -874,7 +927,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:20px;">📜</div>
             <div style="font-size:13px; font-weight:800; color:var(--navy);">2. Scroll & Extracción</div>
             <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
-                Navegación headless en contenedor Docker, auto-scroll progresivo y recolección de posts, enlaces GitHub y miniaturas.
+                Navegación headless en contenedor Docker, auto-scroll progresivo y recolección de posts y repositorios.
             </div>
         </div>
 
@@ -882,7 +935,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:20px;">🧹</div>
             <div style="font-size:13px; font-weight:800; color:var(--navy);">3. Parsing & Filtro IA</div>
             <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
-                Limpieza de texto con BeautifulSoup y regex para identificar repositorios Git, frameworks y librerías emergentes.
+                Limpieza de texto con BeautifulSoup y regex para identificar repositorios Git y frameworks emergentes.
             </div>
         </div>
 
@@ -895,24 +948,15 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
         </div>
     </div>
 
-    <div style="background:#f0fdf4; border:1px solid var(--emerald-brd); padding:12px 18px; border-radius:12px; margin-top:14px; text-align:left; width:100%; max-width:1240px;">
-        <div style="font-size:12px; font-weight:800; color:var(--emerald); margin-bottom:2px;">
-            📊 Resultado en Producción:
-        </div>
-        <div style="font-size:11px; color:var(--navy); line-height:1.5;">
-            28 publicaciones procesadas del perfil de <strong>Álvaro Cintas</strong>, descargando herramientas de vanguardia como <em>VoiceStudio</em>, <em>Obscura</em>, <em>KrillinAI</em> y catalogándolas en la bóveda de GeekSoft con sincronización a GitHub.
-        </div>
-    </div>
-
     <div class="footnote">
-        * <span class="fn-term">Headless Execution:</span> Ejecución de navegadores sin interfaz visual de usuario, optimizando consumo de CPU y memoria RAM en servidores.
+        * <span class="fn-term">Headless Execution:</span> Ejecución de navegadores sin interfaz visual de usuario, optimizando consumo de CPU y memoria RAM.
     </div>
 </section>
 
 <!-- ══════════════════════════════════
-     S15 · ROADMAP DE 7 DÍAS A PRODUCCIÓN
+     S17 · ROADMAP DE 7 DÍAS A PRODUCCIÓN
 ══════════════════════════════════ -->
-<section class="slide" id="s15" style="transform:translateX(70px);">
+<section class="slide" id="s17" style="transform:translateX(70px);">
     <p class="tag">Plan de Acción Acelerado</p>
     <h2>Roadmap Intensivo de <span class="hi">7 Días a Producción</span></h2>
     <p class="sub">Cronograma paso a paso para pasar de cero conocimiento a desplegar arquitecturas de agentes en GeekSoft</p>
@@ -963,9 +1007,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S16 · PROYECTO CAPSTONE & LIVE STACK
+     S18 · PROYECTO CAPSTONE & LIVE STACK
 ══════════════════════════════════ -->
-<section class="slide" id="s16" style="transform:translateX(70px);">
+<section class="slide" id="s18" style="transform:translateX(70px);">
     <p class="tag">Arquitectura del Proyecto Final</p>
     <h2>Proyecto Capstone: <span class="hi">GeekSoft Agentic Core</span></h2>
     <p class="sub">El sistema completo que integra todos los módulos aprendidos en una plataforma productiva</p>
@@ -992,7 +1036,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:36px;">🚀</div>
             <div style="font-size:16px; font-weight:900; color:#38bdf8;">¡Comienza tu Implementación Hoy!</div>
             <div style="font-size:11.5px; color:#94a3b8; line-height:1.5; max-width:380px;">
-                Toda la documentación, notas de herramientas numeradas (#01 a #30) y scripts de despliegue están listos en tu bóveda Obsidian.
+                Toda la documentación, notas de herramientas numeradas (#01 a #33) y scripts de despliegue están listos en tu bóveda Obsidian.
             </div>
             <div style="background:#1e293b; border:1px solid #334155; padding:8px 16px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#4ade80;">
                 git clone https://github.com/RichGutz/AI.TOOLS.FOR.GEEKSOFT.git
@@ -1010,7 +1054,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 <!-- ─── NAVIGATION BUTTONS ─── -->
 <nav>
     <button class="nbtn" id="prevBtn" onclick="changeSlide(-1)" title="Slide Anterior (←)">←</button>
-    <div id="counter">1 / 16</div>
+    <div id="counter">1 / 18</div>
     <button class="nbtn" id="nextBtn" onclick="changeSlide(1)" title="Siguiente Slide (→)">→</button>
 </nav>
 
