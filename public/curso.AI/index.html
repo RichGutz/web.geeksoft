@@ -294,7 +294,7 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S3 · LOS 4 PATRONES DE ANDREW NG (NUEVO)
+     S3 · LOS 4 PATRONES DE ANDREW NG
 ══════════════════════════════════ -->
 <section class="slide" id="s3" style="transform:translateX(70px);">
     <p class="tag">Fundamentos Teóricos de Frontera</p>
@@ -341,9 +341,49 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S4 · REGLAS DE KARPATHY: CÓDIGO LIMPIO & CIRUGÍA (NUEVO)
+     S4 · WORLD MODELS & JEPA (YANN LECUN) (NUEVO)
 ══════════════════════════════════ -->
 <section class="slide" id="s4" style="transform:translateX(70px);">
+    <p class="tag">Frontera de la IA: Más Allá de los LLMs</p>
+    <h2>World Models & <span class="hi">Arquitectura JEPA (Yann LeCun)</span></h2>
+    <p class="sub">Por qué predecir el siguiente token tiene un límite fundamental y cómo los modelos de mundo transformarán los agentes</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: 1.15fr 1fr; gap:16px; text-align:left;">
+        <div class="card" style="padding:18px; border-top:5px solid var(--purple);">
+            <div style="font-size:15px; font-weight:800; color:var(--navy); margin-bottom:6px;">
+                🌌 El Paradigma de Modelos del Mundo (World Models)
+            </div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.6;">
+                • <strong style="color:var(--navy);">El límite autorregresivo:</strong> Predecir token por token acumula errores exponenciales y carece de sentido común físico.<br/><br/>
+                • <strong style="color:var(--navy);">Predicción en Espacio Latente (JEPA):</strong> En lugar de generar texto redundante o píxeles, JEPA predice <em>estados abstractos del sistema</em>.<br/><br/>
+                • <strong style="color:var(--navy);">Simulación Interna de Consecuencias:</strong> Permite al agente simular: <em>"Si ejecuto el comando X en la base de datos, ¿qué estado producirá?"</em> antes de actuar en producción.
+            </div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--emerald); background:#f0fdf4;">
+            <div style="font-size:14px; font-weight:800; color:var(--emerald); margin-bottom:8px;">
+                🏛️ Los 6 Módulos del Agente Autónomo (LeCun)
+            </div>
+            <ul style="font-size:11px; color:var(--navy); line-height:1.6; padding-left:14px;">
+                <li><strong>1. Configurator:</strong> Establece el objetivo global.</li>
+                <li><strong>2. Perception:</strong> Extrae representaciones jerárquicas.</li>
+                <li><strong>3. World Model:</strong> Simula transiciones de estado.</li>
+                <li><strong>4. Cost Function:</strong> Evalúa el riesgo y costo energético.</li>
+                <li><strong>5. Actor:</strong> Formula secuencias de acción óptimas.</li>
+                <li><strong>6. Memory:</strong> Registra trayectorias pasadas.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">JEPA (Joint Embedding Predictive Architecture):</span> Arquitectura de aprendizaje autosupervisado creada por Meta FAIR (Yann LeCun) para aprender física y causalidad.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S5 · REGLAS DE KARPATHY: CÓDIGO LIMPIO
+══════════════════════════════════ -->
+<section class="slide" id="s5" style="transform:translateX(70px);">
     <p class="tag">Ingeniería de Software para Agentes</p>
     <h2>Reglas de Oro de <span class="hi">Andrej Karpathy</span>: Anti-Bloat & Cirugía</h2>
     <p class="sub">Directrices críticas para erradicar asunciones silenciosas, código inflado y refactors destructivos en agentes de IA</p>
@@ -396,9 +436,9 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S5 · ANATOMÍA DE UN AGENTE
+     S6 · ANATOMÍA DE UN AGENTE
 ══════════════════════════════════ -->
-<section class="slide" id="s5" style="transform:translateX(70px);">
+<section class="slide" id="s6" style="transform:translateX(70px);">
     <p class="tag">Arquitectura de Sistemas Autónomos</p>
     <h2>Los <span class="hi">4 Pilares Fundamentales</span> de un Agente en Producción</h2>
     <p class="sub">Un agente de IA no es un prompt largo; es una aplicación de software compuesta por cuatro subsistemas críticos</p>
@@ -409,7 +449,7 @@
             <div style="font-size:14px; font-weight:800; color:var(--navy);">1. Motor de Planificación</div>
             <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
                 • Descomposición jerárquica de objetivos en sub-tareas ejecutables.<br/>
-                • Algoritmos de reflexión y verificación de resultados contra el objetivo del usuario.
+                • Algoritmos de reflexión y verificación de resultados contra el objetivo.
             </div>
         </div>
 
@@ -418,7 +458,7 @@
             <div style="font-size:14px; font-weight:800; color:var(--navy);">2. Memoria & Estado</div>
             <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
                 • <strong>Corto Plazo:</strong> Context window, scratchpads y variables de sesión.<br/>
-                • <strong>Largo Plazo:</strong> Bases vectoriales (Milvus/Pgvector), Knowledge Graph y logs transaccionales.
+                • <strong>Largo Plazo:</strong> Bases vectoriales (Milvus/Pgvector) y logs transaccionales.
             </div>
         </div>
 
@@ -427,7 +467,7 @@
             <div style="font-size:14px; font-weight:800; color:var(--navy);">3. Tool Calling & MCP</div>
             <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
                 • Catálogo estandarizado de funciones tipadas (JSON Schema).<br/>
-                • Protocolo MCP para acceder a bases SQL, GitHub, sistemas ERP y navegación web.
+                • Protocolo MCP para acceder a bases SQL, GitHub y sistemas ERP.
             </div>
         </div>
 
@@ -436,17 +476,8 @@
             <div style="font-size:14px; font-weight:800; color:var(--navy);">4. Entorno Sandbox Seguro</div>
             <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
                 • Contenedores Docker aislados para ejecución de código y scripts.<br/>
-                • Políticas de permisos estrictas (Zero-Trust) para proteger la máquina host y credenciales.
+                • Políticas de permisos estrictas (Zero-Trust) para proteger la máquina host.
             </div>
-        </div>
-    </div>
-
-    <div class="sec-box-light" style="width:100%; max-width:1240px; margin-top:14px; background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:12px 18px; text-align:left;">
-        <div style="font-size:11.5px; font-weight:800; color:var(--navy); margin-bottom:4px;">
-            🔄 Ciclo de Ejecución en Producción:
-        </div>
-        <div style="font-size:11px; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">
-            Input Usuario ➔ [Planificador / LLM] ➔ Decisión de Acción ➔ [MCP Server / Tool Sandbox] ➔ Observación de Resultado ➔ [Auto-Evaluación] ➔ Respuesta Final o Siguiente Iteración
         </div>
     </div>
 
@@ -456,9 +487,9 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S6 · EL ESTÁNDAR UNIVERSAL: MCP
+     S7 · EL ESTÁNDAR UNIVERSAL: MCP
 ══════════════════════════════════ -->
-<section class="slide" id="s6" style="transform:translateX(70px);">
+<section class="slide" id="s7" style="transform:translateX(70px);">
     <p class="tag">Estándares Abiertos de la Industria</p>
     <h2>Model Context Protocol (<span class="hi">MCP</span>)</h2>
     <p class="sub">El "puerto USB-C" de la inteligencia artificial: cómo Anthropic y la comunidad resolvieron el problema N×M de integraciones</p>
@@ -491,14 +522,14 @@
         <div class="card" style="padding:16px; border-left:5px solid var(--red);">
             <div style="font-size:13.5px; font-weight:800; color:var(--red); margin-bottom:4px;">❌ Antes de MCP (Arquitectura Frágil N×M)</div>
             <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
-                Cada framework requería escribir wrappers específicos para cada API. Si la API cambiaba, se rompían todas las implementaciones de los clientes.
+                Cada framework requería escribir wrappers específicos para cada API. Si la API cambiaba, se rompían todas las implementaciones.
             </div>
         </div>
 
         <div class="card" style="padding:16px; border-left:5px solid var(--emerald); background:#f0fdf4;">
             <div style="font-size:13.5px; font-weight:800; color:var(--emerald); margin-bottom:4px;">✅ Con MCP (Estandarización 1 a N)</div>
             <div style="font-size:11.5px; color:var(--navy); line-height:1.5;">
-                Escribes el MCP Server una sola vez y cualquier cliente de IA (local, cloud, IDE o bot) puede consumir sus recursos y herramientas automáticamente.
+                Escribes el MCP Server una sola vez y cualquier cliente de IA puede consumir sus recursos y herramientas automáticamente.
             </div>
         </div>
     </div>
@@ -509,9 +540,9 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S7 · FRAMEWORKS CORE 2026
+     S8 · FRAMEWORKS CORE 2026
 ══════════════════════════════════ -->
-<section class="slide" id="s7" style="transform:translateX(70px);">
+<section class="slide" id="s8" style="transform:translateX(70px);">
     <p class="tag">Ecosistema de Desarrollo de Agentes</p>
     <h2>Frameworks Core: <span class="hi">Matriz Comparativa 2026</span></h2>
     <p class="sub">No existe una herramienta única para todo; la clave es saber exactamente cuándo elegir cada framework</p>
@@ -561,9 +592,9 @@
 </section>
 
 <!-- ══════════════════════════════════
-     S8 · PYDANTIC AI EN PROFUNDIDAD
+     S9 · PYDANTIC AI EN PROFUNDIDAD
 ══════════════════════════════════ -->
-<section class="slide" id="s8" style="transform:translateX(70px);">
+<section class="slide" id="s9" style="transform:translateX(70px);">
     <p class="tag">Type Safety en Agentes de Producción</p>
     <h2>Deep Dive: <span class="hi">Pydantic AI</span></h2>
     <p class="sub">Cómo garantizar que las respuestas de los LLMs respeten contratos de datos estrictos en tiempo de ejecución</p>
@@ -610,9 +641,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S9 · ORQUESTACIÓN CON LANGGRAPH
+     S10 · ORQUESTACIÓN CON LANGGRAPH
 ══════════════════════════════════ -->
-<section class="slide" id="s9" style="transform:translateX(70px);">
+<section class="slide" id="s10" style="transform:translateX(70px);">
     <p class="tag">Orquestación de Flujos Cíclicos Complejos</p>
     <h2>State Machines & <span class="hi">LangGraph</span></h2>
     <p class="sub">Cómo diseñar grafos de control con memoria transaccional, checkpoints y supervisión humana</p>
@@ -671,9 +702,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S10 · NAVEGACIÓN WEB Y COMPUTER USE
+     S11 · NAVEGACIÓN WEB Y COMPUTER USE
 ══════════════════════════════════ -->
-<section class="slide" id="s10" style="transform:translateX(70px);">
+<section class="slide" id="s11" style="transform:translateX(70px);">
     <p class="tag">Automatización Web & Computer Use</p>
     <h2>Navegación Autónoma: <span class="hi">Browser-Use & Obscura</span></h2>
     <p class="sub">Cómo los agentes interactúan con interfaces visuales, resuelven flujos complejos y extraen datos sin APIs</p>
@@ -704,9 +735,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S11 · AUDIO Y PIPELINES MULTIMEDIA LOCAL
+     S12 · AUDIO Y PIPELINES MULTIMEDIA LOCAL
 ══════════════════════════════════ -->
-<section class="slide" id="s11" style="transform:translateX(70px);">
+<section class="slide" id="s12" style="transform:translateX(70px);">
     <p class="tag">Pipelines de Voz & Multimedia Soberana</p>
     <h2>Voz y Video Local: <span class="hi">VoiceStudio & KrillinAI</span></h2>
     <p class="sub">Clonado de voz instantáneo y doblaje multilingüe autónomo ejecutándose 100% en infraestructura propia</p>
@@ -741,9 +772,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S12 · RAG AGÉNTICO Y BÚSQUEDA SEMÁNTICA
+     S13 · RAG AGÉNTICO Y BÚSQUEDA SEMÁNTICA
 ══════════════════════════════════ -->
-<section class="slide" id="s12" style="transform:translateX(70px);">
+<section class="slide" id="s13" style="transform:translateX(70px);">
     <p class="tag">Recuperación de Información de Próxima Generación</p>
     <h2>RAG Agéntico & <span class="hi">Búsqueda Semántica Avanzada</span></h2>
     <p class="sub">Cómo superar las fallas del RAG básico mediante enrutamiento inteligente, re-ranking y grafos de conocimiento</p>
@@ -788,9 +819,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S13 · FRONTEND AGÉNTICO (AG-UI)
+     S14 · FRONTEND AGÉNTICO (AG-UI)
 ══════════════════════════════════ -->
-<section class="slide" id="s13" style="transform:translateX(70px);">
+<section class="slide" id="s14" style="transform:translateX(70px);">
     <p class="tag">Experiencia de Usuario en Tiempo Real</p>
     <h2>Frontend Agéntico: <span class="hi">Streaming & AG-UI</span></h2>
     <p class="sub">Cómo diseñar interfaces interactivas que no se congelen mientras los agentes razonan y ejecutan herramientas</p>
@@ -823,9 +854,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S14 · SEGURIDAD Y SANDBOXING EN VPS
+     S15 · SEGURIDAD Y SANDBOXING EN VPS
 ══════════════════════════════════ -->
-<section class="slide" id="s14" style="transform:translateX(70px);">
+<section class="slide" id="s15" style="transform:translateX(70px);">
     <p class="tag">Infraestructura & Ciberseguridad para Agentes</p>
     <h2>Seguridad Criptográfica & <span class="hi">Sandboxing Remoto</span></h2>
     <p class="sub">El estándar implementado en el VPS Contabo de Geeksoft: aislamiento absoluto, Zero-Trust y gestión de secretos</p>
@@ -860,9 +891,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S15 · MATRIZ DE DECISIÓN ESTRATÉGICA
+     S16 · MATRIZ DE DECISIÓN ESTRATÉGICA
 ══════════════════════════════════ -->
-<section class="slide" id="s15" style="transform:translateX(70px);">
+<section class="slide" id="s16" style="transform:translateX(70px);">
     <p class="tag">Guía Definitiva de Arquitectura</p>
     <h2>Matriz Estratégica: <span class="hi">Cuándo SÍ vs Cuándo NO</span></h2>
     <p class="sub">Cheat-Sheet para líderes técnicos y arquitectos de software al seleccionar herramientas de IA</p>
@@ -907,9 +938,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S16 · SCRAPING INTELIGENTE HEADLESS
+     S17 · SCRAPING INTELIGENTE HEADLESS
 ══════════════════════════════════ -->
-<section class="slide" id="s16" style="transform:translateX(70px);">
+<section class="slide" id="s17" style="transform:translateX(70px);">
     <p class="tag">Caso de Estudio Real Geeksoft</p>
     <h2>Scraper Headless en <span class="hi">VPS Contabo</span></h2>
     <p class="sub">Cómo construimos el sistema automatizado que vigila a los líderes globales de IA sin abrir navegadores locales</p>
@@ -954,9 +985,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S17 · ROADMAP DE 7 DÍAS A PRODUCCIÓN
+     S18 · ROADMAP DE 7 DÍAS A PRODUCCIÓN
 ══════════════════════════════════ -->
-<section class="slide" id="s17" style="transform:translateX(70px);">
+<section class="slide" id="s18" style="transform:translateX(70px);">
     <p class="tag">Plan de Acción Acelerado</p>
     <h2>Roadmap Intensivo de <span class="hi">7 Días a Producción</span></h2>
     <p class="sub">Cronograma paso a paso para pasar de cero conocimiento a desplegar arquitecturas de agentes en GeekSoft</p>
@@ -1007,9 +1038,9 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 </section>
 
 <!-- ══════════════════════════════════
-     S18 · PROYECTO CAPSTONE & LIVE STACK
+     S19 · PROYECTO CAPSTONE & LIVE STACK
 ══════════════════════════════════ -->
-<section class="slide" id="s18" style="transform:translateX(70px);">
+<section class="slide" id="s19" style="transform:translateX(70px);">
     <p class="tag">Arquitectura del Proyecto Final</p>
     <h2>Proyecto Capstone: <span class="hi">GeekSoft Agentic Core</span></h2>
     <p class="sub">El sistema completo que integra todos los módulos aprendidos en una plataforma productiva</p>
@@ -1036,7 +1067,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
             <div style="font-size:36px;">🚀</div>
             <div style="font-size:16px; font-weight:900; color:#38bdf8;">¡Comienza tu Implementación Hoy!</div>
             <div style="font-size:11.5px; color:#94a3b8; line-height:1.5; max-width:380px;">
-                Toda la documentación, notas de herramientas numeradas (#01 a #33) y scripts de despliegue están listos en tu bóveda Obsidian.
+                Toda la documentación, notas de herramientas numeradas (#01 a #34) y scripts de despliegue están listos en tu bóveda Obsidian.
             </div>
             <div style="background:#1e293b; border:1px solid #334155; padding:8px 16px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#4ade80;">
                 git clone https://github.com/RichGutz/AI.TOOLS.FOR.GEEKSOFT.git
@@ -1054,7 +1085,7 @@ result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC
 <!-- ─── NAVIGATION BUTTONS ─── -->
 <nav>
     <button class="nbtn" id="prevBtn" onclick="changeSlide(-1)" title="Slide Anterior (←)">←</button>
-    <div id="counter">1 / 18</div>
+    <div id="counter">1 / 19</div>
     <button class="nbtn" id="nextBtn" onclick="changeSlide(1)" title="Siguiente Slide (→)">→</button>
 </nav>
 
