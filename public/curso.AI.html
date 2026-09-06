@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master en Ingeniería de Agentes de IA 2026 — Geeksoft</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:        #F8FAFC;
+            --bg-card:   #FFFFFF;
+            --navy:      #0F172A;
+            --navy-mid:  #1E293B;
+            --sky:       #0284C7; /* Sky Blue GeekSoft */
+            --sky-dim:   rgba(2,132,199,0.10);
+            --sky-brd:   rgba(2,132,199,0.28);
+            --emerald:   #059669; /* Emerald Green */
+            --emerald-dim:rgba(5,150,105,0.10);
+            --emerald-brd:rgba(5,150,105,0.25);
+            --purple:    #7C3AED; /* Indigo / Purple */
+            --purple-dim:rgba(124,58,237,0.10);
+            --purple-brd:rgba(124,58,237,0.25);
+            --amber:     #D97706; /* Amber Warning / Flow */
+            --amber-dim: rgba(217,119,6,0.10);
+            --amber-brd: rgba(217,119,6,0.25);
+            --red:       #E11D48;
+            --red-dim:   rgba(225,29,72,0.08);
+            --text:      #0F172A;
+            --text-dim:  rgba(15,23,42,0.68);
+            --border:    rgba(15,23,42,0.12);
+            --shadow:    0 4px 20px rgba(15,23,42,0.06);
+            --shadow-lg: 0 12px 40px rgba(15,23,42,0.12);
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* ─── PROGRESS BAR ─── */
+        #progress {
+            position: fixed; top: 0; left: 0; height: 5px; z-index: 999;
+            background: linear-gradient(90deg, var(--sky), var(--emerald), var(--purple), var(--amber));
+            transition: width 0.4s ease;
+        }
+
+        /* ─── DECK ─── */
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 20px 48px 70px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.36s ease, transform 0.36s ease;
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 14px; z-index: 999;
+            background: rgba(255,255,255,0.92);
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(8px);
+        }
+        .nbtn {
+            width: 38px; height: 38px; border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--text); font-size: 18px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow); transition: all 0.2s;
+        }
+        .nbtn:hover { background: var(--sky-dim); border-color: var(--sky-brd); transform: scale(1.08); color: var(--sky); }
+        .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
+        #counter {
+            font-size: 13px; color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace; min-width: 70px; text-align: center; font-weight: 800;
+        }
+
+        /* ─── TYPOGRAPHY & UTILS ─── */
+        .tag {
+            font-size: 11.5px; font-weight: 800; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+        }
+        h1 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: var(--navy); }
+        h2 { font-size: clamp(1.7rem, 2.7vw, 2.4rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
+        .sub { font-size: clamp(0.90rem, 1.35vw, 1.08rem); color: var(--text-dim); font-weight: 400; margin-bottom: 16px; text-align: center; max-width: 1040px; line-height: 1.45; }
+        
+        .hi   { color: var(--sky); }
+        .hi-e { color: var(--emerald); }
+        .hi-p { color: var(--purple); }
+        .hi-a { color: var(--amber); }
+        .hi-r { color: var(--red); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--sky-dim); border: 1px solid var(--sky-brd);
+            border-radius: 100px; padding: 6px 18px; font-size: 12px;
+            color: var(--sky); font-weight: 800; letter-spacing: 0.8px;
+        }
+
+        /* ─── FOOTNOTES ─── */
+        .footnote {
+            margin-top: 14px;
+            font-size: 10px;
+            color: #64748b;
+            line-height: 1.4;
+            width: 100%;
+            max-width: 1240px;
+            text-align: left;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 6px;
+        }
+        .fn-term { font-weight: 800; color: #0f172a; }
+
+        /* ─── FLOW & DIAGRAM COMPONENTS ─── */
+        .flow-grid {
+            width: 100%; max-width: 1240px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px; align-items: stretch;
+        }
+        .flow-card {
+            background: #ffffff; border: 1px solid var(--border);
+            border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow);
+            display: flex; flex-direction: column; gap: 6px; text-align: left;
+        }
+
+        .keys-diagram-light {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; width: 100%; max-width: 1240px; margin: 8px 0 12px;
+        }
+        .key-card-light {
+            flex: 1; background: #ffffff; border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px 14px; box-shadow: var(--shadow);
+            text-align: center; display: flex; flex-direction: column; gap: 4px; align-items: center;
+        }
+
+        /* ─── COMPARISON TABLES ─── */
+        .table-container {
+            width: 100%; max-width: 1240px; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 14px;
+            overflow: hidden; box-shadow: var(--shadow);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+        th { background: #f1f5f9; padding: 10px 14px; font-weight: 800; color: var(--navy); border-bottom: 2px solid var(--border); }
+        td { padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+
+        /* ─── CODE SNIPPET BOX ─── */
+        .code-box {
+            background: #0f172a; color: #f8fafc; border-radius: 10px;
+            padding: 10px 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; line-height: 1.45; text-align: left; overflow-x: auto;
+        }
+
+        /* ─── TIMELINE ─── */
+        .timeline-grid {
+            display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+            gap: 10px; align-items: center; width: 100%; max-width: 1240px; margin-bottom: 12px;
+        }
+        .timeline-card {
+            background: #ffffff; border: 1px solid var(--border);
+            border-radius: 14px; padding: 14px; text-align: left; box-shadow: var(--shadow);
+        }
+        .t-step { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
+    </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div id="deck">
+
+<!-- ══════════════════════════════════
+     S1 · PORTADA MASTERCLASS
+══════════════════════════════════ -->
+<section class="slide active" id="s1">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <span class="badge">GEEKSOFT ACADEMY · MASTERCLASS 2026</span>
+        <span style="font-size:12px; background:var(--emerald-dim); color:var(--emerald); border:1px solid var(--emerald-brd); padding:4px 12px; border-radius:100px; font-weight:800;">
+            PROD-READY ARCHITECTURE
+        </span>
+    </div>
+
+    <h1>Ingeniería de <span class="hi">Agentes de IA</span></h1>
+    <p class="sub" style="font-size:1.2rem; font-weight:500;">
+        De Conceptos Básicos y LLMs a Sistemas Multi-Agente Autónomos, MCP, Sandboxing y Despliegue en Producción
+    </p>
+
+    <div style="width:100%; max-width:1160px; display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; margin:20px 0;">
+        <div class="card" style="padding:18px; border-top:5px solid var(--sky); text-align:left;">
+            <div style="font-size:24px; margin-bottom:6px;">🧠</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">1. Fundamentos & ReAct</div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.45;">Ciclo de razonamiento, Tool Calling y memoria contextual estructurada.</div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--emerald); text-align:left;">
+            <div style="font-size:24px; margin-bottom:6px;">🔌</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">2. Protocolo MCP</div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.45;">El nuevo estándar universal para conectar agentes a bases de datos y APIs.</div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--purple); text-align:left;">
+            <div style="font-size:24px; margin-bottom:6px;">⚡</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">3. Frameworks Core</div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.45;">Pydantic AI (Type Safety) & LangGraph (Grafos Cíclicos con Estado).</div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--amber); text-align:left;">
+            <div style="font-size:24px; margin-bottom:6px;">🛡️</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">4. Despliegue & Sandbox</div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.45;">Scraping headless en Docker VPS, VoiceStudio y Frontend AG-UI en tiempo real.</div>
+        </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:20px; margin-top:8px;">
+        <span style="font-size:12px; color:var(--text-dim);"><strong style="color:var(--navy);">Nivel:</strong> Intermedio a Avanzado</span>
+        <span style="font-size:12px; color:var(--text-dim);"><strong style="color:var(--navy);">Enfoque:</strong> 100% Práctico & Arquitectura Real</span>
+        <span style="font-size:12px; color:var(--text-dim);"><strong style="color:var(--navy);">Infraestructura:</strong> VPS Contabo + Docker + GitHub</span>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">GeekSoft AI Vault:</span> Bóveda de conocimiento técnico de alta ingeniería para el desarrollo y despliegue de herramientas autónomas de IA.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S2 · LA GRAN EVOLUCIÓN
+══════════════════════════════════ -->
+<section class="slide" id="s2" style="transform:translateX(70px);">
+    <p class="tag">Evolución de Paradigmas de Inteligencia Artificial</p>
+    <h2>De Chatbots Estáticos a <span class="hi">Sistemas Agénticos Autónomos</span></h2>
+    <p class="sub">Por qué el prompt engineering tradicional llegó a su techo y cómo los agentes resuelven problemas no lineales</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; text-align:left;">
+        <div class="card" style="padding:20px; border-top:5px solid #94a3b8;">
+            <div style="font-size:24px; margin-bottom:6px;">💬</div>
+            <div style="font-size:15px; font-weight:800; color:var(--navy);">Generación Simple (LLM Directo)</div>
+            <div style="font-size:11.5px; color:var(--red); font-weight:700; margin:4px 0 8px;">Entrada Única ➔ Salida Única (One-Shot)</div>
+            <ul style="font-size:11.5px; color:var(--text-dim); line-height:1.6; padding-left:16px;">
+                <li><strong>Sin ejecución:</strong> Solo predice texto basándose en pesos estáticos.</li>
+                <li><strong>Alucinaciones:</strong> No puede contrastar fuentes ni verificar cálculos.</li>
+                <li><strong>Cero efecto en el mundo:</strong> Incapaz de enviar emails, consultar SQL o ejecutar scripts.</li>
+            </ul>
+        </div>
+
+        <div class="card" style="padding:20px; border-top:5px solid var(--sky);">
+            <div style="font-size:24px; margin-bottom:6px;">📚</div>
+            <div style="font-size:15px; font-weight:800; color:var(--navy);">RAG Clásico (Retrieval Augmented)</div>
+            <div style="font-size:11.5px; color:var(--sky); font-weight:700; margin:4px 0 8px;">Búsqueda Vectorial ➔ Síntesis en Contexto</div>
+            <ul style="font-size:11.5px; color:var(--text-dim); line-height:1.6; padding-left:16px;">
+                <li><strong>Acceso a datos privados:</strong> Inyecta fragmentos relevantes en el prompt.</li>
+                <li><strong>Limitación:</strong> Flujo puramente lineal de lectura; no toma decisiones iterativas.</li>
+                <li><strong>Sin auto-corrección:</strong> Si el chunk es erróneo, la respuesta falla.</li>
+            </ul>
+        </div>
+
+        <div class="card" style="padding:20px; border-top:5px solid var(--emerald); background:#f0fdf4;">
+            <div style="font-size:24px; margin-bottom:6px;">🤖</div>
+            <div style="font-size:15px; font-weight:800; color:var(--emerald);">Sistemas Agénticos (State-of-the-Art)</div>
+            <div style="font-size:11.5px; color:var(--emerald); font-weight:800; margin:4px 0 8px;">Bucle ReAct: Pensar ➔ Actuar ➔ Observar ➔ Corregir</div>
+            <ul style="font-size:11.5px; color:var(--navy); line-height:1.6; padding-left:16px;">
+                <li><strong>Invocación Dinámica de Herramientas:</strong> Usa APIs, Terminal, Web y BDs.</li>
+                <li><strong>Auto-Corrección en Bucle:</strong> Si una tool arroja error, reintenta con otra estrategia.</li>
+                <li><strong>Persistencia de Estado:</strong> Mantiene memoria de corto y largo plazo.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">ReAct (Reasoning + Acting):</span> Patrón arquitectónico donde el modelo genera trazas de razonamiento explícito antes de emitir llamadas a funciones externas.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S3 · ANATOMÍA DE UN AGENTE
+══════════════════════════════════ -->
+<section class="slide" id="s3" style="transform:translateX(70px);">
+    <p class="tag">Arquitectura de Sistemas Autónomos</p>
+    <h2>Los <span class="hi">4 Pilares Fundamentales</span> de un Agente en Producción</h2>
+    <p class="sub">Un agente de IA no es un prompt largo; es una aplicación de software compuesta por cuatro subsistemas críticos</p>
+
+    <div class="flow-grid">
+        <div class="flow-card" style="border-top:4px solid var(--sky);">
+            <div style="font-size:22px;">🎯</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">1. Motor de Planificación</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                • Descomposición jerárquica de objetivos en sub-tareas ejecutables.<br/>
+                • Algoritmos de reflexión y verificación de resultados contra el objetivo del usuario.
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--emerald);">
+            <div style="font-size:22px;">🧠</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">2. Memoria & Estado</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                • <strong>Corto Plazo:</strong> Context window, scratchpads y variables de sesión.<br/>
+                • <strong>Largo Plazo:</strong> Bases vectoriales (Milvus/Pgvector), Knowledge Graph y logs transaccionales.
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--purple);">
+            <div style="font-size:22px;">🔌</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">3. Tool Calling & MCP</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                • Catálogo estandarizado de funciones tipadas (JSON Schema).<br/>
+                • Protocolo MCP para acceder a bases SQL, GitHub, sistemas ERP y navegación web.
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--amber);">
+            <div style="font-size:22px;">🛡️</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">4. Entorno Sandbox Seguro</div>
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.5;">
+                • Contenedores Docker aislados para ejecución de código y scripts.<br/>
+                • Políticas de permisos estrictas (Zero-Trust) para proteger la máquina host y credenciales.
+            </div>
+        </div>
+    </div>
+
+    <div class="sec-box-light" style="width:100%; max-width:1240px; margin-top:14px; background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:12px 18px; text-align:left;">
+        <div style="font-size:11.5px; font-weight:800; color:var(--navy); margin-bottom:4px;">
+            🔄 Ciclo de Ejecución en Producción:
+        </div>
+        <div style="font-size:11px; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">
+            Input Usuario ➔ [Planificador / LLM] ➔ Decisión de Acción ➔ [MCP Server / Tool Sandbox] ➔ Observación de Resultado ➔ [Auto-Evaluación] ➔ Respuesta Final o Siguiente Iteración
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Sandbox:</span> Entorno virtualizado o contenedor con recursos y accesos restringidos para evitar daños en producción.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S4 · EL ESTÁNDAR UNIVERSAL: MCP
+══════════════════════════════════ -->
+<section class="slide" id="s4" style="transform:translateX(70px);">
+    <p class="tag">Estándares Abiertos de la Industria</p>
+    <h2>Model Context Protocol (<span class="hi">MCP</span>)</h2>
+    <p class="sub">El "puerto USB-C" de la inteligencia artificial: cómo Anthropic y la comunidad resolvieron el problema N×M de integraciones</p>
+
+    <div class="keys-diagram-light">
+        <div class="key-card-light" style="border-top:4px solid var(--sky);">
+            <div style="font-size:22px;">🖥️</div>
+            <div style="font-size:13px; font-weight:800; color:var(--sky);">MCP Host / App</div>
+            <div style="font-size:10.5px; color:var(--text-dim);">Antigravity IDE, Claude Desktop, Cursor, Agente Backend en Python</div>
+        </div>
+
+        <div style="font-size:20px; color:var(--sky); font-weight:900;">➔ [JSON-RPC] ➔</div>
+
+        <div class="key-card-light" style="border-top:4px solid var(--purple);">
+            <div style="font-size:22px;">🔌</div>
+            <div style="font-size:13px; font-weight:800; color:var(--purple);">MCP Server (Servicio)</div>
+            <div style="font-size:10.5px; color:var(--text-dim);">Expone: Tools (Acciones), Resources (Lecturas), Prompts (Plantillas)</div>
+        </div>
+
+        <div style="font-size:20px; color:var(--purple); font-weight:900;">➔ [Driver / API] ➔</div>
+
+        <div class="key-card-light" style="border-top:4px solid var(--emerald);">
+            <div style="font-size:22px;">🗄️</div>
+            <div style="font-size:13px; font-weight:800; color:var(--emerald);">Fuentes & Servicios</div>
+            <div style="font-size:10.5px; color:var(--text-dim);">PostgreSQL, GitHub, Playwright, Filesystem, SAP / ERP</div>
+        </div>
+    </div>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:10px; text-align:left;">
+        <div class="card" style="padding:16px; border-left:5px solid var(--red);">
+            <div style="font-size:13.5px; font-weight:800; color:var(--red); margin-bottom:4px;">❌ Antes de MCP (Arquitectura Frágil N×M)</div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
+                Cada framework (LangChain, LlamaIndex, OpenAI Assistant, CrewAI) requería escribir wrappers específicos para cada API. Si la API cambiaba, se rompían todas las implementaciones.
+            </div>
+        </div>
+
+        <div class="card" style="padding:16px; border-left:5px solid var(--emerald); background:#f0fdf4;">
+            <div style="font-size:13.5px; font-weight:800; color:var(--emerald); margin-bottom:4px;">✅ Con MCP (Estandarización 1 a N)</div>
+            <div style="font-size:11.5px; color:var(--navy); line-height:1.5;">
+                Escribes el MCP Server una sola vez (en Python o TypeScript) y cualquier cliente de IA (local, cloud, IDE o bot) puede consumir sus recursos y herramientas automáticamente.
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">JSON-RPC 2.0:</span> Protocolo ligero de comunicación remota que opera sobre Stdio (consola local) o SSE (Server-Sent Events para servidores remotos).
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S5 · FRAMEWORKS CORE 2026
+══════════════════════════════════ -->
+<section class="slide" id="s5" style="transform:translateX(70px);">
+    <p class="tag">Ecosistema de Desarrollo de Agentes</p>
+    <h2>Frameworks Core: <span class="hi">Matriz Comparativa 2026</span></h2>
+    <p class="sub">No existe una herramienta única para todo; la clave es saber exactamente cuándo elegir cada framework</p>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:20%;">Framework</th>
+                    <th style="width:25%;">Filosofía & Fortalezas</th>
+                    <th style="width:25%;">Casos de Uso Ideales</th>
+                    <th style="width:30%;">Cuándo EVITARLO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color:var(--purple); font-size:13px;">LangGraph</strong><br/><span style="font-size:10.5px; color:#64748b;">LangChain</span></td>
+                    <td><strong>Grafos Cíclicos con Estado</strong>, checkpointers de persistencia, branching condicional y Human-in-the-Loop nativo.</td>
+                    <td>Pipelines multi-paso complejos, bots con aprobación humana, workflows con reversión en el tiempo (time-travel).</td>
+                    <td>Tareas lineales simples de un solo paso (añade sobrecarga innecesaria de boilerplate).</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--sky); font-size:13px;">Pydantic AI</strong><br/><span style="font-size:10.5px; color:#64748b;">Pydantic Team</span></td>
+                    <td><strong>Type-Safe & Dependency Injection</strong>. Validación estricta con Pydantic V2, soporte de streaming y Pythonic 100%.</td>
+                    <td>Backend APIs con FastAPI, extracción estructurada de datos, microservicios empresariales robustos y tipados.</td>
+                    <td>Sistemas de enjambre con dinámicas de roles emergentes conversacionales sin esquema fijo.</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--emerald); font-size:13px;">CrewAI</strong><br/><span style="font-size:10.5px; color:#64748b;">CrewAI Inc.</span></td>
+                    <td><strong>Equipos basados en Roles</strong> (Researcher, Writer, Reviewer) con delegación automática de tareas entre agentes.</td>
+                    <td>Investigación automatizada, redacción de contenidos, prototipado rápido de colaboración multi-agente.</td>
+                    <td>Workflows deterministas de misión crítica donde cada paso deba seguir un grafo de estados rígido.</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--amber); font-size:13px;">Browser-Use / Obscura</strong><br/><span style="font-size:10.5px; color:#64748b;">Open Source</span></td>
+                    <td><strong>Computer & Browser Use</strong>. Control de navegador vía Playwright + LLMs de visión para automatizar webs complejas.</td>
+                    <td>Scraping de sitios con SPAs dinámicas, automatización de portales sin API, extracción de datos de LinkedIn / Portales B2B.</td>
+                    <td>Servicios de alto rendimiento que requieran latencia menor a 1 segundo (usar llamadas HTTP directas).</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Regla de Oro Geeksoft:</span> Usar <strong>Pydantic AI</strong> para la capa de servicios y tipado + <strong>LangGraph</strong> para la orquestación del flujo global de negocio.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S6 · PYDANTIC AI EN PROFUNDIDAD
+══════════════════════════════════ -->
+<section class="slide" id="s6" style="transform:translateX(70px);">
+    <p class="tag">Type Safety en Agentes de Producción</p>
+    <h2>Deep Dive: <span class="hi">Pydantic AI</span></h2>
+    <p class="sub">Cómo garantizar que las respuestas de los LLMs respeten contratos de datos estrictos en tiempo de ejecución</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: 1.15fr 1fr; gap:16px; text-align:left;">
+        <div class="card" style="padding:16px; display:flex; flex-direction:column; gap:10px;">
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">✨ Principales Ventajas Arquitectónicas</div>
+            
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55;">
+                • <strong style="color:var(--navy);">Validación Estricta en Origen:</strong> Si el LLM retorna un campo faltante o con tipo inválido, Pydantic AI solicita re-corrección automática sin romper el backend.<br/><br/>
+                • <strong style="color:var(--navy);">Inyección de Dependencias (<code class="mono">RunContext[Deps]</code>):</strong> Pasa conexiones a PostgreSQL, clientes HTTP o tokens de sesión de manera segura y tipada a las herramientas del agente.<br/><br/>
+                • <strong style="color:var(--navy);">Compatibilidad Modelo-Agnóstica:</strong> Cambia de Gemini 2.5 Flash a Claude 3.7 Sonnet o OpenAI o3-mini cambiando una sola línea de configuración.
+            </div>
+
+            <div style="background:#f0f9ff; border:1px solid var(--sky-brd); padding:10px 14px; border-radius:10px; font-size:11px; color:#0369a1;">
+                💡 <strong>Integración con FastAPI:</strong> Se integra nativamente en endpoints asíncronos con validación de schemas OpenAPI en Swagger.
+            </div>
+        </div>
+
+        <div class="code-box">
+<span style="color:#94a3b8;"># Ejemplo Minimalista de Agente con Tipado Estricto</span>
+<span style="color:#38bdf8;">from</span> pydantic <span style="color:#38bdf8;">import</span> BaseModel, Field
+<span style="color:#38bdf8;">from</span> pydantic_ai <span style="color:#38bdf8;">import</span> Agent, RunContext
+
+<span style="color:#38bdf8;">class</span> <span style="color:#4ade80;">RiskEvaluation</span>(BaseModel):
+    empresa: <span style="color:#fb923c;">str</span>
+    score: <span style="color:#fb923c;">int</span> = Field(ge=<span style="color:#f472b6;">0</span>, le=<span style="color:#f472b6;">1000</span>)
+    decision: <span style="color:#fb923c;">str</span> = Field(pattern=<span style="color:#a7f3d0;">"^(APROBADO|RECHAZADO|OBSERVADO)$"</span>)
+
+agent = Agent(
+    <span style="color:#a7f3d0;">'google-gla:gemini-2.5-flash'</span>,
+    result_type=RiskEvaluation,
+    system_prompt=<span style="color:#a7f3d0;">"Eres el evaluador de riesgo financiero de GeekSoft."</span>
+)
+
+result = agent.run_sync(<span style="color:#a7f3d0;">"Evalúa a Corporación ABC con ratio de liquidez 1.8"</span>)
+<span style="color:#38bdf8;">print</span>(result.data.decision)  <span style="color:#94a3b8;"># Totalmente tipado con autocompletado en IDE</span>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Type Safety:</span> Capacidad del lenguaje para detectar discrepancias de tipos en tiempo de compilación o ejecución antes de que afecten la base de datos.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S7 · ORQUESTACIÓN CON LANGGRAPH
+══════════════════════════════════ -->
+<section class="slide" id="s7" style="transform:translateX(70px);">
+    <p class="tag">Orquestación de Flujos Cíclicos Complejos</p>
+    <h2>State Machines & <span class="hi">LangGraph</span></h2>
+    <p class="sub">Cómo diseñar grafos de control con memoria transaccional, checkpoints y supervisión humana</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; text-align:left;">
+        <div class="card" style="padding:18px; border-top:5px solid var(--purple);">
+            <div style="font-size:24px;">🔄</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy); margin:4px 0;">1. Grafos Cíclicos con Estado</div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
+                A diferencia de DAGs rígidos (Airflow), permite iterar en bucles de reintento hasta que una condición de parada o umbral de calidad sea satisfecho.
+            </div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--emerald);">
+            <div style="font-size:24px;">💾</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy); margin:4px 0;">2. Checkpointers de Persistencia</div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
+                Guarda el estado completo del grafo en PostgreSQL / SQLite en cada nodo. Si el servidor se reinicia, el agente reanuda exactamente donde se quedó.
+            </div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--amber);">
+            <div style="font-size:24px;">👤</div>
+            <div style="font-size:14px; font-weight:800; color:var(--navy); margin:4px 0;">3. Human-in-the-Loop & Time Travel</div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.5;">
+                Pausa la ejecución antes de acciones críticas (ej. transferencias bancarias o emails), solicita aprobación y permite editar el estado pasado para re-ejecutar.
+            </div>
+        </div>
+    </div>
+
+    <div class="keys-diagram-light" style="margin-top:14px;">
+        <div class="key-card-light" style="padding:10px;">
+            <div style="font-size:12px; font-weight:800; color:var(--navy);">[Nodo 1: Ingesta]</div>
+            <div style="font-size:10px; color:#64748b;">Extrae datos brutos</div>
+        </div>
+        <div style="font-weight:900; color:var(--purple);">➔</div>
+        <div class="key-card-light" style="padding:10px;">
+            <div style="font-size:12px; font-weight:800; color:var(--navy);">[Nodo 2: Evaluación]</div>
+            <div style="font-size:10px; color:#64748b;">Ejecuta scoring ML</div>
+        </div>
+        <div style="font-weight:900; color:var(--purple);">➔ [Condicional] ➔</div>
+        <div class="key-card-light" style="padding:10px; border:2px dashed var(--amber);">
+            <div style="font-size:12px; font-weight:800; color:var(--amber);">[Nodo 3: Pausa Humana]</div>
+            <div style="font-size:10px; color:#64748b;">Aprobación de Oficial de Riesgo</div>
+        </div>
+        <div style="font-weight:900; color:var(--emerald);">➔</div>
+        <div class="key-card-light" style="padding:10px;">
+            <div style="font-size:12px; font-weight:800; color:var(--emerald);">[Nodo 4: Emisión]</div>
+            <div style="font-size:10px; color:#64748b;">Genera reporte final</div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Time-Travel Debugging:</span> Capacidad de inspeccionar estados históricos de una sesión agéntica y bifurcar ramas de ejecución para pruebas.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S8 · NAVEGACIÓN WEB Y COMPUTER USE
+══════════════════════════════════ -->
+<section class="slide" id="s8" style="transform:translateX(70px);">
+    <p class="tag">Automatización Web & Computer Use</p>
+    <h2>Navegación Autónoma: <span class="hi">Browser-Use & Obscura</span></h2>
+    <p class="sub">Cómo los agentes interactúan con interfaces visuales, resuelven flujos complejos y extraen datos sin APIs</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: 1fr 1fr; gap:16px; text-align:left;">
+        <div class="card" style="padding:18px; border-top:5px solid var(--sky);">
+            <div style="font-size:22px; margin-bottom:4px;">🌐 <strong>Browser-Use</strong> (Playwright + Vision LLM)</div>
+            <div style="font-size:12px; color:var(--text-dim); line-height:1.55; margin-top:8px;">
+                • <strong>Percepción Multimodal:</strong> Captura screenshots de la página, numera interactivamente los elementos clickeables (bounding boxes) y le pide al LLM la coordenada exacta de acción.<br/><br/>
+                • <strong>Manejo de Formularios y Modales:</strong> Escribe texto en campos dinámicos, sortea popups y sigue enlaces como un usuario humano.<br/><br/>
+                • <strong>Despliegue Ideal:</strong> Docker container en VPS Contabo con Chromium headless.
+            </div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--purple);">
+            <div style="font-size:22px; margin-bottom:4px;">🦀 <strong>Obscura</strong> (Rust Headless Stealth Browser)</div>
+            <div style="font-size:12px; color:var(--text-dim); line-height:1.55; margin-top:8px;">
+                • <strong>Ultra-Ligero (30MB RAM):</strong> Escrito en Rust de alto rendimiento para reemplazar instancias pesadas de Chrome que consumen gigabytes de memoria.<br/><br/>
+                • <strong>Anti-Bot Evasión Avanzada:</strong> Modifica fingerprints TLS, Canvas, WebGL y Headers HTTP para navegar sitios protegidos por Cloudflare o Datadome.<br/><br/>
+                • <strong>Ideal Para:</strong> Tareas masivas de web scraping continuo y agentes de recolección en servidores económicos.
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Regla de Aislamiento Geeksoft:</span> Toda navegación automatizada debe ejecutarse en Docker remoto en el VPS Contabo para no ralentizar el equipo local ni bloquear sesiones.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S9 · AUDIO Y PIPELINES MULTIMEDIA LOCAL
+══════════════════════════════════ -->
+<section class="slide" id="s9" style="transform:translateX(70px);">
+    <p class="tag">Pipelines de Voz & Multimedia Soberana</p>
+    <h2>Voz y Video Local: <span class="hi">VoiceStudio & KrillinAI</span></h2>
+    <p class="sub">Clonado de voz instantáneo y doblaje multilingüe autónomo ejecutándose 100% en infraestructura propia</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: 1fr 1fr; gap:16px; text-align:left;">
+        <div class="card" style="padding:18px; border-top:5px solid var(--emerald);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:15px; font-weight:800; color:var(--navy);">🎙️ VoiceStudio (Open Source ElevenLabs)</span>
+                <span style="font-size:10.5px; background:var(--emerald-dim); color:var(--emerald); padding:2px 8px; border-radius:6px; font-weight:800;">Zero Latency</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55; margin-top:8px;">
+                • <strong>Clonado de Voz en 3 Segundos:</strong> Requiere una muestra de audio ultra-corta para replicar tono, emoción y cadencia con modelos neurales locales (ChatTTS / F5-TTS).<br/><br/>
+                • <strong>Soberanía Total & Costo Cero por Token:</strong> Elimina pagos recurrentes a APIs propietarias como ElevenLabs, garantizando privacidad total en grabaciones ejecutivas.
+            </div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--amber);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:15px; font-weight:800; color:var(--navy);">🎬 KrillinAI (Pipeline de Doblaje Autónomo)</span>
+                <span style="font-size:10.5px; background:var(--amber-dim); color:var(--amber); padding:2px 8px; border-radius:6px; font-weight:800;">End-to-End</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55; margin-top:8px;">
+                • <strong>Workflow 100% Automatizado:</strong> Extracción de audio ➔ Transcripción (Whisper) ➔ Traducción contextual (LLM) ➔ Síntesis de voz sincronizada (TTS) ➔ Lip-syncing de video.<br/><br/>
+                • <strong>Localización Global de Contenidos:</strong> Permite transformar masterclasses y capacitaciones técnicas en español a inglés, portugués o mandarín en minutos.
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">TTS (Text-to-Speech):</span> Síntesis de voz artificial de alta fidelidad con redes neuronales generativas.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S10 · RAG AGÉNTICO Y BÚSQUEDA SEMÁNTICA
+══════════════════════════════════ -->
+<section class="slide" id="s10" style="transform:translateX(70px);">
+    <p class="tag">Recuperación de Información de Próxima Generación</p>
+    <h2>RAG Agéntico & <span class="hi">Búsqueda Semántica Avanzada</span></h2>
+    <p class="sub">Cómo superar las fallas del RAG básico mediante enrutamiento inteligente, re-ranking y grafos de conocimiento</p>
+
+    <div class="flow-grid">
+        <div class="flow-card" style="border-top:4px solid var(--sky);">
+            <div style="font-size:20px;">🧭</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">1. Query Router</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
+                El agente analiza la consulta y decide si acudir a una base vectorial, hacer query a PostgreSQL o buscar en la web.
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--purple);">
+            <div style="font-size:20px;">🔍</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">2. Búsqueda Híbrida</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
+                Combina BM25 (palabras clave exactas como IDs o leyes) con Dense Embeddings (significado conceptual).
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--amber);">
+            <div style="font-size:20px;">⚖️</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">3. Re-Ranking Neural</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
+                Un modelo Cross-Encoder (ej. Cohere / BGE-Reranker) reordena los top-20 resultados para extraer los 3 más precisos.
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--emerald);">
+            <div style="font-size:20px;">🛡️</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">4. Self-Correction</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
+                El LLM evalúa si los documentos recuperados responden la pregunta. Si son insuficientes, reescribe el query y reintenta.
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container" style="margin-top:14px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>RAG Tradicional (Naive RAG)</th>
+                    <th>RAG Agéntico (GeekSoft Standard)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Estrategia de Búsqueda</strong></td>
+                    <td style="color:var(--red);">Cosine similarity estático en un solo vector store</td>
+                    <td style="color:var(--emerald); font-weight:700;">Enrutamiento multi-fuente + Hybrid Search + Re-ranking</td>
+                </tr>
+                <tr>
+                    <td><strong>Manejo de Consultas Complejas</strong></td>
+                    <td style="color:var(--red);">Falla al comparar múltiples documentos o periodos</td>
+                    <td style="color:var(--emerald); font-weight:700;">Descompone en sub-preguntas y agrega resultados</td>
+                </tr>
+                <tr>
+                    <td><strong>Tolerancia a Alucinaciones</strong></td>
+                    <td style="color:var(--red);">Alta si los fragmentos contienen ruido</td>
+                    <td style="color:var(--emerald); font-weight:700;">Cita estricta con verificación cruzada en el grafo</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Cross-Encoder:</span> Modelo neural que evalúa conjuntamente la pregunta y el fragmento para predecir su relevancia con máxima precisión.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S11 · FRONTEND AGÉNTICO (AG-UI)
+══════════════════════════════════ -->
+<section class="slide" id="s11" style="transform:translateX(70px);">
+    <p class="tag">Experiencia de Usuario en Tiempo Real</p>
+    <h2>Frontend Agéntico: <span class="hi">Streaming & AG-UI</span></h2>
+    <p class="sub">Cómo diseñar interfaces interactivas que no se congelen mientras los agentes razonan y ejecutan herramientas</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: 1fr 1fr; gap:16px; text-align:left;">
+        <div class="card" style="padding:18px; border-top:5px solid var(--sky);">
+            <div style="font-size:15px; font-weight:800; color:var(--navy); margin-bottom:8px;">
+                ⚡ Protocolo SSE (Server-Sent Events)
+            </div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55;">
+                • <strong>Stream de Pensamiento y Tokens:</strong> Transmite tokens de razonamiento en tiempo real al navegador para reducir la percepción de latencia del usuario.<br/><br/>
+                • <strong>Eventos de Estado Estructurados:</strong> El backend emite eventos tipados (<code class="mono">tool_start</code>, <code class="mono">tool_result</code>, <code class="mono">status_update</code>) que el frontend renderiza como badges animados de progreso.
+            </div>
+        </div>
+
+        <div class="card" style="padding:18px; border-top:5px solid var(--emerald);">
+            <div style="font-size:15px; font-weight:800; color:var(--navy); margin-bottom:8px;">
+                🎨 Renderizado Dinámico de Artefactos
+            </div>
+            <div style="font-size:11.5px; color:var(--text-dim); line-height:1.55;">
+                • <strong>Componentes Vivos (Generative UI):</strong> En lugar de retornar texto plano, el agente emite bloques interactivos (gráficos Chart.js, tablas editables, botones de acción).<br/><br/>
+                • <strong>Formularios Human-in-the-Loop:</strong> Si el agente necesita confirmación de parámetros, renderiza un formulario emergente en el chat antes de continuar el flujo.
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Generative UI:</span> Paradigma donde la interfaz gráfica se adapta dinámicamente según la respuesta y herramientas ejecutadas por el agente.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S12 · SEGURIDAD Y SANDBOXING EN VPS
+══════════════════════════════════ -->
+<section class="slide" id="s12" style="transform:translateX(70px);">
+    <p class="tag">Infraestructura & Ciberseguridad para Agentes</p>
+    <h2>Seguridad Criptográfica & <span class="hi">Sandboxing Remoto</span></h2>
+    <p class="sub">El estándar implementado en el VPS Contabo de Geeksoft: aislamiento absoluto, Zero-Trust y gestión de secretos</p>
+
+    <div class="keys-diagram-light">
+        <div class="key-card-light" style="border-top:4px solid var(--sky);">
+            <div style="font-size:22px;">💻</div>
+            <div style="font-size:13px; font-weight:800; color:var(--sky);">Laptop de Desarrollo</div>
+            <div style="font-size:10.5px; color:var(--text-dim);">Limpia, sin navegadores visuales en bucle, código y notas en Obsidian</div>
+        </div>
+
+        <div style="font-size:20px; color:var(--sky); font-weight:900;">➔ [SSH / Git] ➔</div>
+
+        <div class="key-card-light" style="border-top:4px solid var(--emerald);">
+            <div style="font-size:22px;">🌐</div>
+            <div style="font-size:13px; font-weight:800; color:var(--emerald);">VPS Contabo (Linux)</div>
+            <div style="font-size:10.5px; color:var(--text-dim);">Host protegido con UFW Firewall, Fail2ban y Docker Engine</div>
+        </div>
+
+        <div style="font-size:20px; color:var(--emerald); font-weight:900;">➔ [Docker Sandbox] ➔</div>
+
+        <div class="key-card-light" style="border-top:4px solid var(--purple);">
+            <div style="font-size:22px;">🐳</div>
+            <div style="font-size:13px; font-weight:800; color:var(--purple);">Contenedor Aislado</div>
+            <div style="font-size:10.5px; color:var(--text-dim);">Playwright Headless, 0 puertos expuestos, cookies cifradas</div>
+        </div>
+    </div>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-top:10px; text-align:left;">
+        <div class="card" style="padding:14px; border-left:4px solid var(--emerald);">
+            <div style="font-weight:800; font-size:12.5px; color:var(--emerald);">1. Cero Exposición de Puertos</div>
+            <div style="font-size:11px; color:var(--text-dim); margin-top:4px;">El contenedor scraper opera hacia afuera y no abre puertos públicos en internet.</div>
+        </div>
+        <div class="card" style="padding:14px; border-left:4px solid var(--sky);">
+            <div style="font-size:12.5px; font-weight:800; color:var(--sky);">2. Inyección de Sesión Segura</div>
+            <div style="font-size:11px; color:var(--text-dim); margin-top:4px;">Tokens como <code class="mono">li_at</code> se montan como volúmenes de solo lectura temporales.</div>
+        </div>
+        <div class="card" style="padding:14px; border-left:4px solid var(--amber);">
+            <div style="font-size:12.5px; font-weight:800; color:var(--amber);">3. Rate Limiting Humano</div>
+            <div style="font-size:11px; color:var(--text-dim); margin-top:4px;">Delays estocásticos (3-7s) y rotación de User-Agents para evitar bloqueos.</div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Zero-Trust:</span> Modelo de seguridad donde ningún componente interno confía implícitamente en otro; cada llamada es autenticada y aislada.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S13 · MATRIZ DE DECISIÓN ESTRATÉGICA
+══════════════════════════════════ -->
+<section class="slide" id="s13" style="transform:translateX(70px);">
+    <p class="tag">Guía Definitiva de Arquitectura</p>
+    <h2>Matriz Estratégica: <span class="hi">Cuándo SÍ vs Cuándo NO</span></h2>
+    <p class="sub">Cheat-Sheet para líderes técnicos y arquitectos de software al seleccionar herramientas de IA</p>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:22%;">Tecnología</th>
+                    <th style="width:39%; color:var(--emerald);">✅ Cuándo SÍ Usarla (Best Fit)</th>
+                    <th style="width:39%; color:var(--red);">❌ Cuándo NO Usarla (Anti-Patrón)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pydantic AI</strong></td>
+                    <td>Servicios backend, APIs en FastAPI, extracción estructurada de datos y cuando se requiere type-safety estricto.</td>
+                    <td>Sistemas de chat abierto puramente recreativos o sin esquemas de datos definidos.</td>
+                </tr>
+                <tr>
+                    <td><strong>LangGraph</strong></td>
+                    <td>Flujos multi-paso no lineales con branching, bucles de reintento, supervisión humana (HITL) y necesidad de persistencia.</td>
+                    <td>Llamadas directas de un solo paso (añade complejidad innecesaria de grafos).</td>
+                </tr>
+                <tr>
+                    <td><strong>MCP Protocol</strong></td>
+                    <td>Conectar agentes con bases de datos SQL, repositorios Git, herramientas internas y cuando se quiere evitar vendor lock-in.</td>
+                    <td>Microservicios internos con protocolos gRPC ultrarrápidos de microsegundos.</td>
+                </tr>
+                <tr>
+                    <td><strong>Browser-Use</strong></td>
+                    <td>Automatizar flujos web interactivos, rellenar formularios en portales legacy y extraer datos sin API pública.</td>
+                    <td>Extracciones de alta velocidad donde existe una API REST o endpoint JSON disponible.</td>
+                </tr>
+                <tr>
+                    <td><strong>VoiceStudio</strong></td>
+                    <td>Locución de tutoriales, clonado de voz corporativo y síntesis de audio privada sin pagar suscripciones cloud.</td>
+                    <td>Aplicaciones que requieran latencias ultra-bajas en llamadas telefónicas sin GPU dedicada.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Arquitectura Pragmática:</span> El mejor ingeniero no es el que usa la herramienta más de moda, sino el que elige la herramienta más simple y robusta para el problema.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S14 · SCRAPING INTELIGENTE HEADLESS
+══════════════════════════════════ -->
+<section class="slide" id="s14" style="transform:translateX(70px);">
+    <p class="tag">Caso de Estudio Real Geeksoft</p>
+    <h2>Scraper Headless en <span class="hi">VPS Contabo</span></h2>
+    <p class="sub">Cómo construimos el sistema automatizado que vigila a los 11 líderes globales de IA sin abrir navegadores locales</p>
+
+    <div class="flow-grid">
+        <div class="flow-card" style="border-top:4px solid var(--sky);">
+            <div style="font-size:20px;">🍪</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">1. Inyección de Cookie</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
+                Token <code class="mono">li_at</code> inyectado de forma segura en Playwright para autenticar la sesión sin solicitar credenciales interactivas.
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--emerald);">
+            <div style="font-size:20px;">📜</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">2. Scroll & Extracción</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
+                Navegación headless en contenedor Docker, auto-scroll progresivo y recolección de posts, enlaces GitHub y miniaturas.
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--purple);">
+            <div style="font-size:20px;">🧹</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">3. Parsing & Filtro IA</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
+                Limpieza de texto con BeautifulSoup y regex para identificar repositorios Git, frameworks y librerías emergentes.
+            </div>
+        </div>
+
+        <div class="flow-card" style="border-top:4px solid var(--amber);">
+            <div style="font-size:20px;">📓</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">4. Sync a Bóveda Obsidian</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.45;">
+                Generación automática de notas Markdown numeradas (<code class="mono">XX - Herramienta.md</code>) e indexación en <code class="mono">00 - Vision Inicial.md</code>.
+            </div>
+        </div>
+    </div>
+
+    <div style="background:#f0fdf4; border:1px solid var(--emerald-brd); padding:12px 18px; border-radius:12px; margin-top:14px; text-align:left; width:100%; max-width:1240px;">
+        <div style="font-size:12px; font-weight:800; color:var(--emerald); margin-bottom:2px;">
+            📊 Resultado en Producción:
+        </div>
+        <div style="font-size:11px; color:var(--navy); line-height:1.5;">
+            28 publicaciones procesadas del perfil de <strong>Álvaro Cintas</strong>, descargando herramientas de vanguardia como <em>VoiceStudio</em>, <em>Obscura</em>, <em>KrillinAI</em> y catalogándolas en la bóveda de GeekSoft con sincronización a GitHub.
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Headless Execution:</span> Ejecución de navegadores sin interfaz visual de usuario, optimizando consumo de CPU y memoria RAM en servidores.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S15 · ROADMAP DE 7 DÍAS A PRODUCCIÓN
+══════════════════════════════════ -->
+<section class="slide" id="s15" style="transform:translateX(70px);">
+    <p class="tag">Plan de Acción Acelerado</p>
+    <h2>Roadmap Intensivo de <span class="hi">7 Días a Producción</span></h2>
+    <p class="sub">Cronograma paso a paso para pasar de cero conocimiento a desplegar arquitecturas de agentes en GeekSoft</p>
+
+    <div class="timeline-grid">
+        <div class="timeline-card" style="border-top:4px solid var(--sky);">
+            <span class="t-step" style="background:var(--sky-dim); color:var(--sky);">DÍAS 1 - 2</span>
+            <div style="font-weight:800; font-size:12px; color:var(--navy); margin-bottom:4px;">Fundamentos & MCP</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.4;">
+                Dominio de ReAct, Tool Calling y configuración del primer servidor MCP para consultar bases de datos.
+            </div>
+        </div>
+
+        <div style="font-size:20px; color:var(--sky); font-weight:900;">➔</div>
+
+        <div class="timeline-card" style="border-top:4px solid var(--purple);">
+            <span class="t-step" style="background:var(--purple-dim); color:var(--purple);">DÍAS 3 - 4</span>
+            <div style="font-weight:800; font-size:12px; color:var(--navy); margin-bottom:4px;">Pydantic AI & LangGraph</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.4;">
+                Construcción de agentes tipados, inyección de dependencias y grafos cíclicos con checkpointers persistentes.
+            </div>
+        </div>
+
+        <div style="font-size:20px; color:var(--purple); font-weight:900;">➔</div>
+
+        <div class="timeline-card" style="border-top:4px solid var(--emerald);">
+            <span class="t-step" style="background:var(--emerald-dim); color:var(--emerald);">DÍAS 5 - 6</span>
+            <div style="font-weight:800; font-size:12px; color:var(--navy); margin-bottom:4px;">Web & Multimedia</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.4;">
+                Automatización con Browser-Use en VPS, clonado de voz con VoiceStudio y pipelines RAG agéntico.
+            </div>
+        </div>
+
+        <div style="font-size:20px; color:var(--emerald); font-weight:900;">➔</div>
+
+        <div class="timeline-card" style="border-top:4px solid var(--amber);">
+            <span class="t-step" style="background:var(--amber-dim); color:var(--amber);">DÍA 7</span>
+            <div style="font-weight:800; font-size:12px; color:var(--navy); margin-bottom:4px;">Capstone & Despliegue</div>
+            <div style="font-size:10.5px; color:var(--text-dim); line-height:1.4;">
+                Despliegue final en Docker en Contabo VPS, streaming AG-UI en vivo y sincronización en GitHub.
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">Metodología Geeksoft:</span> 20% teoría arquitectónica y 80% código ejecutable en entornos de producción reales.
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S16 · PROYECTO CAPSTONE & LIVE STACK
+══════════════════════════════════ -->
+<section class="slide" id="s16" style="transform:translateX(70px);">
+    <p class="tag">Arquitectura del Proyecto Final</p>
+    <h2>Proyecto Capstone: <span class="hi">GeekSoft Agentic Core</span></h2>
+    <p class="sub">El sistema completo que integra todos los módulos aprendidos en una plataforma productiva</p>
+
+    <div style="width:100%; max-width:1240px; display:grid; grid-template-columns: 1.1fr 1fr; gap:16px; text-align:left;">
+        <div class="card" style="padding:18px; display:flex; flex-direction:column; gap:8px;">
+            <div style="font-size:14px; font-weight:800; color:var(--navy);">🏗️ Componentes del Stack Integrado</div>
+            <ul style="font-size:11.5px; color:var(--text-dim); line-height:1.6; padding-left:16px;">
+                <li><strong>Capa de Ingesta:</strong> Scraper Headless en VPS Contabo monitoreando feeds técnicos.</li>
+                <li><strong>Capa de Conectividad:</strong> Servidores MCP conectando PostgreSQL, GitHub y APIs de Factoring.</li>
+                <li><strong>Capa de Inteligencia:</strong> Agentes Pydantic AI para validación y LangGraph para flujos con supervisión humana.</li>
+                <li><strong>Capa de Salida:</strong> Frontend interactivo con streaming SSE y síntesis de voz con VoiceStudio.</li>
+            </ul>
+
+            <div style="display:flex; gap:10px; margin-top:6px;">
+                <span class="badge" style="font-size:11px; padding:4px 12px;">GitHub: AI.TOOLS.FOR.GEEKSOFT</span>
+                <span style="font-size:11px; background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; padding:4px 12px; border-radius:100px; font-weight:800;">
+                    100% Sincronizado
+                </span>
+            </div>
+        </div>
+
+        <div class="card" style="padding:18px; background:#0f172a; color:#f8fafc; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:12px;">
+            <div style="font-size:36px;">🚀</div>
+            <div style="font-size:16px; font-weight:900; color:#38bdf8;">¡Comienza tu Implementación Hoy!</div>
+            <div style="font-size:11.5px; color:#94a3b8; line-height:1.5; max-width:380px;">
+                Toda la documentación, notas de herramientas numeradas (#01 a #30) y scripts de despliegue están listos en tu bóveda Obsidian.
+            </div>
+            <div style="background:#1e293b; border:1px solid #334155; padding:8px 16px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#4ade80;">
+                git clone https://github.com/RichGutz/AI.TOOLS.FOR.GEEKSOFT.git
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        * <span class="fn-term">GeekSoft 2026:</span> Liderando la adopción de ingeniería agéntica y arquitecturas de software autónomas en el sector empresarial.
+    </div>
+</section>
+
+</div>
+
+<!-- ─── NAVIGATION BUTTONS ─── -->
+<nav>
+    <button class="nbtn" id="prevBtn" onclick="changeSlide(-1)" title="Slide Anterior (←)">←</button>
+    <div id="counter">1 / 16</div>
+    <button class="nbtn" id="nextBtn" onclick="changeSlide(1)" title="Siguiente Slide (→)">→</button>
+</nav>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressEl = document.getElementById('progress');
+    const counterEl = document.getElementById('counter');
+
+    function updateDeck() {
+        slides.forEach((slide, idx) => {
+            slide.classList.remove('active');
+            if (idx < currentSlide) {
+                slide.style.transform = 'translateX(-70px)';
+            } else if (idx > currentSlide) {
+                slide.style.transform = 'translateX(70px)';
+            } else {
+                slide.classList.add('active');
+            }
+        });
+
+        const pct = ((currentSlide + 1) / totalSlides) * 100;
+        progressEl.style.width = pct + '%';
+        counterEl.innerText = (currentSlide + 1) + ' / ' + totalSlides;
+
+        document.getElementById('prevBtn').disabled = (currentSlide === 0);
+        document.getElementById('nextBtn').disabled = (currentSlide === totalSlides - 1);
+    }
+
+    function changeSlide(dir) {
+        currentSlide += dir;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+        updateDeck();
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+            e.preventDefault();
+            changeSlide(1);
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault();
+            changeSlide(-1);
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            currentSlide = 0;
+            updateDeck();
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            currentSlide = totalSlides - 1;
+            updateDeck();
+        }
+    });
+
+    updateDeck();
+</script>
+
+</body>
+</html>
