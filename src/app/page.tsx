@@ -82,7 +82,7 @@ const AWAKENED_HEROES = [
 
 // Función para abrir WhatsApp directo en la App nativa (Móvil) o Web (Desktop)
 const openWhatsApp = () => {
-  const text = encodeURIComponent("Hola Geeksoft, quiero despertar, dame el red pill");
+  const text = encodeURIComponent("Hola Geeksoft, quiero despertar, dame el red pill!");
   const phone = "51991090016";
   if (typeof window !== "undefined") {
     const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
