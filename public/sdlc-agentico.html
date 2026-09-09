@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agent SDLC & Visual Canvas 2026 - GeekSoft Innovation Labs</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #0284C7;
+            --sky-dim:     rgba(2,132,199,0.10);
+            --sky-brd:     rgba(2,132,199,0.28);
+            --emerald:     #059669;
+            --emerald-dim: rgba(5,150,105,0.10);
+            --emerald-brd: rgba(5,150,105,0.25);
+            --purple:      #7C3AED;
+            --purple-dim:  rgba(124,58,237,0.10);
+            --purple-brd:  rgba(124,58,237,0.25);
+            --amber:       #D97706;
+            --amber-dim:   rgba(217,119,6,0.10);
+            --amber-brd:   rgba(217,119,6,0.25);
+            --red:         #E11D48;
+            --red-dim:     rgba(225,29,72,0.08);
+            --text:        #0F172A;
+            --text-dim:    rgba(15,23,42,0.68);
+            --border:      rgba(15,23,42,0.12);
+            --shadow:      0 4px 20px rgba(15,23,42,0.06);
+            --shadow-lg:   0 12px 40px rgba(15,23,42,0.12);
+        }
+
+        /* ─── BLINDAJE ANTI-IMPRESIÓN (DRM) ─── */
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        /* ─── WATERMARK DIGITAL ─── */
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.035; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #0f172a; transform: rotate(-25deg) scale(1.15);
+        }
+        .wm-item { padding: 30px 40px; white-space: nowrap; }
+
+        /* ─── DECK & SLIDES ─── */
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 18px 48px 72px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
+
+        /* ─── BARRA DE NAVEGACIÓN INFERIOR ─── */
+        nav {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 14px; z-index: 999;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 6px 16px; border-radius: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+        }
+        .nbtn {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--navy); font-size: 18px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow); transition: all 0.2s;
+        }
+        .nbtn:hover { background: var(--sky-dim); border-color: var(--sky-brd); transform: scale(1.1); color: var(--sky); }
+        .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
+        #counter {
+            font-size: 13px; color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace; min-width: 65px; text-align: center; font-weight: 800;
+        }
+
+        /* ─── TIPOGRAFÍA & JERARQUÍA ─── */
+        .tag {
+            font-size: 11px; font-weight: 800; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        h1 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: var(--navy); }
+        h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
+        .sub { font-size: clamp(0.92rem, 1.35vw, 1.1rem); color: var(--text-dim); font-weight: 400; margin-bottom: 14px; text-align: center; max-width: 1050px; line-height: 1.45; }
+        .hi   { color: var(--sky); }
+        .hi-b { color: var(--emerald); }
+        .hi-p { color: var(--purple); }
+        .hi-a { color: var(--amber); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* ─── TARJETAS & CONTENEDORES ─── */
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover { border-color: var(--sky-brd); }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--sky-dim); border: 1px solid var(--sky-brd);
+            border-radius: 100px; padding: 6px 18px; font-size: 12px;
+            color: var(--sky); font-weight: 800; letter-spacing: 0.5px;
+        }
+        .badge.green { background: var(--emerald-dim); border-color: var(--emerald-brd); color: var(--emerald); }
+        .badge.purple { background: var(--purple-dim); border-color: var(--purple-brd); color: var(--purple); }
+
+        /* ─── GRIDS & LAYOUTS ─── */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 1240px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; max-width: 1240px; }
+
+        .spec-box {
+            padding: 16px; display: flex; flex-direction: column; gap: 8px; text-align: left;
+        }
+        .spec-icon { font-size: 26px; }
+        .spec-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+        .spec-desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+
+        /* ─── DIAGRAMA DE FLUJO VISUAL ─── */
+        .flow-container {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
+            padding: 14px 18px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
+            margin: 6px 0; gap: 8px;
+        }
+        .flow-node {
+            flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
+            padding: 10px 8px; text-align: center; display: flex; flex-direction: column; gap: 4px;
+        }
+        .flow-node.active { border-color: var(--sky); background: #f0f9ff; }
+        .flow-node.green  { border-color: var(--emerald); background: #ecfdf5; }
+        .flow-node.purple { border-color: var(--purple); background: #f5f3ff; }
+        .flow-node.amber  { border-color: var(--amber); background: #fffbeb; }
+        .flow-node-title { font-size: 12.5px; font-weight: 800; color: var(--navy); }
+        .flow-node-desc  { font-size: 10.5px; color: var(--text-dim); }
+        .flow-arrow { font-size: 16px; color: #94a3b8; font-weight: 900; }
+
+        /* ─── TABLAS COMPARATIVAS ─── */
+        .table-wrap {
+            width: 100%; max-width: 1240px; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+        th { background: #0f172a; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.5px; }
+        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        /* ─── FOOTNOTE ─── */
+        .footnote {
+            margin-top: 10px; font-size: 10.5px; color: #64748b;
+            line-height: 1.4; width: 100%; max-width: 1240px; text-align: left;
+            border-top: 1px dashed #cbd5e1; padding-top: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MARCA DE AGUA FORENSE -->
+    <div id="watermark-layer">
+        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
+        <div class="wm-item">SDLC AGÉNTICO 2026</div>
+        <div class="wm-item">PRODUCCIÓN DETERMINISTA</div>
+        <div class="wm-item">GEEKSOFT.TECH</div>
+        <div class="wm-item">MULTI-AGENT HARNESS</div>
+        <div class="wm-item">QUALITY GATES</div>
+        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
+    </div>
+
+    <!-- CONTENEDOR DE DIAPOSITIVAS -->
+    <div id="deck">
+
+        <!-- SLIDE 1: PORTADA EJECUTIVA -->
+        <div class="slide active">
+            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+                <span class="badge">🚀 SDLC AGÉNTICO MASTERCLASS</span>
+                <span class="badge green">✨ SOTA 2026</span>
+            </div>
+            <h1>Multi-Agent Software Development Life Cycle</h1>
+            <h2>Orquestación Visual, Equipos Autónomos y Quality Gates</h2>
+            <p class="sub">
+                Cómo entregar el <strong>diseño, arquitectura, programación, auditoría de QC y despliegue</strong> de software a colectivos de agentes de IA con trazabilidad gráfica completa y cero alucinaciones.
+            </p>
+
+            <div class="grid-4" style="margin-top: 14px;">
+                <div class="card spec-box">
+                    <span class="spec-icon">🧠</span>
+                    <span class="spec-title">Director de Orquesta</span>
+                    <span class="spec-desc">Transición de picar código a gobernar requerimientos y contratos de calidad.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">📊</span>
+                    <span class="spec-title">Artefactos Visuales</span>
+                    <span class="spec-desc">Diagramación obligatoria en Mermaid.js antes de escribir una sola línea de código.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">👥</span>
+                    <span class="spec-title">5 Roles Especializados</span>
+                    <span class="spec-desc">PM, Architect, Engineering Squad, QA Auditor y DevOps Release.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🧪</span>
+                    <span class="spec-title">Quality Gates en Sandbox</span>
+                    <span class="spec-desc">Validación determinista en Docker con bucles cerrados de corrección automática.</span>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span><strong>GeekSoft Innovation Labs</strong> &bull; Sistema Operativo Agéntico</span>
+                <span>Usa <strong>&larr; &rarr;</strong> o la barra espaciadora para navegar</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: EL CAMBIO DE PARADIGMA -->
+        <div class="slide">
+            <div class="tag">⚡ Cambio de Mentalidad</div>
+            <h2>De "Programador Aislado" a "Director de Fábrica Agéntica"</h2>
+            <p class="sub">El Vibe Coding simple satura el contexto. La ingeniería agéntica moderna desacopla roles y delega ejecución.</p>
+
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-left: 4px solid var(--red);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--red);">❌ Enfoque Tradicional / Vibe Coding Básico</span>
+                        <span class="badge" style="background:var(--red-dim); color:var(--red); border-color:rgba(225,29,72,0.2);">Cuello de Botella</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; El humano programa frente al teclado mientras el LLM autocompleta.<br/>
+                        &bull; Toda la discusión y código se mezclan en una sola sesión (+100K tokens basura).<br/>
+                        &bull; El programador revisa manualmente cada línea: fatiga cognitiva inmediata.<br/>
+                        &bull; Alucinación recurrente de APIs y pérdida de coherencia arquitectónica.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-left: 4px solid var(--emerald);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--emerald);">✅ Enfoque Multi-Agente / Harness Engineering</span>
+                        <span class="badge green">Escalabilidad 10X</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; El humano actúa como <strong>Sponsor / Revisor de Gates</strong> definiendo objetivos.<br/>
+                        &bull; <strong>Contexto Aislado:</strong> Cada agente solo recibe lo que necesita para su tarea atómica.<br/>
+                        &bull; <strong>Sustrato en Archivos:</strong> La comunicación ocurre vía `PRD.md`, `openapi.json` y `test_report.json`.<br/>
+                        &bull; <strong>Verificación Determinista:</strong> Suites de tests en Docker (`pytest`) validan el éxito o fallo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Principio: <em>"Los agentes no improvisan: siguen Procedimientos Operativos Estandarizados (SOPs)."</em></span>
+                <span>Slide 2 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: LOS 5 ROLES AGÉNTICOS -->
+        <div class="slide">
+            <div class="tag">👥 Estructura de Equipo</div>
+            <h2>Los 5 Roles Agénticos del SDLC y sus Contratos de Salida</h2>
+            <p class="sub">Separación estricta de responsabilidades para garantizar coherencia y evitar el sesgo de auto-aprobación.</p>
+
+            <div class="grid-5" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-icon">👩‍💼</span>
+                    <span class="spec-title">1. Product Manager</span>
+                    <span class="badge" style="font-size:10px; padding:3px 8px;">Fase Diseño</span>
+                    <p class="spec-desc"><strong>Input:</strong> Prompt humano.<br/><strong>Output:</strong> `PRD.md` con historias de usuario y criterios de aceptación.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🏗️</span>
+                    <span class="spec-title">2. Architect Lead</span>
+                    <span class="badge purple" style="font-size:10px; padding:3px 8px;">Fase Blueprint</span>
+                    <p class="spec-desc"><strong>Input:</strong> PRD aprobado.<br/><strong>Output:</strong> Diagramas Mermaid + Topología + Esquemas de Datos SQL/Pydantic.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">💻</span>
+                    <span class="spec-title">3. Engineer Squad</span>
+                    <span class="badge" style="font-size:10px; padding:3px 8px;">Fase Coding</span>
+                    <p class="spec-desc"><strong>Input:</strong> Especificación técnica.<br/><strong>Output:</strong> Código modular Frontend/Backend + Dockerfile.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🔍</span>
+                    <span class="spec-title">4. QA Auditor</span>
+                    <span class="badge green" style="font-size:10px; padding:3px 8px;">Fase QC</span>
+                    <p class="spec-desc"><strong>Input:</strong> Código + PRD.<br/><strong>Output:</strong> Suite de pruebas en Sandbox + `test_report.json` (100% PASS).</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🚀</span>
+                    <span class="spec-title">5. DevOps Release</span>
+                    <span class="badge" style="font-size:10px; padding:3px 8px;">Fase Deploy</span>
+                    <p class="spec-desc"><strong>Input:</strong> Código aprobado.<br/><strong>Output:</strong> Contenedor en VPS + SSL Let's Encrypt + Smoke Tests.</p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Regla de Oro: <em>"El agente que programa NUNCA debe ser el que aprueba el Control de Calidad."</em></span>
+                <span>Slide 3 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: EL PIPELINE VISUAL END-TO-END -->
+        <div class="slide">
+            <div class="tag">🔄 Flujo Operativo</div>
+            <h2>Pipeline Visual End-to-End con Checkpoints Humanos</h2>
+            <p class="sub">Trazabilidad completa: el humano solo interviene en los puntos de control estratégicos (Gates 0, 1 y 3).</p>
+
+            <div class="flow-container">
+                <div class="flow-node active">
+                    <span class="flow-node-title">📋 Requerimiento</span>
+                    <span class="flow-node-desc">Humano define el QUÉ</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node active">
+                    <span class="flow-node-title">📑 PRD Formal</span>
+                    <span class="flow-node-desc">PM Agent &bull; Gate 0</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node purple">
+                    <span class="flow-node-title">📊 Diagramas Mermaid</span>
+                    <span class="flow-node-desc">Architect &bull; Gate 1</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node">
+                    <span class="flow-node-title">💻 Modular Coding</span>
+                    <span class="flow-node-desc">Frontend &amp; Backend</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node green">
+                    <span class="flow-node-title">🧪 Sandbox QC</span>
+                    <span class="flow-node-desc">Pytest &amp; Auto-Fix</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node green">
+                    <span class="flow-node-title">🚀 Staging Deploy</span>
+                    <span class="flow-node-desc">URL en Producción</span>
+                </div>
+            </div>
+
+            <div class="grid-3" style="margin-top: 14px;">
+                <div class="card spec-box">
+                    <span class="spec-title">🚦 Gate 0: Aprobación del PRD</span>
+                    <p class="spec-desc">Revisión de 2 minutos del documento de requerimientos antes de gastar presupuesto de inferencia en código.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">🚦 Gate 1: Blueprint Visual</span>
+                    <p class="spec-desc">Validación de los diagramas de secuencia y flujo en Mermaid. Si la arquitectura no tiene sentido gráfico, se corrige aquí.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">🚦 Gate 2: Bucle Auto-Corrección</span>
+                    <p class="spec-desc">Si el test falla en Docker, el QA pasa el error al Dev de forma autónoma (máximo 3 iteraciones).</p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Flujo validado en producción en el ecosistema <strong>MIFUNE &amp; GeekSoft</strong></span>
+                <span>Slide 4 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: EL ESTÁNDAR VISUAL MERMAID.JS -->
+        <div class="slide">
+            <div class="tag">📊 Artefactos Gráficos</div>
+            <h2>El Estándar Visual: Diagramación Obligatoria en Mermaid.js</h2>
+            <p class="sub">Por qué los agentes deben generar gráficos estructurados antes de construir código fuente.</p>
+
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-icon">📐</span>
+                    <span class="spec-title">Diagramas de Secuencia</span>
+                    <p class="spec-desc">
+                        Visualizan la interacción temporal entre clientes, routers FastAPI, workers en sandbox y bases de datos PostgreSQL/Redis.<br/>
+                        <strong class="mono" style="color:var(--sky);">sequenceDiagram</strong>
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🧩</span>
+                    <span class="spec-title">Diagramas de Clases &amp; Tipos</span>
+                    <p class="spec-desc">
+                        Definen los contratos de datos inmutables y modelos Pydantic V2 antes de escribir los controladores.<br/>
+                        <strong class="mono" style="color:var(--purple);">classDiagram</strong>
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🗺️</span>
+                    <span class="spec-title">Topología de Servicios (C4)</span>
+                    <p class="spec-desc">
+                        Muestran cómo se comunican los contenedores en la red Docker (`coolify`, `mifune_network`, Traefik reverse proxy).<br/>
+                        <strong class="mono" style="color:var(--emerald);">flowchart TD</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 12px; background:#0f172a; color:#f8fafc; border:none;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-weight:800; font-size:13px; color:#38bdf8;" class="mono">&lt;/&gt; Directiva Mandatoria para el Agente Arquitecto</span>
+                    <span class="badge" style="background:rgba(56,189,248,0.15); color:#38bdf8; border-color:rgba(56,189,248,0.3);">Prompt Rule</span>
+                </div>
+                <p style="font-size:11.5px; color:#94a3b8; line-height:1.5; margin-top:6px;" class="mono">
+                    "Antes de generar cualquier archivo de código fuente, debes emitir obligatoriamente un bloque ```mermaid conteniendo el diagrama de secuencia de los endpoints y el modelo de entidad-relación. La codificación no comenzará hasta la aprobación de dicho diagrama."
+                </p>
+            </div>
+
+            <div class="footnote">
+                <span>Renderizado nativo instantáneo en Obsidian Markdown, GitHub y Web.Geeksoft</span>
+                <span>Slide 5 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: TOP REPOSITORIOS (FÁBRICAS MULTI-AGENTE) -->
+        <div class="slide">
+            <div class="tag">🏛️ Catálogo de Repositorios</div>
+            <h2>Fábricas de Software Multi-Agente con Salidas Visuales</h2>
+            <p class="sub">Herramientas open-source líderes para orquestar colectivos de desarrollo autónomo.</p>
+
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--sky);">🥇 MetaGPT (`geekan/MetaGPT`)</span>
+                        <span class="badge">GitHub +45K ⭐</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Enfoque:</strong> Simulación integral de empresa de software con SOPs humanos.<br/>
+                        &bull; <strong>Componente Visual:</strong> Integración nativa de <strong>Mermaid.js</strong> para generar diagramas de arquitectura, contratos de datos y tareas en Markdown.<br/>
+                        &bull; <strong>Roles:</strong> Alice (PM), Bob (Architect), Eve (Project Lead), Alex (Dev), David (QA).
+                    </p>
+                    <div style="background:#f1f5f9; padding:6px 10px; border-radius:8px; font-size:11px;" class="mono">
+                        git clone https://github.com/geekan/MetaGPT.git
+                    </div>
+                </div>
+
+                <div class="card spec-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--purple);">🥈 ChatDev 2.0 (`OpenBMB/ChatDev`)</span>
+                        <span class="badge purple">DevAll Canvas</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Enfoque:</strong> Oficina virtual comunicativa basada en cascada ágil (*ChatChain*).<br/>
+                        &bull; <strong>Componente Visual:</strong> <strong>Web Visualizer en vivo</strong> que muestra a los avatares dialogando, pasando código y depurando.<br/>
+                        &bull; <strong>DevAll Canvas:</strong> Editor gráfico drag-and-drop para conectar agentes personalizados.
+                    </p>
+                    <div style="background:#f1f5f9; padding:6px 10px; border-radius:8px; font-size:11px;" class="mono">
+                        git clone https://github.com/OpenBMB/ChatDev.git
+                    </div>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Consulta la nota técnica completa en la bóveda: <strong>[[60 - Multi-Agent SDLC &amp; Visual Canvas]]</strong></span>
+                <span>Slide 6 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: TOP REPOSITORIOS (CANVAS & NODOS) -->
+        <div class="slide">
+            <div class="tag">🎨 Lienzos y Nodos</div>
+            <h2>Lienzos Drag-and-Drop &amp; Grafos Agénticos Interactivos</h2>
+            <p class="sub">Plataformas visuales para diseñar y depurar tuberías agénticas en tiempo real.</p>
+
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--sky);">🥉 AutoGen Studio (Microsoft)</span>
+                        <span class="badge">Visual UI</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Enfoque:</strong> Interfaz visual para orquestar salas de chat multi-agente (*GroupChat*).<br/>
+                        &bull; <strong>Componente Visual:</strong> Canvas para arrastrar agentes, enlazar tools y monitorear la traza de mensajes y archivos producidos.<br/>
+                        &bull; <strong>Playground:</strong> Ejecución en vivo con visualización de código e imágenes.
+                    </p>
+                    <div style="background:#f1f5f9; padding:6px 10px; border-radius:8px; font-size:11px;" class="mono">
+                        pip install autogenstudio &bull; autogenstudio ui --port 8081
+                    </div>
+                </div>
+
+                <div class="card spec-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--emerald);">🏅 Langflow (`langflow-ai/langflow`)</span>
+                        <span class="badge green">Graph Engine</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Enfoque:</strong> Entorno de programación visual modular con nodos tipados.<br/>
+                        &bull; <strong>Componente Visual:</strong> Lienzo infinito donde conectas LLMs, RAG, memorias y agentes con inspección de payloads paso a paso.<br/>
+                        &bull; <strong>Exportación:</strong> Generación inmediata de código Python y endpoints API REST.
+                    </p>
+                    <div style="background:#f1f5f9; padding:6px 10px; border-radius:8px; font-size:11px;" class="mono">
+                        git clone https://github.com/langflow-ai/langflow.git
+                    </div>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Permiten orquestar agentes complejos con cero líneas de configuración previa</span>
+                <span>Slide 7 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: TOP REPOSITORIOS (ENTORNOS AUTÓNOMOS) -->
+        <div class="slide">
+            <div class="tag">🚀 Entornos Autónomos</div>
+            <h2>OpenHands: El Ingeniero de Software Autónomo con UI Web</h2>
+            <p class="sub">Plataforma integral con explorador de archivos, terminal y navegador web sandbox.</p>
+
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-icon">📂</span>
+                    <span class="spec-title">File Explorer &amp; Diff</span>
+                    <p class="spec-desc">Muestra en tiempo real qué archivos se están creando o editando, con resaltado de sintaxis y diffs visuales.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🌐</span>
+                    <span class="spec-title">Integrated Browser</span>
+                    <p class="spec-desc">El agente abre la webapp generada en un Chromium aislado para validar la UI y tomar screenshots de confirmación.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">💻</span>
+                    <span class="spec-title">Interactive Terminal</span>
+                    <p class="spec-desc">Ejecuta compilaciones, tests (`npm test`, `pytest`) y migraciones en un contenedor Docker seguro.</p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 12px; background:#0f172a; color:#ffffff; border:none;">
+                <span class="spec-title" style="color:#38bdf8;">🐳 Despliegue en 1 Línea con Docker</span>
+                <p style="font-size:11px; color:#94a3b8; margin-top:4px;" class="mono">
+                    docker run -it --pull=always -u root -e SANDBOX_USER_ID=$(id -u) -e WORKSPACE_BASE=$(pwd)/workspace -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 docker.all-hands.dev/all-hands-ai/openhands:latest
+                </p>
+            </div>
+
+            <div class="footnote">
+                <span>Repositorio oficial: <strong>All-Hands-AI/OpenHands</strong> (+40K ⭐ en GitHub)</span>
+                <span>Slide 8 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: MATRIZ COMPARATIVA -->
+        <div class="slide">
+            <div class="tag">📊 Matriz de Decisión</div>
+            <h2>Comparativa Técnica para Elegir el Stack de Desarrollo</h2>
+            <p class="sub">Evaluación dimensional de capacidades visuales, soporte SDLC y facilidad de uso.</p>
+
+            <div class="table-wrap" style="margin-top: 8px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Herramienta</th>
+                            <th>Diagramas Mermaid</th>
+                            <th>Canvas Interactivo</th>
+                            <th>Simulación SDLC</th>
+                            <th>QC / Sandbox Auto</th>
+                            <th>Caso de Uso Recomendado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>MetaGPT</strong></td>
+                            <td>⭐⭐⭐⭐⭐ (Nativo)</td>
+                            <td>⭐⭐ (Web Report)</td>
+                            <td>⭐⭐⭐⭐⭐ (SOPs)</td>
+                            <td>⭐⭐⭐⭐⭐ (David QA)</td>
+                            <td>Diseño formal de arquitectura y PRDs corporativos.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ChatDev 2.0</strong></td>
+                            <td>⭐⭐⭐ (Vía chat)</td>
+                            <td>⭐⭐⭐⭐ (Web Office)</td>
+                            <td>⭐⭐⭐⭐⭐ (ChatChain)</td>
+                            <td>⭐⭐⭐⭐ (Reviewer)</td>
+                            <td>Prototipado rápido colaborativo con agentes visuales.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AutoGen Studio</strong></td>
+                            <td>⭐⭐ (Vía tool)</td>
+                            <td>⭐⭐⭐⭐⭐ (Canvas)</td>
+                            <td>⭐⭐⭐⭐ (GroupChat)</td>
+                            <td>⭐⭐⭐⭐ (Critic)</td>
+                            <td>Diseño de flujos agénticos personalizados con UI.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>OpenHands</strong></td>
+                            <td>⭐⭐⭐ (Markdown)</td>
+                            <td>⭐⭐⭐⭐⭐ (Full Web IDE)</td>
+                            <td>⭐⭐⭐⭐⭐ (DevOps)</td>
+                            <td>⭐⭐⭐⭐⭐ (Docker Pytest)</td>
+                            <td>Desarrollo y refactorización completa de repositorios.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Langflow</strong></td>
+                            <td>⭐⭐⭐ (Nodos)</td>
+                            <td>⭐⭐⭐⭐⭐ (Graph Canvas)</td>
+                            <td>⭐⭐⭐ (Pipelines)</td>
+                            <td>⭐⭐⭐ (Validadores)</td>
+                            <td>Orquestación de microservicios RAG y conectores API.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="footnote">
+                <span>Matriz documentada en la nota <strong>[[60 - Multi-Agent SDLC &amp; Visual Canvas]]</strong></span>
+                <span>Slide 9 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: CHECKLIST & PRÓXIMOS PASOS -->
+        <div class="slide">
+            <div class="tag">📋 Plan de Acción</div>
+            <h2>Checklist Operativo para Lanzar tu Fábrica Agéntica</h2>
+            <p class="sub">Guía de 6 pasos para entregar requerimientos y recibir software verificado en producción.</p>
+
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title">1. Briefing de Alto Nivel</span>
+                    <p class="spec-desc">Define el QUÉ y el PARA QUÉ en 3 párrafos. Deja el CÓMO técnico al agente arquitecto.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">2. Revisión de Diagramas</span>
+                    <p class="spec-desc">Verifica visualmente los diagramas Mermaid (Gate 1). Aprueba la topología antes de compilar.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">3. Aislamiento por Módulos</span>
+                    <p class="spec-desc">Asigna tareas atómicas a programadores agénticos independientes sobre contratos tipados.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">4. Suite QC en Docker</span>
+                    <p class="spec-desc">Exige al menos un 90% de cobertura de pruebas unitarias y de integración en sandbox.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">5. Auto-Fix Supervisado</span>
+                    <p class="spec-desc">Permite un bucle de corrección autónomo limitado a un máximo de 3 iteraciones.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">6. Despliegue con SSL</span>
+                    <p class="spec-desc">Publicación automática en VPS vía Traefik/Docker con health check `200 OK` verificado.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 14px; display:flex; gap:12px; align-items:center;">
+                <span class="badge green">✨ GeekSoft Ready</span>
+                <span style="font-size:12px; color:var(--text-dim);">Consulta las notas <strong>[[60]]</strong> y <strong>[[61]]</strong> en Obsidian para más detalles.</span>
+            </div>
+
+            <div class="footnote">
+                <span>Presentación disponible en vivo en <strong>geeksoft.tech/sdlc-agentico</strong></span>
+                <span>Slide 10 / 10</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONTROLES DE NAVEGACIÓN -->
+    <nav>
+        <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
+        <div id="counter">1 / 10</div>
+        <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
+        <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
+    </nav>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const counter = document.getElementById('counter');
+        const fsBtn = document.getElementById('fs-btn');
+        let current = 0;
+
+        function updateDeck() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active');
+                if (idx === current) {
+                    slide.classList.add('active');
+                }
+            });
+            counter.textContent = `${current + 1} / ${slides.length}`;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === slides.length - 1;
+        }
+
+        function nextSlide() {
+            if (current < slides.length - 1) {
+                current++;
+                updateDeck();
+            }
+        }
+
+        function prevSlide() {
+            if (current > 0) {
+                current--;
+                updateDeck();
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // NAVEGACIÓN POR TECLADO
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'Home') {
+                current = 0;
+                updateDeck();
+            } else if (e.key === 'End') {
+                current = slides.length - 1;
+                updateDeck();
+            }
+        });
+
+        // FULLSCREEN
+        fsBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen().catch(() => {});
+            }
+        });
+
+        // INICIALIZAR
+        updateDeck();
+    </script>
+</body>
+</html>
