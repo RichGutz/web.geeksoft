@@ -66,14 +66,14 @@
             position: absolute; inset: 0;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            padding: 18px 48px 72px;
+            padding: 16px 44px 70px;
             opacity: 0; pointer-events: none;
             transition: opacity 0.35s ease, transform 0.35s ease;
         }
         .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
 
         nav {
-            position: fixed; bottom: 20px; left: 50%;
+            position: fixed; bottom: 18px; left: 50%;
             transform: translateX(-50%);
             display: flex; align-items: center; gap: 14px; z-index: 999;
             background: rgba(255, 255, 255, 0.92);
@@ -83,9 +83,9 @@
             box-shadow: var(--shadow-lg);
         }
         .nbtn {
-            width: 40px; height: 40px; border-radius: 50%;
+            width: 38px; height: 38px; border-radius: 50%;
             border: 1px solid var(--border);
-            background: var(--bg-card); color: var(--navy); font-size: 18px;
+            background: var(--bg-card); color: var(--navy); font-size: 17px;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             box-shadow: var(--shadow); transition: all 0.2s;
         }
@@ -97,13 +97,13 @@
         }
 
         .tag {
-            font-size: 11px; font-weight: 800; letter-spacing: 3px;
-            text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+            font-size: 10.5px; font-weight: 800; letter-spacing: 2.5px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 4px;
             display: inline-flex; align-items: center; gap: 6px;
         }
-        h1 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: var(--navy); }
-        h2 { font-size: clamp(1.55rem, 2.3vw, 2.2rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
-        .sub { font-size: clamp(0.90rem, 1.25vw, 1.05rem); color: var(--text-dim); font-weight: 400; margin-bottom: 12px; text-align: center; max-width: 1050px; line-height: 1.45; }
+        h1 { font-size: clamp(2.1rem, 3.4vw, 3.2rem); font-weight: 900; line-height: 1.1; margin-bottom: 8px; color: var(--navy); }
+        h2 { font-size: clamp(1.45rem, 2.2vw, 2.05rem); font-weight: 900; line-height: 1.15; margin-bottom: 5px; color: var(--navy); }
+        .sub { font-size: clamp(0.86rem, 1.18vw, 1.0rem); color: var(--text-dim); font-weight: 400; margin-bottom: 10px; text-align: center; max-width: 1080px; line-height: 1.4; }
         .hi   { color: var(--sky); }
         .hi-b { color: var(--emerald); }
         .hi-p { color: var(--purple); }
@@ -112,65 +112,65 @@
 
         .card {
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 16px; box-shadow: var(--shadow);
+            border-radius: 14px; box-shadow: var(--shadow);
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .card:hover { border-color: var(--sky-brd); }
 
         .badge {
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; gap: 6px;
             background: var(--sky-dim); border: 1px solid var(--sky-brd);
-            border-radius: 100px; padding: 6px 18px; font-size: 12px;
+            border-radius: 100px; padding: 5px 14px; font-size: 11px;
             color: var(--sky); font-weight: 800; letter-spacing: 0.5px;
         }
         .badge.green { background: var(--emerald-dim); border-color: var(--emerald-brd); color: var(--emerald); }
         .badge.purple { background: var(--purple-dim); border-color: var(--purple-brd); color: var(--purple); }
         .badge.amber { background: var(--amber-dim); border-color: var(--amber-brd); color: var(--amber); }
 
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 1240px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 1240px; }
 
         .spec-box {
-            padding: 14px; display: flex; flex-direction: column; gap: 6px; text-align: left;
+            padding: 12px 14px; display: flex; flex-direction: column; gap: 5px; text-align: left;
         }
-        .spec-icon { font-size: 24px; }
-        .spec-title { font-size: 14px; font-weight: 800; color: var(--navy); }
-        .spec-desc { font-size: 11.5px; color: var(--text-dim); line-height: 1.45; }
+        .spec-icon { font-size: 22px; }
+        .spec-title { font-size: 13.5px; font-weight: 800; color: var(--navy); }
+        .spec-desc { font-size: 11.2px; color: var(--text-dim); line-height: 1.42; }
 
         .flow-container {
             display: flex; align-items: center; justify-content: space-between;
-            background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
-            padding: 12px 16px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
-            margin: 6px 0; gap: 8px;
+            background: #ffffff; border: 1px solid var(--border); border-radius: 14px;
+            padding: 10px 14px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
+            margin: 5px 0; gap: 6px;
         }
         .flow-node {
-            flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
-            padding: 9px 8px; text-align: center; display: flex; flex-direction: column; gap: 3px;
+            flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px;
+            padding: 8px 6px; text-align: center; display: flex; flex-direction: column; gap: 2px;
         }
         .flow-node.active { border-color: var(--sky); background: #f0f9ff; }
         .flow-node.green  { border-color: var(--emerald); background: #ecfdf5; }
         .flow-node.purple { border-color: var(--purple); background: #f5f3ff; }
         .flow-node.amber  { border-color: var(--amber); background: #fffbeb; }
-        .flow-node-title { font-size: 12px; font-weight: 800; color: var(--navy); }
-        .flow-node-desc  { font-size: 10px; color: var(--text-dim); }
-        .flow-arrow { font-size: 15px; color: #94a3b8; font-weight: 900; }
+        .flow-node-title { font-size: 11.5px; font-weight: 800; color: var(--navy); }
+        .flow-node-desc  { font-size: 9.5px; color: var(--text-dim); }
+        .flow-arrow { font-size: 14px; color: #94a3b8; font-weight: 900; }
 
         .table-wrap {
             width: 100%; max-width: 1240px; background: #ffffff;
-            border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+            border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
             box-shadow: var(--shadow);
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 11.5px; }
-        th { background: #0f172a; color: #ffffff; padding: 9px 14px; font-weight: 700; letter-spacing: 0.5px; }
-        td { padding: 8px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 11px; }
+        th { background: #0f172a; color: #ffffff; padding: 8px 12px; font-weight: 700; letter-spacing: 0.5px; }
+        td { padding: 7px 12px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) { background: #f8fafc; }
 
         .footnote {
-            margin-top: 8px; font-size: 10px; color: #64748b;
-            line-height: 1.4; width: 100%; max-width: 1240px; text-align: left;
-            border-top: 1px dashed #cbd5e1; padding-top: 5px;
+            margin-top: 8px; font-size: 9.5px; color: #64748b;
+            line-height: 1.35; width: 100%; max-width: 1240px; text-align: left;
+            border-top: 1px dashed #cbd5e1; padding-top: 4px;
             display: flex; justify-content: space-between; align-items: center;
         }
     </style>
@@ -189,7 +189,7 @@
 
         <!-- SLIDE 1: PORTADA EJECUTIVA -->
         <div class="slide active">
-            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
                 <span class="badge green">🏛️ CAPÍTULO 11</span>
                 <span class="badge purple">PROPTWIN AI SOFTWARE FACTORY</span>
                 <span class="badge">SOTA 2026</span>
@@ -200,7 +200,7 @@
                 Transformación de la administración patrimonial de ~400 predios mediante un gemelo digital geoespacial, ingesta cartográfica de 3 vías, arnés financiero y UI corporativa estandarizada estilo APEFAC.
             </p>
             
-            <div class="grid-4" style="margin-top: 14px;">
+            <div class="grid-4" style="margin-top: 12px;">
                 <div class="card spec-box">
                     <span class="spec-icon">🏛️</span>
                     <span class="spec-title">Caso de Negocio Real</span>
@@ -225,7 +225,7 @@
 
             <div class="footnote">
                 <span>GeekSoft Academy &bull; Bóveda: [[75 - Blueprint PROPTWIN]], [[76 - Software Factory]], [[77 - Stack e Infraestructura]]</span>
-                <span>Slide 1 / 12</span>
+                <span>Slide 1 / 14</span>
             </div>
         </div>
 
@@ -264,7 +264,7 @@
 
             <div class="footnote">
                 <span>Documentado en: `AdL.RE.SOFT/03_Modulos_del_Sistema/02_Modulo_Inmobiliario_y_Predios.md`</span>
-                <span>Slide 2 / 12</span>
+                <span>Slide 2 / 14</span>
             </div>
         </div>
 
@@ -297,7 +297,7 @@
 
             <div class="footnote">
                 <span>Metodología formalizada en [[76 - Software Factory Agentica PROPTWIN]]</span>
-                <span>Slide 3 / 12</span>
+                <span>Slide 3 / 14</span>
             </div>
         </div>
 
@@ -339,11 +339,11 @@
 
             <div class="footnote">
                 <span>Especificado en detalle en [[77 - Stack Tecnologico, Infraestructura y Entorno de Ejecucion]]</span>
-                <span>Slide 4 / 12</span>
+                <span>Slide 4 / 14</span>
             </div>
         </div>
 
-        <!-- SLIDE 5: SISTEMA DE DISEÑO UI/UX APEFAC (NUEVO) -->
+        <!-- SLIDE 5: SISTEMA DE DISEÑO UI/UX APEFAC -->
         <div class="slide">
             <div class="tag">🎨 Diseño UI/UX Estandarizado</div>
             <h2>El Sistema de Diseño UI/UX APEFAC Enterprise Light</h2>
@@ -380,7 +380,7 @@
 
             <div class="footnote">
                 <span>Estándar basado en `APEFAC/Obsidian/Diseño.SW.APEFAC/` (Templates Master &amp; Sidebar Enterprise)</span>
-                <span>Slide 5 / 12</span>
+                <span>Slide 5 / 14</span>
             </div>
         </div>
 
@@ -421,7 +421,7 @@
 
             <div class="footnote">
                 <span>Arquitectura de Infraestructura en [[77 - Stack Tecnologico, Infraestructura y Entorno de Ejecucion]]</span>
-                <span>Slide 6 / 12</span>
+                <span>Slide 6 / 14</span>
             </div>
         </div>
 
@@ -463,7 +463,7 @@
 
             <div class="footnote">
                 <span>Estrategia de Ruteo Económico &bull; Ecosistema Google Gemini 2026</span>
-                <span>Slide 7 / 12</span>
+                <span>Slide 7 / 14</span>
             </div>
         </div>
 
@@ -509,7 +509,7 @@
 
             <div class="footnote">
                 <span>Estructura de módulos en `AdL.RE.SOFT/03_Modulos_del_Sistema/`</span>
-                <span>Slide 8 / 12</span>
+                <span>Slide 8 / 14</span>
             </div>
         </div>
 
@@ -551,7 +551,7 @@
 
             <div class="footnote">
                 <span>Estrategia GIS documentada en [[75 - Blueprint PROPTWIN]] y `AdL.RE.SOFT/03_Modulos_del_Sistema/01_Modulo_GIS_y_Mapas.md`</span>
-                <span>Slide 9 / 12</span>
+                <span>Slide 9 / 14</span>
             </div>
         </div>
 
@@ -590,7 +590,7 @@
 
             <div class="footnote">
                 <span>Diagrama ER completo en `AdL.RE.SOFT/01_WorkTree_Arquitectura/Modelo_Datos_Entidad_Relacion.md`</span>
-                <span>Slide 10 / 12</span>
+                <span>Slide 10 / 14</span>
             </div>
         </div>
 
@@ -644,17 +644,17 @@
 
             <div class="footnote">
                 <span>Arquitectura de Roles en [[76 - Software Factory Agentica PROPTWIN]]</span>
-                <span>Slide 11 / 12</span>
+                <span>Slide 11 / 14</span>
             </div>
         </div>
 
-        <!-- SLIDE 12: ROADMAP DE EJECUCIÓN & QUALITY GATES -->
+        <!-- SLIDE 12: ROADMAP DE EJECUCIÓN (4 FASES / 8 SPRINTS) -->
         <div class="slide">
-            <div class="tag">📅 Plan de Ejecución &amp; Calidad</div>
-            <h2>Roadmap (4 Fases / 8 Sprints) &amp; Quality Gates GeekSoft</h2>
-            <p class="sub">El paso a paso cronológico con validaciones inflexibles para entrega determinista.</p>
+            <div class="tag">📅 Plan de Ejecución</div>
+            <h2>El Roadmap de la Fábrica PROPTWIN (4 Fases / 8 Sprints)</h2>
+            <p class="sub">El paso a paso cronológico para materializar la plataforma completa.</p>
             
-            <div class="grid-4" style="margin-top: 6px;">
+            <div class="grid-4" style="margin-top: 10px;">
                 <div class="card spec-box">
                     <span class="spec-title" style="color:var(--sky);">Fase 1: GIS Core (S1-S2)</span>
                     <p class="spec-desc">
@@ -689,18 +689,98 @@
                 </div>
             </div>
 
-            <div class="card spec-box" style="margin-top: 8px; background: var(--sky-dim); border-color: var(--sky-brd); padding: 10px 14px;">
-                <div style="font-size: 12px; font-weight: 800; color: var(--navy);">
-                    💡 La Regla de Oro GeekSoft &bull; Quality Gates Deterministas:
+            <div class="footnote">
+                <span>Plan extraído de `AdL.RE.SOFT/02_Plan_de_Trabajo/Plan_de_Trabajo_Roadmap.md`</span>
+                <span>Slide 12 / 14</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: QUALITY GATES A & B (INGENIERÍA ESTRUCTURAL Y METROLOGÍA DE SPECS) -->
+        <div class="slide">
+            <div class="tag">📐 Metrología de Software &amp; Análisis Estructural</div>
+            <h2>Quality Gates A &amp; B: Tolerancias GD&amp;T y Rigidez de Tipos</h2>
+            <p class="sub">En ingeniería mecánica no se mecaniza sin plano acotado; en software agéntico no se codifica sin contratos matemáticamente cerrados.</p>
+            
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--navy);">GATE A: Spec Kit &amp; Mathematical Contracts</span>
+                        <span class="badge">GD&amp;T de Software</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Análogo Mecánico:</strong> Tolerancias geométricas y dimensionales (GD&T) en plano antes de taller.<br/>
+                        &bull; <strong>Mecanismo Formal:</strong> AST Linter de Markdown + JSONSchema Draft 2020-12 + OpenAPI 3.1.<br/>
+                        &bull; <strong>Casos Límite Verificados:</strong> Predios con área nula, polígonos auto-intersecados, partidas registrales canceladas y mora compuesta SAT con cambio de año fiscal.<br/>
+                        &bull; <strong>Criterio Inflexible:</strong> 100% Historias Gherkin con invariantes cerrados. Cero código generado si el PRD contiene adjetivos ambiguos ("rápido", "intuitivo").
+                    </p>
                 </div>
-                <p class="spec-desc" style="color: var(--navy); font-size: 11px;">
-                    <em>"Gate A (Spec Kit 100% Gherkin) &bull; Gate B (Type Safety mypy/tsc 0 errores) &bull; Gate C (Sandbox QC Docker >90% cobertura) &bull; Gate D (Hardening). Un agente constructor nunca aprueba ni audita su propio código."</em>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--purple);">GATE B: Type Safety &amp; Dimensional Analysis</span>
+                        <span class="badge purple">Análisis Dimensional</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Análogo Mecánico:</strong> Homogeneidad dimensional física (no sumar Newtons con Metros) y rigidez de rigidez torsional.<br/>
+                        &bull; <strong>Backend Riguroso:</strong> `mypy --strict --disallow-any-generics --disallow-untyped-defs` en Python 3.12 (cero `Any`).<br/>
+                        &bull; <strong>Validadores Pydantic v2:</strong> Rangos geográficos acotados (Lat: `[-18.4, 0.0]`, Lon: `[-81.3, -68.6]` Perú) y coma fija `Decimal(12,4)` con redondeo SBS `ROUND_HALF_EVEN`.<br/>
+                        &bull; <strong>Frontend Riguroso:</strong> TypeScript 5.x `tsc --noEmit --strict` (cero aserción ciega `as any`).
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Determinismo Estático &bull; Zero-Tolerance Architecture GeekSoft</span>
+                <span>Slide 13 / 14</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: QUALITY GATES C & D (BANCO DE PRUEBAS DINÁMICO, HARDENING & REGLA DE ORO) -->
+        <div class="slide">
+            <div class="tag">🧪 Banco de Pruebas Dinámico &amp; Factor de Seguridad</div>
+            <h2>Quality Gates C &amp; D: Stress Metrology, Hardening &amp; Regla de Oro</h2>
+            <p class="sub">Validación dinámica en vacío bajo condiciones extremas y factor de seguridad garantizado.</p>
+            
+            <div class="grid-2" style="margin-top: 8px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--emerald);">GATE C: Sandbox Dynamic QC &amp; Stress Metrology</span>
+                        <span class="badge green">Banco de Ensayo</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Análogo Mecánico:</strong> Banco de pruebas de fatiga dinámica en vacío con ciclo de carga severa.<br/>
+                        &bull; <strong>Aislamiento Docker:</strong> Contenedores efímeros sin acceso a red externa (`--network none`).<br/>
+                        &bull; <strong>Metrología Geoespacial:</strong> Verificación PostGIS `ST_IsValid(geom) = true`, `ST_IsSimple = true`, polígonos cerrados antihorario y proyección UTM 18S (EPSG:32718).<br/>
+                        &bull; <strong>Estrés Financiero:</strong> 50,000 contratos sintéticos con indexación IPC sin drift de coma flotante (`pytest --cov-fail-under=95`).
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--amber);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--amber);">GATE D: Hardening, Security &amp; Traceability</span>
+                        <span class="badge amber">Safety Factor &gt; 3.0</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Análogo Mecánico:</strong> Factor de seguridad estructural ($SF \ge 3.0$) y trazabilidad de materiales (ASTM/ISO).<br/>
+                        &bull; <strong>Auditoría AST:</strong> `bandit -r app -ll` (cero inyecciones SQL/deserializaciones) y `trivy fs` (0 CVEs altos/críticos).<br/>
+                        &bull; <strong>Aislamiento RLS:</strong> Tests de penetración sintéticos probando que ningún inquilino vea partidas ajenas.<br/>
+                        &bull; <strong>Forense:</strong> Hash SHA-256 inmutable de cada peritaje y dictamen emitido por los agentes.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 8px; background: var(--sky-dim); border-color: var(--sky-brd); padding: 8px 12px;">
+                <div style="font-size: 11.5px; font-weight: 800; color: var(--navy);">
+                    💡 La Regla de Oro Inflexible GeekSoft:
+                </div>
+                <p class="spec-desc" style="color: var(--navy); font-size: 10.5px;">
+                    <em>"Un agente constructor jamás audita ni aprueba su propio código. El desacoplamiento estricto entre el generador y el auditor metrológico en sandboxes herméticos es la única garantía de entregar software empresarial con 0 alucinaciones y 100% de determinismo matemático."</em>
                 </p>
             </div>
 
             <div class="footnote">
                 <span>GeekSoft Innovation Labs &bull; Estándar de Excelencia AI Software Factory 2026</span>
-                <span>Slide 12 / 12</span>
+                <span>Slide 14 / 14</span>
             </div>
         </div>
 
@@ -708,7 +788,7 @@
 
     <nav>
         <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 12</div>
+        <div id="counter">1 / 14</div>
         <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
         <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
     </nav>
