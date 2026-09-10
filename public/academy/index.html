@@ -78,20 +78,13 @@
         .header-brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
-        .brand-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: var(--navy);
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 900;
-            box-shadow: var(--shadow-sm);
+        .brand-logo-img {
+            height: 38px;
+            width: auto;
+            max-width: 160px;
+            object-fit: contain;
         }
         .brand-text h1 {
             font-family: 'Outfit', sans-serif;
@@ -493,7 +486,7 @@
     <!-- HEADER WIKIPEDIA -->
     <header class="wiki-header">
         <div class="header-brand">
-            <div class="brand-logo">Ω</div>
+            <img src="/images/Logo.Geeksoft.png" alt="GeekSoft Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='/images/CABEZA.GEEKSOFT_transparent.png';" />
             <div class="brand-text">
                 <h1>GeekSoft AI Academy</h1>
                 <p>Enciclopedia & Hub de Ingeniería de Agentes 2026</p>
@@ -506,9 +499,9 @@
         </div>
 
         <div class="header-actions">
-            <span class="badge-stat">11 Capítulos</span>
-            <span class="badge-stat" style="color:var(--emerald); background:var(--emerald-dim); border-color:var(--emerald-brd);">11 Decks PPT 16:9</span>
-            <span class="badge-stat" style="color:var(--purple); background:var(--purple-dim); border-color:var(--purple-brd);">76+ Notas</span>
+            <span class="badge-stat">12 Capítulos</span>
+            <span class="badge-stat" style="color:var(--emerald); background:var(--emerald-dim); border-color:var(--emerald-brd);">12 Decks PPT 16:9</span>
+            <span class="badge-stat" style="color:var(--purple); background:var(--purple-dim); border-color:var(--purple-brd);">80+ Notas</span>
         </div>
     </header>
 
@@ -520,7 +513,7 @@
             
             <div class="sidebar-header">
                 <span class="sidebar-title">Ejes del Programa</span>
-                <span class="sidebar-count">10 Capítulos</span>
+                <span class="sidebar-count">12 Capítulos</span>
             </div>
 
             <!-- Cap 01 -->
@@ -694,6 +687,22 @@
                     <div class="acc-sub-item" onclick="selectLesson('cap-11', 0, event)"><span class="sub-bullet">├─</span> Blueprint Gemelo Digital Arzobispado</div>
                     <div class="acc-sub-item" onclick="selectLesson('cap-11', 1, event)"><span class="sub-bullet">├─</span> Software Factory & 5 Roles Agénticos</div>
                     <div class="acc-sub-item" onclick="selectLesson('cap-11', 2, event)"><span class="sub-bullet">└─</span> Quality Gates & Sandbox Docker</div>
+                </div>
+            </div>
+
+            <!-- Cap 12 -->
+            <div class="accordion-item" data-target="cap-12">
+                <div class="accordion-header" onclick="selectChapter('cap-12', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">12</span>
+                        <span class="acc-text">Arquitectura ARBN.CPJS (Airbnb Twin)</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 0, event)"><span class="sub-bullet">├─</span> Blueprint Remodelación & Staging</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 1, event)"><span class="sub-bullet">├─</span> Motor BOQ & Despiece de Partidas</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 2, event)"><span class="sub-bullet">└─</span> Auditor Airbnb Ready 5 Estrellas</div>
                 </div>
             </div>
 
@@ -887,11 +896,28 @@
                 classes: [
                     { title: "Blueprint de Arquitectura PROPTWIN", desc: "El Gemelo Digital Inmobiliario del Arzobispado de Lima.", tag: "Nota 75" },
                     { title: "Software Factory Agéntica PROPTWIN", desc: "Roles desacoplados, contratos y Quality Gates deterministas.", tag: "Nota 76" },
-                    { title: "Motor Geo-Grafo & Ingesta OCR", desc: "PostGIS, Neo4j Graphify y digitalización de contratos Sunarp.", tag: "Specs v1.0" }
+                    { title: "Stack Tecnológico & Contabo VPS Sandbox", desc: "React 19 TS + APEFAC Light UI, Python FastAPI y Supabase PostGIS.", tag: "Nota 77" }
                 ],
                 metrics: [
                     { label: "Cuadrilla Agéntica", val: "5 Roles Desacoplados" },
                     { label: "Quality Gates", val: "4 Barreras Docker" }
+                ]
+            },
+            "cap-12": {
+                id: "12",
+                title: "Arquitectura ARBN.CPJS (Airbnb Twin & Remodeling)",
+                badge: "Virtual Staging & BOQ Engine",
+                subtitle: "Gemelo micro-inmobiliario para remodelación express, Virtual Staging con IA, despiece BOQ y puesta a punto Airbnb.",
+                deckUrl: "cap-12-arbn-cpjs-architecture.html",
+                summary: "Plataforma de remodelación integral y puesta a punto comercial para Airbnb. Caso piloto de 60 m² (Anny Rojas). Transforma cotizaciones informales en presupuestos BOQ de 6 partidas, genera renders Before/After con ControlNet preservando estructuras y audita el equipamiento indispensable de 5 estrellas.",
+                classes: [
+                    { title: "Blueprint de Arquitectura ARBN.CPJS", desc: "El Gemelo Digital de Remodelación & Airbnb Staging.", tag: "Nota 78" },
+                    { title: "Motor de Costos BOQ & Checklist Airbnb", desc: "Despiece de cotizaciones, selector de partidas y checklist 5 estrellas.", tag: "Nota 79" },
+                    { title: "Stack Tecnológico & Sandbox en Contabo", desc: "React 19 TS, Python FastAPI, Supabase Storage y UI APEFAC.", tag: "Nota 80" }
+                ],
+                metrics: [
+                    { label: "Caso Piloto", val: "60 m² Anny Rojas" },
+                    { label: "Categorías BOQ", val: "6 Partidas Clave" }
                 ]
             }
         };

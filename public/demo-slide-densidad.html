@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Slide - Alta Densidad (Look & Feel GeekSoft APEFAC 16:9)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --bg:          #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --bg-subtle:   #F1F5F9;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            
+            --sky:         #0284C7;
+            --sky-dim:     rgba(2,132,199,0.08);
+            --sky-brd:     rgba(2,132,199,0.25);
+            
+            --emerald:     #059669;
+            --emerald-dim: rgba(5,150,105,0.08);
+            --emerald-brd: rgba(5,150,105,0.25);
+            
+            --purple:      #7C3AED;
+            --purple-dim:  rgba(124,58,237,0.08);
+            --purple-brd:  rgba(124,58,237,0.25);
+            
+            --amber:       #D97706;
+            --amber-dim:   rgba(217,119,6,0.08);
+            --amber-brd:   rgba(217,119,6,0.25);
+            
+            --red:         #E11D48;
+            --red-dim:     rgba(225,29,72,0.08);
+            
+            --text:        #0F172A;
+            --text-dim:    rgba(15,23,42,0.68);
+            --text-muted:  #64748B;
+            
+            --border:      rgba(15,23,42,0.11);
+            --border-hover:rgba(2,132,199,0.4);
+            
+            --shadow-sm:   0 2px 8px rgba(15,23,42,0.04);
+            --shadow:      0 4px 20px rgba(15,23,42,0.06);
+            --shadow-lg:   0 12px 35px rgba(15,23,42,0.09);
+
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        /* ─── BLINDAJE ANTI-IMPRESIÓN (DRM) ─── */
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ─── WATERMARK DISCRETO FORENSE ─── */
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 1;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.028; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #0f172a; transform: rotate(-22deg) scale(1.1);
+        }
+        .wm-item { padding: 35px 50px; white-space: nowrap; }
+
+        /* ─── CONTENEDOR 16:9 MAXIMIZADO DE ALTA DENSIDAD ─── */
+        .slide-stage {
+            position: relative;
+            z-index: 2;
+            width: 96vw;
+            height: 94vh;
+            max-width: 1820px;
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 22px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 14px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ─── HEADER EJECUTIVO (CLARO, ELEGANTE Y PROTAGÓNICO) ─── */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .category-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--sky-dim);
+            color: var(--sky);
+            border: 1px solid var(--sky-brd);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge.purple {
+            background: var(--purple-dim);
+            color: var(--purple);
+            border-color: var(--purple-brd);
+        }
+        .badge.emerald {
+            background: var(--emerald-dim);
+            color: var(--emerald);
+            border-color: var(--emerald-brd);
+        }
+
+        .slide-title {
+            font-size: 27px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: var(--navy);
+            line-height: 1.15;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .slide-title span.accent {
+            color: var(--sky);
+        }
+
+        .slide-subtitle {
+            font-size: 13.5px;
+            color: var(--text-dim);
+            font-weight: 500;
+            line-height: 1.35;
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+        .meta-pill {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--text-dim);
+            font-weight: 700;
+        }
+        .meta-pill strong {
+            color: var(--navy);
+        }
+
+        /* ─── CUERPO PRINCIPAL MULTI-COLUMNA ─── */
+        .slide-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1.18fr 1.32fr 1.1fr;
+            gap: 16px;
+            min-height: 0; /* Asegura ajuste perfecto sin desborde */
+        }
+
+        .panel {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+        .panel.sky::before { background: var(--sky); }
+        .panel.purple::before { background: var(--purple); }
+        .panel.emerald::before { background: var(--emerald); }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #F1F5F9;
+            padding-bottom: 8px;
+        }
+        .panel-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        /* Columna 1: Tarjetas de Roles Especializados */
+        .role-card {
+            background: var(--bg);
+            border: 1px solid #E2E8F0;
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .role-card:hover {
+            border-color: var(--sky-brd);
+            box-shadow: var(--shadow);
+            background: #FFFFFF;
+        }
+        .role-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+        .role-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .role-desc {
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.45;
+        }
+
+        /* Columna 2: Pipeline de Pasos Agénticos */
+        .pipeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            justify-content: space-between;
+        }
+        .pipe-step {
+            display: grid;
+            grid-template-columns: 32px 1fr auto;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg);
+            border: 1px solid #E2E8F0;
+            border-radius: var(--radius-sm);
+            padding: 9px 12px;
+            transition: all 0.2s;
+        }
+        .pipe-step:hover {
+            border-color: var(--sky-brd);
+            background: #FFFFFF;
+        }
+        .pipe-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pipe-info h4 {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+        .pipe-info p {
+            font-size: 11.5px;
+            color: var(--text-dim);
+        }
+        .pipe-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+
+        /* Columna 3: Métricas y Bloque de Código Determinista */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .metric-box {
+            background: var(--bg);
+            border: 1px solid #E2E8F0;
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--emerald);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .metric-label {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-container {
+            background: #0F172A;
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            line-height: 1.55;
+            color: #E2E8F0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .c-comment { color: #64748B; font-style: italic; }
+        .c-kw      { color: #C084FC; font-weight: 700; }
+        .c-fn      { color: #38BDF8; }
+        .c-str     { color: #34D399; }
+        .c-var     { color: #F1F5F9; }
+
+        /* ─── FOOTER CON REGLA DE ORO GEEKSOFT ─── */
+        .slide-footer {
+            border-top: 1px solid #E2E8F0;
+            padding-top: 10px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .gold-rule-box {
+            background: var(--sky-dim);
+            border: 1px solid var(--sky-brd);
+            border-radius: var(--radius-sm);
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .gold-rule-icon { font-size: 16px; }
+        .gold-rule-text {
+            font-size: 12px;
+            color: var(--navy);
+            line-height: 1.35;
+        }
+        .gold-rule-text strong {
+            color: var(--sky);
+            font-weight: 800;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+        .nav-tag {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MARCA DE AGUA FORENSE -->
+    <div id="watermark-layer">
+        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
+        <div class="wm-item">SDLC AGÉNTICO 2026</div>
+        <div class="wm-item">PRODUCCIÓN DETERMINISTA</div>
+        <div class="wm-item">GEEKSOFT.TECH</div>
+        <div class="wm-item">MULTI-AGENT HARNESS</div>
+        <div class="wm-item">QUALITY GATES</div>
+        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
+    </div>
+
+    <!-- CONTENEDOR DE LA DIAPOSITIVA (16:9 EN BLANCO/FONDO CLARO CORPORATIVO APEFAC) -->
+    <div class="slide-stage">
+        
+        <!-- HEADER -->
+        <header class="slide-header">
+            <div class="header-left">
+                <div class="category-group">
+                    <span class="badge">Capítulo 01</span>
+                    <span class="badge purple">Sistemas Agénticos & Orquestación</span>
+                    <span class="badge emerald">SOTA 2026</span>
+                </div>
+                <h1 class="slide-title">
+                    Multi-Agent SDLC: <span class="accent">De Requerimiento a Código Auditado</span>
+                </h1>
+                <p class="slide-subtitle">
+                    Arquitectura de bucles cerrados con roles desacoplados, diagramación Mermaid obligatoria y Quality Gates deterministas.
+                </p>
+            </div>
+
+            <div class="header-meta">
+                <div class="meta-pill">
+                    <span>Módulo: <strong>01 / 10</strong></span>
+                </div>
+                <div class="meta-pill">
+                    <span>Slide: <strong>04 / 18</strong></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- CUERPO PRINCIPAL (3 COLUMNAS OPTIMIZADAS) -->
+        <main class="slide-body">
+            
+            <!-- PANEL 1: DESACOPLAMIENTO DE ROLES -->
+            <section class="panel sky">
+                <div class="panel-header">
+                    <h2 class="panel-title"><span>👥</span> 1. Desacoplamiento de Roles</h2>
+                    <span class="badge">Especialización</span>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-head">
+                        <span>Product Manager Agent</span>
+                        <span class="role-tag" style="background: var(--sky-dim); color: var(--sky);">PRD & Spec</span>
+                    </div>
+                    <p class="role-desc">
+                        Convierte intenciones ambiguas en especificaciones técnicas rigurosas y criterios Gherkin ejecutables.
+                    </p>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-head">
+                        <span>System Architect Agent</span>
+                        <span class="role-tag" style="background: var(--purple-dim); color: var(--purple);">Mermaid & API</span>
+                    </div>
+                    <p class="role-desc">
+                        Genera contratos OpenAPI, esquemas de BD y diagramas de secuencia antes de tocar una línea de código.
+                    </p>
+                </div>
+
+                <div class="role-card">
+                    <div class="role-head">
+                        <span>Senior QA / QC Auditor</span>
+                        <span class="role-tag" style="background: var(--emerald-dim); color: var(--emerald);">Docker & Pytest</span>
+                    </div>
+                    <p class="role-desc">
+                        Ejecuta tests unitarios y de estrés en Docker aislado sin tolerar alucinaciones de sintaxis ni regresiones.
+                    </p>
+                </div>
+            </section>
+
+            <!-- PANEL 2: PIPELINE DE EJECUCIÓN AGÉNTICA -->
+            <section class="panel purple">
+                <div class="panel-header">
+                    <h2 class="panel-title"><span>🔄</span> 2. Pipeline Determinista</h2>
+                    <span class="badge purple">Loop Feedback</span>
+                </div>
+
+                <div class="pipeline-container">
+                    <div class="pipe-step">
+                        <div class="pipe-badge" style="background: var(--sky-dim); color: var(--sky); border: 1px solid var(--sky-brd);">01</div>
+                        <div class="pipe-info">
+                            <h4>Ingesta & Spec-Driven Prompting</h4>
+                            <p>Elaboración de Spec Kit con límites de contexto limpios.</p>
+                        </div>
+                        <div class="pipe-status" style="background: var(--sky-dim); color: var(--sky);">INPUT</div>
+                    </div>
+
+                    <div class="pipe-step">
+                        <div class="pipe-badge" style="background: var(--purple-dim); color: var(--purple); border: 1px solid var(--purple-brd);">02</div>
+                        <div class="pipe-info">
+                            <h4>Generación Modular Desacoplada</h4>
+                            <p>Codificación por componentes con tipado estricto.</p>
+                        </div>
+                        <div class="pipe-status" style="background: var(--purple-dim); color: var(--purple);">BUILDER</div>
+                    </div>
+
+                    <div class="pipe-step">
+                        <div class="pipe-badge" style="background: var(--emerald-dim); color: var(--emerald); border: 1px solid var(--emerald-brd);">03</div>
+                        <div class="pipe-info">
+                            <h4>Quality Gate & Docker Sandbox</h4>
+                            <p>Validación real de linter, type-check y suite de pruebas.</p>
+                        </div>
+                        <div class="pipe-status" style="background: var(--emerald-dim); color: var(--emerald);">GATE</div>
+                    </div>
+
+                    <div class="pipe-step">
+                        <div class="pipe-badge" style="background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-brd);">04</div>
+                        <div class="pipe-info">
+                            <h4>Auto-Refactor & Certificación</h4>
+                            <p>Si falla el test, reinyecta traceback al agente corrector.</p>
+                        </div>
+                        <div class="pipe-status" style="background: var(--amber-dim); color: var(--amber);">AUTO-FIX</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANEL 3: MÉTRICAS Y GATE REAL -->
+            <section class="panel emerald">
+                <div class="panel-header">
+                    <h2 class="panel-title"><span>⚡</span> 3. Métricas & Sandbox QC</h2>
+                    <span class="badge emerald">Determinismo</span>
+                </div>
+
+                <div class="metrics-row">
+                    <div class="metric-box">
+                        <div class="metric-value">98.4%</div>
+                        <div class="metric-label">Pass Rate 1er Loop</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value" style="color: var(--sky);">0.0%</div>
+                        <div class="metric-label">Alucinación Release</div>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <span class="c-comment"># Quality Gate determinista en Sandbox</span>
+                    <div><span class="c-kw">def</span> <span class="c-fn">verify_agent_output</span>(spec, patch):</div>
+                    <div>&nbsp;&nbsp;sandbox = DockerRunner(<span class="c-str">"qa-sandbox"</span>)</div>
+                    <div>&nbsp;&nbsp;res = sandbox.exec(<span class="c-str">"pytest --cov"</span>)</div>
+                    <div>&nbsp;&nbsp;<span class="c-kw">if</span> res.exit_code != 0:</div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-kw">return</span> feedback_loop(res.err)</div>
+                    <div>&nbsp;&nbsp;<span class="c-kw">return</span> ReleaseReady(patch)</div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER: REGLA DE ORO GEEKSOFT + NAVEGACIÓN -->
+        <footer class="slide-footer">
+            <div class="gold-rule-box">
+                <span class="gold-rule-icon">💡</span>
+                <span class="gold-rule-text">
+                    <strong>Regla de Oro GeekSoft:</strong> Un agente nunca audita su propio código. El desacoplamiento estricto entre el agente constructor y el agente auditor garantiza confiabilidad absoluta en producción.
+                </span>
+            </div>
+
+            <div class="footer-nav">
+                <span class="nav-tag">GeekSoft Innovation Labs</span>
+                <span>Usa <strong>&larr; &rarr;</strong> para navegar</span>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
