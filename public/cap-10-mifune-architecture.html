@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capítulo 10: Arquitectura MIFUNE - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #0284C7;
+            --sky-dim:     rgba(2,132,199,0.10);
+            --sky-brd:     rgba(2,132,199,0.28);
+            --emerald:     #059669;
+            --emerald-dim: rgba(5,150,105,0.10);
+            --emerald-brd: rgba(5,150,105,0.25);
+            --purple:      #7C3AED;
+            --purple-dim:  rgba(124,58,237,0.10);
+            --purple-brd:  rgba(124,58,237,0.25);
+            --amber:       #D97706;
+            --amber-dim:   rgba(217,119,6,0.10);
+            --amber-brd:   rgba(217,119,6,0.25);
+            --red:         #E11D48;
+            --red-dim:     rgba(225,29,72,0.08);
+            --text:        #0F172A;
+            --text-dim:    rgba(15,23,42,0.68);
+            --border:      rgba(15,23,42,0.12);
+            --shadow:      0 4px 20px rgba(15,23,42,0.06);
+            --shadow-lg:   0 12px 40px rgba(15,23,42,0.12);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.035; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #0f172a; transform: rotate(-25deg) scale(1.15);
+        }
+        .wm-item { padding: 30px 40px; white-space: nowrap; }
+
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 18px 48px 72px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
+
+        nav {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 14px; z-index: 999;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 6px 16px; border-radius: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+        }
+        .nbtn {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--navy); font-size: 18px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow); transition: all 0.2s;
+        }
+        .nbtn:hover { background: var(--sky-dim); border-color: var(--sky-brd); transform: scale(1.1); color: var(--sky); }
+        .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
+        #counter {
+            font-size: 13px; color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace; min-width: 65px; text-align: center; font-weight: 800;
+        }
+
+        .tag {
+            font-size: 11px; font-weight: 800; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        h1 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: var(--navy); }
+        h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
+        .sub { font-size: clamp(0.92rem, 1.35vw, 1.1rem); color: var(--text-dim); font-weight: 400; margin-bottom: 14px; text-align: center; max-width: 1050px; line-height: 1.45; }
+        .hi   { color: var(--sky); }
+        .hi-b { color: var(--emerald); }
+        .hi-p { color: var(--purple); }
+        .hi-a { color: var(--amber); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover { border-color: var(--sky-brd); }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--sky-dim); border: 1px solid var(--sky-brd);
+            border-radius: 100px; padding: 6px 18px; font-size: 12px;
+            color: var(--sky); font-weight: 800; letter-spacing: 0.5px;
+        }
+        .badge.green { background: var(--emerald-dim); border-color: var(--emerald-brd); color: var(--emerald); }
+        .badge.purple { background: var(--purple-dim); border-color: var(--purple-brd); color: var(--purple); }
+        .badge.amber { background: var(--amber-dim); border-color: var(--amber-brd); color: var(--amber); }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 1240px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; max-width: 1240px; }
+
+        .spec-box {
+            padding: 16px; display: flex; flex-direction: column; gap: 8px; text-align: left;
+        }
+        .spec-icon { font-size: 26px; }
+        .spec-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+        .spec-desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+
+        .flow-container {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
+            padding: 14px 18px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
+            margin: 6px 0; gap: 8px;
+        }
+        .flow-node {
+            flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
+            padding: 10px 8px; text-align: center; display: flex; flex-direction: column; gap: 4px;
+        }
+        .flow-node.active { border-color: var(--sky); background: #f0f9ff; }
+        .flow-node.green  { border-color: var(--emerald); background: #ecfdf5; }
+        .flow-node.purple { border-color: var(--purple); background: #f5f3ff; }
+        .flow-node.amber  { border-color: var(--amber); background: #fffbeb; }
+        .flow-node-title { font-size: 12.5px; font-weight: 800; color: var(--navy); }
+        .flow-node-desc  { font-size: 10.5px; color: var(--text-dim); }
+        .flow-arrow { font-size: 16px; color: #94a3b8; font-weight: 900; }
+
+        .table-wrap {
+            width: 100%; max-width: 1240px; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+        th { background: #0f172a; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.5px; }
+        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        .footnote {
+            margin-top: 10px; font-size: 10.5px; color: #64748b;
+            line-height: 1.4; width: 100%; max-width: 1240px; text-align: left;
+            border-top: 1px dashed #cbd5e1; padding-top: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
+        <div class="wm-item">GEEKSOFT ACADEMY 2026</div>
+        <div class="wm-item">CONFIDENCIAL &bull; PROPIEDAD INTELECTUAL</div>
+        <div class="wm-item">WWW.GEEKSOFT.TECH</div>
+        <div class="wm-item">MULTI-AGENT &bull; RAG &bull; SOTA</div>
+    </div>
+
+    <div id="deck">
+<div class="slide active">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+            <span class="badge green">🛡️ CAPÍTULO 10</span>
+            <span class="badge">CASO REAL EN PRODUCCIÓN</span>
+        </div>
+        <h1>Arquitectura MIFUNE: Arnés de Modelado Financiero</h1>
+        <h2>Dual-Agent Harness, LibreOffice Sandbox &amp; Skills Registry en VPS</h2>
+        <p class="sub">Plataforma empresarial de modelado 3-Statements con checkpoints humanos (HITL), neutralidad de modelos, consistencia FAST y cero desvío contable.</p>
+        <div class="grid-4" style="margin-top: 14px;">
+            <div class="card spec-box">
+                <span class="spec-icon">🏛️</span>
+                <span class="spec-title">Job Runner vs Web App</span>
+                <span class="spec-desc">Arquitectura asíncrona desacoplada con FastAPI y Redis Job Queue en VPS.</span>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">📦</span>
+                <span class="spec-title">Skills Registry S3</span>
+                <span class="spec-desc">Versionado semántico inmutable (SemVer) con verificación SHA-256 en MinIO.</span>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🧪</span>
+                <span class="spec-title">Sandbox LibreOffice</span>
+                <span class="spec-desc">Recálculo contable real en Calc Headless con suite QC de 26 pruebas automáticas.</span>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🌐</span>
+                <span class="spec-title">Live Dashboard SSL</span>
+                <span class="spec-desc">Desplegado en producción en <strong style="color:var(--sky);">https://mifune.geeksoft.tech</strong>.</span>
+            </div>
+        </div>
+        <div class="footnote"><span>GeekSoft Academy &bull; Bóveda: [[48 - MIFUNE]] y [[58 - Bitacora Despliegue]]</span><span>Slide 1 / 5</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🔄 Pipeline de Ejecución</div>
+        <h2>El Ciclo Operativo de Corrida MIFUNE (4.5 Segundos)</h2>
+        <p class="sub">Flujo determinista desde la ingesta de supuestos hasta la entrega de Excel, PDF y JSON certificados.</p>
+        <div class="flow-container">
+            <div class="flow-node active">
+                <span class="flow-node-title">1. Request</span>
+                <span class="flow-node-desc">Supuestos de Entrada</span>
+            </div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node purple">
+                <span class="flow-node-title">2. Skill Registry</span>
+                <span class="flow-node-desc">MinIO S3 Canon v1.0.0</span>
+            </div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node">
+                <span class="flow-node-title">3. Worker Sandbox</span>
+                <span class="flow-node-desc">openpyxl &amp; Pandas</span>
+            </div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node green">
+                <span class="flow-node-title">4. Calc Headless</span>
+                <span class="flow-node-desc">Recálculo &amp; PDF</span>
+            </div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node green">
+                <span class="flow-node-title">5. QC Suite</span>
+                <span class="flow-node-desc">26 Tests Contables PASS</span>
+            </div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node active">
+                <span class="flow-node-title">6. Dashboard</span>
+                <span class="flow-node-desc">Entrega Ejecutiva</span>
+            </div>
+        </div>
+        <div class="footnote"><span>Validado en Contabo VPS: 4.5s por corrida completa</span><span>Slide 2 / 5</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🧪 Quality Gates Contables</div>
+        <h2>Los 4 Gates de Verificación Obligatorios en MIFUNE</h2>
+        <p class="sub">Gobernanza financiera estricta: si un solo gate falla, el modelo no se certifica.</p>
+        <div class="grid-4" style="margin-top: 10px;">
+            <div class="card spec-box">
+                <span class="spec-title" style="color:var(--sky);">Gate A: Anti-Hardcode</span>
+                <p class="spec-desc">Verifica que no existan constantes numéricas quemadas dentro de celdas que deben ser fórmulas dinámicas.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title" style="color:var(--purple);">Gate A2: Consistencia FAST</span>
+                <p class="spec-desc">Auditoría de consistencia horizontal en todas las columnas temporales del Estado de Resultados.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title" style="color:var(--emerald);">Gate B: Balance Cuadrado</span>
+                <p class="spec-desc">Verificación matemática: <code style="color:var(--emerald);">Activo = Pasivo + Patrimonio</code> con delta &lt; $0.01 en todos los periodos.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title" style="color:var(--amber);">Gate C: Recálculo Calc</span>
+                <p class="spec-desc">LibreOffice Headless recalcula el árbol de dependencias y exporta el PDF ejecutivo sin desfase.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>Suite de pruebas documentada en [[58E - Paso E - Ejecucion de Modelo y Suite QC]]</span><span>Slide 3 / 5</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🌐 Producción en Vivo</div>
+        <h2>MIFUNE Web Dashboard en https://mifune.geeksoft.tech</h2>
+        <p class="sub">Interfaz corporativa con Dark Mode, Glassmorphism, telemetría en streaming y descargas de Excel/PDF.</p>
+        <div class="grid-3" style="margin-top: 10px;">
+            <div class="card spec-box">
+                <span class="spec-icon">⚡</span>
+                <span class="spec-title">FastAPI Job Runner</span>
+                <p class="spec-desc">Puerto 8100 &bull; Enrutado vía Traefik con SSL Let's Encrypt automático y red aislada Coolify.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🗄️</span>
+                <span class="spec-title">MinIO Skills Registry</span>
+                <p class="spec-desc">Puertos 9100/9101 &bull; Buckets `mifune-skills-canon` y `mifune-runs-output` con 8 artefactos por corrida.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🛡️</span>
+                <span class="spec-title">Logo Capitán MIFUNE</span>
+                <p class="spec-desc">Exoesqueleto de combate APU &bull; Identidad visual oficial de la plataforma de defensa financiera.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>Dominio oficial: <strong>https://mifune.geeksoft.tech</strong></span><span>Slide 4 / 5</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🚀 Escalabilidad</div>
+        <h2>Próximos Pasos de la Plataforma MIFUNE</h2>
+        <p class="sub">Evolución hacia el agente conversacional por WhatsApp y orquestación multi-modelo.</p>
+        <div class="grid-3" style="margin-top: 10px;">
+            <div class="card spec-box">
+                <span class="spec-title">1. WhatsApp Agent Harness</span>
+                <p class="spec-desc">Integración con Evolution API para solicitar corridas financieras y recibir el Excel/PDF por chat.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title">2. Dual-Agent OmniRoute</span>
+                <p class="spec-desc">Ruteo de razonamiento con DeepSeek-R1 y generación de código con Claude 3.5 Sonnet.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title">3. Módulos DCF &amp; LBO</span>
+                <p class="spec-desc">Incorporación de nuevas skills canónicas para valoración por flujos descontados y fusiones.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>GeekSoft Innovation Labs &bull; Proyecto MIFUNE 2026</span><span>Slide 5 / 5</span></div>
+    </div>
+    </div>
+
+    <nav>
+        <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
+        <div id="counter">1 / 5</div>
+        <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
+        <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
+    </nav>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const counter = document.getElementById('counter');
+        const fsBtn = document.getElementById('fs-btn');
+        let current = 0;
+
+        function updateDeck() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active');
+                if (idx === current) {
+                    slide.classList.add('active');
+                }
+            });
+            counter.textContent = `${current + 1} / ${slides.length}`;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === slides.length - 1;
+        }
+
+        function nextSlide() {
+            if (current < slides.length - 1) {
+                current++;
+                updateDeck();
+            }
+        }
+
+        function prevSlide() {
+            if (current > 0) {
+                current--;
+                updateDeck();
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'Home') {
+                current = 0;
+                updateDeck();
+            } else if (e.key === 'End') {
+                current = slides.length - 1;
+                updateDeck();
+            }
+        });
+
+        fsBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen().catch(() => {});
+            }
+        });
+
+        updateDeck();
+    </script>
+</body>
+</html>

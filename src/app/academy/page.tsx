@@ -24,7 +24,7 @@ const CHAPTERS = [
         title: "🚀 Multi-Agent SDLC & Visual Canvas (10 Slides)",
         url: "/sdlc-agentico",
         desc: "Fábrica de software autónoma: Roles PM/Architect/Dev/QA/DevOps, diagramas Mermaid obligatorios y Quality Gates.",
-        badge: "NUEVO • SOTA 2026",
+        badge: "ONLINE • SOTA 2026",
       },
     ],
     notes: [
@@ -41,7 +41,14 @@ const CHAPTERS = [
     title: "Sistemas RAG, Embeddings & Vector DBs",
     tag: "Retrieval & Knowledge",
     color: "#34d399",
-    ppts: [],
+    ppts: [
+      {
+        title: "📚 GraphRAG vs Vector RAG vs Hybrid RAG (6 Slides)",
+        url: "/cap-02-rag-sistemas",
+        desc: "Arquitectura RAG Empresarial en AWS Bedrock, recuperación híbrida RRF, Graphify y resolución multi-hop.",
+        badge: "ONLINE • DECK ACTIVO",
+      },
+    ],
     notes: [
       "GraphRAG vs Vector RAG vs Hybrid RAG (#59)",
       "Arquitectura RAG Empresarial en AWS (#52)",
@@ -54,7 +61,14 @@ const CHAPTERS = [
     title: "Vibe Coding & Asistentes de Desarrollo",
     tag: "Developer Tools",
     color: "#c084fc",
-    ppts: [],
+    ppts: [
+      {
+        title: "💻 Anatomía de Claude Code & Herramientas CLI (5 Slides)",
+        url: "/cap-03-vibe-coding",
+        desc: "El runtime .claude/, hooks deterministas, compresión de consola RTK y Spec-Driven Development.",
+        badge: "ONLINE • DECK ACTIVO",
+      },
+    ],
     notes: [
       "Anatomía del Directorio .claude en Claude Code (#49)",
       "Spec Kit - Spec-Driven Development (#01)",
@@ -67,7 +81,14 @@ const CHAPTERS = [
     title: "Modelos de Razonamiento, Visión & Arquitectura LLM",
     tag: "LLM Foundations",
     color: "#fbbf24",
-    ppts: [],
+    ppts: [
+      {
+        title: "⚙️ World Models JEPA, Spatial AI & Reasoning (4 Slides)",
+        url: "/cap-04-modelos-llm",
+        desc: "La visión de Yann LeCun (V-JEPA), Spatial Intelligence de Fei-Fei Li, Transformer Explainer y DeepSeek CoT.",
+        badge: "ONLINE • DECK ACTIVO",
+      },
+    ],
     notes: [
       "World Models, JEPA y la Visión de Yann LeCun (#34)",
       "Inteligencia Espacial & World Labs de Fei-Fei Li (#35)",
@@ -82,9 +103,9 @@ const CHAPTERS = [
     color: "#38bdf8",
     ppts: [
       {
-        title: "📖 Instructivo y Playbook de Trabajo con Agentes (#61)",
-        url: "/sdlc-agentico",
-        desc: "De Programador a Director de Orquesta: Contratos, entregables por rol y reglas de gobernanza sin alucinaciones.",
+        title: "📖 Harness Engineering & Patrones Agénticos (4 Slides)",
+        url: "/cap-05-fundamentos-ingenieria",
+        desc: "Playbook de Developer a AI Champion (LIDR.co), 4 Patrones de Andrew Ng y superación del Acceleration Whiplash.",
         badge: "PLAYBOOK OFICIAL",
       },
     ],
@@ -100,7 +121,14 @@ const CHAPTERS = [
     title: "Diseño de Producto, UX & Interfaces Visuales",
     tag: "UX & Interfaces",
     color: "#c084fc",
-    ppts: [],
+    ppts: [
+      {
+        title: "🎨 Leyes de UX & Protocolo Streaming AG-UI (4 Slides)",
+        url: "/cap-06-diseno-ux-interfaces",
+        desc: "Heurísticas de psicología cognitiva, streaming tipado JSON en tiempo real y estética de producto GeekSoft.",
+        badge: "ONLINE • DECK ACTIVO",
+      },
+    ],
     notes: [
       "Leyes de UX (Laws of UX) (#06)",
       "dsh-visualizer - Renderizado en vivo (#11)",
@@ -113,7 +141,14 @@ const CHAPTERS = [
     title: "Infraestructura, VPS & Seguridad en Producción",
     tag: "DevOps & Cloud",
     color: "#34d399",
-    ppts: [],
+    ppts: [
+      {
+        title: "🛡️ Hardening de Servidores Linux, VPS & Docker (4 Slides)",
+        url: "/cap-07-infraestructura-vps",
+        desc: "5 capas de seguridad perimetral en Contabo VPS, redes Docker aisladas y scraping headless diario a las 07:00 AM.",
+        badge: "ONLINE • DECK ACTIVO",
+      },
+    ],
     notes: [
       "How To Secure A Linux Server (#21)",
       "Cron Job Diario y Scraping Headless VPS Contabo (#41)",
@@ -125,7 +160,14 @@ const CHAPTERS = [
     title: "Radar Tecnológico & Vigilancia Continua",
     tag: "Radar & OSINT",
     color: "#fbbf24",
-    ppts: [],
+    ppts: [
+      {
+        title: "📡 Radar Tecnológico & Curación Sistemática OSINT (4 Slides)",
+        url: "/cap-08-radar-tecnologico",
+        desc: "Vigilancia de GitHub Trending, pesos abiertos en Hugging Face y Watchlist de 11 Top Voices globales.",
+        badge: "ONLINE • DECK ACTIVO",
+      },
+    ],
     notes: [
       "Radar Automatizado GitHub & Hugging Face (#36)",
       "Watchlist de 11 Perfiles Top Voices en LinkedIn (#000)",
@@ -156,10 +198,16 @@ const CHAPTERS = [
     color: "#34d399",
     ppts: [
       {
-        title: "🛡️ MIFUNE Live Web Dashboard (https://mifune.geeksoft.tech)",
+        title: "🛡️ Arquitectura MIFUNE & Arnés Financiero (5 Slides)",
+        url: "/cap-10-mifune-architecture",
+        desc: "Dual-Agent Harness, LibreOffice Calc Headless Sandbox, Skills Registry S3 y Quality Gates financieros.",
+        badge: "ONLINE • DECK ACTIVO",
+      },
+      {
+        title: "🌐 MIFUNE Live Web Dashboard (Producción en VPS)",
         url: "https://mifune.geeksoft.tech",
-        desc: "Arnés Financiero 3-Statements: LibreOffice Headless Sandbox, MinIO Skills Registry y Quality Gates en vivo.",
-        badge: "PRODUCCIÓN EN VIVO",
+        desc: "Plataforma desplegada con SSL en https://mifune.geeksoft.tech & FastAPI Job Runner en puerto 8100.",
+        badge: "LIVE DASHBOARD",
       },
     ],
     notes: [
@@ -294,7 +342,6 @@ export default function AcademyPage() {
         html: emailHtml,
       };
 
-      // 1. Endpoint backend Next.js local
       let sent = false;
       try {
         const resA = await fetch("/api/send-otp", {
@@ -307,7 +354,6 @@ export default function AcademyPage() {
         console.warn("Local proxy error:", err);
       }
 
-      // 2. Fallback proxy producción
       if (!sent) {
         try {
           await fetch("https://apefac.geeksoft.tech/api/send-otp", {
@@ -353,7 +399,6 @@ export default function AcademyPage() {
     setInputOtp("");
   };
 
-  // VISTA 1: GATEKEEPER 2FA
   if (!isAuthenticated) {
     return (
       <div style={{ minHeight: "100vh", background: "#090d16", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px", fontFamily: "'Inter', sans-serif", color: "#f8fafc" }}>
@@ -451,7 +496,6 @@ export default function AcademyPage() {
     );
   }
 
-  // VISTA 2: EL GRAN ÍNDICE (DESPUÉS DEL 2FA)
   return (
     <div style={{ minHeight: "100vh", background: "#090d16", color: "#f8fafc", fontFamily: "'Inter', sans-serif", padding: "40px 20px 80px" }}>
       <div style={{ maxWidth: "1150px", margin: "0 auto" }}>
@@ -489,7 +533,7 @@ export default function AcademyPage() {
             Repositorio Maestro de Presentaciones e Ingeniería
           </h1>
           <p style={{ color: "#94a3b8", fontSize: "15px", marginTop: "8px", maxWidth: "850px", lineHeight: "1.5" }}>
-            Árbol ordenado de los 10 ejes temáticos. Haz clic en las tarjetas de presentación para abrir los decks interactivos en vivo en pantalla completa.
+            Árbol ordenado de los 10 ejes temáticos con sus 10 presentaciones interactivas en vivo. Haz clic en las tarjetas destacadas para abrir en pantalla completa.
           </p>
         </header>
 
