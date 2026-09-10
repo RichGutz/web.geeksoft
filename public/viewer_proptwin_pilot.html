@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROPTWIN - Gemelo Digital Inmobiliario (Arzobispado de Lima)</title>
-    <!-- Leaflet CSS & JS para máxima compatibilidad y estabilidad en producción -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Chart.js para Tooltips Polares Radiales a 60 FPS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts Inter & JetBrains Mono -->
@@ -141,7 +141,7 @@
             flex: 1;
             height: 100%;
             position: relative;
-            background: #E2E8F0;
+            background: #0F172A;
         }
 
         #map {
@@ -163,12 +163,12 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(8px);
             border: 1.5px solid var(--border);
             border-radius: 10px;
             padding: 12px 14px;
-            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
             pointer-events: auto;
         }
 
@@ -207,29 +207,37 @@
             border-radius: 3px;
         }
 
-        /* LAYER TOGGLE BUTTONS */
+        /* LAYER TOGGLE BUTTONS (ESTILO PETRAL.MARK) */
         .layer-toggle-bar {
             display: flex;
             gap: 6px;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .layer-btn {
             background: #F1F5F9;
             border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 10px;
-            font-weight: 700;
+            padding: 5px 10px;
+            font-size: 10.5px;
+            font-weight: 800;
             color: var(--navy);
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .layer-btn:hover {
+            background: #E2E8F0;
         }
 
         .layer-btn.active {
-            background: var(--navy);
+            background: var(--sky);
             color: #ffffff;
-            border-color: var(--navy);
+            border-color: var(--sky);
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
         }
 
         /* RADIAL POLAR HOVER TOOLTIP (NOTA #93) */
@@ -243,7 +251,7 @@
             border: 2px solid var(--sky);
             border-radius: 12px;
             padding: 12px;
-            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.18), 0 4px 12px rgba(15, 23, 42, 0.1);
+            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.22), 0 4px 12px rgba(15, 23, 42, 0.12);
             transform: translate(15px, 15px);
             transition: transform 0.05s ease-out;
         }
@@ -332,7 +340,7 @@
             display: block;
         }
 
-        /* APEFAC ENTERPRISE LIGHT CARDS */
+        /* APEFAC CARDS */
         .info-card {
             background: #ffffff;
             border: 1px solid var(--border);
@@ -387,7 +395,7 @@
             margin-top: 1px;
         }
 
-        /* SEMAPHORES APEFAC */
+        /* SEMAPHORES */
         .semaphore-badge {
             display: inline-flex;
             align-items: center;
@@ -402,12 +410,6 @@
             background: var(--amber-light);
             color: var(--amber);
             border: 1px solid rgba(217, 119, 6, 0.25);
-        }
-
-        .semaphore-green {
-            background: var(--emerald-light);
-            color: var(--emerald);
-            border: 1px solid rgba(5, 150, 105, 0.25);
         }
 
         /* EDMS DOCUMENT TREE */
@@ -434,7 +436,6 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            border-bottom: 1px solid transparent;
         }
 
         .folder-header:hover {
@@ -523,16 +524,16 @@
             font-family: var(--font-mono);
         }
 
-        .custom-div-icon {
+        .vertex-marker-icon {
             background: #0284c7;
             color: #ffffff;
             border: 2px solid #ffffff;
             border-radius: 50%;
             font-weight: 900;
-            font-size: 10px;
+            font-size: 11px;
             text-align: center;
-            line-height: 18px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            line-height: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
     </style>
 </head>
@@ -579,8 +580,9 @@
                         </div>
                     </div>
                     <div class="layer-toggle-bar">
-                        <button class="layer-btn active" id="btn-carto" onclick="setBaseLayer('carto')">🗺️ Plano APEFAC Light</button>
-                        <button class="layer-btn" id="btn-sat" onclick="setBaseLayer('sat')">🛰️ Satélite HD (ESRI)</button>
+                        <button class="layer-btn active" id="btn-google-sat" onclick="setBaseLayer('google-sat')">🛰️ Google Satélite HD</button>
+                        <button class="layer-btn" id="btn-google-roads" onclick="setBaseLayer('google-roads')">🗺️ Google Calles</button>
+                        <button class="layer-btn" id="btn-osm" onclick="setBaseLayer('osm')">🌐 OpenStreetMap</button>
                     </div>
                 </div>
             </div>
@@ -892,84 +894,98 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // COORDENADAS EXACTAS DE AV. ALEJANDRO IGLESIAS 419, CHORRILLOS
-        const latCenter = -12.16485;
-        const lngCenter = -77.02755;
+        // COORDENADAS CONVERTIDAS MATEMATICAMENTE CON PYPROJ (EPSG:32718 UTM 18S -> EPSG:4326 WGS84)
+        // Manzana real entre Av. Alejandro Iglesias, Jr. Maximo Alvarado y Jr. Numa Llona (Chorrillos)
+        const coordsGeokad = [
+            [-12.1667395, -77.0241691], // Vértice A (Frente Av. Iglesias - 35.46 m)
+            [-12.1667072, -77.0238264], // Vértice B (Esq. Jr. Máximo Alvarado - 19.82 m)
+            [-12.1669967, -77.0237055], // Vértice C (Fondo Lote 4/5 - 30.09 m)
+            [-12.1670971, -77.0239607], // Vértice D (Fondo Quiebre 1 - 9.35 m)
+            [-12.1670372, -77.0241233], // Vértice E (Fondo Quiebre 2 - 20.33 m)
+            [-12.1669035, -77.0242275]  // Vértice F (Jr. Numa Llona - 29.90 m)
+        ];
 
-        // INICIALIZACION MAPA CON LEAFLET (ULTRA ESTABLE Y RESISTENTE)
+        const latCenter = -12.16688;
+        const lngCenter = -77.02400;
+
+        // INICIALIZACION MAPA CON LEAFLET
         const map = L.map('map', {
             center: [latCenter, lngCenter],
-            zoom: 18,
-            zoomControl: true
+            zoom: 19,
+            zoomControl: true,
+            maxZoom: 22
         });
 
-        // CAPAS BASE
-        const cartoLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO',
-            maxZoom: 20,
-            subdomains: 'abcd'
+        // CAPAS BASE (PETRAL.MARK: GRATIS, ESTABLES, SIN MARCA DE AGUA)
+        const googleSatHybrid = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+            maxZoom: 22,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '&copy; Google Maps &bull; Petral.MARK Engine'
         }).addTo(map);
 
-        const satLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '&copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
-            maxZoom: 19
+        const googleRoads = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 22,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '&copy; Google Maps'
         });
 
-        function setBaseLayer(type) {
-            document.getElementById('btn-carto').classList.remove('active');
-            document.getElementById('btn-sat').classList.remove('active');
+        const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        });
 
-            if (type === 'carto') {
-                map.removeLayer(satLayer);
-                map.addLayer(cartoLayer);
-                document.getElementById('btn-carto').classList.add('active');
+        // CONTROLADOR DE CAPAS
+        function setBaseLayer(type) {
+            document.getElementById('btn-google-sat').classList.remove('active');
+            document.getElementById('btn-google-roads').classList.remove('active');
+            document.getElementById('btn-osm').classList.remove('active');
+
+            map.removeLayer(googleSatHybrid);
+            map.removeLayer(googleRoads);
+            map.removeLayer(osmLayer);
+
+            if (type === 'google-sat') {
+                map.addLayer(googleSatHybrid);
+                document.getElementById('btn-google-sat').classList.add('active');
+            } else if (type === 'google-roads') {
+                map.addLayer(googleRoads);
+                document.getElementById('btn-google-roads').classList.add('active');
             } else {
-                map.removeLayer(cartoLayer);
-                map.addLayer(satLayer);
-                document.getElementById('btn-sat').classList.add('active');
+                map.addLayer(osmLayer);
+                document.getElementById('btn-osm').classList.add('active');
             }
         }
 
-        // COORDENADAS POLIGONALES DE IGLESIAS 419 (GEOKAD WGS84)
-        const coordsGeokad = [
-            [-12.16462, -77.02772], // Vértice A (Frente Iglesias)
-            [-12.16458, -77.02738], // Vértice B (Esq. Maximo Alvarado)
-            [-12.16488, -77.02722], // Vértice C (Fondo Lote 4/5)
-            [-12.16498, -77.02748], // Vértice D (Quiebre 1)
-            [-12.16492, -77.02762], // Vértice E (Quiebre 2)
-            [-12.16480, -77.02774]  // Vértice F (Numa Llona)
-        ];
-
-        // POLIGONO TOPOGRAFICO REAL (AZUL APEFAC)
+        // POLIGONO TOPOGRAFICO REAL (AZUL APEFAC - 1,294.37 m²)
         const polygonTopografico = L.polygon(coordsGeokad, {
-            color: '#0284c7',
+            color: '#38bdf8',
             weight: 3.5,
             fillColor: '#0284c7',
-            fillOpacity: 0.35
+            fillOpacity: 0.40
         }).addTo(map);
 
-        // POLIGONO REGISTRAL COMPARATIVO (LINEA DISCONTINUA AMBAR)
+        // POLIGONO REGISTRAL COMPARATIVO SUNARP (1,204.66 m² - LINEA PUNTEADA AMBAR)
         const coordsSunarp = [
-            [-12.16464, -77.02769],
-            [-12.16460, -77.02740],
-            [-12.16485, -77.02726],
-            [-12.16494, -77.02750],
-            [-12.16489, -77.02762],
-            [-12.16479, -77.02771]
+            [-12.166755, -77.024140],
+            [-12.166725, -77.023845],
+            [-12.166970, -77.023730],
+            [-12.167060, -77.023960],
+            [-12.167010, -77.024105],
+            [-12.166890, -77.024195]
         ];
 
         const polygonRegistral = L.polygon(coordsSunarp, {
-            color: '#d97706',
+            color: '#fbbf24',
             weight: 2,
             dashArray: '5, 5',
             fillColor: '#d97706',
-            fillOpacity: 0.15
+            fillOpacity: 0.20
         }).addTo(map);
 
         // MARCADORES EN CADA VERTICE CON SU LETRA
         const verticesLabels = [
-            { letra: 'A', coord: coordsGeokad[0], desc: 'Vértice A - Av. Iglesias (35.46 m)' },
-            { letra: 'B', coord: coordsGeokad[1], desc: 'Vértice B - Jr. M. Alvarado (19.82 m)' },
+            { letra: 'A', coord: coordsGeokad[0], desc: 'Vértice A - Av. Alejandro Iglesias (35.46 m)' },
+            { letra: 'B', coord: coordsGeokad[1], desc: 'Vértice B - Jr. Máximo Alvarado (19.82 m)' },
             { letra: 'C', coord: coordsGeokad[2], desc: 'Vértice C - Fondo Lote 4/5 (30.09 m)' },
             { letra: 'D', coord: coordsGeokad[3], desc: 'Vértice D - Fondo Quiebre 1 (9.35 m)' },
             { letra: 'E', coord: coordsGeokad[4], desc: 'Vértice E - Fondo Quiebre 2 (20.33 m)' },
@@ -978,10 +994,10 @@
 
         verticesLabels.forEach(v => {
             const icon = L.divIcon({
-                className: 'custom-div-icon',
+                className: 'vertex-marker-icon',
                 html: `<div>${v.letra}</div>`,
-                iconSize: [20, 20],
-                iconAnchor: [10, 10]
+                iconSize: [22, 22],
+                iconAnchor: [11, 11]
             });
             L.marker(v.coord, { icon: icon })
                 .bindTooltip(`<b>${v.desc}</b>`, { direction: 'top' })
@@ -1018,11 +1034,11 @@
                 datasets: [{
                     label: 'Recaudación 2025 (S/)',
                     data: [9000, 9000, 9000, 9000, 9000, 9000, 9000, 9000, 9000, 9000, 9000, 9000],
-                    backgroundColor: 'rgba(2, 132, 199, 0.25)',
+                    backgroundColor: 'rgba(2, 132, 199, 0.35)',
                     borderColor: '#0284c7',
-                    borderWidth: 2,
+                    borderWidth: 2.5,
                     pointBackgroundColor: '#0284c7',
-                    pointRadius: 2.5
+                    pointRadius: 3
                 }]
             },
             options: {
