@@ -102,8 +102,8 @@
             display: inline-flex; align-items: center; gap: 6px;
         }
         h1 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: var(--navy); }
-        h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
-        .sub { font-size: clamp(0.92rem, 1.35vw, 1.1rem); color: var(--text-dim); font-weight: 400; margin-bottom: 14px; text-align: center; max-width: 1050px; line-height: 1.45; }
+        h2 { font-size: clamp(1.55rem, 2.3vw, 2.2rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
+        .sub { font-size: clamp(0.90rem, 1.25vw, 1.05rem); color: var(--text-dim); font-weight: 400; margin-bottom: 12px; text-align: center; max-width: 1050px; line-height: 1.45; }
         .hi   { color: var(--sky); }
         .hi-b { color: var(--emerald); }
         .hi-p { color: var(--purple); }
@@ -132,45 +132,45 @@
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
 
         .spec-box {
-            padding: 16px; display: flex; flex-direction: column; gap: 8px; text-align: left;
+            padding: 14px; display: flex; flex-direction: column; gap: 6px; text-align: left;
         }
-        .spec-icon { font-size: 26px; }
-        .spec-title { font-size: 15px; font-weight: 800; color: var(--navy); }
-        .spec-desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+        .spec-icon { font-size: 24px; }
+        .spec-title { font-size: 14px; font-weight: 800; color: var(--navy); }
+        .spec-desc { font-size: 11.5px; color: var(--text-dim); line-height: 1.45; }
 
         .flow-container {
             display: flex; align-items: center; justify-content: space-between;
             background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
-            padding: 14px 18px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
+            padding: 12px 16px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
             margin: 6px 0; gap: 8px;
         }
         .flow-node {
             flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
-            padding: 10px 8px; text-align: center; display: flex; flex-direction: column; gap: 4px;
+            padding: 9px 8px; text-align: center; display: flex; flex-direction: column; gap: 3px;
         }
         .flow-node.active { border-color: var(--sky); background: #f0f9ff; }
         .flow-node.green  { border-color: var(--emerald); background: #ecfdf5; }
         .flow-node.purple { border-color: var(--purple); background: #f5f3ff; }
         .flow-node.amber  { border-color: var(--amber); background: #fffbeb; }
-        .flow-node-title { font-size: 12.5px; font-weight: 800; color: var(--navy); }
-        .flow-node-desc  { font-size: 10.5px; color: var(--text-dim); }
-        .flow-arrow { font-size: 16px; color: #94a3b8; font-weight: 900; }
+        .flow-node-title { font-size: 12px; font-weight: 800; color: var(--navy); }
+        .flow-node-desc  { font-size: 10px; color: var(--text-dim); }
+        .flow-arrow { font-size: 15px; color: #94a3b8; font-weight: 900; }
 
         .table-wrap {
             width: 100%; max-width: 1240px; background: #ffffff;
             border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
             box-shadow: var(--shadow);
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
-        th { background: #0f172a; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.5px; }
-        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 11.5px; }
+        th { background: #0f172a; color: #ffffff; padding: 9px 14px; font-weight: 700; letter-spacing: 0.5px; }
+        td { padding: 8px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) { background: #f8fafc; }
 
         .footnote {
-            margin-top: 10px; font-size: 10.5px; color: #64748b;
+            margin-top: 8px; font-size: 10px; color: #64748b;
             line-height: 1.4; width: 100%; max-width: 1240px; text-align: left;
-            border-top: 1px dashed #cbd5e1; padding-top: 6px;
+            border-top: 1px dashed #cbd5e1; padding-top: 5px;
             display: flex; justify-content: space-between; align-items: center;
         }
     </style>
@@ -197,7 +197,7 @@
             <h1>PROPTWIN: Gemelo Digital del Arzobispado de Lima</h1>
             <h2>La Primera Fábrica de Software Agéntica de Nivel Empresarial</h2>
             <p class="sub">
-                Transformación de la administración patrimonial de ~400 predios mediante un gemelo digital geoespacial, ingesta OCR de títulos Sunarp, arnés financiero y gobierno agéntico gobernado por contratos.
+                Transformación de la administración patrimonial de ~400 predios mediante un gemelo digital geoespacial, ingesta cartográfica de 3 vías, arnés financiero y UI corporativa estandarizada estilo APEFAC.
             </p>
             
             <div class="grid-4" style="margin-top: 14px;">
@@ -212,9 +212,9 @@
                     <span class="spec-desc">PM, System Architect, Engineering Squad, QC Auditor y DevOps Release.</span>
                 </div>
                 <div class="card spec-box">
-                    <span class="spec-icon">🛠️</span>
-                    <span class="spec-title">Stack Enterprise</span>
-                    <span class="spec-desc">React 19 TS, Python 3.12 FastAPI, Supabase PostGIS y UI estilo APEFAC.</span>
+                    <span class="spec-icon">🎨</span>
+                    <span class="spec-title">UI/UX Estilo APEFAC</span>
+                    <span class="spec-desc">Enterprise Light Theme, Sidebar Modular, Master-Detail GIS y alta densidad de datos.</span>
                 </div>
                 <div class="card spec-box">
                     <span class="spec-icon">🧪</span>
@@ -225,7 +225,7 @@
 
             <div class="footnote">
                 <span>GeekSoft Academy &bull; Bóveda: [[75 - Blueprint PROPTWIN]], [[76 - Software Factory]], [[77 - Stack e Infraestructura]]</span>
-                <span>Slide 1 / 10</span>
+                <span>Slide 1 / 12</span>
             </div>
         </div>
 
@@ -264,7 +264,7 @@
 
             <div class="footnote">
                 <span>Documentado en: `AdL.RE.SOFT/03_Modulos_del_Sistema/02_Modulo_Inmobiliario_y_Predios.md`</span>
-                <span>Slide 2 / 10</span>
+                <span>Slide 2 / 12</span>
             </div>
         </div>
 
@@ -297,24 +297,24 @@
 
             <div class="footnote">
                 <span>Metodología formalizada en [[76 - Software Factory Agentica PROPTWIN]]</span>
-                <span>Slide 3 / 10</span>
+                <span>Slide 3 / 12</span>
             </div>
         </div>
 
-        <!-- SLIDE 4: STACK TECNOLÓGICO Y UI APEFAC -->
+        <!-- SLIDE 4: STACK TECNOLÓGICO -->
         <div class="slide">
             <div class="tag">🛠️ Stack Tecnológico</div>
             <h2>Stack de Producción: React TypeScript, Python &amp; Supabase PostGIS</h2>
-            <p class="sub">Arquitectura full-stack desacoplada con el sistema de diseño visual APEFAC Enterprise Light.</p>
+            <p class="sub">Arquitectura full-stack desacoplada y fuertemente tipada para alto rendimiento.</p>
             
             <div class="grid-3" style="margin-top: 10px;">
                 <div class="card spec-box">
-                    <span class="spec-title" style="color:var(--sky);">🎨 Frontend: React 19 + TypeScript + APEFAC</span>
+                    <span class="spec-title" style="color:var(--sky);">🎨 Frontend: React 19 + TypeScript</span>
                     <p class="spec-desc">
                         &bull; <strong>Vite + TypeScript:</strong> Compilación estricta y reactividad ultrarrápida.<br/>
-                        &bull; <strong>UI APEFAC Light:</strong> `#F8FAFC`, Navy `#0F172A`, Sky `#0284C7`, Emerald `#059669`.<br/>
                         &bull; <strong>GIS:</strong> MapLibre GL / Leaflet + Turf.js con semáforo 4 colores.<br/>
-                        &bull; <strong>Data:</strong> TanStack Table + Apache ECharts para analítica.
+                        &bull; <strong>Data:</strong> TanStack Table + Apache ECharts para analítica patrimonial.<br/>
+                        &bull; <strong>Componentes:</strong> Modulares, reutilizables y sin Tailwind innecesario.
                     </p>
                 </div>
                 <div class="card spec-box">
@@ -339,11 +339,52 @@
 
             <div class="footnote">
                 <span>Especificado en detalle en [[77 - Stack Tecnologico, Infraestructura y Entorno de Ejecucion]]</span>
-                <span>Slide 4 / 10</span>
+                <span>Slide 4 / 12</span>
             </div>
         </div>
 
-        <!-- SLIDE 5: DÓNDE TRABAJAN LOS AGENTES (DISTRIBUCIÓN DE CARGA) -->
+        <!-- SLIDE 5: SISTEMA DE DISEÑO UI/UX APEFAC (NUEVO) -->
+        <div class="slide">
+            <div class="tag">🎨 Diseño UI/UX Estandarizado</div>
+            <h2>El Sistema de Diseño UI/UX APEFAC Enterprise Light</h2>
+            <p class="sub">Directriz visual estricta: replicar exactamente la estética, tokens y ergonomía de `C:\Users\rguti\APEFAC`.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <span class="spec-title" style="color:var(--navy);">1. Paleta de Tokens &amp; Claridad</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Fondo Base:</strong> `#F8FAFC` (Slate-50) &bull; <strong>Tarjetas:</strong> `#FFFFFF`.<br/>
+                        &bull; <strong>Bordes:</strong> `1px solid #E2E8F0` / `#CBD5E1`.<br/>
+                        &bull; <strong>Texto Principal:</strong> `#0F172A` &bull; <strong>Acento:</strong> `#0284C7` (Sky).<br/>
+                        &bull; <strong>Estados:</strong> Emerald `#059669`, Amber `#D97706`, Rose `#E11D48`.<br/>
+                        &bull; <strong>Prohibición:</strong> Cero cajas oscuras en el layout central.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <span class="spec-title" style="color:var(--purple);">2. Layout Modular &amp; Navegación</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Sidebar Enterprise:</strong> Colapsable, con grupos de módulos y pill de estado activo.<br/>
+                        &bull; <strong>Topbar Header:</strong> Breadcrumbs dinámicos, buscador global (`Ctrl+K`) y selector de entidad AdL.<br/>
+                        &bull; <strong>Master-Detail GIS:</strong> Lienzo de mapa interactivo a la izquierda + Panel de Ficha Técnica a la derecha.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <span class="spec-title" style="color:var(--emerald);">3. Densidad &amp; Tipografía</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Fuentes:</strong> `Inter` para interfaz, `JetBrains Mono` para códigos (`#PRP-042`), UTM y montos (`S/.`).<br/>
+                        &bull; <strong>Tablas de Datos:</strong> Padding compacto (`py-2.5 px-4`), hover refinado y columnas numéricas alineadas a la derecha.<br/>
+                        &bull; <strong>Badges:</strong> Mayúsculas `text-[10px]` semánticos de estado.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Estándar basado en `APEFAC/Obsidian/Diseño.SW.APEFAC/` (Templates Master &amp; Sidebar Enterprise)</span>
+                <span>Slide 5 / 12</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: DISTRIBUCIÓN DE CARGA & VPS -->
         <div class="slide">
             <div class="tag">💻 Entorno de Ejecución</div>
             <h2>¿Dónde Trabajan los Agentes? Arquitectura Híbrida Distribuida</h2>
@@ -380,11 +421,53 @@
 
             <div class="footnote">
                 <span>Arquitectura de Infraestructura en [[77 - Stack Tecnologico, Infraestructura y Entorno de Ejecucion]]</span>
-                <span>Slide 5 / 10</span>
+                <span>Slide 6 / 12</span>
             </div>
         </div>
 
-        <!-- SLIDE 6: LOS 7 MÓDULOS DEL SISTEMA -->
+        <!-- SLIDE 7: PRESUPUESTO & RENDIMIENTO CON PLAN GEMINI (S/. 350) -->
+        <div class="slide">
+            <div class="tag">💰 Presupuesto &amp; Asignación de Tokens</div>
+            <h2>Viabilidad de la Cuadrilla con Plan Gemini (S/. 350 / ~$95 USD)</h2>
+            <p class="sub">Ruteo inteligente por Tiers: Gemini Pro para decisiones críticas y Gemini Flash para ejecución masiva sin sobrecostos.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <span class="spec-title" style="color:var(--sky);">⚡ Tier Rápido: Gemini Flash</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Costo:</strong> ~$0.075 / 1M tokens.<br/>
+                        &bull; <strong>Rendimiento:</strong> &gt; 600M a 800M tokens con $95 USD.<br/>
+                        &bull; <strong>Roles Asignados:</strong> Dev Squad (código FastAPI/React), QA Tester (Pytest) e ingesta OCR.<br/>
+                        &bull; <strong>Latencia:</strong> Sub-segundo (&lt; 800ms por llamada).
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <span class="spec-title" style="color:var(--purple);">🧠 Tier Alto: Gemini Pro / Thinker</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Costo:</strong> ~$1.25 - $2.50 / 1M tokens.<br/>
+                        &bull; <strong>Rendimiento:</strong> 30M a 60M tokens de razonamiento.<br/>
+                        &bull; <strong>Roles Asignados:</strong> Product Manager (PRD), Arquitecto de Software y Auditor Legal Sunarp.<br/>
+                        &bull; <strong>Ventana:</strong> 1M a 2M tokens para ingesta de expedientes.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <span class="spec-title" style="color:var(--emerald);">🔌 Conexión Directa al Plan</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Conexión API:</strong> `GEMINI_API_KEY` en `.env` local y VPS.<br/>
+                        &bull; <strong>SDK Agéntico:</strong> Google GenAI SDK / Pydantic AI.<br/>
+                        &bull; <strong>Hardware $0:</strong> Compilaciones y Docker en Contabo VPS.<br/>
+                        &bull; <strong>Capacidad:</strong> Corre PROPTWIN, ARBN y MIFUNE en paralelo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Estrategia de Ruteo Económico &bull; Ecosistema Google Gemini 2026</span>
+                <span>Slide 7 / 12</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: LOS 7 MÓDULOS DEL SISTEMA -->
         <div class="slide">
             <div class="tag">🧩 Módulos del Sistema</div>
             <h2>La Arquitectura Funcional de 7 Módulos de PROPTWIN</h2>
@@ -392,8 +475,8 @@
             
             <div class="grid-4" style="margin-top: 10px;">
                 <div class="card spec-box">
-                    <span class="spec-title" style="color:var(--sky);">1. GIS &amp; Mapa 2D/3D</span>
-                    <p class="spec-desc">MapLibre GL + Turf.js con semáforo de 4 estados por predio.</p>
+                    <span class="spec-title" style="color:var(--sky);">1. GIS &amp; Mapa 2D/3D (3 Vías)</span>
+                    <p class="spec-desc">MapLibre GL con ingesta de: Topografía UTM, trazado visual en Google Earth y BGR Sunarp (best-effort).</p>
                 </div>
                 <div class="card spec-box">
                     <span class="spec-title" style="color:var(--purple);">2. Inmuebles &amp; Ficha 360°</span>
@@ -416,7 +499,7 @@
                 </div>
                 <div class="card spec-box">
                     <span class="spec-title" style="color:var(--purple);">6. Paperless Documental</span>
-                    <p class="spec-desc">OCR e indexación de escrituras públicas, títulos y contratos.</p>
+                    <p class="spec-desc">OCR e indexación de escrituras públicas, títulos y contratos (Paperless-ngx #83).</p>
                 </div>
                 <div class="card spec-box">
                     <span class="spec-title" style="color:var(--emerald);">7. Copiloto IA (RAG)</span>
@@ -426,15 +509,57 @@
 
             <div class="footnote">
                 <span>Estructura de módulos en `AdL.RE.SOFT/03_Modulos_del_Sistema/`</span>
-                <span>Slide 6 / 10</span>
+                <span>Slide 8 / 12</span>
             </div>
         </div>
 
-        <!-- SLIDE 7: MODELO DE DATOS GEO-RELACIONAL -->
+        <!-- SLIDE 9: INGESTA CARTOGRÁFICA Y LINDEROS GIS (3 VÍAS) -->
+        <div class="slide">
+            <div class="tag">🗺️ Cartografía &amp; Linderos</div>
+            <h2>Estrategia de Ingesta Cartográfica y Linderos de Predios</h2>
+            <p class="sub">Los linderos reales peruanos no existen en mapas open source. Implementación de una arquitectura híbrida de 3 vías.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <span class="spec-title" style="color:var(--sky);">1. Levantamientos Topográficos UTM (Prioritaria)</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Fuente:</strong> Planos perimétricos y memorias descriptivas de campo.<br/>
+                        &bull; <strong>Input:</strong> Formulario de ingreso de vértices UTM (WGS84 Zona 18S).<br/>
+                        &bull; <strong>PostGIS:</strong> Construcción determinista con `ST_GeomFromText('POLYGON(...)', 4326)`.<br/>
+                        &bull; <strong>Precisión:</strong> Exactitud milimétrica oficial.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <span class="spec-title" style="color:var(--purple);">2. Trazado Satelital Visual (Google Earth / Canvas)</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Fuente:</strong> Fotogrametría satelital de alta resolución en Google Earth.<br/>
+                        &bull; <strong>Herramienta:</strong> Lienzo interactivo MapLibre Draw integrado en PROPTWIN.<br/>
+                        &bull; <strong>Flujo:</strong> El usuario traza el perímetro visible sobre la manzana.<br/>
+                        &bull; <strong>Utilidad:</strong> Rápido registro de predios sin plano digitalizado.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <span class="spec-title" style="color:var(--emerald);">3. Sunarp BGR Asistido (Complementaria)</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Fuente:</strong> Base Gráfica Registral (`visor-bgr.sunarp.gob.pe`).<br/>
+                        &bull; <strong>Realidad:</strong> Límites estrictos de consulta y cobertura incompleta.<br/>
+                        &bull; <strong>Enfoque:</strong> Extracción asistida o importación de polígonos certificados.<br/>
+                        &bull; <strong>Uso:</strong> Cruce pericial de superposiciones registrales.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Estrategia GIS documentada en [[75 - Blueprint PROPTWIN]] y `AdL.RE.SOFT/03_Modulos_del_Sistema/01_Modulo_GIS_y_Mapas.md`</span>
+                <span>Slide 9 / 12</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: MODELO DE DATOS GEO-RELACIONAL -->
         <div class="slide">
             <div class="tag">🗄️ Modelo de Datos</div>
             <h2>El Modelo Entidad-Relación Geoespacial (PostGIS)</h2>
-            <p class="sub">Claves compuestas y cardinalidad relacional para el patrimonio del Arzobispado.</p>
+            <p class="sub">Claves compuestas, particionamiento de unidades y polígonos perimétricos no estándar.</p>
             
             <div class="grid-3" style="margin-top: 10px;">
                 <div class="card spec-box">
@@ -454,22 +579,22 @@
                     </p>
                 </div>
                 <div class="card spec-box">
-                    <span class="spec-title">3. GEOMETRIA_GIS &amp; GRAFO</span>
+                    <span class="spec-title">3. LINDEROS_GIS (PostGIS)</span>
                     <p class="spec-desc">
-                        &bull; PostGIS `ST_Polygon` (EPSG:4326) con linderos del predio.<br/>
-                        &bull; Centroide lat/lng para marcadores MapLibre GL.<br/>
-                        &bull; Grafo relacional: Inmueble &harr; Inquilino &harr; Contrato.
+                        &bull; <strong>Topografía:</strong> Vértices UTM `ST_GeomFromText('POLYGON(...)', 4326)`.<br/>
+                        &bull; <strong>Google Earth:</strong> Trazado satelital visual de linderos reales.<br/>
+                        &bull; <strong>Sunarp BGR:</strong> Extracción asistida con límites de cuota.
                     </p>
                 </div>
             </div>
 
             <div class="footnote">
                 <span>Diagrama ER completo en `AdL.RE.SOFT/01_WorkTree_Arquitectura/Modelo_Datos_Entidad_Relacion.md`</span>
-                <span>Slide 7 / 10</span>
+                <span>Slide 10 / 12</span>
             </div>
         </div>
 
-        <!-- SLIDE 8: LA CUADRILLA AGÉNTICA -->
+        <!-- SLIDE 11: LA CUADRILLA AGÉNTICA -->
         <div class="slide">
             <div class="tag">👥 Organización Agéntica</div>
             <h2>La Cuadrilla de 5 Agentes Especializados de PROPTWIN</h2>
@@ -509,7 +634,7 @@
                 </div>
                 <div class="card spec-box">
                     <span class="spec-title">Engineering Squad</span>
-                    <p class="spec-desc">Construye componentes desacoplados con tipado estricto Pydantic y tokens APEFAC.</p>
+                    <p class="spec-desc">Construye componentes desacoplados con tipado estricto Pydantic y tokens visuales APEFAC.</p>
                 </div>
                 <div class="card spec-box">
                     <span class="spec-title">Auditor &amp; Release</span>
@@ -519,31 +644,31 @@
 
             <div class="footnote">
                 <span>Arquitectura de Roles en [[76 - Software Factory Agentica PROPTWIN]]</span>
-                <span>Slide 8 / 10</span>
+                <span>Slide 11 / 12</span>
             </div>
         </div>
 
-        <!-- SLIDE 9: ROADMAP DE EJECUCIÓN (4 FASES / 8 SPRINTS) -->
+        <!-- SLIDE 12: ROADMAP DE EJECUCIÓN & QUALITY GATES -->
         <div class="slide">
-            <div class="tag">📅 Plan de Ejecución</div>
-            <h2>El Roadmap de la Fábrica PROPTWIN (4 Fases / 8 Sprints)</h2>
-            <p class="sub">El paso a paso cronológico para materializar la plataforma completa.</p>
+            <div class="tag">📅 Plan de Ejecución &amp; Calidad</div>
+            <h2>Roadmap (4 Fases / 8 Sprints) &amp; Quality Gates GeekSoft</h2>
+            <p class="sub">El paso a paso cronológico con validaciones inflexibles para entrega determinista.</p>
             
-            <div class="grid-4" style="margin-top: 10px;">
+            <div class="grid-4" style="margin-top: 6px;">
                 <div class="card spec-box">
                     <span class="spec-title" style="color:var(--sky);">Fase 1: GIS Core (S1-S2)</span>
                     <p class="spec-desc">
                         &bull; Schema PostGIS 400 predios.<br/>
-                        &bull; Seed sintética de contratos.<br/>
+                        &bull; Ingesta UTM + Satelital.<br/>
                         &bull; MapLibre GL + Landmarks.
                     </p>
                 </div>
                 <div class="card spec-box">
                     <span class="spec-title" style="color:var(--purple);">Fase 2: Gestión (S3-S4)</span>
                     <p class="spec-desc">
-                        &bull; Ficha Técnica 360° del predio.<br/>
+                        &bull; Ficha Técnica 360° APEFAC.<br/>
                         &bull; Módulo Legal 3 fuentes.<br/>
-                        &bull; Juicios de desalojo y alertas.
+                        &bull; OCR Paperless-ngx títulos.
                     </p>
                 </div>
                 <div class="card spec-box">
@@ -564,44 +689,18 @@
                 </div>
             </div>
 
-            <div class="footnote">
-                <span>Plan extraído de `AdL.RE.SOFT/02_Plan_de_Trabajo/Plan_de_Trabajo_Roadmap.md`</span>
-                <span>Slide 9 / 10</span>
-            </div>
-        </div>
-
-        <!-- SLIDE 10: QUALITY GATES Y REGLA DE ORO -->
-        <div class="slide">
-            <div class="tag">🛡️ Calidad Determinista</div>
-            <h2>Quality Gates de Producción &amp; La Regla de Oro GeekSoft</h2>
-            <p class="sub">Criterios inflexibles para asegurar que PROPTWIN sea el proyecto agéntico mejor construido de la historia.</p>
-            
-            <div class="table-wrap" style="margin-top: 10px;">
-                <table>
-                    <thead>
-                        <tr><th>Quality Gate</th><th>Foco de Validación</th><th>Mecanismo de Control</th><th>Criterio de Aprobación</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>Gate A: Spec Kit</strong></td><td>Completitud de Requerimientos</td><td>Linter de Markdown &amp; Schemas</td><td>100% Historias Gherkin válidas</td></tr>
-                        <tr><td><strong>Gate B: Type Safety</strong></td><td>Integridad Estricta de Tipos</td><td>`mypy --strict` &amp; `tsc`</td><td>0 errores de tipos en backend/frontend</td></tr>
-                        <tr><td><strong>Gate C: Sandbox QC</strong></td><td>Tests Unitarios &amp; Estrés</td><td>Docker efímero + `pytest`</td><td>&gt; 90% Cobertura y 0 fallos</td></tr>
-                        <tr><td><strong>Gate D: Hardening</strong></td><td>Seguridad y Secretos</td><td>`bandit` &amp; `trivy` scan</td><td>Cero vulnerabilidades críticas</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="card spec-box" style="margin-top: 10px; background: var(--sky-dim); border-color: var(--sky-brd);">
-                <div style="font-size: 13px; font-weight: 800; color: var(--navy);">
-                    💡 La Regla de Oro GeekSoft:
+            <div class="card spec-box" style="margin-top: 8px; background: var(--sky-dim); border-color: var(--sky-brd); padding: 10px 14px;">
+                <div style="font-size: 12px; font-weight: 800; color: var(--navy);">
+                    💡 La Regla de Oro GeekSoft &bull; Quality Gates Deterministas:
                 </div>
-                <p class="spec-desc" style="color: var(--navy);">
-                    <em>"Un agente constructor nunca aprueba ni audita su propio código. El desacoplamiento estricto entre el creador y el auditor en sandboxes aislados es la única garantía de entregar software empresarial con cero alucinaciones."</em>
+                <p class="spec-desc" style="color: var(--navy); font-size: 11px;">
+                    <em>"Gate A (Spec Kit 100% Gherkin) &bull; Gate B (Type Safety mypy/tsc 0 errores) &bull; Gate C (Sandbox QC Docker >90% cobertura) &bull; Gate D (Hardening). Un agente constructor nunca aprueba ni audita su propio código."</em>
                 </p>
             </div>
 
             <div class="footnote">
                 <span>GeekSoft Innovation Labs &bull; Estándar de Excelencia AI Software Factory 2026</span>
-                <span>Slide 10 / 10</span>
+                <span>Slide 12 / 12</span>
             </div>
         </div>
 
@@ -609,7 +708,7 @@
 
     <nav>
         <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 10</div>
+        <div id="counter">1 / 12</div>
         <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
         <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
     </nav>
