@@ -1147,7 +1147,66 @@
 
             <div class="footnote">
                 <span>Ver nota completa en [[92 - AWS Microcredenciales Oficiales Gratuitas con Sandboxes Reales]]</span>
-                <span>Slide 20 / 20</span>
+                <span>Slide 20 / 21</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: TOOLTIP POLAR RADAR GEOESPACIAL (NUEVO) -->
+        <div class="slide">
+            <div class="tag">🎯 UX / UI Geoespacial de Alta Precisión</div>
+            <h2>Tooltips Geoespaciales Dinámicos: El Radar Polar de 12 Meses en el Cursor</h2>
+            <p class="sub">Inspección territorial instantánea a 60 FPS sin modales pesados: el cursor despliega un radar radial de 12 meses con el flujo de cobranzas del predio (Bernabé Hinojosa).</p>
+            
+            <div class="grid-3" style="margin-top: 8px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--navy);">1. Mecánica del Tooltip Polar</span>
+                        <span class="badge">60 FPS WebGL</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>12 Ejes Radiales:</strong> Ene a Dic representando la ciclicidad anual de cobro de alquileres.<br/>
+                        &bull; <strong>Anillos de Magnitud:</strong> Escala métrica (S/. 0 a S/. 50,000) o días de atraso.<br/>
+                        &bull; <strong>Seguimiento Suave:</strong> Acoplado al puntero con `requestAnimationFrame` sin lag de red.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--purple);">2. Aplicación en PROPTWIN</span>
+                        <span class="badge purple">~400 Predios Lima</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Diagnóstico Visual:</strong> Los directores recorren el mapa del Centro de Lima e identifican vacancia o morosidad estacional en 1 segundo.<br/>
+                        &bull; <strong>Polígono Azul:</strong> Recaudación real cobrada.<br/>
+                        &bull; <strong>Línea Roja:</strong> Deuda tributaria o mora acumulada.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--emerald);">3. Estándar Visual APEFAC</span>
+                        <span class="badge green">Enterprise Light</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Cristal APEFAC:</strong> Tarjeta con `backdrop-filter: blur(8px)` y fondo `#FFFFFF` al 92%.<br/>
+                        &bull; <strong>Tipografía:</strong> `JetBrains Mono` para meses y montos exactos.<br/>
+                        &bull; <strong>Badge Central:</strong> `AL DÍA` (Verde), `MOROSO` (Rojo), `VACANTE` (Gris).
+                    </p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 8px; background: var(--sky-dim); border-color: var(--sky-brd); padding: 8px 12px;">
+                <div style="font-size: 11px; font-weight: 800; color: var(--navy);">
+                    ⚡ Revolución en la Experiencia del Usuario (Zero Modals):
+                </div>
+                <p class="spec-desc" style="color: var(--navy); font-size: 10px; line-height: 1.35;">
+                    <em>"En lugar de obligar al usuario a hacer clic y abrir un modal pesado para ver el historial financiero, el radar polar calcula y dibuja la salud del contrato directamente en el cursor del mapa."</em>
+                </p>
+            </div>
+
+            <div class="footnote">
+                <span>Ver nota completa en [[93 - Tooltips Geoespaciales Dinamicos en Tiempo Real]]</span>
+                <span>Slide 21 / 21</span>
             </div>
         </div>
 
@@ -1155,7 +1214,7 @@
 
     <nav>
         <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 20</div>
+        <div id="counter">1 / 21</div>
         <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
         <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
     </nav>
