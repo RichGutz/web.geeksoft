@@ -995,89 +995,236 @@
             </div>
         </div>
 
-        <!-- SLIDE 15: FLOWCHART MAESTRO - RELOJERÍA SUIZA -->
+                <!-- SLIDE 15: MEGA FLOWCHART MAESTRO - RELOJERÍA SUIZA INTEGRAL (V19 SoTA) -->
         <div class="slide">
-            <div class="tag">⚙️ Cinemática del Sistema</div>
-            <h2>El Mecanismo de Relojería Suiza: Flowchart Maestro PROPTWIN</h2>
-            <p class="sub">Tren de engranajes cinemático de datos: cada maestro transmite restricciones y torque a la siguiente etapa con cero juego axial (backlash).</p>
+            <div class="tag">⚙️ Flujograma Cinemático Integral</div>
+            <h2>Diagrama de Flujo Maestro PROPTWIN (Relojería Suiza &amp; Fork EDMS)</h2>
+            <p class="sub">Tren de transmisión cinemático de datos: 4 niveles de acoplamiento rígido con cero juego axial (backlash) y bóveda documental indexada por partida registral.</p>
             
-            <div class="grid-6" style="margin-top: 8px;">
-                <div class="card spec-box" style="border-top: 3px solid var(--sky); padding: 8px 10px;">
-                    <span style="font-size: 10px; font-weight: 900; color: var(--sky);">1. INGESTA (Tolerancia 0)</span>
-                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
-                        &bull; Vértices UTM 18S.<br/>
-                        &bull; Trazado Satelital.<br/>
-                        &bull; OCR Paperless-ngx.<br/>
-                        &bull; Visor BGR Sunarp.
-                    </p>
-                </div>
-                <div class="card spec-box" style="border-top: 3px solid var(--emerald); padding: 8px 10px;">
-                    <span style="font-size: 10px; font-weight: 900; color: var(--emerald);">2. ACTIVO POSTGIS</span>
-                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
-                        &bull; `PREDIO_MATRIZ`<br/>
-                        &bull; `LINDEROS_GIS`<br/>
-                        &bull; `UNIDAD_INM`<br/>
-                        &bull; Polígonos 4326.
-                    </p>
-                </div>
-                <div class="card spec-box" style="border-top: 3px solid var(--purple); padding: 8px 10px;">
-                    <span style="font-size: 10px; font-weight: 900; color: var(--purple);">3. JURÍDICO &amp; CONTRATOS</span>
-                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
-                        &bull; `CONTRATO_ALQ`<br/>
-                        &bull; `EXP_LITIGIO`<br/>
-                        &bull; RUC / DNI Inquilino.<br/>
-                        &bull; SHA-256 Pericial.
-                    </p>
-                </div>
-                <div class="card spec-box" style="border-top: 3px solid var(--amber); padding: 8px 10px;">
-                    <span style="font-size: 10px; font-weight: 900; color: var(--amber);">4. MOTOR FINANCIERO</span>
-                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
-                        &bull; `CTA_CTE_INQ`<br/>
-                        &bull; Indexación IPC SBS.<br/>
-                        &bull; `DEUDA_SAT` Lima.<br/>
-                        &bull; Coma Fija (12,4).
-                    </p>
-                </div>
-                <div class="card spec-box" style="border-top: 3px solid var(--red); padding: 8px 10px;">
-                    <span style="font-size: 10px; font-weight: 900; color: var(--red);">5. VOLANTE ESCAPE</span>
-                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
-                        &bull; Gate A (GD&amp;T PRD).<br/>
-                        &bull; Gate B (mypy/tsc).<br/>
-                        &bull; Gate C (Docker QC).<br/>
-                        &bull; Gate D ($SF \ge 3.0$).
-                    </p>
-                </div>
-                <div class="card spec-box" style="border-top: 3px solid var(--navy); padding: 8px 10px;">
-                    <span style="font-size: 10px; font-weight: 900; color: var(--navy);">6. ESFERA APEFAC</span>
-                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
-                        &bull; Master GIS 2D/3D.<br/>
-                        &bull; Ficha 360° Predio.<br/>
-                        &bull; ECharts Cancillería.<br/>
-                        &bull; Copiloto IA RAG.
-                    </p>
-                </div>
+            <div style="width: 100%; height: 530px; background: #ffffff; border: 1.5px solid var(--border); border-radius: 12px; box-shadow: 0 4px 20px rgba(15,23,42,0.06); padding: 12px; overflow-y: auto; overflow-x: auto; margin-top: 6px;">
+                <svg viewBox="0 0 1140 680" style="width: 100%; min-width: 1000px; height: auto; font-family: 'Inter', sans-serif;">
+                    <defs>
+                        <linearGradient id="gradSky" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f0f9ff"/>
+                            <stop offset="100%" stop-color="#e0f2fe"/>
+                        </linearGradient>
+                        <linearGradient id="gradEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ecfdf5"/>
+                            <stop offset="100%" stop-color="#d1fae5"/>
+                        </linearGradient>
+                        <linearGradient id="gradPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#faf5ff"/>
+                            <stop offset="100%" stop-color="#f3e8ff"/>
+                        </linearGradient>
+                        <linearGradient id="gradAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fffbeb"/>
+                            <stop offset="100%" stop-color="#fef3c7"/>
+                        </linearGradient>
+                        <linearGradient id="gradRose" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fff1f2"/>
+                            <stop offset="100%" stop-color="#ffe4e6"/>
+                        </linearGradient>
+                        <linearGradient id="gradNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#0f172a"/>
+                            <stop offset="100%" stop-color="#1e293b"/>
+                        </linearGradient>
+                        <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+                            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.07"/>
+                        </filter>
+                        <marker id="arrowSky" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                            <path d="M 0 0 L 8 4 L 0 8 z" fill="#0284c7" />
+                        </marker>
+                        <marker id="arrowEmerald" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                            <path d="M 0 0 L 8 4 L 0 8 z" fill="#059669" />
+                        </marker>
+                        <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                            <path d="M 0 0 L 8 4 L 0 8 z" fill="#7c3aed" />
+                        </marker>
+                        <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                            <path d="M 0 0 L 8 4 L 0 8 z" fill="#d97706" />
+                        </marker>
+                    </defs>
+
+                    <!-- NIVEL 1: INGESTA & MAESTROS -->
+                    <rect x="20" y="20" width="1100" height="145" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+                    <text x="35" y="42" fill="#475569" font-size="11" font-weight="800" letter-spacing="0.5">🏛️ NIVEL 1: FUNDAMENTOS, INGESTA CARTOGRÁFICA Y BÓVEDA EDMS (TOLERANCIA GD&amp;T CERO)</text>
+
+                    <!-- MOD 1: CARTOGRAFIA -->
+                    <g filter="url(#shadow)">
+                        <rect x="35" y="55" width="230" height="95" rx="8" fill="url(#gradSky)" stroke="#0284c7" stroke-width="1.5"/>
+                        <text x="48" y="75" fill="#0369a1" font-size="11" font-weight="800">🗺️ MOD 1: Ingesta 3 Vías</text>
+                        <text x="48" y="93" fill="#334155" font-size="9.5">• Topografía UTM 18S (Geokad WGS84)</text>
+                        <text x="48" y="108" fill="#334155" font-size="9.5">• Trazado Satelital MapLibre GL</text>
+                        <text x="48" y="123" fill="#334155" font-size="9.5">• Visor BGR Sunarp Oficial</text>
+                        <rect x="185" y="128" width="70" height="15" rx="3" fill="#0284c7"/>
+                        <text x="190" y="139" fill="#ffffff" font-size="8" font-weight="800">ST_GeomFrom</text>
+                    </g>
+
+                    <!-- MOD 2: PREDIO MATRIZ -->
+                    <g filter="url(#shadow)">
+                        <rect x="295" y="55" width="250" height="95" rx="8" fill="url(#gradEmerald)" stroke="#059669" stroke-width="1.5"/>
+                        <text x="308" y="75" fill="#047857" font-size="11" font-weight="800">📦 MOD 2: Maestro Patrimonial</text>
+                        <text x="308" y="93" fill="#334155" font-size="9.5">• <b>PREDIO_MATRIZ</b> (PK: partida_registral)</text>
+                        <text x="308" y="108" fill="#334155" font-size="9.5">• <b>LINDEROS_GIS</b> (ST_Polygon WGS84)</text>
+                        <text x="308" y="123" fill="#334155" font-size="9.5">• <b>UNIDAD_INM</b> (PK: [partida]-[subunidad])</text>
+                        <rect x="445" y="128" width="90" height="15" rx="3" fill="#059669"/>
+                        <text x="450" y="139" fill="#ffffff" font-size="8" font-weight="800">Partida 07001015</text>
+                    </g>
+
+                    <!-- MOD 2.5: BOVEDA EDMS (#95) -->
+                    <g filter="url(#shadow)">
+                        <rect x="575" y="55" width="265" height="95" rx="8" fill="url(#gradPurple)" stroke="#7c3aed" stroke-width="1.5"/>
+                        <text x="588" y="75" fill="#6d28d9" font-size="11" font-weight="800">📁 MOD 2.5: Bóveda EDMS (Fork #95)</text>
+                        <text x="588" y="93" fill="#334155" font-size="9.5">• <b>/storage/{partida}/</b> (7 subcarpetas canónicas)</text>
+                        <text x="588" y="108" fill="#334155" font-size="9.5">• Ingesta Multimodal: PyPDF + Vision LLM</text>
+                        <text x="588" y="123" fill="#334155" font-size="9.5">• HR/PU Chorrillos + SHA-256 Inmutable</text>
+                        <rect x="735" y="128" width="95" height="15" rx="3" fill="#7c3aed"/>
+                        <text x="740" y="139" fill="#ffffff" font-size="8" font-weight="800">Bóveda Documental</text>
+                    </g>
+
+                    <!-- MOD 3: INQUILINOS -->
+                    <g filter="url(#shadow)">
+                        <rect x="870" y="55" width="235" height="95" rx="8" fill="url(#gradAmber)" stroke="#d97706" stroke-width="1.5"/>
+                        <text x="883" y="75" fill="#b45309" font-size="11" font-weight="800">👥 MOD 3: Inquilinos &amp; Cancillería</text>
+                        <text x="883" y="93" fill="#334155" font-size="9.5">• <b>INQUILINO</b> (PK: RUC_20 | DNI)</text>
+                        <text x="883" y="108" fill="#334155" font-size="9.5">• Apoderados &amp; Mandatos Notariales</text>
+                        <text x="883" y="123" fill="#334155" font-size="9.5">• Calificación Crediticia &amp; Fiador</text>
+                        <rect x="1015" y="128" width="80" height="15" rx="3" fill="#d97706"/>
+                        <text x="1020" y="139" fill="#ffffff" font-size="8" font-weight="800">Cancillería AdL</text>
+                    </g>
+
+                    <!-- FLECHAS CONEXION NIVEL 1 -> NIVEL 2 -->
+                    <path d="M 150 150 L 150 185 L 250 185" fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arrowSky)"/>
+                    <path d="M 420 150 L 420 195 L 350 195" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arrowEmerald)"/>
+                    <path d="M 700 150 L 700 195 L 610 195" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowPurple)"/>
+                    <path d="M 980 150 L 980 185 L 750 185" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arrowAmber)"/>
+
+                    <!-- NIVEL 2: CONTRATOS & CALIFICACION -->
+                    <rect x="20" y="180" width="1100" height="145" rx="10" fill="#fdf4ff" stroke="#e9d5ff" stroke-width="1.5" stroke-dasharray="4,4"/>
+                    <text x="35" y="202" fill="#7e22ce" font-size="11" font-weight="800" letter-spacing="0.5">📝 NIVEL 2: GESTIÓN CONTRACTUAL &amp; CRUCE DE APROBACIÓN (QUALITY GATE A)</text>
+
+                    <!-- ETAPA 2.1: BORRADOR -->
+                    <g filter="url(#shadow)">
+                        <rect x="35" y="215" width="230" height="95" rx="8" fill="#ffffff" stroke="#a855f7" stroke-width="1.5"/>
+                        <text x="48" y="235" fill="#7e22ce" font-size="11" font-weight="800">📑 Borrador de Contrato</text>
+                        <text x="48" y="253" fill="#334155" font-size="9.5">• Renta Base + Moneda (USD / PEN)</text>
+                        <text x="48" y="268" fill="#334155" font-size="9.5">• Cláusula de Allanamiento Futuro</text>
+                        <text x="48" y="283" fill="#334155" font-size="9.5">• Destino de Uso Permitido (RDA/CZ)</text>
+                        <rect x="180" y="288" width="75" height="15" rx="3" fill="#a855f7"/>
+                        <text x="185" y="299" fill="#ffffff" font-size="8" font-weight="800">Draft Inicial</text>
+                    </g>
+
+                    <path d="M 265 262 L 310 262" fill="none" stroke="#a855f7" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+                    <!-- ETAPA 2.2: CRUCE NOTARIAL & GATE A -->
+                    <g filter="url(#shadow)">
+                        <rect x="315" y="215" width="400" height="95" rx="8" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+                        <text x="328" y="235" fill="#047857" font-size="11" font-weight="800">⚡ Cruce de Aprobación &amp; Peritaje Notarial</text>
+                        <text x="328" y="253" fill="#334155" font-size="9.5">• Título Notarial OCR + Validación de Linderos WGS84</text>
+                        <text x="328" y="268" fill="#334155" font-size="9.5">• Depósito de Garantía (1-2 Meses) + Acta de Entrega de Llaves</text>
+                        <text x="328" y="283" fill="#334155" font-size="9.5">• <b>Semáforo Legal:</b> Verde (Directa) vs Amarillo (+89.71m² Saneamiento)</text>
+                        <rect x="585" y="288" width="120" height="15" rx="3" fill="#059669"/>
+                        <text x="590" y="299" fill="#ffffff" font-size="8" font-weight="800">Quality Gate A OK</text>
+                    </g>
+
+                    <path d="M 715 262 L 760 262" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arrowEmerald)"/>
+
+                    <!-- ETAPA 2.3: CONTRATO ACTIVO & FICHA 360 -->
+                    <g filter="url(#shadow)">
+                        <rect x="765" y="215" width="340" height="95" rx="8" fill="url(#gradEmerald)" stroke="#059669" stroke-width="1.5"/>
+                        <text x="778" y="235" fill="#047857" font-size="11" font-weight="800">✅ CONTRATO VIGENTE &amp; FICHA 360°</text>
+                        <text x="778" y="253" fill="#334155" font-size="9.5">• <b>PK: num_contrato</b> (Vigencia: Inicio - Fin)</text>
+                        <text x="778" y="268" fill="#334155" font-size="9.5">• Nacimiento del Gemelo Digital Operativo</text>
+                        <text x="778" y="283" fill="#334155" font-size="9.5">• Suministros Asociados (Luz 103653 / SEDAPAL)</text>
+                        <rect x="985" y="288" width="110" height="15" rx="3" fill="#047857"/>
+                        <text x="990" y="299" fill="#ffffff" font-size="8" font-weight="800">Nacimiento Ficha</text>
+                    </g>
+
+                    <!-- FLECHAS CONEXION NIVEL 2 -> NIVEL 3 -->
+                    <path d="M 935 310 L 935 345 L 750 345" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arrowAmber)"/>
+
+                    <!-- NIVEL 3: MOTOR FINANCIERO & TESORERIA -->
+                    <rect x="20" y="340" width="1100" height="145" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5" stroke-dasharray="4,4"/>
+                    <text x="35" y="362" fill="#b45309" font-size="11" font-weight="800" letter-spacing="0.5">💰 NIVEL 3: MOTOR FINANCIERO, RECAUDACIÓN BANCARIA Y TESORERÍA (COMA FIJA DECIMAL 12,4)</text>
+
+                    <!-- ETAPA 3.1: CTA CTE & EMISION -->
+                    <g filter="url(#shadow)">
+                        <rect x="35" y="375" width="280" height="95" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+                        <text x="48" y="395" fill="#b45309" font-size="11" font-weight="800">💳 Cuenta Corriente &amp; Emisión Día 1</text>
+                        <text x="48" y="413" fill="#334155" font-size="9.5">• Generación mensual automática (Vence fin de mes)</text>
+                        <text x="48" y="428" fill="#334155" font-size="9.5">• Indexación IPC oficial SBS + Renta Escalonada</text>
+                        <text x="48" y="443" fill="#334155" font-size="9.5">• Mora diaria determinista: <b>Decimal(12,4)</b></text>
+                        <rect x="215" y="448" width="90" height="15" rx="3" fill="#d97706"/>
+                        <text x="220" y="459" fill="#ffffff" font-size="8" font-weight="800">SBS Bancario</text>
+                    </g>
+
+                    <path d="M 315 422 L 360 422" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arrowAmber)"/>
+
+                    <!-- ETAPA 3.2: ALERTAS OMNICANAL -->
+                    <g filter="url(#shadow)">
+                        <rect x="365" y="375" width="320" height="95" rx="8" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
+                        <text x="378" y="395" fill="#0369a1" font-size="11" font-weight="800">📲 Alertas Preventivas WhatsApp &amp; Email</text>
+                        <text x="378" y="413" fill="#334155" font-size="9.5">• Cadencia APEFAC: <b>D1, D-5, D-1, D, D+1</b></text>
+                        <text x="378" y="428" fill="#334155" font-size="9.5">• Envío de voucher virtual y código de recaudación</text>
+                        <text x="378" y="443" fill="#334155" font-size="9.5">• Trazabilidad de entrega y confirmación de lectura</text>
+                        <rect x="585" y="448" width="90" height="15" rx="3" fill="#0284c7"/>
+                        <text x="590" y="459" fill="#ffffff" font-size="8" font-weight="800">Omnicanalidad</text>
+                    </g>
+
+                    <path d="M 685 422 L 730 422" fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arrowSky)"/>
+
+                    <!-- ETAPA 3.3: RECAUDACION BCP/BBVA -->
+                    <g filter="url(#shadow)">
+                        <rect x="735" y="375" width="370" height="95" rx="8" fill="url(#gradSky)" stroke="#0284c7" stroke-width="1.5"/>
+                        <text x="748" y="395" fill="#0369a1" font-size="11" font-weight="800">🏦 Recaudación Telecrédito BCP &amp; BBVA</text>
+                        <text x="748" y="413" fill="#334155" font-size="9.5">• Conciliación bancaria diaria 1:1 vía archivo plano</text>
+                        <text x="748" y="428" fill="#334155" font-size="9.5">• Actualización instantánea de semáforo de cobranza</text>
+                        <text x="748" y="443" fill="#334155" font-size="9.5">• Disparo de carta notarial si mora &gt; 60 días</text>
+                        <rect x="995" y="448" width="100" height="15" rx="3" fill="#0369a1"/>
+                        <text x="1000" y="459" fill="#ffffff" font-size="8" font-weight="800">Conciliación 1:1</text>
+                    </g>
+
+                    <!-- FLECHAS CONEXION NIVEL 3 -> NIVEL 4 -->
+                    <path d="M 920 470 L 920 505 L 600 505" fill="none" stroke="#e11d48" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+                    <!-- NIVEL 4: QUALITY GATES & DESPLIEGUE APEFAC -->
+                    <rect x="20" y="500" width="1100" height="165" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4"/>
+                    <text x="35" y="522" fill="#0f172a" font-size="11" font-weight="800" letter-spacing="0.5">🛡️ NIVEL 4: VOLANTE DE ESCAPE (QUALITY GATES A-D) &amp; DASHBOARD APEFAC LIVE (60 FPS)</text>
+
+                    <!-- GATES A-D -->
+                    <g filter="url(#shadow)">
+                        <rect x="35" y="535" width="480" height="115" rx="8" fill="#ffffff" stroke="#e11d48" stroke-width="1.5"/>
+                        <text x="48" y="555" fill="#be123c" font-size="11" font-weight="800">🔒 Banco de Calibración &amp; Quality Gates Deterministas</text>
+                        <text x="48" y="573" fill="#334155" font-size="9.5">• <b>Gate A (Arquitectura):</b> GD&amp;T &bull; Contratos Pydantic &bull; PostGIS</text>
+                        <text x="48" y="588" fill="#334155" font-size="9.5">• <b>Gate B (Tipado Estricto):</b> mypy strict &bull; tsc zero errors &bull; Zod</text>
+                        <text x="48" y="603" fill="#334155" font-size="9.5">• <b>Gate C (Auditoría Docker):</b> Pytest 6/6 &bull; Seguridad &bull; Conexión DB</text>
+                        <text x="48" y="618" fill="#334155" font-size="9.5">• <b>Gate D (Release Inmutable):</b> Firma SHA-256 (<code>af5aa41331...</code>) &bull; Safety Factor &ge; 3.0</text>
+                        <rect x="380" y="628" width="125" height="16" rx="3" fill="#be123c"/>
+                        <text x="385" y="640" fill="#ffffff" font-size="8.5" font-weight="800">Calibración Aprobada</text>
+                    </g>
+
+                    <path d="M 515 592 L 565 592" fill="none" stroke="#0f172a" stroke-width="2.5" marker-end="url(#arrowSky)"/>
+
+                    <!-- DASHBOARD APEFAC -->
+                    <g filter="url(#shadow)">
+                        <rect x="570" y="535" width="535" height="115" rx="8" fill="url(#gradNavy)" stroke="#0f172a" stroke-width="1.5"/>
+                        <text x="585" y="557" fill="#38bdf8" font-size="12" font-weight="800">🚀 UI APEFAC ENTERPRISE LIGHT &amp; TOOLTIP POLAR 60 FPS</text>
+                        <text x="585" y="577" fill="#e2e8f0" font-size="9.5">• <b>Visor Geoespacial WebGL MapLibre:</b> Renderizado de predio Iglesias 419 a 60 FPS</text>
+                        <text x="585" y="593" fill="#e2e8f0" font-size="9.5">• <b>Tooltip Polar Radial 12 Meses:</b> Inspección al vuelo sin modales obstructivos (#93)</text>
+                        <text x="585" y="609" fill="#e2e8f0" font-size="9.5">• <b>Split Panel 360°:</b> Semáforos de Saneamiento, Cobranza SAT y Bóveda Documental EDMS (#95)</text>
+                        <text x="585" y="625" fill="#e2e8f0" font-size="9.5">• <b>Copiloto IA RAG:</b> Consultas en lenguaje natural con citas a asientos SUNARP y autovalúo</text>
+                        <rect x="990" y="628" width="105" height="16" rx="3" fill="#38bdf8"/>
+                        <text x="995" y="640" fill="#0f172a" font-size="8.5" font-weight="900">LIVE PRODUCTION</text>
+                    </g>
+                </svg>
             </div>
 
-            <div class="flow-container" style="margin-top: 8px; padding: 8px 12px;">
-                <div class="flow-node active"><span class="flow-node-title">Topografía + OCR</span><span class="flow-node-desc">Ingesta</span></div>
-                <span class="flow-arrow">&rarr;</span>
-                <div class="flow-node green"><span class="flow-node-title">PREDIO_MATRIZ</span><span class="flow-node-desc">PK Registral</span></div>
-                <span class="flow-arrow">&rarr;</span>
-                <div class="flow-node purple"><span class="flow-node-title">CONTRATO + LITIGIO</span><span class="flow-node-desc">Jurídico</span></div>
-                <span class="flow-arrow">&rarr;</span>
-                <div class="flow-node amber"><span class="flow-node-title">CTA_CTE + IPC</span><span class="flow-node-desc">Finanzas</span></div>
-                <span class="flow-arrow">&rarr;</span>
-                <div class="flow-node" style="border-color:var(--red); background:#fff1f2;"><span class="flow-node-title">QUALITY GATES</span><span class="flow-node-desc">Auditoría A-D</span></div>
-                <span class="flow-arrow">&rarr;</span>
-                <div class="flow-node" style="border-color:var(--navy); background:#f8fafc;"><span class="flow-node-title">UI APEFAC LIVE</span><span class="flow-node-desc">Producción</span></div>
-            </div>
-
-            <div class="card spec-box" style="margin-top: 6px; background: #ffffff; padding: 8px 12px;">
-                <div style="font-size: 11px; font-weight: 800; color: var(--navy);">
-                    🔄 Dinámica de No-Backlash:
+            <div class="card spec-box" style="margin-top: 6px; background: #ffffff; padding: 6px 12px;">
+                <div style="font-size: 10px; font-weight: 800; color: var(--navy);">
+                    🔄 Dinámica de No-Backlash &amp; Caso Insignia Iglesias 419:
                 </div>
-                <p class="spec-desc" style="color: var(--text-dim); font-size: 10px; line-height: 1.35;">
-                    Si un inmueble entra en <strong>Litigio de Desalojo</strong>, el tren jurídico desacopla automáticamente la renovación del contrato, y el tren financiero provisiona el riesgo contable en SAT sin intervención manual ni desincronización de base de datos.
+                <p class="spec-desc" style="color: var(--text-dim); font-size: 9px; line-height: 1.35;">
+                    La discrepancia física de +89.71 m² detectada por Geokad en la Partida 07001015 conmuta el semáforo a <strong>AMARILLO_SANEAMIENTO</strong> sin bloquear la emisión del recibo de luz (Suministro 103653) ni la recaudación de renta, orquestando en paralelo el expediente notarial bajo Ley 27333 con trazabilidad criptográfica SHA-256.
                 </p>
             </div>
 
@@ -1087,7 +1234,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 16: MATRIZ CINEMÁTICA DE ACOPLAMIENTOS -->
+<!-- SLIDE 16: MATRIZ CINEMÁTICA DE ACOPLAMIENTOS -->
         <div class="slide">
             <div class="tag">📊 Matriz de Acoplamientos</div>
             <h2>Matriz Cinemática de Maestros &amp; Transmisión de Datos</h2>
