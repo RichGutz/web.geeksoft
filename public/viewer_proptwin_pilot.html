@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROPTWIN Pilot MVP - Predio Iglesias 419 (Chorrillos)</title>
-    <!-- MapLibre GL CSS & JS -->
-    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
-    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <title>PROPTWIN - Gemelo Digital Inmobiliario (Arzobispado de Lima)</title>
+    <!-- Leaflet CSS & JS para máxima compatibilidad y estabilidad en producción -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!-- Chart.js para Tooltips Polares Radiales a 60 FPS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts Inter & JetBrains Mono -->
@@ -63,7 +63,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
-            z-index: 50;
+            z-index: 1000;
             box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
         }
 
@@ -147,6 +147,7 @@
         #map {
             width: 100%;
             height: 100%;
+            z-index: 1;
         }
 
         /* MAP OVERLAYS */
@@ -154,10 +155,11 @@
             position: absolute;
             top: 16px;
             left: 16px;
-            z-index: 10;
+            z-index: 500;
             display: flex;
             flex-direction: column;
             gap: 8px;
+            pointer-events: none;
         }
 
         .glass-card {
@@ -167,6 +169,7 @@
             border-radius: 10px;
             padding: 12px 14px;
             box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+            pointer-events: auto;
         }
 
         .predio-badge-card h3 {
@@ -186,7 +189,7 @@
 
         .legend-bar {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-top: 8px;
             font-size: 10.5px;
             font-weight: 700;
@@ -204,10 +207,35 @@
             border-radius: 3px;
         }
 
+        /* LAYER TOGGLE BUTTONS */
+        .layer-toggle-bar {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .layer-btn {
+            background: #F1F5F9;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--navy);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .layer-btn.active {
+            background: var(--navy);
+            color: #ffffff;
+            border-color: var(--navy);
+        }
+
         /* RADIAL POLAR HOVER TOOLTIP (NOTA #93) */
         #radial-polar-tooltip {
             position: absolute;
-            z-index: 100;
+            z-index: 999;
             pointer-events: none;
             display: none;
             width: 290px;
@@ -246,13 +274,13 @@
 
         /* SIDEBAR SPLIT 360 PANEL */
         .sidebar-panel {
-            width: 460px;
+            width: 480px;
             background: var(--surface);
             border-left: 1.5px solid var(--border);
             display: flex;
             flex-direction: column;
             height: 100%;
-            z-index: 20;
+            z-index: 500;
             box-shadow: -4px 0 20px rgba(15, 23, 42, 0.04);
         }
 
@@ -425,7 +453,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 4px 6px;
+            padding: 5px 8px;
             border-radius: 4px;
             font-size: 10.5px;
             background: #FAFAFA;
@@ -484,15 +512,27 @@
             background: #F1F5F9;
             color: var(--navy);
             font-weight: 800;
-            padding: 5px 6px;
+            padding: 6px 8px;
             text-align: left;
             border-bottom: 1.5px solid var(--border);
         }
 
         .table-custom td {
-            padding: 5px 6px;
+            padding: 6px 8px;
             border-bottom: 1px solid #F1F5F9;
             font-family: var(--font-mono);
+        }
+
+        .custom-div-icon {
+            background: #0284c7;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 10px;
+            text-align: center;
+            line-height: 18px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -537,6 +577,10 @@
                             <div class="legend-color" style="background:#d97706; border:1px dashed #b45309;"></div>
                             <span>SUNARP: 1,204.66 m²</span>
                         </div>
+                    </div>
+                    <div class="layer-toggle-bar">
+                        <button class="layer-btn active" id="btn-carto" onclick="setBaseLayer('carto')">🗺️ Plano APEFAC Light</button>
+                        <button class="layer-btn" id="btn-sat" onclick="setBaseLayer('sat')">🛰️ Satélite HD (ESRI)</button>
                     </div>
                 </div>
             </div>
@@ -848,97 +892,124 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // MAPLIBRE GL INITIALIZATION (CHORRILLOS, LIMA)
-        // Coordenadas aproximadas WGS84 para Av. Alejandro Iglesias 419, Chorrillos
-        const centerCoords = [-77.0275, -12.1648];
+        // COORDENADAS EXACTAS DE AV. ALEJANDRO IGLESIAS 419, CHORRILLOS
+        const latCenter = -12.16485;
+        const lngCenter = -77.02755;
 
-        const map = new maplibreGl.Map({
-            container: 'map',
-            style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-            center: centerCoords,
-            zoom: 17.5,
-            pitch: 35,
-            bearing: -15
+        // INICIALIZACION MAPA CON LEAFLET (ULTRA ESTABLE Y RESISTENTE)
+        const map = L.map('map', {
+            center: [latCenter, lngCenter],
+            zoom: 18,
+            zoomControl: true
         });
 
-        // GEOMETRIA REAL DEL PREDIO IGLESIAS 419
-        const polygonGeokad = {
-            'type': 'Feature',
-            'properties': {
-                'name': 'Iglesias 419 - Levantamiento Geokad',
-                'area': '1,294.37 m²',
-                'partida': '07001015'
-            },
-            'geometry': {
-                'type': 'Polygon',
-                'coordinates': [[
-                    [-77.02770, -12.16460],
-                    [-77.02735, -12.16455],
-                    [-77.02720, -12.16485],
-                    [-77.02745, -12.16495],
-                    [-77.02760, -12.16490],
-                    [-77.02772, -12.16478],
-                    [-77.02770, -12.16460]
-                ]]
+        // CAPAS BASE
+        const cartoLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            maxZoom: 20,
+            subdomains: 'abcd'
+        }).addTo(map);
+
+        const satLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '&copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
+            maxZoom: 19
+        });
+
+        function setBaseLayer(type) {
+            document.getElementById('btn-carto').classList.remove('active');
+            document.getElementById('btn-sat').classList.remove('active');
+
+            if (type === 'carto') {
+                map.removeLayer(satLayer);
+                map.addLayer(cartoLayer);
+                document.getElementById('btn-carto').classList.add('active');
+            } else {
+                map.removeLayer(cartoLayer);
+                map.addLayer(satLayer);
+                document.getElementById('btn-sat').classList.add('active');
             }
-        };
+        }
 
-        map.on('load', () => {
-            // Fuente del Poligono
-            map.addSource('predio-iglesias', {
-                'type': 'geojson',
-                'data': polygonGeokad
+        // COORDENADAS POLIGONALES DE IGLESIAS 419 (GEOKAD WGS84)
+        const coordsGeokad = [
+            [-12.16462, -77.02772], // Vértice A (Frente Iglesias)
+            [-12.16458, -77.02738], // Vértice B (Esq. Maximo Alvarado)
+            [-12.16488, -77.02722], // Vértice C (Fondo Lote 4/5)
+            [-12.16498, -77.02748], // Vértice D (Quiebre 1)
+            [-12.16492, -77.02762], // Vértice E (Quiebre 2)
+            [-12.16480, -77.02774]  // Vértice F (Numa Llona)
+        ];
+
+        // POLIGONO TOPOGRAFICO REAL (AZUL APEFAC)
+        const polygonTopografico = L.polygon(coordsGeokad, {
+            color: '#0284c7',
+            weight: 3.5,
+            fillColor: '#0284c7',
+            fillOpacity: 0.35
+        }).addTo(map);
+
+        // POLIGONO REGISTRAL COMPARATIVO (LINEA DISCONTINUA AMBAR)
+        const coordsSunarp = [
+            [-12.16464, -77.02769],
+            [-12.16460, -77.02740],
+            [-12.16485, -77.02726],
+            [-12.16494, -77.02750],
+            [-12.16489, -77.02762],
+            [-12.16479, -77.02771]
+        ];
+
+        const polygonRegistral = L.polygon(coordsSunarp, {
+            color: '#d97706',
+            weight: 2,
+            dashArray: '5, 5',
+            fillColor: '#d97706',
+            fillOpacity: 0.15
+        }).addTo(map);
+
+        // MARCADORES EN CADA VERTICE CON SU LETRA
+        const verticesLabels = [
+            { letra: 'A', coord: coordsGeokad[0], desc: 'Vértice A - Av. Iglesias (35.46 m)' },
+            { letra: 'B', coord: coordsGeokad[1], desc: 'Vértice B - Jr. M. Alvarado (19.82 m)' },
+            { letra: 'C', coord: coordsGeokad[2], desc: 'Vértice C - Fondo Lote 4/5 (30.09 m)' },
+            { letra: 'D', coord: coordsGeokad[3], desc: 'Vértice D - Fondo Quiebre 1 (9.35 m)' },
+            { letra: 'E', coord: coordsGeokad[4], desc: 'Vértice E - Fondo Quiebre 2 (20.33 m)' },
+            { letra: 'F', coord: coordsGeokad[5], desc: 'Vértice F - Jr. Numa Llona (29.90 m)' }
+        ];
+
+        verticesLabels.forEach(v => {
+            const icon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div>${v.letra}</div>`,
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
             });
-
-            // Relleno Poligono
-            map.addLayer({
-                'id': 'predio-fill',
-                'type': 'fill',
-                'source': 'predio-iglesias',
-                'paint': {
-                    'fill-color': '#0284c7',
-                    'fill-opacity': 0.35
-                }
-            });
-
-            // Borde Poligono
-            map.addLayer({
-                'id': 'predio-line',
-                'type': 'line',
-                'source': 'predio-iglesias',
-                'paint': {
-                    'line-color': '#0284c7',
-                    'line-width': 3.5
-                }
-            });
-
-            // Marker Icon Central
-            const el = document.createElement('div');
-            el.className = 'predio-marker';
-            el.innerHTML = '🏛️';
-            el.style.fontSize = '24px';
-            el.style.cursor = 'pointer';
-            new maplibreGl.Marker(el)
-                .setLngLat(centerCoords)
+            L.marker(v.coord, { icon: icon })
+                .bindTooltip(`<b>${v.desc}</b>`, { direction: 'top' })
                 .addTo(map);
-
-            // TOOLTIP POLAR RADIAL AL HOVER
-            const tooltip = document.getElementById('radial-polar-tooltip');
-
-            map.on('mousemove', 'predio-fill', (e) => {
-                map.getCanvas().style.cursor = 'pointer';
-                tooltip.style.display = 'block';
-                tooltip.style.left = e.point.x + 'px';
-                tooltip.style.top = e.point.y + 'px';
-            });
-
-            map.on('mouseleave', 'predio-fill', () => {
-                map.getCanvas().style.cursor = '';
-                tooltip.style.display = 'none';
-            });
         });
 
-        // INICIALIZACION DEL CHART POLAR RADIAL 12 MESES (NOTA #93)
+        // TOOLTIP POLAR RADIAL AL HOVER SOBRE EL PREDIO
+        const tooltipEl = document.getElementById('radial-polar-tooltip');
+
+        polygonTopografico.on('mouseover', function(e) {
+            tooltipEl.style.display = 'block';
+            updateTooltipPosition(e.originalEvent);
+        });
+
+        polygonTopografico.on('mousemove', function(e) {
+            updateTooltipPosition(e.originalEvent);
+        });
+
+        polygonTopografico.on('mouseout', function() {
+            tooltipEl.style.display = 'none';
+        });
+
+        function updateTooltipPosition(e) {
+            tooltipEl.style.left = (e.clientX - 10) + 'px';
+            tooltipEl.style.top = (e.clientY - 10) + 'px';
+        }
+
+        // INICIALIZACION RADAR POLAR CHART.JS (NOTA #93)
         const ctx = document.getElementById('polarHoverChart').getContext('2d');
         const polarChart = new Chart(ctx, {
             type: 'radar',
@@ -957,7 +1028,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                animation: false, // 60 FPS ultra rapido
+                animation: false,
                 scales: {
                     r: {
                         angleLines: { color: '#E2E8F0' },
