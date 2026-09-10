@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enciclopedia & Hub de Ingeniería de Agentes de IA — GeekSoft Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg:          #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --bg-subtle:   #F1F5F9;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            
+            --sky:         #0284C7;
+            --sky-dim:     rgba(2,132,199,0.08);
+            --sky-brd:     rgba(2,132,199,0.25);
+            
+            --emerald:     #059669;
+            --emerald-dim: rgba(5,150,105,0.08);
+            --emerald-brd: rgba(5,150,105,0.25);
+            
+            --purple:      #7C3AED;
+            --purple-dim:  rgba(124,58,237,0.08);
+            --purple-brd:  rgba(124,58,237,0.25);
+            
+            --amber:       #D97706;
+            --amber-dim:   rgba(217,119,6,0.08);
+            --amber-brd:   rgba(217,119,6,0.25);
+            
+            --text:        #0F172A;
+            --text-dim:    rgba(15,23,42,0.70);
+            --text-muted:  #64748B;
+            
+            --border:      #E2E8F0;
+            --border-wiki: #CBD5E1;
+            
+            --shadow-sm:   0 1px 3px rgba(15,23,42,0.06);
+            --shadow-md:   0 4px 14px rgba(15,23,42,0.08);
+            --shadow-lg:   0 10px 30px rgba(15,23,42,0.12);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ─── HEADER WIKIPEDIA / GEEKSOFT ─── */
+        .wiki-header {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border);
+            padding: 12px 32px;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--navy);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 900;
+            box-shadow: var(--shadow-sm);
+        }
+        .brand-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+        .brand-text p {
+            font-size: 11.5px;
+            color: var(--text-muted);
+        }
+
+        .header-search {
+            flex: 1;
+            max-width: 480px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 16px 8px 38px;
+            border-radius: 20px;
+            border: 1px solid var(--border-wiki);
+            background: var(--bg);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            color: var(--navy);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .search-input:focus {
+            background: #FFFFFF;
+            border-color: var(--sky);
+            box-shadow: 0 0 0 3px var(--sky-dim);
+        }
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge-stat {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--sky-dim);
+            color: var(--sky);
+            border: 1px solid var(--sky-brd);
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        /* ─── LAYOUT 2 COLUMNAS (SIDEBAR ACORDEÓN + CUERPO ENFOCADO) ─── */
+        .wiki-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
+        /* ─── SIDEBAR: ACORDEÓN DE CAPÍTULOS Y CLASES ─── */
+        .wiki-sidebar {
+            background: #FFFFFF;
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px 14px;
+        }
+
+        .sidebar-header {
+            padding: 4px 10px 10px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sidebar-title {
+            font-size: 12.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--navy);
+        }
+        .sidebar-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--sky);
+            font-weight: 700;
+        }
+
+        /* Acordeón Simple y Minimalista Estilo Wikipedia */
+        .accordion-item {
+            border: none;
+            border-bottom: 1px solid #E2E8F0;
+            background: transparent;
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        .accordion-header {
+            padding: 10px 8px;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            user-select: none;
+            transition: color 0.15s ease;
+        }
+        .accordion-header:hover {
+            background: #F8FAFC;
+        }
+        .accordion-item.active-chapter .accordion-header .acc-text {
+            color: var(--sky);
+            font-weight: 800;
+        }
+
+        .acc-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+        .acc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            width: auto;
+            height: auto;
+            background: transparent;
+            border: none;
+            display: inline;
+        }
+        .acc-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .acc-arrow {
+            font-size: 10px;
+            color: var(--text-muted);
+            transition: transform 0.15s ease;
+            flex-shrink: 0;
+        }
+        .accordion-item.open .acc-arrow {
+            transform: rotate(90deg);
+            color: var(--navy);
+        }
+
+        .accordion-body {
+            display: none;
+            background: transparent;
+            border: none;
+            border-left: 2px solid #E2E8F0;
+            margin: 2px 0 10px 14px;
+            padding: 4px 0 6px 12px;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .accordion-item.open .accordion-body {
+            display: flex;
+        }
+
+        .acc-sub-item {
+            padding: 5px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.15s ease;
+            background: transparent;
+            border: none;
+        }
+        .acc-sub-item:hover {
+            color: var(--sky);
+            background: transparent;
+        }
+        .acc-sub-item.active-lesson {
+            color: var(--sky);
+            font-weight: 700;
+            background: transparent;
+            border: none;
+        }
+        .sub-bullet {
+            font-size: 10px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        /* ─── CUERPO PRINCIPAL ENFOCADO ─── */
+        .wiki-main {
+            overflow-y: auto;
+            padding: 28px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .chapter-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-wiki);
+            border-radius: 12px;
+            padding: 28px 32px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chapter-hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 18px;
+            gap: 20px;
+        }
+        .breadcrumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb strong {
+            color: var(--sky);
+        }
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            font-size: 13.5px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .deck-launch-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--navy);
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 800;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
+        }
+        .deck-launch-btn:hover {
+            background: var(--sky);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        .deck-launch-btn .play-icon {
+            font-size: 15px;
+            color: #38BDF8;
+        }
+
+        /* Secciones del Capítulo */
+        .grid-detail {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+        }
+
+        .section-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        /* Lista de Clases / Notas del Módulo */
+        .classes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .class-row {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.15s ease;
+        }
+        .class-row:hover {
+            border-color: var(--sky-brd);
+        }
+        .class-info h4 {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .class-info p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .class-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--sky-dim);
+            color: var(--sky);
+            border: 1px solid var(--sky-brd);
+            white-space: nowrap;
+        }
+
+        /* Specs & Métricas */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .metric-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        .metric-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--emerald);
+        }
+        .metric-lbl {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-text {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER WIKIPEDIA -->
+    <header class="wiki-header">
+        <div class="header-brand">
+            <div class="brand-logo">Ω</div>
+            <div class="brand-text">
+                <h1>GeekSoft AI Academy</h1>
+                <p>Enciclopedia & Hub de Ingeniería de Agentes 2026</p>
+            </div>
+        </div>
+
+        <div class="header-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="wiki-search" class="search-input" placeholder="Buscar módulo, concepto o herramienta (ej. MIFUNE, GraphRAG, Docker)...">
+        </div>
+
+        <div class="header-actions">
+            <span class="badge-stat">11 Capítulos</span>
+            <span class="badge-stat" style="color:var(--emerald); background:var(--emerald-dim); border-color:var(--emerald-brd);">11 Decks PPT 16:9</span>
+            <span class="badge-stat" style="color:var(--purple); background:var(--purple-dim); border-color:var(--purple-brd);">76+ Notas</span>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL: SIDEBAR ACORDEÓN + CUERPO DINÁMICO -->
+    <div class="wiki-container">
+        
+        <!-- SIDEBAR IZQUIERDO CON ACORDEÓN -->
+        <aside class="wiki-sidebar" id="sidebar-accordion">
+            
+            <div class="sidebar-header">
+                <span class="sidebar-title">Ejes del Programa</span>
+                <span class="sidebar-count">10 Capítulos</span>
+            </div>
+
+            <!-- Cap 01 -->
+            <div class="accordion-item open active-chapter" data-target="cap-01">
+                <div class="accordion-header" onclick="selectChapter('cap-01', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">01</span>
+                        <span class="acc-text">Sistemas Agénticos & Orquestación</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item active-lesson" onclick="selectLesson('cap-01', 0, event)"><span class="sub-bullet">├─</span> Multi-Agent SDLC & Canvas</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 1, event)"><span class="sub-bullet">├─</span> Anatomía del Directorio .claude</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 2, event)"><span class="sub-bullet">├─</span> Graph & Loop Engineering</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 3, event)"><span class="sub-bullet">└─</span> Patrones de Diseño Agéntico</div>
+                </div>
+            </div>
+
+            <!-- Cap 02 -->
+            <div class="accordion-item" data-target="cap-02">
+                <div class="accordion-header" onclick="selectChapter('cap-02', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">02</span>
+                        <span class="acc-text">Sistemas RAG & Vector DBs</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 0, event)"><span class="sub-bullet">├─</span> GraphRAG vs Vector RAG vs Hybrid</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 1, event)"><span class="sub-bullet">├─</span> RAG Empresarial en AWS</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 2, event)"><span class="sub-bullet">├─</span> Graphify Knowledge Graph</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 3, event)"><span class="sub-bullet">└─</span> Utopia RAG Sandbox</div>
+                </div>
+            </div>
+
+            <!-- Cap 03 -->
+            <div class="accordion-item" data-target="cap-03">
+                <div class="accordion-header" onclick="selectChapter('cap-03', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">03</span>
+                        <span class="acc-text">Vibe Coding & Asistentes Dev</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 0, event)"><span class="sub-bullet">├─</span> Spec Kit & Spec-Driven Prompting</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 1, event)"><span class="sub-bullet">├─</span> OmniRoute Local Gateway</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 2, event)"><span class="sub-bullet">└─</span> GenOffice Suite Agéntica</div>
+                </div>
+            </div>
+
+            <!-- Cap 04 -->
+            <div class="accordion-item" data-target="cap-04">
+                <div class="accordion-header" onclick="selectChapter('cap-04', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">04</span>
+                        <span class="acc-text">Modelos LLM & Razonamiento</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 0, event)"><span class="sub-bullet">├─</span> World Models & JEPA (LeCun)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 1, event)"><span class="sub-bullet">├─</span> Transformer Explainer ONNX</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 2, event)"><span class="sub-bullet">└─</span> Hands-On Large Language Models</div>
+                </div>
+            </div>
+
+            <!-- Cap 05 -->
+            <div class="accordion-item" data-target="cap-05">
+                <div class="accordion-header" onclick="selectChapter('cap-05', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">05</span>
+                        <span class="acc-text">Curriculums & Fundamentos</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 0, event)"><span class="sub-bullet">├─</span> Multi-Agent SDLC Playbook</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 1, event)"><span class="sub-bullet">├─</span> Playbook Developer to AI Champion</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 2, event)"><span class="sub-bullet">└─</span> Code as Agent Harness (Stanford)</div>
+                </div>
+            </div>
+
+            <!-- Cap 06 -->
+            <div class="accordion-item" data-target="cap-06">
+                <div class="accordion-header" onclick="selectChapter('cap-06', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">06</span>
+                        <span class="acc-text">Diseño de Producto & UX</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-06', 0, event)"><span class="sub-bullet">├─</span> Leyes de UX (Laws of UX)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-06', 1, event)"><span class="sub-bullet">└─</span> AG-UI Streaming Protocol</div>
+                </div>
+            </div>
+
+            <!-- Cap 07 -->
+            <div class="accordion-item" data-target="cap-07">
+                <div class="accordion-header" onclick="selectChapter('cap-07', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">07</span>
+                        <span class="acc-text">Infraestructura, VPS & Seguridad</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-07', 0, event)"><span class="sub-bullet">├─</span> How To Secure A Linux Server</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-07', 1, event)"><span class="sub-bullet">└─</span> Cron Job Diario & Scraping VPS</div>
+                </div>
+            </div>
+
+            <!-- Cap 08 -->
+            <div class="accordion-item" data-target="cap-08">
+                <div class="accordion-header" onclick="selectChapter('cap-08', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">08</span>
+                        <span class="acc-text">Radar & Vigilancia OSINT</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-08', 0, event)"><span class="sub-bullet">├─</span> Radar Automatizado GitHub & HF</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-08', 1, event)"><span class="sub-bullet">└─</span> Overwatch Earth 3D OSINT</div>
+                </div>
+            </div>
+
+            <!-- Cap 09 -->
+            <div class="accordion-item" data-target="cap-09">
+                <div class="accordion-header" onclick="selectChapter('cap-09', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">09</span>
+                        <span class="acc-text">Masterclass & Feedback Continuo</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-09', 0, event)"><span class="sub-bullet">├─</span> Super Curso Master (21 Módulos)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-09', 1, event)"><span class="sub-bullet">└─</span> Pipeline de Retroalimentación</div>
+                </div>
+            </div>
+
+            <!-- Cap 10 -->
+            <div class="accordion-item" data-target="cap-10">
+                <div class="accordion-header" onclick="selectChapter('cap-10', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">10</span>
+                        <span class="acc-text">Arquitectura MIFUNE (Caso Real)</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 0, event)"><span class="sub-bullet">├─</span> Blueprint de Arquitectura MIFUNE</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 1, event)"><span class="sub-bullet">├─</span> Bitácora en Vivo (Pasos A-I)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 2, event)"><span class="sub-bullet">└─</span> Suite QC de 26 Pruebas en Sandbox</div>
+                </div>
+            </div>
+
+            <!-- Cap 11 -->
+            <div class="accordion-item" data-target="cap-11">
+                <div class="accordion-header" onclick="selectChapter('cap-11', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">11</span>
+                        <span class="acc-text">Arquitectura PROPTWIN (Caso Real)</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 0, event)"><span class="sub-bullet">├─</span> Blueprint Gemelo Digital Arzobispado</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 1, event)"><span class="sub-bullet">├─</span> Software Factory & 5 Roles Agénticos</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 2, event)"><span class="sub-bullet">└─</span> Quality Gates & Sandbox Docker</div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- CUERPO PRINCIPAL DINÁMICO (SOLO MUESTRA EL CAPÍTULO SELECCIONADO) -->
+        <main class="wiki-main" id="chapter-viewport">
+            <!-- Renderizado dinámico vía JavaScript -->
+        </main>
+
+    </div>
+
+    <!-- BASE DE DATOS Y CONTROLADOR REACTIVO -->
+    <script>
+        const CHAPTER_DATA = {
+            "cap-01": {
+                id: "01",
+                title: "Sistemas Agénticos & Orquestación",
+                badge: "Multi-Agent SDLC & Frameworks",
+                subtitle: "Orquestación multi-agente, desacoplamiento de roles de software, diagramación Mermaid obligatoria y runtime Claude Code.",
+                deckUrl: "cap-01-sistemas-agenticos.html",
+                summary: "En este módulo se enseña cómo transicionar del desarrollo manual aislado a la dirección de fábricas de software autónomas. Se abordan los 5 roles clave (PM, System Architect, Squad, QC Auditor y Release), bucles cerrados de retroalimentación determinista y control de calidad en sandbox.",
+                classes: [
+                    { title: "Multi-Agent SDLC & Visual Canvas", desc: "MetaGPT, ChatDev, AutoGen Studio, Langflow y OpenHands.", tag: "Nota 60" },
+                    { title: "Anatomía del Directorio .claude", desc: "Claude Code Runtime, Hooks deterministas, skills y reglas scoped.", tag: "Nota 49" },
+                    { title: "Graph & Loop Engineering", desc: "El manifiesto de Boris Cherny (Anthropic) para bucles cerrados.", tag: "Nota 73" },
+                    { title: "Patrones de Diseño Agéntico", desc: "ReAct, Single-Shot, Planner-Executor, Verifier-Gated y Guardrails.", tag: "Nota 53" }
+                ],
+                metrics: [
+                    { label: "Roles Desacoplados", val: "5 Especialistas" },
+                    { label: "Diagramación", val: "Mermaid.js" }
+                ]
+            },
+            "cap-02": {
+                id: "02",
+                title: "Sistemas RAG, Embeddings & Vector DBs",
+                badge: "GraphRAG & Recuperación Semántica",
+                subtitle: "Framework de selección entre Vector RAG, GraphRAG y Fusión Híbrida (RRF) en AWS Bedrock y OpenSearch.",
+                deckUrl: "cap-02-rag-sistemas.html",
+                summary: "Evolución de bases de conocimiento corporativas desde el chunking ingenuo hasta el modelado de grafos relacionales (Graphify) capaces de resolver consultas multi-hop sin alucinación de contexto.",
+                classes: [
+                    { title: "GraphRAG vs Vector RAG vs Hybrid RAG", desc: "Guía de arquitectura, selección y optimización de latencia.", tag: "Nota 59" },
+                    { title: "Arquitectura RAG Empresarial en AWS", desc: "Bedrock, OpenSearch Serverless, Aurora pgvector y FastAPI.", tag: "Nota 52" },
+                    { title: "Graphify Knowledge Graph Engine", desc: "Transformación de repositorios de código y SQL a grafos de conocimiento.", tag: "Nota 02" },
+                    { title: "Utopia Vector Store", desc: "Sandbox de experimentación y recuperación semántica de alta fidelidad.", tag: "Nota 13" }
+                ],
+                metrics: [
+                    { label: "Precisión Fusión", val: "99.2% Top-K" },
+                    { label: "Latencia AWS", val: "< 400ms" }
+                ]
+            },
+            "cap-03": {
+                id: "03",
+                title: "Vibe Coding & Asistentes de Desarrollo",
+                badge: "Harness & Especificaciones Rigurosas",
+                subtitle: "Metodología Spec-Driven Prompting, límites limpios de contexto, suites ofimáticas agénticas y gateways locales.",
+                deckUrl: "cap-03-vibe-coding.html",
+                summary: "Cómo programar con asistentes de IA sin saturar la ventana de contexto. Reglas de oro para crear especificaciones antes de codificar y ruteo económico de inferencia con OmniRoute.",
+                classes: [
+                    { title: "Spec Kit (Spec-Driven Prompting)", desc: "Metodología de especificaciones técnicas antes de generar código.", tag: "Nota 01" },
+                    { title: "OmniRoute AI Gateway", desc: "Gateway local con 352+ proveedores, failover y pool de tokens.", tag: "Nota 50" },
+                    { title: "GenOffice Suite Agéntica", desc: "Suite ofimática open source con agentes IA integrados (.xlsx, .docx).", tag: "Nota 47" }
+                ],
+                metrics: [
+                    { label: "Proveedores AI", val: "352+ Modelos" },
+                    { label: "Ahorro de Contexto", val: "70% Reducción" }
+                ]
+            },
+            "cap-04": {
+                id: "04",
+                title: "Modelos de Razonamiento, Visión & Arquitectura LLM",
+                badge: "World Models & Reasoning SOTA",
+                subtitle: "Arquitectura interna de LLMs, World Models (JEPA), simuladores WebGL y fine-tuning de modelos abiertos.",
+                deckUrl: "cap-04-modelos-llm.html",
+                summary: "Fundamentos de la arquitectura Transformer, atención multi-cabezal, cuantización (GGUF/AWQ), modelos de razonamiento profundo y la visión de Yann LeCun sobre arquitecturas basadas en energía.",
+                classes: [
+                    { title: "World Models & JEPA", desc: "Visión de Yann LeCun sobre predicción en espacio latente.", tag: "Nota 34" },
+                    { title: "Transformer Explainer", desc: "Simulador interactivo en navegador de GPT-2 124M con ONNX Web.", tag: "Nota 45" },
+                    { title: "Hands-On Large Language Models", desc: "Guía práctica de fine-tuning, MoE y despliegue local.", tag: "Nota 64" }
+                ],
+                metrics: [
+                    { label: "Simulador", val: "GPT-2 ONNX" },
+                    { label: "Modos de Inferencia", val: "MoE & Dense" }
+                ]
+            },
+            "cap-05": {
+                id: "05",
+                title: "Curriculums, Fundamentos & Guías de Ingeniería",
+                badge: "Playbooks & Harness Engineering",
+                subtitle: "Instructivo operativo de trabajo con cuadrillas de agentes y el paper fundacional de Stanford sobre Code as Harness.",
+                deckUrl: "cap-05-fundamentos-ingenieria.html",
+                summary: "Guía metodológica paso a paso para líderes técnicos y desarrolladores. Cómo pasar de programador individual a AI Champion implementando métricas DORA y gobernanza agéntica.",
+                classes: [
+                    { title: "Multi-Agent SDLC Playbook", desc: "Instructivo de trabajo operativo y reglas de gobernanza agéntica.", tag: "Nota 61" },
+                    { title: "Playbook Developer to AI Champion", desc: "Guía de Álvaro Moya / LIDR para Context & Harness Engineering.", tag: "Nota 54" },
+                    { title: "Code as Agent Harness", desc: "Paper fundacional de Stanford, Meta y UIUC.", tag: "Nota 51" }
+                ],
+                metrics: [
+                    { label: "Metodología", val: "Harness 10X" },
+                    { label: "Métricas", val: "DORA & Faros" }
+                ]
+            },
+            "cap-06": {
+                id: "06",
+                title: "Diseño de Producto, UX & Interfaces Visuales",
+                badge: "Protocolo AG-UI & Estética APEFAC",
+                subtitle: "Principios cognitivos de interfaz, protocolo streaming interactivo AG-UI y diseño visual corporativo GeekSoft.",
+                deckUrl: "cap-06-diseno-ux-interfaces.html",
+                summary: "Diseño de experiencias de usuario fluidas para productos agénticos. Manejo de estados de carga, spinners, streaming reactivo y paleta visual APEFAC de alta gama.",
+                classes: [
+                    { title: "Leyes de UX (Laws of UX)", desc: "Principios cognitivos y heurísticas de usabilidad para software.", tag: "Nota 06" },
+                    { title: "AG-UI Protocol", desc: "Protocolo de renderizado de interfaces agénticas en tiempo real.", tag: "Nota 17" }
+                ],
+                metrics: [
+                    { label: "Protocolo UI", val: "AG-UI Streaming" },
+                    { label: "Look & Feel", val: "APEFAC Light" }
+                ]
+            },
+            "cap-07": {
+                id: "07",
+                title: "Infraestructura, VPS & Seguridad en Producción",
+                badge: "Hardening, Docker & Scraping Headless",
+                subtitle: "Hardening de servidores Linux en Contabo VPS, redes Docker aisladas y cron jobs de scraping headless.",
+                deckUrl: "cap-07-infraestructura-vps.html",
+                summary: "Despliegue robusto de infraestructura en la nube. Configuración de claves SSH Ed25519, UFW Firewall, Fail2Ban, Traefik con SSL automático y workers en navegadores ultraligeros en Rust (Obscura).",
+                classes: [
+                    { title: "How To Secure A Linux Server", desc: "Las 5 capas de defensa para servidores de producción.", tag: "Nota 21" },
+                    { title: "Cron Job Diario & Scraping VPS", desc: "Automatización de recolección de datos a las 07:00 AM.", tag: "Nota 41" }
+                ],
+                metrics: [
+                    { label: "VPS Contabo", val: "Hardened Linux" },
+                    { label: "Browser Rust", val: "30MB RAM" }
+                ]
+            },
+            "cap-08": {
+                id: "08",
+                title: "Radar Tecnológico & Vigilancia Continua",
+                badge: "Vigilancia OSINT & Pipeline de Curación",
+                subtitle: "Monitoreo sistemático de GitHub Trending, Hugging Face y 11 Top Voices globales de inteligencia artificial.",
+                deckUrl: "cap-08-radar-tecnologico.html",
+                summary: "El motor de inteligencia competitiva de GeekSoft. Algoritmos de filtrado de ruido para transformar publicaciones y repositorios en notas técnicas estructuradas para la Bóveda.",
+                classes: [
+                    { title: "Radar Automatizado de GitHub & HF", desc: "Scripts headless de extracción diaria y clasificación.", tag: "Nota 36" },
+                    { title: "Overwatch Earth OSINT", desc: "Centro 3D interactivo de telemetría planetaria.", tag: "Nota 46" }
+                ],
+                metrics: [
+                    { label: "Top Voices", val: "11 Investigadores" },
+                    { label: "Frecuencia", val: "Diaria 07:00 AM" }
+                ]
+            },
+            "cap-09": {
+                id: "09",
+                title: "Masterclass & Pipeline de Aprendizaje Continuo",
+                badge: "Currículum SoTA 2026 & Feedback Loop",
+                subtitle: "Estructura de 21 módulos de producción y bucles automáticos de actualización y retroalimentación pedagógica.",
+                deckUrl: "cap-09-masterclass-pipeline.html",
+                summary: "Metodología pedagógica para mantener el curso de IA permanentemente actualizado frente a la velocidad de la industria mediante bucles cerrados y validación en sandboxes reales.",
+                classes: [
+                    { title: "Super Curso Master de Agentes", desc: "Currículum completo de 21 módulos SoTA 2026.", tag: "Nota 30" },
+                    { title: "Pipeline de Retroalimentación", desc: "Bucle cerrado de ingestión de dudas y actualización de decks.", tag: "Nota 31" }
+                ],
+                metrics: [
+                    { label: "Módulos Master", val: "21 Bloques" },
+                    { label: "Ciclo Update", val: "Continuo" }
+                ]
+            },
+            "cap-10": {
+                id: "10",
+                title: "Arquitectura MIFUNE (Caso Real en Producción)",
+                badge: "Dual-Agent Harness & Sandbox VPS",
+                subtitle: "Plataforma empresarial de modelado financiero 3-Statements con LibreOffice Headless y MinIO S3 en VPS Contabo.",
+                deckUrl: "cap-10-mifune-architecture.html",
+                summary: "Caso de estudio de nivel de producción 100% desplegado en https://mifune.geeksoft.tech. Combina arquitectura Job Runner en FastAPI, Skills Registry inmutable con SemVer, worker efímero con recálculo contable en LibreOffice y suite QC de 26 pruebas automáticas.",
+                classes: [
+                    { title: "Blueprint de Arquitectura MIFUNE", desc: "Dual-Agent Harness, HITL y ruteo económico.", tag: "Nota 48" },
+                    { title: "Bitácora de Despliegue en Vivo (Pasos A-I)", desc: "MinIO, Docker Worker, FastAPI, Redis y SSL Traefik.", tag: "Notas 58A-58I" },
+                    { title: "Suite de Pruebas QC & Recálculo Contable", desc: "26 pruebas contables deterministas con cero desvío.", tag: "Nota 56" }
+                ],
+                metrics: [
+                    { label: "Tiempo Corrida", val: "4.5 Segundos" },
+                    { label: "Suite QC", val: "26 Tests PASS" }
+                ]
+            },
+            "cap-11": {
+                id: "11",
+                title: "Arquitectura PROPTWIN (El Gemelo Digital Inmobiliario)",
+                badge: "AI Software Factory & Real Estate Twin",
+                subtitle: "Fábrica agéntica multi-rol para la gestión patrimonial, geoespacial y legal del Arzobispado de Lima.",
+                deckUrl: "cap-11-proptwin-architecture.html",
+                summary: "Arquitectura de Gemelo Digital Inmobiliario (Property Twin). Modela cientos de propiedades del Arzobispado de Lima mediante ingesta OCR de partidas Sunarp, motor geoespacial PostGIS, grafo relacional de contratos y una cuadrilla de 5 agentes gobernada por Quality Gates en Docker Sandbox.",
+                classes: [
+                    { title: "Blueprint de Arquitectura PROPTWIN", desc: "El Gemelo Digital Inmobiliario del Arzobispado de Lima.", tag: "Nota 75" },
+                    { title: "Software Factory Agéntica PROPTWIN", desc: "Roles desacoplados, contratos y Quality Gates deterministas.", tag: "Nota 76" },
+                    { title: "Motor Geo-Grafo & Ingesta OCR", desc: "PostGIS, Neo4j Graphify y digitalización de contratos Sunarp.", tag: "Specs v1.0" }
+                ],
+                metrics: [
+                    { label: "Cuadrilla Agéntica", val: "5 Roles Desacoplados" },
+                    { label: "Quality Gates", val: "4 Barreras Docker" }
+                ]
+            }
+        };
+
+        function renderChapter(capId) {
+            const data = CHAPTER_DATA[capId];
+            if (!data) return;
+
+            const viewport = document.getElementById('chapter-viewport');
+            viewport.innerHTML = `
+                <div class="chapter-card">
+                    <div class="chapter-hero">
+                        <div>
+                            <div class="breadcrumb">
+                                GeekSoft Academy &bull; Capítulo <strong>${data.id}</strong> &bull; ${data.badge}
+                            </div>
+                            <h2 class="hero-title">${data.title}</h2>
+                            <p class="hero-subtitle">${data.subtitle}</p>
+                        </div>
+                        <a href="${data.deckUrl}" class="deck-launch-btn">
+                            <span class="play-icon">▶</span>
+                            <span>Ver Deck Interactivo PPT</span>
+                        </a>
+                    </div>
+
+                    <div class="grid-detail">
+                        <div class="section-box">
+                            <div class="section-title">
+                                <span>📚</span> Clases & Notas Técnicas del Módulo
+                            </div>
+                            <div class="classes-list">
+                                ${data.classes.map(c => `
+                                    <div class="class-row">
+                                        <div class="class-info">
+                                            <h4>${c.title}</h4>
+                                            <p>${c.desc}</p>
+                                        </div>
+                                        <span class="class-badge">${c.tag}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 14px;">
+                            <div class="section-box">
+                                <div class="section-title">
+                                    <span>🧠</span> Resumen Ejecutivo del Capítulo
+                                </div>
+                                <p class="summary-text">${data.summary}</p>
+                            </div>
+
+                            <div class="section-box">
+                                <div class="section-title">
+                                    <span>⚡</span> Especificaciones & Métricas
+                                </div>
+                                <div class="metrics-grid">
+                                    ${data.metrics.map(m => `
+                                        <div class="metric-card">
+                                            <div class="metric-val">${m.val}</div>
+                                            <div class="metric-lbl">${m.label}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectChapter(capId, headerEl) {
+            // Actualizar acordeón
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active-chapter');
+                if (item.getAttribute('data-target') === capId) {
+                    item.classList.add('active-chapter');
+                    item.classList.toggle('open');
+                } else {
+                    item.classList.remove('open');
+                }
+            });
+
+            // Renderizar contenido central
+            renderChapter(capId);
+        }
+
+        function selectLesson(capId, lessonIdx, event) {
+            event.stopPropagation();
+            // Marcar lección activa
+            document.querySelectorAll('.acc-sub-item').forEach(sub => sub.classList.remove('active-lesson'));
+            event.currentTarget.classList.add('active-lesson');
+
+            // Asegurar que el capítulo esté activo y renderizado
+            renderChapter(capId);
+        }
+
+        // Búsqueda en tiempo real
+        const searchInput = document.getElementById('wiki-search');
+        searchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            const items = document.querySelectorAll('.accordion-item');
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(q)) {
+                    item.style.display = 'block';
+                    if (q.length > 2) item.classList.add('open');
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Inicializar con Capítulo 01
+        renderChapter('cap-01');
+    </script>
+
+</body>
+</html>

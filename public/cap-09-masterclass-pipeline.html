@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capítulo 05: Curriculums & Fundamentos de Ingeniería - GeekSoft Academy</title>
+    <title>Capítulo 09: Masterclass & Pipeline de Aprendizaje Continuo - GeekSoft Academy</title>
     <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -130,7 +130,6 @@
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 1240px; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
-        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; max-width: 1240px; }
 
         .spec-box {
             padding: 16px; display: flex; flex-direction: column; gap: 8px; text-align: left;
@@ -187,111 +186,143 @@
     </div>
 
     <div id="deck">
-<div class="slide active">
-        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
-            <span class="badge">📖 CAPÍTULO 05</span>
-            <span class="badge green">FUNDAMENTOS &amp; PLAYBOOKS</span>
-        </div>
-        <h1>Harness Engineering &amp; Patrones Agénticos</h1>
-        <h2>De Developer Tradicional a AI Champion en Producción</h2>
-        <p class="sub">El playbook de Álvaro Moya (LIDR.co), los 4 patrones de diseño de Andrew Ng y la ingeniería de arneses de software.</p>
-        <div class="grid-4" style="margin-top: 14px;">
-            <div class="card spec-box">
-                <span class="spec-icon">🔄</span>
-                <span class="spec-title">Loop Engineering</span>
-                <span class="spec-desc">Diseño de bucles agénticos controlados con presupuestos de tokens y paradas seguras.</span>
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide active">
+            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+                <span class="badge green">🎓 CAPÍTULO 09</span>
+                <span class="badge purple">PIPELINE CONTINUO &bull; SOTA 2026</span>
             </div>
-            <div class="card spec-box">
-                <span class="spec-icon">🛡️</span>
-                <span class="spec-title">Harness Engineering</span>
-                <span class="spec-desc">El código como sustrato determinista de ejecución, memoria y verificación.</span>
+            <h1>Masterclass &amp; Pipeline Continuo de Aprendizaje</h1>
+            <h2>Currículum de 21 Módulos SoTA y Ciclos de Retroalimentación Automatizados</h2>
+            <p class="sub">Cómo mantener actualizado el conocimiento de ingeniería agéntica mediante bucles cerrados de curación, retroalimentación de alumnos y despliegue continuo.</p>
+            
+            <div class="grid-3" style="margin-top: 14px;">
+                <div class="card spec-box">
+                    <span class="spec-icon">📚</span>
+                    <span class="spec-title">21 Módulos de Producción</span>
+                    <span class="spec-desc">De Fundamentos y ReAct a Harness Engineering, Sandboxing y despliegue real en Contabo VPS.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🔄</span>
+                    <span class="spec-title">Feedback Loop Continuo</span>
+                    <span class="spec-desc">Ingesta automática de dudas, errores en laboratorios y nuevos papers para actualizar notas y slides.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🛡️</span>
+                    <span class="spec-title">Quality Gate Pedagógico</span>
+                    <span class="spec-desc">Verificación de código ejecutable antes de publicar material nuevo a la plataforma.</span>
+                </div>
             </div>
-            <div class="card spec-box">
-                <span class="spec-icon">📐</span>
-                <span class="spec-title">4 Patrones Andrew Ng</span>
-                <span class="spec-desc">Reflection, Tool Use, Planning y Multi-Agent Collaboration.</span>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-icon">📚</span>
-                <span class="spec-title">AI Engineering</span>
-                <span class="spec-desc">523 lecciones prácticas: Build It &rarr; Use It &rarr; Ship It.</span>
-            </div>
-        </div>
-        <div class="footnote"><span>GeekSoft Academy &bull; Bóveda: [[54 - Playbook Harness Engineering]]</span><span>Slide 1 / 4</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">📐 Patrones Fundacionales</div>
-        <h2>Los 4 Patrones de Diseño Agéntico de Andrew Ng</h2>
-        <p class="sub">La base conceptual que supera a los modelos estándar en benchmarks complejos.</p>
-        <div class="grid-4" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--sky);">1. Reflection</span>
-                <p class="spec-desc">El modelo evalúa su propia salida, encuentra defectos y genera una versión corregida antes de responder.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--emerald);">2. Tool Use</span>
-                <p class="spec-desc">Invocación de terminal, navegadores y bases de datos para interactuar con el mundo real.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--purple);">3. Planning</span>
-                <p class="spec-desc">Descomposición del objetivo en secuencias de pasos antes de iniciar la ejecución del código.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--amber);">4. Multi-Agent</span>
-                <p class="spec-desc">Distribución del trabajo entre agentes con roles especializados y debates colaborativos.</p>
+
+            <div class="footnote">
+                <span>GeekSoft Academy &bull; Bóveda: [[30 - Super Curso Master]] y [[31 - Pipeline Continuo]]</span>
+                <span>Slide 1 / 4</span>
             </div>
         </div>
-        <div class="footnote"><span>Nota vinculada: [[33 - Los 4 Patrones de Diseo Agentico de Andrew Ng]]</span><span>Slide 2 / 4</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">🚀 Superando el Whiplash</div>
-        <h2>El Acceleration Whiplash y las Métricas DORA</h2>
-        <p class="sub">Por qué programar 10x más rápido satura el proceso si no se automatiza el QA y Deploy.</p>
-        <div class="grid-2" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--red);">El Problema: Acceleration Whiplash</span>
-                <p class="spec-desc">
-                    &bull; Los desarrolladores generan 5 veces más código por día.<br/>
-                    &bull; Las revisiones humanas (PRs) se convierten en un cuello de botella inmanejable.<br/>
-                    &bull; Aumenta la tasa de errores en producción y la deuda técnica oculta.
-                </p>
+
+        <!-- SLIDE 2: CURRICULUM -->
+        <div class="slide">
+            <div class="tag">📐 Estructura Curricular</div>
+            <h2>Los 4 Bloques Estratégicos del Programa Master</h2>
+            <p class="sub">Progresión pedagógica diseñada para llevar a un ingeniero de software a dominar sistemas agénticos autónomos.</p>
+            
+            <div class="grid-4" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--sky);">Bloque 1: Fundamentos</span>
+                    <p class="spec-desc">ReAct, Tool Calling, Memoria Contextual estructurada y Model Context Protocol (MCP).</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--purple);">Bloque 2: RAG &amp; Grafos</span>
+                    <p class="spec-desc">Vector RAG, GraphRAG relacional, Fusión Híbrida RRF y Graphify AST.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--emerald);">Bloque 3: Harness &amp; Roles</span>
+                    <p class="spec-desc">Spec-Driven Prompting, Pydantic AI, LangGraph, Claude Code y Multi-Agent SDLC.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--amber);">Bloque 4: Producción Real</span>
+                    <p class="spec-desc">Sandboxing en Docker, Scraping headless, Suite QC de 26 pruebas y Arquitectura MIFUNE.</p>
+                </div>
             </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--emerald);">La Solución: Harness Automatizado</span>
-                <p class="spec-desc">
-                    &bull; Suites de pruebas en sandbox Docker que validan automáticamente cada commit.<br/>
-                    &bull; Agentes auditores de seguridad que aprueban antes de desplegar.<br/>
-                    &bull; Despliegues continuos verificados con telemetría en tiempo real.
-                </p>
-            </div>
-        </div>
-        <h2>Roadmap de 7 Días para Equipos de Ingeniería</h2>
-        <p class="sub">Metodología paso a paso para transformar desarrolladores tradicionales en AI Champions.</p>
-        <div class="grid-4" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-title">Días 1-2: Setup</span>
-                <p class="spec-desc">Estandarización de `.claude/`, MCP servers y compresión RTK en terminal.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title">Días 3-4: RAG</span>
-                <p class="spec-desc">Implementación de Graphify y recuperación híbrida sobre la base de código.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title">Día 5: Multi-Agente</span>
-                <p class="spec-desc">Creación de subagentes especializados (Arquitecto, Dev, QA Tester).</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title">Días 6-7: Deploy</span>
-                <p class="spec-desc">Integración de Quality Gates en CI/CD y despliegue autónomo en VPS.</p>
+
+            <div class="footnote">
+                <span>Nota vinculada: [[30 - Super Curso Master de Ingenieria de Agentes de IA]]</span>
+                <span>Slide 2 / 4</span>
             </div>
         </div>
-        <div class="footnote"><span>GeekSoft Academy &bull; Módulo de Liderazgo e Ingeniería Agéntica</span><span>Slide 4 / 4</span></div>
-    </div>
+
+        <!-- SLIDE 3: FEEDBACK LOOP -->
+        <div class="slide">
+            <div class="tag">🔄 Pipeline de Actualización</div>
+            <h2>El Ciclo de Retroalimentación y Evolución del Curso</h2>
+            <p class="sub">Mecanismo automatizado que evita que el temario quede obsoleto.</p>
+            
+            <div class="flow-container">
+                <div class="flow-node active">
+                    <span class="flow-node-title">1. Señal / Duda</span>
+                    <span class="flow-node-desc">Pregunta de Alumno / Paper</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node purple">
+                    <span class="flow-node-title">2. Sandbox Test</span>
+                    <span class="flow-node-desc">Prueba Técnica en VPS</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node">
+                    <span class="flow-node-title">3. Nota Obsidian</span>
+                    <span class="flow-node-desc">Nueva Nota #XX</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node green">
+                    <span class="flow-node-title">4. Deck Compilación</span>
+                    <span class="flow-node-desc">Actualización PPT</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node active">
+                    <span class="flow-node-title">5. Deploy Live</span>
+                    <span class="flow-node-desc">geeksoft.tech</span>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Documentado en [[31 - Pipeline Continuo de Retroalimentacion y Actualizacion del Curso]]</span>
+                <span>Slide 3 / 4</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: MATRIZ DE COMPETENCIAS -->
+        <div class="slide">
+            <div class="tag">🎯 Perfil de Egreso</div>
+            <h2>Competencias Clave del Ingeniero de Agentes GeekSoft</h2>
+            <p class="sub">Habilidades técnicas evaluadas y certificadas al finalizar el programa.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title">1. Director de Fábrica Agéntica</span>
+                    <p class="spec-desc">Capacidad de descomponer requerimientos empresariales complejos en especificaciones formales y gobernar cuadrillas de agentes.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">2. Arquitecto de Sandboxes</span>
+                    <p class="spec-desc">Diseño de entornos de ejecución seguros y aislados con validación determinista de código y recálculo contable.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">3. Operador de Producción</span>
+                    <p class="spec-desc">Despliegue en VPS Linux con Traefik SSL, Redis Queue, MinIO S3 y telemetría de Quality Gates en tiempo real.</p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>GeekSoft Academy &bull; Estándar de Certificación Profesional SoTA 2026</span>
+                <span>Slide 4 / 4</span>
+            </div>
+        </div>
+
     </div>
 
     <nav>
         <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 3</div>
+        <div id="counter">1 / 4</div>
         <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
         <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
     </nav>

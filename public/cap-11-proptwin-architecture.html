@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capítulo 05: Curriculums & Fundamentos de Ingeniería - GeekSoft Academy</title>
+    <title>Capítulo 11: Arquitectura PROPTWIN - GeekSoft Academy</title>
     <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -130,7 +130,6 @@
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 1240px; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
-        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; max-width: 1240px; }
 
         .spec-box {
             padding: 16px; display: flex; flex-direction: column; gap: 8px; text-align: left;
@@ -180,118 +179,190 @@
 
     <div id="watermark-layer">
         <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
-        <div class="wm-item">GEEKSOFT ACADEMY 2026</div>
-        <div class="wm-item">CONFIDENCIAL &bull; PROPIEDAD INTELECTUAL</div>
+        <div class="wm-item">PROPTWIN AI FACTORY 2026</div>
+        <div class="wm-item">ARZOBISPADO DE LIMA</div>
         <div class="wm-item">WWW.GEEKSOFT.TECH</div>
-        <div class="wm-item">MULTI-AGENT &bull; RAG &bull; SOTA</div>
+        <div class="wm-item">DIGITAL TWIN &bull; QUALITY GATES</div>
     </div>
 
     <div id="deck">
-<div class="slide active">
-        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
-            <span class="badge">📖 CAPÍTULO 05</span>
-            <span class="badge green">FUNDAMENTOS &amp; PLAYBOOKS</span>
-        </div>
-        <h1>Harness Engineering &amp; Patrones Agénticos</h1>
-        <h2>De Developer Tradicional a AI Champion en Producción</h2>
-        <p class="sub">El playbook de Álvaro Moya (LIDR.co), los 4 patrones de diseño de Andrew Ng y la ingeniería de arneses de software.</p>
-        <div class="grid-4" style="margin-top: 14px;">
-            <div class="card spec-box">
-                <span class="spec-icon">🔄</span>
-                <span class="spec-title">Loop Engineering</span>
-                <span class="spec-desc">Diseño de bucles agénticos controlados con presupuestos de tokens y paradas seguras.</span>
+
+        <!-- SLIDE 1: PORTADA EJECUTIVA -->
+        <div class="slide active">
+            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+                <span class="badge green">🏛️ CAPÍTULO 11</span>
+                <span class="badge purple">PROPTWIN AI SOFTWARE FACTORY</span>
+                <span class="badge">SOTA 2026</span>
             </div>
-            <div class="card spec-box">
-                <span class="spec-icon">🛡️</span>
-                <span class="spec-title">Harness Engineering</span>
-                <span class="spec-desc">El código como sustrato determinista de ejecución, memoria y verificación.</span>
+            <h1>PROPTWIN: Arquitectura de Gemelo Digital Inmobiliario</h1>
+            <h2>Fábrica Agéntica Multi-Rol para el Patrimonio del Arzobispado de Lima</h2>
+            <p class="sub">
+                Transformando la administración patrimonial mediante un gemelo digital relacional, ingesta OCR de partidas Sunarp, arnés financiero determinista y gobierno agéntico por contratos.
+            </p>
+            
+            <div class="grid-4" style="margin-top: 14px;">
+                <div class="card spec-box">
+                    <span class="spec-icon">🏛️</span>
+                    <span class="spec-title">Caso de Negocio Real</span>
+                    <span class="spec-desc">Gestión integral de cientos de inmuebles históricos, locales comerciales y contratos.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">👥</span>
+                    <span class="spec-title">5 Roles Agénticos</span>
+                    <span class="spec-desc">PM, System Architect, Engineering Squad, QC Auditor y DevOps Release.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🗺️</span>
+                    <span class="spec-title">PostGIS &amp; Grafo</span>
+                    <span class="spec-desc">Georreferenciación exacta y mapeo de relaciones entre inmuebles, contratos e inquilinos.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🧪</span>
+                    <span class="spec-title">Quality Gates en Docker</span>
+                    <span class="spec-desc">Validación determinista en sandbox efímero con cero alucinaciones de código.</span>
+                </div>
             </div>
-            <div class="card spec-box">
-                <span class="spec-icon">📐</span>
-                <span class="spec-title">4 Patrones Andrew Ng</span>
-                <span class="spec-desc">Reflection, Tool Use, Planning y Multi-Agent Collaboration.</span>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-icon">📚</span>
-                <span class="spec-title">AI Engineering</span>
-                <span class="spec-desc">523 lecciones prácticas: Build It &rarr; Use It &rarr; Ship It.</span>
-            </div>
-        </div>
-        <div class="footnote"><span>GeekSoft Academy &bull; Bóveda: [[54 - Playbook Harness Engineering]]</span><span>Slide 1 / 4</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">📐 Patrones Fundacionales</div>
-        <h2>Los 4 Patrones de Diseño Agéntico de Andrew Ng</h2>
-        <p class="sub">La base conceptual que supera a los modelos estándar en benchmarks complejos.</p>
-        <div class="grid-4" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--sky);">1. Reflection</span>
-                <p class="spec-desc">El modelo evalúa su propia salida, encuentra defectos y genera una versión corregida antes de responder.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--emerald);">2. Tool Use</span>
-                <p class="spec-desc">Invocación de terminal, navegadores y bases de datos para interactuar con el mundo real.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--purple);">3. Planning</span>
-                <p class="spec-desc">Descomposición del objetivo en secuencias de pasos antes de iniciar la ejecución del código.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--amber);">4. Multi-Agent</span>
-                <p class="spec-desc">Distribución del trabajo entre agentes con roles especializados y debates colaborativos.</p>
+
+            <div class="footnote">
+                <span>GeekSoft Academy &bull; Bóveda: [[75 - Blueprint PROPTWIN]] y [[76 - Software Factory Agentica]]</span>
+                <span>Slide 1 / 5</span>
             </div>
         </div>
-        <div class="footnote"><span>Nota vinculada: [[33 - Los 4 Patrones de Diseo Agentico de Andrew Ng]]</span><span>Slide 2 / 4</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">🚀 Superando el Whiplash</div>
-        <h2>El Acceleration Whiplash y las Métricas DORA</h2>
-        <p class="sub">Por qué programar 10x más rápido satura el proceso si no se automatiza el QA y Deploy.</p>
-        <div class="grid-2" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--red);">El Problema: Acceleration Whiplash</span>
-                <p class="spec-desc">
-                    &bull; Los desarrolladores generan 5 veces más código por día.<br/>
-                    &bull; Las revisiones humanas (PRs) se convierten en un cuello de botella inmanejable.<br/>
-                    &bull; Aumenta la tasa de errores en producción y la deuda técnica oculta.
-                </p>
+
+        <!-- SLIDE 2: EL SALTO DE PARADIGMA -->
+        <div class="slide">
+            <div class="tag">⚡ Metodología de Fábrica</div>
+            <h2>De "Programador Aislado" a "Director de Fábrica Agéntica"</h2>
+            <p class="sub">El pair coding tradicional satura el contexto. La ingeniería agéntica moderna desacopla roles y gobierna por especificaciones formales.</p>
+            
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-left: 4px solid var(--red);">
+                    <span class="spec-title" style="color:var(--red);">❌ Enfoque Artesanal / Junior</span>
+                    <p class="spec-desc">
+                        &bull; Prompting directo pidiendo código sin especificaciones previas.<br/>
+                        &bull; Un solo agente programando, probando y aprobando su propio código.<br/>
+                        &bull; Ventana de contexto saturada tras pocos turnos.<br/>
+                        &bull; Alta tasa de alucinaciones y regresiones en producción.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-left: 4px solid var(--emerald);">
+                    <span class="spec-title" style="color:var(--emerald);">✅ AI Software Factory SoTA 2026</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Spec-Driven:</strong> PRDs formales y diagramas Mermaid antes de codificar.<br/>
+                        &bull; <strong>Desacoplamiento:</strong> Agente constructor separado del agente auditor.<br/>
+                        &bull; <strong>Sandbox Docker:</strong> Pruebas unitarias reales y validación de tipos.<br/>
+                        &bull; <strong>Cero Alucinaciones:</strong> Quality Gates deterministas como barrera de release.
+                    </p>
+                </div>
             </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--emerald);">La Solución: Harness Automatizado</span>
-                <p class="spec-desc">
-                    &bull; Suites de pruebas en sandbox Docker que validan automáticamente cada commit.<br/>
-                    &bull; Agentes auditores de seguridad que aprueban antes de desplegar.<br/>
-                    &bull; Despliegues continuos verificados con telemetría en tiempo real.
-                </p>
-            </div>
-        </div>
-        <h2>Roadmap de 7 Días para Equipos de Ingeniería</h2>
-        <p class="sub">Metodología paso a paso para transformar desarrolladores tradicionales en AI Champions.</p>
-        <div class="grid-4" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-title">Días 1-2: Setup</span>
-                <p class="spec-desc">Estandarización de `.claude/`, MCP servers y compresión RTK en terminal.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title">Días 3-4: RAG</span>
-                <p class="spec-desc">Implementación de Graphify y recuperación híbrida sobre la base de código.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title">Día 5: Multi-Agente</span>
-                <p class="spec-desc">Creación de subagentes especializados (Arquitecto, Dev, QA Tester).</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title">Días 6-7: Deploy</span>
-                <p class="spec-desc">Integración de Quality Gates en CI/CD y despliegue autónomo en VPS.</p>
+
+            <div class="footnote">
+                <span>Metodología documentada en [[76 - Software Factory Agentica PROPTWIN]]</span>
+                <span>Slide 2 / 5</span>
             </div>
         </div>
-        <div class="footnote"><span>GeekSoft Academy &bull; Módulo de Liderazgo e Ingeniería Agéntica</span><span>Slide 4 / 4</span></div>
-    </div>
+
+        <!-- SLIDE 3: ARQUITECTURA 4 CAPAS -->
+        <div class="slide">
+            <div class="tag">🏗️ Arquitectura de Sistema</div>
+            <h2>Las 4 Capas del Gemelo Digital Inmobiliario PROPTWIN</h2>
+            <p class="sub">Estructura modular de alta disponibilidad para procesamiento documental, georreferenciación y visualización ejecutiva.</p>
+            
+            <div class="grid-4" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--sky);">1. Ingesta Multimodal</span>
+                    <p class="spec-desc">OCR inteligente de partidas registrales Sunarp, contratos históricos y planos perimétricos.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--purple);">2. Motor Geo-Grafo</span>
+                    <p class="spec-desc">PostGIS para ubicación espacial + Grafo relacional (Inmueble &harr; Inquilino &harr; Pagos).</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--emerald);">3. Arnés de Negocio</span>
+                    <p class="spec-desc">Cálculo de rentas, indexación por inflación, alertas legales de vencimiento y tasaciones.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--amber);">4. Dashboard AG-UI</span>
+                    <p class="spec-desc">Visualizador interactivo 16:9 con mapas vectoriales, fichas técnicas y telemetría en vivo.</p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Detalle técnico en [[75 - Blueprint de Arquitectura PROPTWIN]]</span>
+                <span>Slide 3 / 5</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: PIPELINE DETERMINISTA -->
+        <div class="slide">
+            <div class="tag">🔄 Pipeline de Entrega</div>
+            <h2>Ciclo de Vida Agéntico: De Requerimiento a Release Certificado</h2>
+            <p class="sub">Flujo de producción gobernado por contratos estandarizados.</p>
+            
+            <div class="flow-container">
+                <div class="flow-node active">
+                    <span class="flow-node-title">1. PM Agent</span>
+                    <span class="flow-node-desc">PRD &amp; Gherkin</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node purple">
+                    <span class="flow-node-title">2. Architect</span>
+                    <span class="flow-node-desc">Mermaid &amp; Schemas</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node">
+                    <span class="flow-node-title">3. Dev Squad</span>
+                    <span class="flow-node-desc">FastAPI &amp; React</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node green">
+                    <span class="flow-node-title">4. QC Sandbox</span>
+                    <span class="flow-node-desc">Docker &amp; Pytest</span>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-node active">
+                    <span class="flow-node-title">5. Release</span>
+                    <span class="flow-node-desc">PROPTWIN Live</span>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Regla de Oro: El agente constructor nunca audita su propio código.</span>
+                <span>Slide 4 / 5</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: QUALITY GATES -->
+        <div class="slide">
+            <div class="tag">🛡️ Control de Calidad</div>
+            <h2>La Matriz de Quality Gates Deterministas de PROPTWIN</h2>
+            <p class="sub">Barreras automáticas de validación antes de realizar cualquier merge o despliegue.</p>
+            
+            <div class="table-wrap" style="margin-top: 10px;">
+                <table>
+                    <thead>
+                        <tr><th>Quality Gate</th><th>Foco de Validación</th><th>Mecanismo de Control</th><th>Criterio de Aprobación</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Gate A: Spec Kit</strong></td><td>Completitud de Requerimientos</td><td>Linter de Markdown &amp; Schemas</td><td>100% Historias Gherkin válidas</td></tr>
+                        <tr><td><strong>Gate B: Type Safety</strong></td><td>Integridad Estricta de Tipos</td><td>`mypy --strict` &amp; `tsc`</td><td>0 errores de tipos en backend/frontend</td></tr>
+                        <tr><td><strong>Gate C: Sandbox QC</strong></td><td>Tests Unitarios &amp; Estrés</td><td>Docker efímero + `pytest`</td><td>&gt; 90% Cobertura y 0 fallos</td></tr>
+                        <tr><td><strong>Gate D: Hardening</strong></td><td>Seguridad y Secretos</td><td>`bandit` &amp; `trivy` scan</td><td>Cero vulnerabilidades críticas</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="footnote">
+                <span>GeekSoft Academy &bull; Estándar de Excelencia de Software Factory 2026</span>
+                <span>Slide 5 / 5</span>
+            </div>
+        </div>
+
     </div>
 
     <nav>
         <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 3</div>
+        <div id="counter">1 / 5</div>
         <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
         <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
     </nav>
