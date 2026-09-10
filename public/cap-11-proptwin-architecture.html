@@ -212,20 +212,20 @@
                     <span class="spec-desc">PM, System Architect, Engineering Squad, QC Auditor y DevOps Release.</span>
                 </div>
                 <div class="card spec-box">
-                    <span class="spec-icon">🗺️</span>
-                    <span class="spec-title">PostGIS &amp; Grafo</span>
-                    <span class="spec-desc">Georreferenciación 2D/3D y mapeo relacional de contratos, títulos e inquilinos.</span>
+                    <span class="spec-icon">🛠️</span>
+                    <span class="spec-title">Stack Enterprise</span>
+                    <span class="spec-desc">React 19 TS, Python 3.12 FastAPI, Supabase PostGIS y UI estilo APEFAC.</span>
                 </div>
                 <div class="card spec-box">
                     <span class="spec-icon">🧪</span>
-                    <span class="spec-title">Quality Gates en Docker</span>
-                    <span class="spec-desc">Validación determinista en sandbox efímero con cero alucinaciones de código.</span>
+                    <span class="spec-title">Sandboxes en VPS</span>
+                    <span class="spec-desc">Ejecución pesada en Contabo VPS con Docker, sin sobrecargar tu PC local.</span>
                 </div>
             </div>
 
             <div class="footnote">
-                <span>GeekSoft Academy &bull; Bóveda: [[75 - Blueprint PROPTWIN]] y [[76 - Software Factory Agentica]]</span>
-                <span>Slide 1 / 8</span>
+                <span>GeekSoft Academy &bull; Bóveda: [[75 - Blueprint PROPTWIN]], [[76 - Software Factory]], [[77 - Stack e Infraestructura]]</span>
+                <span>Slide 1 / 10</span>
             </div>
         </div>
 
@@ -264,7 +264,7 @@
 
             <div class="footnote">
                 <span>Documentado en: `AdL.RE.SOFT/03_Modulos_del_Sistema/02_Modulo_Inmobiliario_y_Predios.md`</span>
-                <span>Slide 2 / 8</span>
+                <span>Slide 2 / 10</span>
             </div>
         </div>
 
@@ -297,11 +297,94 @@
 
             <div class="footnote">
                 <span>Metodología formalizada en [[76 - Software Factory Agentica PROPTWIN]]</span>
-                <span>Slide 3 / 8</span>
+                <span>Slide 3 / 10</span>
             </div>
         </div>
 
-        <!-- SLIDE 4: LOS 7 MÓDULOS DEL SISTEMA -->
+        <!-- SLIDE 4: STACK TECNOLÓGICO Y UI APEFAC -->
+        <div class="slide">
+            <div class="tag">🛠️ Stack Tecnológico</div>
+            <h2>Stack de Producción: React TypeScript, Python &amp; Supabase PostGIS</h2>
+            <p class="sub">Arquitectura full-stack desacoplada con el sistema de diseño visual APEFAC Enterprise Light.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--sky);">🎨 Frontend: React 19 + TypeScript + APEFAC</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Vite + TypeScript:</strong> Compilación estricta y reactividad ultrarrápida.<br/>
+                        &bull; <strong>UI APEFAC Light:</strong> `#F8FAFC`, Navy `#0F172A`, Sky `#0284C7`, Emerald `#059669`.<br/>
+                        &bull; <strong>GIS:</strong> MapLibre GL / Leaflet + Turf.js con semáforo 4 colores.<br/>
+                        &bull; <strong>Data:</strong> TanStack Table + Apache ECharts para analítica.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--purple);">🐍 Backend: Python 3.12 + FastAPI</span>
+                    <p class="spec-desc">
+                        &bull; <strong>FastAPI Asíncrono:</strong> Contratos OpenAPI 3.1 tipados.<br/>
+                        &bull; <strong>Pydantic v2:</strong> Validación estricta en tiempo de ejecución.<br/>
+                        &bull; <strong>Motor Financiero:</strong> Indexación IPC y cálculo de moras SAT.<br/>
+                        &bull; <strong>OCR &amp; AI:</strong> PyMuPDF + PaddleOCR para títulos y contratos.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--emerald);">🗄️ Database: Supabase Cloud + PostGIS</span>
+                    <p class="spec-desc">
+                        &bull; <strong>PostgreSQL 16 + PostGIS:</strong> Polígonos espaciales `ST_Polygon`.<br/>
+                        &bull; <strong>Row Level Security (RLS):</strong> Aislamiento por roles AdL.<br/>
+                        &bull; <strong>Supabase Storage S3:</strong> Escrituras públicas y planos CAD.<br/>
+                        &bull; <strong>Auth &amp; 2FA:</strong> Acceso seguro para directores y auditores.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Especificado en detalle en [[77 - Stack Tecnologico, Infraestructura y Entorno de Ejecucion]]</span>
+                <span>Slide 4 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: DÓNDE TRABAJAN LOS AGENTES (DISTRIBUCIÓN DE CARGA) -->
+        <div class="slide">
+            <div class="tag">💻 Entorno de Ejecución</div>
+            <h2>¿Dónde Trabajan los Agentes? Arquitectura Híbrida Distribuida</h2>
+            <p class="sub">Tu PC local se mantiene 100% liviana y fría; la carga pesada de compilación y OCR vive en el VPS Contabo.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <span class="spec-title" style="color:var(--sky);">💻 Tu PC Local (Cabina de Control)</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Carga:</strong> &lt; 5% CPU / Cero saturación térmica.<br/>
+                        &bull; <strong>Editor:</strong> Antigravity IDE (prompts, Spec Kits y Git).<br/>
+                        &bull; <strong>Preview:</strong> Vite dev server liviano para ver la UI.<br/>
+                        &bull; <strong>Rol:</strong> Human-in-the-Loop para toma de decisiones clave.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <span class="spec-title" style="color:var(--purple);">🚀 Contabo VPS (169.58.168.107) - Fábrica Pesada</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Docker Sandboxes:</strong> Agentes compilan y prueban en contenedores.<br/>
+                        &bull; <strong>QC Automated:</strong> `pytest`, `mypy` y `tsc --noEmit` en background.<br/>
+                        &bull; <strong>Worker Pesado:</strong> Celery + Redis procesando OCR de escrituras.<br/>
+                        &bull; <strong>Multi-Agent:</strong> LangGraph ejecutando bucles autónomos.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <span class="spec-title" style="color:var(--emerald);">☁️ Supabase Cloud (Datos &amp; Archivos)</span>
+                    <p class="spec-desc">
+                        &bull; <strong>PostGIS Managed:</strong> Consultas espaciales de 400 predios.<br/>
+                        &bull; <strong>Storage S3:</strong> Archivos y expedientes en la nube.<br/>
+                        &bull; <strong>Cero Mantenimiento:</strong> Sin instalar pesadas BDs en tu laptop.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Arquitectura de Infraestructura en [[77 - Stack Tecnologico, Infraestructura y Entorno de Ejecucion]]</span>
+                <span>Slide 5 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: LOS 7 MÓDULOS DEL SISTEMA -->
         <div class="slide">
             <div class="tag">🧩 Módulos del Sistema</div>
             <h2>La Arquitectura Funcional de 7 Módulos de PROPTWIN</h2>
@@ -343,11 +426,11 @@
 
             <div class="footnote">
                 <span>Estructura de módulos en `AdL.RE.SOFT/03_Modulos_del_Sistema/`</span>
-                <span>Slide 4 / 8</span>
+                <span>Slide 6 / 10</span>
             </div>
         </div>
 
-        <!-- SLIDE 5: MODELO DE DATOS GEO-RELACIONAL -->
+        <!-- SLIDE 7: MODELO DE DATOS GEO-RELACIONAL -->
         <div class="slide">
             <div class="tag">🗄️ Modelo de Datos</div>
             <h2>El Modelo Entidad-Relación Geoespacial (PostGIS)</h2>
@@ -382,11 +465,11 @@
 
             <div class="footnote">
                 <span>Diagrama ER completo en `AdL.RE.SOFT/01_WorkTree_Arquitectura/Modelo_Datos_Entidad_Relacion.md`</span>
-                <span>Slide 5 / 8</span>
+                <span>Slide 7 / 10</span>
             </div>
         </div>
 
-        <!-- SLIDE 6: LA CUADRILLA AGÉNTICA -->
+        <!-- SLIDE 8: LA CUADRILLA AGÉNTICA -->
         <div class="slide">
             <div class="tag">👥 Organización Agéntica</div>
             <h2>La Cuadrilla de 5 Agentes Especializados de PROPTWIN</h2>
@@ -436,11 +519,11 @@
 
             <div class="footnote">
                 <span>Arquitectura de Roles en [[76 - Software Factory Agentica PROPTWIN]]</span>
-                <span>Slide 6 / 8</span>
+                <span>Slide 8 / 10</span>
             </div>
         </div>
 
-        <!-- SLIDE 7: ROADMAP DE EJECUCIÓN (4 FASES / 8 SPRINTS) -->
+        <!-- SLIDE 9: ROADMAP DE EJECUCIÓN (4 FASES / 8 SPRINTS) -->
         <div class="slide">
             <div class="tag">📅 Plan de Ejecución</div>
             <h2>El Roadmap de la Fábrica PROPTWIN (4 Fases / 8 Sprints)</h2>
@@ -483,11 +566,11 @@
 
             <div class="footnote">
                 <span>Plan extraído de `AdL.RE.SOFT/02_Plan_de_Trabajo/Plan_de_Trabajo_Roadmap.md`</span>
-                <span>Slide 7 / 8</span>
+                <span>Slide 9 / 10</span>
             </div>
         </div>
 
-        <!-- SLIDE 8: QUALITY GATES Y REGLA DE ORO -->
+        <!-- SLIDE 10: QUALITY GATES Y REGLA DE ORO -->
         <div class="slide">
             <div class="tag">🛡️ Calidad Determinista</div>
             <h2>Quality Gates de Producción &amp; La Regla de Oro GeekSoft</h2>
@@ -518,7 +601,7 @@
 
             <div class="footnote">
                 <span>GeekSoft Innovation Labs &bull; Estándar de Excelencia AI Software Factory 2026</span>
-                <span>Slide 8 / 8</span>
+                <span>Slide 10 / 10</span>
             </div>
         </div>
 
@@ -526,7 +609,7 @@
 
     <nav>
         <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 8</div>
+        <div id="counter">1 / 10</div>
         <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
         <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
     </nav>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capítulo 12: Arquitectura ARBN.CPJS (Airbnb Twin & AI Remodeling Engine) - GeekSoft Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0F172A;
+            --navy-light: #1E293B;
+            --slate: #334155;
+            --text: #0F172A;
+            --text-dim: #475569;
+            --bg-base: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --card-hover: #F1F5F9;
+            --border: #E2E8F0;
+            --border-subtle: #CBD5E1;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.03);
+            --sky: #0284C7;
+            --sky-dim: rgba(2, 132, 199, 0.08);
+            --sky-brd: rgba(2, 132, 199, 0.3);
+            --emerald: #059669;
+            --emerald-dim: rgba(5, 150, 105, 0.08);
+            --emerald-brd: rgba(5, 150, 105, 0.3);
+            --amber: #D97706;
+            --amber-dim: rgba(217, 119, 6, 0.08);
+            --amber-brd: rgba(217, 119, 6, 0.3);
+            --purple: #7C3AED;
+            --purple-dim: rgba(124, 58, 237, 0.08);
+            --purple-brd: rgba(124, 58, 237, 0.3);
+            --red: #E11D48;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; pointer-events: none; z-index: 1;
+            display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
+            padding: 40px; opacity: 0.03;
+        }
+        .wm-item {
+            font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 900;
+            color: #000; transform: rotate(-25deg); display: flex;
+            align-items: center; justify-content: center; text-transform: uppercase;
+        }
+
+        #deck {
+            position: relative; width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center; z-index: 10;
+        }
+
+        .slide {
+            position: absolute; inset: 0; opacity: 0; visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 30px 48px 65px; background-color: var(--bg-base);
+        }
+        .slide.active { opacity: 1; visibility: visible; }
+
+        .tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 11px; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1.2px; color: var(--sky); background: var(--sky-dim);
+            border: 1px solid var(--sky-brd); padding: 4px 10px; border-radius: 6px;
+            margin-bottom: 6px; width: fit-content;
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+            background: #f1f5f9; color: var(--slate); border: 1px solid #cbd5e1;
+        }
+        .badge.green { background: var(--emerald-dim); color: var(--emerald); border-color: var(--emerald-brd); }
+        .badge.purple { background: var(--purple-dim); color: var(--purple); border-color: var(--purple-brd); }
+
+        h1 {
+            font-family: 'Outfit', sans-serif; font-size: 30px; font-weight: 900;
+            color: var(--navy); line-height: 1.15; letter-spacing: -0.5px;
+        }
+        h2 {
+            font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800;
+            color: var(--navy); line-height: 1.2; letter-spacing: -0.3px;
+        }
+        p.sub { font-size: 13px; color: var(--text-dim); line-height: 1.4; margin-top: 2px; }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
+
+        .card {
+            background: #ffffff; border: 1px solid var(--border);
+            border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow);
+            display: flex; flex-direction: column; justify-content: flex-start;
+        }
+        .spec-box { display: flex; flex-direction: column; gap: 4px; }
+        .spec-icon { font-size: 20px; }
+        .spec-title { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 800; color: var(--navy); }
+        .spec-desc { font-size: 11.5px; color: var(--text-dim); line-height: 1.45; }
+
+        nav {
+            position: fixed; bottom: 14px; right: 36px; z-index: 100;
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.9); padding: 5px 12px;
+            border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .nbtn {
+            background: #ffffff; border: 1px solid #cbd5e1; color: var(--navy);
+            width: 32px; height: 32px; border-radius: 50%; font-weight: 800; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 13px;
+        }
+        .nbtn:hover { background: #f8fafc; border-color: var(--sky); }
+        #counter { font-size: 12px; font-weight: 700; color: var(--slate); min-width: 50px; text-align: center; }
+
+        .flow-container {
+            display: flex; align-items: center; justify-content: space-between;
+            width: 100%; max-width: 1240px; background: #ffffff; border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px 18px; box-shadow: var(--shadow);
+        }
+        .flow-node {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 12px; flex: 1; margin: 0 4px;
+        }
+        .flow-node.active { border-color: var(--sky); background: #f0f9ff; }
+        .flow-node.green  { border-color: var(--emerald); background: #ecfdf5; }
+        .flow-node.purple { border-color: var(--purple); background: #f5f3ff; }
+        .flow-node.amber  { border-color: var(--amber); background: #fffbeb; }
+        .flow-node-title { font-size: 12.5px; font-weight: 800; color: var(--navy); }
+        .flow-node-desc  { font-size: 10.5px; color: var(--text-dim); }
+        .flow-arrow { font-size: 16px; color: #94a3b8; font-weight: 900; }
+
+        .table-wrap {
+            width: 100%; max-width: 1240px; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+        th { background: #0f172a; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.5px; }
+        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        .footnote {
+            margin-top: 10px; font-size: 10.5px; color: #64748b;
+            line-height: 1.4; width: 100%; max-width: 1240px; text-align: left;
+            border-top: 1px dashed #cbd5e1; padding-top: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
+        <div class="wm-item">ARBN.CPJS AI FACTORY 2026</div>
+        <div class="wm-item">AIRBNB STAGING &amp; COSTING</div>
+        <div class="wm-item">WWW.GEEKSOFT.TECH</div>
+        <div class="wm-item">DUAL DIGITAL TWIN &bull; QUALITY GATES</div>
+    </div>
+
+    <div id="deck">
+
+        <!-- SLIDE 1: PORTADA EJECUTIVA -->
+        <div class="slide active">
+            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+                <span class="badge green">🛋️ CAPÍTULO 12</span>
+                <span class="badge purple">ARBN.CPJS AI REMODELING ENGINE</span>
+                <span class="badge">SOTA 2026</span>
+            </div>
+            <h1>ARBN.CPJS: Gemelo Digital de Remodelación &amp; Airbnb</h1>
+            <h2>Staging Virtual IA, Motor BOQ de Partidas y Puesta a Punto Express</h2>
+            <p class="sub">
+                Transformación de departamentos antiguos en activos de alta rentabilidad para alquiler temporal (Airbnb/Booking) mediante IA de visión, normalización de cotizaciones y auditoría de 5 estrellas.
+            </p>
+            
+            <div class="grid-4" style="margin-top: 14px;">
+                <div class="card spec-box">
+                    <span class="spec-icon">🛋️</span>
+                    <span class="spec-title">Piloto 60 m² (Anny Rojas)</span>
+                    <span class="spec-desc">Caso real de remodelación integral, selección de acabados y puesta a punto Airbnb.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">🎨</span>
+                    <span class="spec-title">Virtual Staging IA</span>
+                    <span class="spec-desc">Renders Before/After con ControlNet preservando muros maestros y ventanas.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">📋</span>
+                    <span class="spec-title">Motor BOQ &amp; Partidas</span>
+                    <span class="spec-desc">Ingesta de cotizaciones informales, toggle de partidas y cálculo SBS en vivo.</span>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-icon">⭐</span>
+                    <span class="spec-title">Auditor Airbnb Ready</span>
+                    <span class="spec-desc">Checklist de equipamiento indispensable para asegurar 5 estrellas desde el día 1.</span>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>GeekSoft Academy &bull; Bóveda: [[78 - Blueprint ARBN.CPJS]], [[79 - Motor BOQ]], [[80 - Stack e Infraestructura]]</span>
+                <span>Slide 1 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: EL CASO DE NEGOCIO REAL (ANNY ROJAS 60M2) -->
+        <div class="slide">
+            <div class="tag">🛋️ El Caso de Negocio Real</div>
+            <h2>Remodelación Integral &amp; Administración Airbnb: El Piloto 60 m²</h2>
+            <p class="sub">El flujo operativo liderado por Anny Rojas (Diseño, Administración y Ejecución de Obra Llave en Mano).</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--sky);">1. El Espacio &amp; Necesidad (60 m²)</span>
+                    <p class="spec-desc">
+                        &bull; Sala-Comedor, Cocina semi-integrada, 1 Dormitorio principal, 1 Baño.<br/>
+                        &bull; Estado actual: Acabados antiguos, necesidad de pintura, muebles deteriorados.<br/>
+                        &bull; Meta: Máxima rentabilidad por noche en plataformas de alquiler temporal.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--purple);">2. El Reto de las Cotizaciones</span>
+                    <p class="spec-desc">
+                        &bull; Múltiples cotizaciones informales en WhatsApp / papel de maestros de obra.<br/>
+                        &bull; Dificultad para comparar partidas: *"Esto sí va"*, *"Esto ya no"*, *"Esto es opcional"*.<br/>
+                        &bull; Faltan partidas de electrodomésticos, menaje y decoración.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--emerald);">3. La Solución Llave en Mano</span>
+                    <p class="spec-desc">
+                        &bull; Dossier interactivo con renders Before/After en estilo Japandi / Nórdico.<br/>
+                        &bull; Presupuesto exacto sin sobrecostos imprevistos.<br/>
+                        &bull; Checklist 100% verificado para apertura comercial sin retrasos.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Documentado en: `ARBN.CPJS.AR/specs/01_SPECIFY.md` y transcripción de voz Whisper</span>
+                <span>Slide 2 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: LOS DOS GEMELOS DIGITALES EN PARALELO -->
+        <div class="slide">
+            <div class="tag">🏛️ &harr; 🛋️ Los Dos Gemelos</div>
+            <h2>Arquitectura Dual: PROPTWIN (Macro) vs ARBN.CPJS (Micro)</h2>
+            <p class="sub">Dos proyectos complementarios construidos en paralelo sobre la misma fábrica agéntica.</p>
+            
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-left: 4px solid var(--sky);">
+                    <span class="spec-title" style="color:var(--sky);">🏛️ PROPTWIN: El Gemelo Macro-Patrimonial</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Escala:</strong> Cartera corporativa de ~400 predios del Arzobispado de Lima.<br/>
+                        &bull; <strong>Enfoque:</strong> Georreferenciación PostGIS, saneamiento Sunarp, títulos registrales y arbitrios SAT.<br/>
+                        &bull; <strong>Actor Clave:</strong> Cancillería, Directores de Inmuebles, Abogados Litigantes.<br/>
+                        &bull; <strong>Métrica Clave:</strong> Saneamiento de cartera, rentas patrimoniales y reducción de litigios.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-left: 4px solid var(--emerald);">
+                    <span class="spec-title" style="color:var(--emerald);">🛋️ ARBN.CPJS: El Gemelo Micro-Remodelación</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Escala:</strong> Unidades individuales (60 m² a 150 m²) para Airbnb / Alquiler.<br/>
+                        &bull; <strong>Enfoque:</strong> Virtual Staging ControlNet, despiece BOQ de partidas, equipamiento y menaje.<br/>
+                        &bull; <strong>Actor Clave:</strong> Anny Rojas, Propietarios e Inversionistas de Remodelación.<br/>
+                        &bull; <strong>Métrica Clave:</strong> Retorno de inversión (ROI), costo por $m^2$ y calificación 5 estrellas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Ecosistema unificado en GeekSoft Innovation Labs 2026</span>
+                <span>Slide 3 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: STACK TECNOLÓGICO Y UI APEFAC -->
+        <div class="slide">
+            <div class="tag">🛠️ Stack Tecnológico</div>
+            <h2>Stack de Producción: React TypeScript, Python &amp; Supabase Storage</h2>
+            <p class="sub">Arquitectura full-stack desacoplada con el sistema de diseño visual APEFAC Enterprise Light.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--sky);">🎨 Frontend: React 19 + TypeScript + APEFAC</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Vite + TypeScript:</strong> Compilación estricta y velocidad instantánea.<br/>
+                        &bull; <strong>UI APEFAC Light:</strong> `#F8FAFC`, Navy `#0F172A`, Sky `#0284C7`, Emerald `#059669`.<br/>
+                        &bull; <strong>Staging Slider:</strong> Comparador Before/After fotorrealista por ambiente.<br/>
+                        &bull; <strong>BOQ Table:</strong> TanStack Table con toggles de aprobación en vivo.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--purple);">🐍 Backend: Python 3.12 + FastAPI</span>
+                    <p class="spec-desc">
+                        &bull; <strong>FastAPI Async:</strong> Contratos OpenAPI 3.1 tipados con Pydantic v2.<br/>
+                        &bull; <strong>Parser Informal:</strong> Extracción NLP de cotizaciones de WhatsApp/PDF.<br/>
+                        &bull; <strong>SBS Scraper:</strong> Tipo de cambio diario oficial USD/PEN.<br/>
+                        &bull; <strong>OpenTakeoff:</strong> Metrados de planos PDF (áreas y perímetros).
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--emerald);">🗄️ Database: Supabase Cloud</span>
+                    <p class="spec-desc">
+                        &bull; <strong>PostgreSQL 16:</strong> Tablas `proyectos`, `partidas_boq`, `items_airbnb`.<br/>
+                        &bull; <strong>Supabase Storage S3:</strong> Buckets para fotos originales, planos y renders IA.<br/>
+                        &bull; <strong>Row Level Security (RLS):</strong> Acceso seguro para clientes y equipo de obra.<br/>
+                        &bull; <strong>Auth &amp; 2FA:</strong> Inicio de sesión protegido.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Documentado en [[80 - Stack Tecnologico, UI APEFAC y Sandbox Agentico]]</span>
+                <span>Slide 4 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: DÓNDE TRABAJAN LOS AGENTES (DISTRIBUCIÓN DE CARGA) -->
+        <div class="slide">
+            <div class="tag">💻 Entorno de Ejecución</div>
+            <h2>¿Dónde Trabajan los Agentes? Distribución PC Local vs Contabo VPS</h2>
+            <p class="sub">Tu PC local se mantiene 100% liviana y fría; la carga pesada de inferencia y pruebas vive en el VPS Contabo.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <span class="spec-title" style="color:var(--sky);">💻 Tu PC Local (Cabina de Control)</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Carga:</strong> &lt; 5% CPU / Cero ruido térmico.<br/>
+                        &bull; <strong>Editor:</strong> Antigravity IDE (prompts, Spec Kits y Git).<br/>
+                        &bull; <strong>Preview:</strong> Vite dev server liviano para ver la UI.<br/>
+                        &bull; <strong>Rol:</strong> Human-in-the-Loop para toma de decisiones clave.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <span class="spec-title" style="color:var(--purple);">🚀 Contabo VPS (169.58.168.107) - Fábrica Pesada</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Docker Sandboxes:</strong> Agentes compilan y prueban en contenedores.<br/>
+                        &bull; <strong>QC Automated:</strong> `pytest`, `mypy` y `tsc --noEmit` en background.<br/>
+                        &bull; <strong>Worker Staging IA:</strong> Inferencia de ControlNet y procesamiento de imágenes.<br/>
+                        &bull; <strong>Multi-Agent:</strong> LangGraph ejecutando bucles autónomos.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <span class="spec-title" style="color:var(--emerald);">☁️ Supabase Cloud (Datos &amp; Renders)</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Persistencia Relacional:</strong> Partidas, cotizaciones y presupuestos.<br/>
+                        &bull; <strong>Storage S3:</strong> Fotos en alta resolución y renders generados.<br/>
+                        &bull; <strong>Cero Mantenimiento:</strong> Sin instalar bases de datos en tu laptop.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Arquitectura de Infraestructura en [[80 - Stack Tecnologico, UI APEFAC y Sandbox Agentico]]</span>
+                <span>Slide 5 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: LOS 4 MÓDULOS DE ARBN.CPJS -->
+        <div class="slide">
+            <div class="tag">🧩 Módulos del Sistema</div>
+            <h2>Los 4 Módulos Funcionales de ARBN.CPJS</h2>
+            <p class="sub">El flujo integrado de remodelación desde la ingesta hasta el cierre comercial.</p>
+            
+            <div class="grid-4" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--sky);">1. Ingesta Multimedia</span>
+                    <p class="spec-desc">
+                        &bull; Subida de fotos por ambiente.<br/>
+                        &bull; Walkthrough en video de celular.<br/>
+                        &bull; Planos arquitectónicos 2D/PDF.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--purple);">2. Motor BOQ de Costos</span>
+                    <p class="spec-desc">
+                        &bull; Parser de cotizaciones informales.<br/>
+                        &bull; 6 agrupadores de partidas.<br/>
+                        &bull; Toggles (*Sí / No / Opcional*).
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--emerald);">3. Staging Visual IA</span>
+                    <p class="spec-desc">
+                        &bull; ControlNet + Segmentación.<br/>
+                        &bull; Estilos Japandi / Nórdico.<br/>
+                        &bull; Slider interactivo Before/After.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--amber);">4. Auditor Airbnb Ready</span>
+                    <p class="spec-desc">
+                        &bull; Checklist 5 estrellas.<br/>
+                        &bull; Detección de faltantes críticos.<br/>
+                        &bull; Agregado de kit con 1 clic.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Especificación en `ARBN.CPJS.AR/specs/01_SPECIFY.md`</span>
+                <span>Slide 6 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: MOTOR BOQ DE 6 PARTIDAS -->
+        <div class="slide">
+            <div class="tag">📋 Motor de Costos</div>
+            <h2>Estructura de las 6 Categorías BOQ de Remodelación</h2>
+            <p class="sub">Normalización universal para transformar cotizaciones informales en presupuestos deterministas.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title">01. Demolición &amp; Obra Civil</span>
+                    <p class="spec-desc">Retiro de cerámicos viejos, picado de muros, retiro de desmonte, drywall y tabiquería.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">02. Instalaciones Eléctricas &amp; Sanitarias</span>
+                    <p class="spec-desc">Cambio de tuberías PVC, nuevos puntos de tomacorrientes, luminarias LED y griferías.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">03. Revestimientos &amp; Acabados</span>
+                    <p class="spec-desc">Pisos SPC / porcelanato, pintura lavable premium, enchapes de baño y salpicaderos de cocina.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">04. Carpintería &amp; Muebles a Medida</span>
+                    <p class="spec-desc">Muebles altos y bajos de cocina en melamine RH, clóset principal y vanity de baño flotante.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">05. Equipamiento &amp; Electrodomésticos</span>
+                    <p class="spec-desc">Refrigeradora, cocina empotrada, campana extractora, microondas, Smart TV 55" y terma.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">06. Decoración, Menaje &amp; Airbnb Kit</span>
+                    <p class="spec-desc">Cerradura inteligente, cortinas blackout, ropa de cama hotelera, vajilla x4 y elementos deco.</p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Motor detallado en [[79 - Motor de Costos BOQ, Virtual Staging y Checklist]]</span>
+                <span>Slide 7 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: VIRTUAL STAGING CON CONTROLNET -->
+        <div class="slide">
+            <div class="tag">🎨 Staging Visual IA</div>
+            <h2>Virtual Staging con Preservación Estructural (ControlNet)</h2>
+            <p class="sub">Transformación fotorrealista sin deformar las dimensiones reales del departamento.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--sky);">1. Limpieza de Escena (Declutter)</span>
+                    <p class="spec-desc">
+                        &bull; El modelo `ai-room-declutter` remueve muebles rotos, ropa o desorden.<br/>
+                        &bull; Genera un lienzo limpio del espacio respetando la perspectiva original.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--purple);">2. Bloqueo Estructural (ControlNet)</span>
+                    <p class="spec-desc">
+                        &bull; Detección de aristas y segmentación (`controlnet-seg-room`).<br/>
+                        &bull; Mantiene inalterables: vigas, columnas, ventanas, puertas y tomas eléctricas.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title" style="color:var(--emerald);">3. Render de Estilo Personalizado</span>
+                    <p class="spec-desc">
+                        &bull; Aplicación de prompts calibrados para estilo Japandi, Nórdico o Industrial.<br/>
+                        &bull; Muestra al cliente el acabado final exacto con iluminación realista.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Modelos de referencia en `ARBN.CPJS.AR/specs/INVESTIGACION_ESTADO_DEL_ARTE.md`</span>
+                <span>Slide 8 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: AUDITOR AIRBNB READY 5 ESTRELLAS -->
+        <div class="slide">
+            <div class="tag">⭐ Auditor Airbnb Ready</div>
+            <h2>El Checklist de Puesta a Punto Express (5 Estrellas)</h2>
+            <p class="sub">Auditoría inteligente de ítems críticos para garantizar satisfacción total de huéspedes.</p>
+            
+            <div class="table-wrap" style="margin-top: 10px;">
+                <table>
+                    <thead>
+                        <tr><th>Categoría</th><th>Ítems Obligatorios</th><th>Impacto en Reseñas</th><th>Acción Rápida en el Sistema</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Acceso Autónomo</strong></td><td>Cerradura inteligente por código PIN / Wi-Fi</td><td>Check-in 24/7 sin llaves físicas</td><td>Añadir al Presupuesto ($180 USD)</td></tr>
+                        <tr><td><strong>Descanso Premium</strong></td><td>Colchón Queen ortopédico + Cortinas Blackout 100%</td><td>Evita quejas de insomnio o luz</td><td>Añadir al Presupuesto ($350 USD)</td></tr>
+                        <tr><td><strong>Cocina Equipada</strong></td><td>Cafetera, Microondas, Vajilla x4, Copas de vino</td><td>Permite estadías largas de nómadas</td><td>Completar Menaje ($120 USD)</td></tr>
+                        <tr><td><strong>Seguridad Normativa</strong></td><td>Extintor ABC, Botiquín primeros auxilios, Detector humo</td><td>Cumplimiento normativo y Airbnb Plus</td><td>Añadir Kit Seguridad ($75 USD)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="footnote">
+                <span>Checklist estructurado en [[79 - Motor de Costos BOQ, Virtual Staging y Checklist]]</span>
+                <span>Slide 9 / 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: QUALITY GATES Y DOSSIER COMERCIAL -->
+        <div class="slide">
+            <div class="tag">🚀 Entrega Comercial</div>
+            <h2>El Dossier Llave en Mano de Anny Rojas &amp; Quality Gates</h2>
+            <p class="sub">El producto final que convierte un prospecto en una obra cerrada y ejecutada con éxito.</p>
+            
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-left: 4px solid var(--sky);">
+                    <span class="spec-title" style="color:var(--sky);">📑 Dossier Ejecutivo Interactivo</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Render Visual:</strong> Comparativa interactiva Before/After por ambiente.<br/>
+                        &bull; <strong>Presupuesto Transparente:</strong> Desglose de 6 partidas sin costos ocultos.<br/>
+                        &bull; <strong>Cronograma:</strong> 3 a 4 semanas de ejecución de obra civil y acabados.<br/>
+                        &bull; <strong>Retorno Estimado:</strong> Tarifa promedio por noche y ocupabilidad proyectada.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-left: 4px solid var(--emerald);">
+                    <span class="spec-title" style="color:var(--emerald);">🛡️ Quality Gates en Docker Sandbox</span>
+                    <p class="spec-desc">
+                        &bull; <strong>Gate A (Spec):</strong> 100% historias Gherkin aprobadas.<br/>
+                        &bull; <strong>Gate B (Types):</strong> Cero errores de tipos con `tsc` y `mypy`.<br/>
+                        &bull; <strong>Gate C (Math):</strong> 100% exactitud matemática en subtotales de costos y SBS.<br/>
+                        &bull; <strong>Gate D (Release):</strong> Despliegue verificado en VPS Contabo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>GeekSoft Innovation Labs &bull; Estándar de Excelencia AI Software Factory 2026</span>
+                <span>Slide 10 / 10</span>
+            </div>
+        </div>
+
+    </div>
+
+    <nav>
+        <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
+        <div id="counter">1 / 10</div>
+        <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
+        <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
+    </nav>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const counter = document.getElementById('counter');
+        const fsBtn = document.getElementById('fs-btn');
+        let current = 0;
+
+        function updateDeck() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active');
+                if (idx === current) {
+                    slide.classList.add('active');
+                }
+            });
+            counter.textContent = `${current + 1} / ${slides.length}`;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === slides.length - 1;
+        }
+
+        function nextSlide() {
+            if (current < slides.length - 1) {
+                current++;
+                updateDeck();
+            }
+        }
+
+        function prevSlide() {
+            if (current > 0) {
+                current--;
+                updateDeck();
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'Home') {
+                current = 0;
+                updateDeck();
+            } else if (e.key === 'End') {
+                current = slides.length - 1;
+                updateDeck();
+            }
+        });
+
+        fsBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen().catch(() => {});
+            }
+        });
+
+        updateDeck();
+    </script>
+</body>
+</html>
