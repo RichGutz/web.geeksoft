@@ -226,7 +226,7 @@
 
             <div class="footnote">
                 <span>GeekSoft Academy &bull; Bóveda: [[75 - Blueprint PROPTWIN]], [[76 - Software Factory]], [[77 - Stack e Infraestructura]]</span>
-                <span>Slide 1 / 17</span>
+                <span>Slide 1 / 25</span>
             </div>
         </div>
 
@@ -265,7 +265,7 @@
 
             <div class="footnote">
                 <span>Documentado en: `AdL.RE.SOFT/03_Modulos_del_Sistema/02_Modulo_Inmobiliario_y_Predios.md`</span>
-                <span>Slide 2 / 17</span>
+                <span>Slide 2 / 25</span>
             </div>
         </div>
 
@@ -298,7 +298,7 @@
 
             <div class="footnote">
                 <span>Metodología formalizada en [[76 - Software Factory Agentica PROPTWIN]]</span>
-                <span>Slide 3 / 17</span>
+                <span>Slide 3 / 25</span>
             </div>
         </div>
 
@@ -340,7 +340,7 @@
 
             <div class="footnote">
                 <span>Especificado en detalle en [[77 - Stack Tecnologico, Infraestructura y Entorno de Ejecucion]]</span>
-                <span>Slide 4 / 17</span>
+                <span>Slide 4 / 25</span>
             </div>
         </div>
 
@@ -381,7 +381,7 @@
 
             <div class="footnote">
                 <span>Estándar basado en `APEFAC/Obsidian/Diseño.SW.APEFAC/` (Templates Master &amp; Sidebar Enterprise)</span>
-                <span>Slide 5 / 17</span>
+                <span>Slide 5 / 25</span>
             </div>
         </div>
 
@@ -422,7 +422,7 @@
 
             <div class="footnote">
                 <span>Arquitectura de Infraestructura en [[77 - Stack Tecnologico, Infraestructura y Entorno de Ejecucion]]</span>
-                <span>Slide 6 / 17</span>
+                <span>Slide 6 / 25</span>
             </div>
         </div>
 
@@ -464,7 +464,7 @@
 
             <div class="footnote">
                 <span>Estrategia de Ruteo Económico &bull; Ecosistema Google Gemini 2026</span>
-                <span>Slide 7 / 17</span>
+                <span>Slide 7 / 25</span>
             </div>
         </div>
 
@@ -510,7 +510,217 @@
 
             <div class="footnote">
                 <span>Estructura de módulos en `AdL.RE.SOFT/03_Modulos_del_Sistema/`</span>
-                <span>Slide 8 / 17</span>
+                <span>Slide 8 / 25</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: LOS 3 SEMÁFOROS CRÍTICOS DE ADL.RE.SOFT -->
+        <div class="slide">
+            <div class="tag">🚦 Los 3 Semáforos de Negocio</div>
+            <h2>Los 3 Semáforos Operativos de AdL.RE.SOFT (Génesis Whisper)</h2>
+            <p class="sub">Definición operativa de las 3 dimensiones críticas de control para los ~400 predios administrados por el Arzobispado de Lima.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--navy);">1. Ocupación &amp; Régimen Legal</span>
+                        <span class="badge">Tenencia</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Propiedad Directa (~55%):</strong> ~220 predios con titularidad plena en SUNARP.<br/>
+                        &bull; <strong>Mandato Religioso (~45%):</strong> ~180 predios administrados por poder notarial de congregaciones, cofradías y parroquias.<br/>
+                        &bull; <strong>Estados:</strong> `ALQUILADO` | `VACANTE` | `EN_LITIGIO_DESALOJO`.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--purple);">2. Cobranza &amp; Cuenta Corriente</span>
+                        <span class="badge purple">Recaudación</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Inquilinos Corporativos (RUC 20):</strong> Empresas con contratos formales, facturación electrónica y garantía bancaria.<br/>
+                        &bull; <strong>Personas Naturales (DNI):</strong> Vivienda/comercio tradicional con riesgo de mora.<br/>
+                        &bull; <strong>Semáforo:</strong> `AL_DIA` (0-5 días) | `POR_VENCER` | `MOROSO` (&gt; 30 días) | `COBRANZA_JUDICIAL`.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--emerald);">3. Tributación Municipal (SAT)</span>
+                        <span class="badge green">Fiscal</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Impuesto Predial:</strong> Obligación anual liquidada en trimestres (SAT Lima y distritos).<br/>
+                        &bull; <strong>Arbitrios Municipales:</strong> Limpieza pública, parques y serenazgo asociados a cada subunidad.<br/>
+                        &bull; <strong>Control Coactivo:</strong> Detección temprana de órdenes de pago para evitar embargos a cuentas del Arzobispado.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 8px; background: var(--sky-dim); border-color: var(--sky-brd); padding: 8px 12px;">
+                <div style="font-size: 11px; font-weight: 800; color: var(--navy);">
+                    🎙️ Requerimiento Literal AdL.RE.SOFT:
+                </div>
+                <p class="spec-desc" style="color: var(--navy); font-size: 10px; line-height: 1.35;">
+                    <em>"Cada predio va a ser un landmark que active un tooltip para notar: 1. Alquilado / No alquilado / Con problemas legales. 2. Pagos al día del inquilino / Morosidad. 3. Sin deuda de impuesto predial / arbitrios o con deuda... funcionando como un reporteador sofisticado para Legal e Inmuebles."</em>
+                </p>
+            </div>
+
+            <div class="footnote">
+                <span>Extraído de `AdL.RE.SOFT/05_Transcripciones_y_Requerimientos/Transcripcion_DASHBOARD_ADL_SOFT.md`</span>
+                <span>Slide 9 / 25</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: MÓDULO LEGAL DE 3 FUENTES -->
+        <div class="slide">
+            <div class="tag">⚖️ Gestión Jurídica Multi-Área</div>
+            <h2>Módulo Legal &amp; Litigios: Las 3 Fuentes de Datos AdL</h2>
+            <p class="sub">Integración unificada de expedientes judiciales, partes de inspección física y saneamiento registral SUNARP.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--navy);">Fuente 1: Asesoría Legal AdL</span>
+                        <span class="badge">Poder Judicial</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Procesos Civiles:</strong> Demandas de desalojo por vencimiento de contrato o falta de pago.<br/>
+                        &bull; <strong>Cobranza Coactiva:</strong> Procesos de ejecución de garantías y medidas cautelares.<br/>
+                        &bull; <strong>Transacciones Extrajudiciales:</strong> Acuerdos de refinanciamiento y conciliaciones notariales.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--purple);">Fuente 2: Gestión Inmobiliaria</span>
+                        <span class="badge purple">Campo &amp; Inspección</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Actas de Inspección:</strong> Verificación de estado de conservación y subarriendos no autorizados.<br/>
+                        &bull; <strong>Actas de Entrega de Llaves:</strong> Registro pericial al término de vigencia.<br/>
+                        &bull; <strong>Mantenimiento Patrimonial:</strong> Dictámenes técnicos sobre predios en Centro Histórico de Lima.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--emerald);">Fuente 3: Saneamiento SUNARP</span>
+                        <span class="badge green">Registral</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Títulos Archivados:</strong> Partidas registrales matrices y asientos de dominio.<br/>
+                        &bull; <strong>Independizaciones:</strong> Desglose registral de locales comerciales y departamentos.<br/>
+                        &bull; <strong>Mandatos Notariales:</strong> Poderes otorgados por congregaciones para administrar sus predios.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Maqueta y especificación en `AdL.RE.SOFT/03_Modulos_del_Sistema/03_Modulo_Legal_y_Litigios.md`</span>
+                <span>Slide 10 / 25</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: GESTIÓN DOCUMENTAL PAPERLESS & COPILOTO IA -->
+        <div class="slide">
+            <div class="tag">📂 EDMS &amp; Copiloto IA</div>
+            <h2>Gestión Documental Paperless-ngx &amp; Copiloto IA Asistido</h2>
+            <p class="sub">Digitalización integral de expedientes históricos, OCR multinivel y copiloto para emisión de dictámenes y cartas notariales.</p>
+            
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 4px solid var(--sky);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--navy);">1. Repositorio EDMS Centralizado</span>
+                        <span class="badge">Paperless-ngx</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Indexación de Expedientes:</strong> Contratos, adendas, escrituras públicas (ej. `Escrito 1 Excepción Cargo 24370-2026.pdf`).<br/>
+                        &bull; <strong>Metadatos Jerárquicos:</strong> Etiquetas por Partida SUNARP, Inquilino, Juzgado y Tipo de Documento.<br/>
+                        &bull; <strong>Almacenamiento Seguro:</strong> Supabase S3 con hash SHA-256 inmutable.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--purple);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--purple);">2. OCR &amp; Extracción Automática</span>
+                        <span class="badge purple">PyMuPDF / Paddle</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Búsqueda Full-Text:</strong> Localización instantánea de cláusulas arbitrales o montos de renta histórica en segundos.<br/>
+                        &bull; <strong>Extracción de Entidades:</strong> Detección automática de DNIs, RUCs, plazos de vigencia y montos de garantía.<br/>
+                        &bull; <strong>Zero Papel:</strong> Eliminación de archivadores físicos dispersos.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="spec-title" style="color:var(--emerald);">3. Copiloto IA (RAG Jurídico)</span>
+                        <span class="badge green">Gemini RAG</span>
+                    </div>
+                    <p class="spec-desc">
+                        &bull; <strong>Generador de Cartas Notariales:</strong> Redacción automática de requerimientos de pago y apercibimientos de desalojo.<br/>
+                        &bull; <strong>Informes a Cancillería:</strong> Consolidación ejecutiva del estado patrimonial y financiero de congregaciones.<br/>
+                        &bull; <strong>Alertas Proactivas:</strong> Avisos con 60 días de anticipación al vencimiento de mandatos y contratos.
+                    </p>
+                </div>
+            </div>
+
+            <div class="footnote">
+                <span>Especificado en `AdL.RE.SOFT/03_Modulos_del_Sistema/06_Modulo_Gestion_Documental_Paperless.md`</span>
+                <span>Slide 11 / 25</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: EL CATÁLOGO DE MAQUETAS APEFAC 1X1 -->
+        <div class="slide">
+            <div class="tag">🎨 Maquetas &amp; Vistas 1x1</div>
+            <h2>El Catálogo de Maquetas UI Estandarizadas de AdL.RE.SOFT</h2>
+            <p class="sub">Vistas modulares maquetadas en HTML5 y Tailwind CSS bajo la directriz visual APEFAC Enterprise Light.</p>
+            
+            <div class="grid-4" style="margin-top: 10px;">
+                <div class="card spec-box" style="border-top: 3px solid var(--sky);">
+                    <span style="font-size: 11px; font-weight: 900; color: var(--navy);">1. Maestro Inmuebles 1x1</span>
+                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
+                        `Maqueta_Maestro_Inmuebles_1x1.html`: Ficha técnica 360°, subunidades, galería fotográfica y estado registral.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 3px solid var(--purple);">
+                    <span style="font-size: 11px; font-weight: 900; color: var(--purple);">2. Maestro Contratos 1x1</span>
+                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
+                        `Maqueta_Maestro_Contratos_1x1.html`: Bandeja de contratos vigentes, histórico de renovaciones y cláusulas IPC.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 3px solid var(--emerald);">
+                    <span style="font-size: 11px; font-weight: 900; color: var(--emerald);">3. Legal 3 Fuentes</span>
+                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
+                        `Maqueta_Modulo_Legal_3Fuentes.html`: Tablero cruzado de procesos judiciales, partes de inspección y SUNARP.
+                    </p>
+                </div>
+
+                <div class="card spec-box" style="border-top: 3px solid var(--amber);">
+                    <span style="font-size: 11px; font-weight: 900; color: var(--amber);">4. GIS Interactivo</span>
+                    <p style="font-size: 9.5px; color: var(--text-dim); line-height: 1.35; margin-top: 3px;">
+                        `Maqueta_Modulo_01_GIS_Mapa_Interactivo.html`: Visor cartográfico con landmarks, filtros y tooltip dinámico.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 8px; background: #ffffff; padding: 8px 12px;">
+                <div style="font-size: 11px; font-weight: 800; color: var(--navy);">
+                    📁 Repositorio de Maquetas UI en Disco:
+                </div>
+                <p class="spec-desc" style="color: var(--text-dim); font-size: 10px; line-height: 1.35;">
+                    Ubicadas en `C:\Users\rguti\AdL.RE.SOFT\Maquetas_UI\` y listas para ser renderizadas como componentes React en producción.
+                </p>
+            </div>
+
+            <div class="footnote">
+                <span>Directorio de maquetas en `C:\Users\rguti\AdL.RE.SOFT\Maquetas_UI\`</span>
+                <span>Slide 12 / 25</span>
             </div>
         </div>
 
@@ -552,7 +762,7 @@
 
             <div class="footnote">
                 <span>Estrategia GIS documentada en [[75 - Blueprint PROPTWIN]] y `AdL.RE.SOFT/03_Modulos_del_Sistema/01_Modulo_GIS_y_Mapas.md`</span>
-                <span>Slide 9 / 17</span>
+                <span>Slide 13 / 25</span>
             </div>
         </div>
 
@@ -591,7 +801,7 @@
 
             <div class="footnote">
                 <span>Diagrama ER completo en `AdL.RE.SOFT/01_WorkTree_Arquitectura/Modelo_Datos_Entidad_Relacion.md`</span>
-                <span>Slide 10 / 17</span>
+                <span>Slide 14 / 25</span>
             </div>
         </div>
 
@@ -645,7 +855,7 @@
 
             <div class="footnote">
                 <span>Arquitectura de Roles en [[76 - Software Factory Agentica PROPTWIN]]</span>
-                <span>Slide 11 / 17</span>
+                <span>Slide 15 / 25</span>
             </div>
         </div>
 
@@ -692,7 +902,7 @@
 
             <div class="footnote">
                 <span>Plan extraído de `AdL.RE.SOFT/02_Plan_de_Trabajo/Plan_de_Trabajo_Roadmap.md`</span>
-                <span>Slide 12 / 17</span>
+                <span>Slide 16 / 25</span>
             </div>
         </div>
 
@@ -732,7 +942,7 @@
 
             <div class="footnote">
                 <span>Determinismo Estático &bull; Zero-Tolerance Architecture GeekSoft</span>
-                <span>Slide 13 / 17</span>
+                <span>Slide 17 / 25</span>
             </div>
         </div>
 
@@ -781,7 +991,7 @@
 
             <div class="footnote">
                 <span>GeekSoft Innovation Labs &bull; Estándar de Excelencia AI Software Factory 2026</span>
-                <span>Slide 14 / 17</span>
+                <span>Slide 18 / 25</span>
             </div>
         </div>
 
@@ -873,7 +1083,7 @@
 
             <div class="footnote">
                 <span>Diagrama Cinemático &bull; Relojería Suiza de Software GeekSoft</span>
-                <span>Slide 15 / 17</span>
+                <span>Slide 19 / 25</span>
             </div>
         </div>
 
@@ -916,7 +1126,7 @@
 
             <div class="footnote">
                 <span>GeekSoft Innovation Labs &bull; Arquitectura de Gemelo Digital SoTA 2026</span>
-                <span>Slide 16 / 17</span>
+                <span>Slide 20 / 25</span>
             </div>
         </div>
 
@@ -977,7 +1187,7 @@
 
             <div class="footnote">
                 <span>Inspirado en el Módulo de Cobranzas APEFAC (`C:\Users\rguti\APEFAC`) &bull; PROPTWIN Tesorería</span>
-                <span>Slide 17 / 19</span>
+                <span>Slide 21 / 25</span>
             </div>
         </div>
 
@@ -1036,7 +1246,7 @@
 
             <div class="footnote">
                 <span>Ver nota completa en [[90 - Kit de Planeacion Agentica V3 por Pedro Aaron]]</span>
-                <span>Slide 18 / 19</span>
+                <span>Slide 22 / 25</span>
             </div>
         </div>
 
@@ -1088,7 +1298,7 @@
 
             <div class="footnote">
                 <span>Ver nota completa en [[91 - Top 10 Motores de Scraping e Ingesta Web Open Source para Datasets de IA]]</span>
-                <span>Slide 19 / 20</span>
+                <span>Slide 23 / 25</span>
             </div>
         </div>
 
@@ -1147,7 +1357,7 @@
 
             <div class="footnote">
                 <span>Ver nota completa en [[92 - AWS Microcredenciales Oficiales Gratuitas con Sandboxes Reales]]</span>
-                <span>Slide 20 / 21</span>
+                <span>Slide 24 / 25</span>
             </div>
         </div>
 
@@ -1206,7 +1416,7 @@
 
             <div class="footnote">
                 <span>Ver nota completa en [[93 - Tooltips Geoespaciales Dinamicos en Tiempo Real]]</span>
-                <span>Slide 21 / 21</span>
+                <span>Slide 25 / 25</span>
             </div>
         </div>
 
@@ -1214,7 +1424,7 @@
 
     <nav>
         <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 21</div>
+        <div id="counter">1 / 25</div>
         <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
         <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
     </nav>
