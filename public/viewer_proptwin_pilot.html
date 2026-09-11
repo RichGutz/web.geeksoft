@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROPTWIN - Gemelo Digital Inmobiliario (Arzobispado de Lima)</title>
+    <title>PROPTWIN - Gemelo Digital Inmobiliario (Arzobispado de Lima) | APEFAC Enterprise</title>
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Chart.js para Tooltips Polares Radiales a 60 FPS -->
+    <!-- Chart.js para Radar Polar a 60 FPS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,22 +18,31 @@
         :root {
             --bg: #F8FAFC;
             --surface: #FFFFFF;
+            --surface-hover: #F1F5F9;
             --border: #E2E8F0;
             --border-strong: #CBD5E1;
             --navy: #0F172A;
-            --navy-light: #1E293B;
+            --navy-mid: #1E293B;
+            --navy-light: #334155;
             --sky: #0284C7;
-            --sky-light: #E0F2FE;
+            --sky-dim: rgba(2, 132, 199, 0.08);
+            --sky-brd: rgba(2, 132, 199, 0.25);
             --emerald: #059669;
-            --emerald-light: #D1FAE5;
+            --emerald-dim: rgba(5, 150, 105, 0.08);
+            --emerald-brd: rgba(5, 150, 105, 0.25);
             --amber: #D97706;
-            --amber-light: #FEF3C7;
+            --amber-dim: rgba(217, 119, 6, 0.08);
+            --amber-brd: rgba(217, 119, 6, 0.25);
             --rose: #E11D48;
-            --rose-light: #FFE4E6;
+            --rose-dim: rgba(225, 29, 72, 0.08);
             --purple: #7C3AED;
-            --purple-light: #F3E8FF;
+            --purple-dim: rgba(124, 58, 237, 0.08);
+            --purple-brd: rgba(124, 58, 237, 0.25);
             --text-main: #0F172A;
             --text-muted: #64748B;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+            --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.12);
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
@@ -54,26 +63,36 @@
             overflow: hidden;
         }
 
-        /* TOP NAVIGATION APEFAC */
-        .header-bar {
-            height: 54px;
+        /* ==========================================================================
+           1. TOP APP RIBBON (NIVEL 1 & NIVEL 2 ESTILO APEFAC)
+           ========================================================================== */
+        .app-topbar {
             background: var(--surface);
-            border-bottom: 1.5px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Nivel 1: Header Institucional Compacto */
+        .topbar-main {
+            height: 46px;
+            padding: 0 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
-            z-index: 1000;
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+            border-bottom: 1px solid var(--border);
+            background: #ffffff;
         }
 
-        .header-left {
+        .topbar-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
-        .brand-pill {
+        .brand-badge {
             background: var(--navy);
             color: #ffffff;
             font-weight: 900;
@@ -86,23 +105,52 @@
             gap: 6px;
         }
 
-        .brand-title {
-            font-size: 14px;
+        .brand-subtitle {
+            font-size: 13px;
             font-weight: 800;
             color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .badge-live {
-            background: var(--emerald-light);
+        .brand-divider {
+            width: 1px;
+            height: 18px;
+            background: var(--border-strong);
+        }
+
+        .predio-selector {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .predio-selector:hover {
+            border-color: var(--sky);
+            background: #ffffff;
+        }
+
+        .status-live-pill {
+            background: var(--emerald-dim);
             color: var(--emerald);
             font-size: 10px;
             font-weight: 800;
             padding: 3px 8px;
             border-radius: 9999px;
-            border: 1px solid rgba(5, 150, 105, 0.2);
+            border: 1px solid var(--emerald-brd);
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
         }
 
         .pulse-dot {
@@ -119,25 +167,327 @@
             100% { transform: scale(0.95); opacity: 0.8; }
         }
 
-        .header-right {
+        .topbar-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             font-size: 11px;
             font-family: var(--font-mono);
             color: var(--text-muted);
         }
 
-        /* MAIN APP LAYOUT: SPLIT VIEW */
-        .main-container {
+        .topbar-right span b {
+            color: var(--navy);
+        }
+
+        /* Nivel 2: Navigation Ribbon de Tabs con Iconos y Sublabels */
+        .navigation-ribbon {
+            display: flex;
+            align-items: center;
+            background: #FAFAFC;
+            padding: 4px 16px;
+            gap: 6px;
+            overflow-x: auto;
+        }
+
+        .ribbon-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+            text-align: left;
+            color: var(--navy-light);
+            text-decoration: none;
+        }
+
+        .ribbon-tab:hover {
+            background: #ffffff;
+            border-color: var(--border);
+            transform: translateY(-1px);
+        }
+
+        .ribbon-tab.active {
+            background: #ffffff;
+            border-color: var(--sky-brd);
+            box-shadow: 0 1px 3px rgba(2, 132, 199, 0.08);
+            border-bottom: 2px solid var(--sky);
+        }
+
+        .ribbon-tab-icon {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ribbon-tab-texts {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ribbon-tab-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .ribbon-tab-sublabel {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .ribbon-tab.active .ribbon-tab-label {
+            color: var(--sky);
+        }
+
+        /* ==========================================================================
+           2. MAIN WORKSPACE: SIDEBAR ENTERPRISE + CONTENT
+           ========================================================================== */
+        .app-workspace {
             flex: 1;
             display: flex;
-            height: calc(100vh - 54px);
+            height: calc(100vh - 98px);
             position: relative;
         }
 
-        /* MAP CONTAINER */
-        .map-wrapper {
+        /* SIDEBAR ENTERPRISE APEFAC */
+        .app-sidebar {
+            width: 230px;
+            background: #ffffff;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: width 0.25s ease;
+            z-index: 900;
+            flex-shrink: 0;
+        }
+
+        .app-sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar-content {
+            padding: 12px 8px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-section-title {
+            font-size: 9.5px;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 0 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-sidebar.collapsed .sidebar-section-title {
+            display: none;
+        }
+
+        .sidebar-nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--navy-light);
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+        }
+
+        .sidebar-nav-item:hover {
+            background: var(--surface-hover);
+            color: var(--navy);
+        }
+
+        .sidebar-nav-item.active {
+            background: var(--sky-dim);
+            color: var(--sky);
+            border-color: var(--sky-brd);
+            font-weight: 800;
+        }
+
+        .sidebar-nav-icon {
+            font-size: 14px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .app-sidebar.collapsed .sidebar-nav-item span:not(.sidebar-nav-icon) {
+            display: none;
+        }
+
+        .sidebar-footer {
+            padding: 10px;
+            border-top: 1px solid var(--border);
+            background: #F8FAFC;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .user-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-size: 10.5px;
+            font-weight: 800;
+            color: var(--navy);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 9px;
+            color: var(--text-muted);
+        }
+
+        .app-sidebar.collapsed .user-info {
+            display: none;
+        }
+
+        .sidebar-toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: var(--border);
+            color: var(--navy);
+        }
+
+        /* ==========================================================================
+           3. MASTER CONTENT AREA (HEADER STRIP + DUAL VIEW)
+           ========================================================================== */
+        .app-main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            background: var(--bg);
+        }
+
+        /* MASTER HEADER STRIP (1 SOLA LÍNEA HORIZONTAL) */
+        .master-header-strip {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 8px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .strip-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .strip-title {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .strip-divider {
+            width: 1px;
+            height: 16px;
+            background: var(--border);
+        }
+
+        .strip-kpis {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .kpi-chip {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            font-size: 11px;
+        }
+
+        .kpi-label {
+            font-size: 9.5px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .kpi-val {
+            font-weight: 900;
+            font-family: var(--font-mono);
+            color: var(--navy);
+        }
+
+        /* ==========================================================================
+           4. DUAL GIS & ANALYTIC DRAWER LAYOUT
+           ========================================================================== */
+        .dual-view-container {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* MAPA LEAFLET */
+        .map-pane {
             flex: 1;
             height: 100%;
             position: relative;
@@ -150,11 +500,11 @@
             z-index: 1;
         }
 
-        /* MAP OVERLAYS */
-        .map-controls-floating {
+        /* CONTROLES FLOTANTES SOBRE EL MAPA */
+        .map-floating-stack {
             position: absolute;
-            top: 16px;
-            left: 16px;
+            top: 14px;
+            left: 14px;
             z-index: 500;
             display: flex;
             flex-direction: column;
@@ -162,18 +512,18 @@
             pointer-events: none;
         }
 
-        .glass-card {
+        .glass-card-floating {
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(8px);
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            padding: 12px 14px;
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            box-shadow: var(--shadow-md);
             pointer-events: auto;
         }
 
         .predio-badge-card h3 {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 900;
             color: var(--navy);
             display: flex;
@@ -182,172 +532,113 @@
         }
 
         .predio-badge-card p {
-            font-size: 11px;
+            font-size: 10.5px;
             color: var(--text-muted);
             margin-top: 2px;
         }
 
-        .legend-bar {
+        .layer-selector-floating {
             display: flex;
-            gap: 12px;
-            margin-top: 8px;
-            font-size: 10.5px;
-            font-weight: 700;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .legend-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-        }
-
-        /* LAYER TOGGLE BUTTONS (ESTILO PETRAL.MARK) */
-        .layer-toggle-bar {
-            display: flex;
-            gap: 6px;
-            margin-top: 10px;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 4px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            pointer-events: auto;
         }
 
         .layer-btn {
-            background: #F1F5F9;
-            border: 1px solid var(--border);
-            border-radius: 6px;
+            border: none;
+            background: transparent;
             padding: 5px 10px;
-            font-size: 10.5px;
+            border-radius: 4px;
+            font-size: 10px;
             font-weight: 800;
-            color: var(--navy);
+            color: var(--navy-light);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s;
             display: flex;
             align-items: center;
             gap: 4px;
         }
 
-        .layer-btn:hover {
-            background: #E2E8F0;
-        }
-
         .layer-btn.active {
             background: var(--sky);
             color: #ffffff;
-            border-color: var(--sky);
-            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
         }
 
-        /* RADIAL POLAR HOVER TOOLTIP (NOTA #93) */
-        #radial-polar-tooltip {
-            position: absolute;
-            z-index: 999;
-            pointer-events: none;
-            display: none;
-            width: 290px;
-            background: rgba(255, 255, 255, 0.98);
-            border: 2px solid var(--sky);
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.22), 0 4px 12px rgba(15, 23, 42, 0.12);
-            transform: translate(15px, 15px);
-            transition: transform 0.05s ease-out;
-        }
-
-        .tooltip-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 6px;
-            margin-bottom: 8px;
-        }
-
-        .tooltip-title {
-            font-size: 11px;
-            font-weight: 900;
-            color: var(--navy);
-        }
-
-        .tooltip-status {
-            font-size: 9.5px;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-            background: var(--emerald-light);
-            color: var(--emerald);
-        }
-
-        /* SIDEBAR SPLIT 360 PANEL */
-        .sidebar-panel {
-            width: 480px;
-            background: var(--surface);
-            border-left: 1.5px solid var(--border);
+        /* DRAWER LATERAL DERECHO (ANÁLISIS & SQUAD IA) */
+        .drawer-pane {
+            width: 440px;
+            background: #ffffff;
+            border-left: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            height: 100%;
             z-index: 500;
-            box-shadow: -4px 0 20px rgba(15, 23, 42, 0.04);
+            box-shadow: var(--shadow-md);
         }
 
-        .sidebar-tabs {
+        .drawer-nav-tabs {
             display: flex;
-            border-bottom: 1.5px solid var(--border);
+            border-bottom: 1px solid var(--border);
             background: #F8FAFC;
         }
 
-        .tab-btn {
+        .dtab-btn {
             flex: 1;
-            padding: 11px 8px;
-            border: none;
-            background: transparent;
+            padding: 10px 8px;
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text-muted);
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
+            transition: all 0.15s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
+            gap: 4px;
         }
 
-        .tab-btn:hover {
+        .dtab-btn:hover {
             color: var(--navy);
-            background: rgba(241, 245, 249, 0.8);
+            background: #ffffff;
         }
 
-        .tab-btn.active {
+        .dtab-btn.active {
             color: var(--sky);
             background: #ffffff;
             border-bottom-color: var(--sky);
         }
 
-        .sidebar-content {
+        .drawer-content-scroll {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .tab-pane {
+        .tab-panel {
             display: none;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .tab-pane.active {
-            display: block;
+        .tab-panel.active {
+            display: flex;
         }
 
-        /* APEFAC CARDS */
+        /* TARJETAS ANALÍTICAS DENTRO DEL DRAWER */
         .info-card {
             background: #ffffff;
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 12px;
-            margin-bottom: 12px;
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+            box-shadow: var(--shadow-sm);
         }
 
         .info-card-header {
@@ -366,534 +657,692 @@
             gap: 6px;
         }
 
-        .meta-grid {
+        .badge-status {
+            font-size: 9.5px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-amber {
+            background: var(--amber-dim);
+            color: var(--amber);
+            border: 1px solid var(--amber-brd);
+        }
+
+        .badge-emerald {
+            background: var(--emerald-dim);
+            color: var(--emerald);
+            border: 1px solid var(--emerald-brd);
+        }
+
+        .badge-sky {
+            background: var(--sky-dim);
+            color: var(--sky);
+            border: 1px solid var(--sky-brd);
+        }
+
+        .metric-grid-2 {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
         }
 
-        .meta-item {
-            background: #F8FAFC;
+        .metric-box {
+            background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 6px 8px;
+            padding: 8px 10px;
         }
 
-        .meta-label {
-            font-size: 9.5px;
-            font-weight: 700;
+        .metric-label {
+            font-size: 9px;
+            font-weight: 800;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.3px;
         }
 
-        .meta-val {
-            font-size: 12px;
-            font-weight: 800;
+        .metric-value {
+            font-size: 13px;
+            font-weight: 900;
             color: var(--navy);
             font-family: var(--font-mono);
-            margin-top: 1px;
+            margin-top: 2px;
         }
 
-        /* SEMAPHORES */
-        .semaphore-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 10.5px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 6px;
-        }
-
-        .semaphore-yellow {
-            background: var(--amber-light);
-            color: var(--amber);
-            border: 1px solid rgba(217, 119, 6, 0.25);
-        }
-
-        /* EDMS DOCUMENT TREE */
-        .edms-tree {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .edms-folder {
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            overflow: hidden;
-            background: #ffffff;
-        }
-
-        .folder-header {
-            background: #F8FAFC;
-            padding: 8px 10px;
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--navy);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .folder-header:hover {
-            background: #F1F5F9;
-        }
-
-        .file-list {
-            padding: 6px 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            background: #ffffff;
-        }
-
-        .file-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 5px 8px;
-            border-radius: 4px;
-            font-size: 10.5px;
-            background: #FAFAFA;
-            border: 1px solid #F1F5F9;
-        }
-
-        .file-row:hover {
-            background: #F0F9FF;
-            border-color: #BAE6FD;
-        }
-
-        .file-info {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .ocr-tag {
-            font-size: 8.5px;
-            font-weight: 800;
-            padding: 2px 5px;
-            border-radius: 3px;
-        }
-
-        .ocr-native {
-            background: #E0F2FE;
-            color: #0369A1;
-        }
-
-        .ocr-vision {
-            background: #FEE2E2;
-            color: #B91C1C;
-        }
-
-        .sha-pill {
-            font-family: var(--font-mono);
-            font-size: 8.5px;
-            color: var(--text-muted);
-            background: #EDE9FE;
-            padding: 1px 4px;
-            border-radius: 3px;
-        }
-
-        /* VERTICES TABLE */
+        /* TABLA TÉCNICA */
         .table-custom {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10px;
-            margin-top: 6px;
+            font-size: 10.5px;
+            margin-top: 4px;
         }
 
         .table-custom th {
-            background: #F1F5F9;
-            color: var(--navy);
-            font-weight: 800;
+            background: var(--bg);
             padding: 6px 8px;
             text-align: left;
-            border-bottom: 1.5px solid var(--border);
+            font-weight: 800;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            font-size: 9.5px;
+            text-transform: uppercase;
         }
 
         .table-custom td {
             padding: 6px 8px;
-            border-bottom: 1px solid #F1F5F9;
+            border-bottom: 1px solid var(--border);
+            color: var(--navy);
             font-family: var(--font-mono);
         }
 
+        /* SQUAD DE ASISTENTES IA CHAT */
+        .agent-msg-box {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            margin-bottom: 8px;
+        }
+
+        .agent-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+            font-weight: 900;
+            color: #ffffff;
+        }
+
+        .agent-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .agent-name {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .agent-text {
+            font-size: 11px;
+            color: var(--navy-light);
+            line-height: 1.4;
+        }
+
+        .agent-code-tag {
+            font-family: var(--font-mono);
+            font-size: 9.5px;
+            background: rgba(15, 23, 42, 0.06);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        /* TOOLTIP POLAR RADIAL AL HOVER */
+        #radial-polar-tooltip {
+            position: fixed;
+            display: none;
+            z-index: 9999;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid var(--sky);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: var(--shadow-lg);
+            width: 220px;
+            height: 220px;
+        }
+
+        /* MARCADORES EN VÉRTICES */
         .vertex-marker-icon {
-            background: #0284c7;
+            background: var(--navy);
             color: #ffffff;
             border: 2px solid #ffffff;
             border-radius: 50%;
+            font-family: var(--font-mono);
+            font-size: 10px;
             font-weight: 900;
-            font-size: 11px;
-            text-align: center;
-            line-height: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.35);
         }
     </style>
 </head>
 <body>
 
-    <!-- TOP HEADER -->
-    <header class="header-bar">
-        <div class="header-left">
-            <div class="brand-pill">🏛️ PROPTWIN</div>
-            <div class="brand-title">Gemelo Digital Inmobiliario &bull; Arzobispado de Lima</div>
-            <div class="badge-live">
-                <div class="pulse-dot"></div>
-                PILOTO REAL LIVE
+    <!-- 1. TOPBAR & NAVIGATION RIBBON APEFAC (NIVELES 1 Y 2) -->
+    <header class="app-topbar">
+        <!-- Nivel 1: Header Principal -->
+        <div class="topbar-main">
+            <div class="topbar-left">
+                <div class="brand-badge">🏛️ PROPTWIN</div>
+                <div class="brand-subtitle">
+                    Gemelo Digital Inmobiliario
+                    <span style="font-size: 10.5px; color: var(--text-muted); font-weight: 600;">(Arzobispado de Lima)</span>
+                </div>
+                <div class="brand-divider"></div>
+                <div class="predio-selector" title="Selector de predio activo">
+                    📍 <span>Av. Alejandro Iglesias 409-411-419 (Chorrillos)</span> ▾
+                </div>
+                <div class="status-live-pill">
+                    <div class="pulse-dot"></div> PILOTO REAL LIVE
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <span>Partida: <b>07001015</b></span>
+                <span>•</span>
+                <span>Distrito: <b>Chorrillos</b></span>
+                <span>•</span>
+                <span>SHA-256: <b style="color:var(--sky);">af5aa413...</b></span>
             </div>
         </div>
-        <div class="header-right">
-            <span>Partida Registral: <b>07001015</b></span>
-            <span>&bull;</span>
-            <span>Distrito: <b>Chorrillos</b></span>
-            <span>&bull;</span>
-            <span>SHA-256: <b style="color:var(--sky);">af5aa41331...</b></span>
-        </div>
+
+        <!-- Nivel 2: Navigation Ribbon de Módulos (Estilo APEFAC NavigationRibbon.jsx) -->
+        <nav class="navigation-ribbon">
+            <button class="ribbon-tab active" onclick="switchDrawerTab('tab-ficha')">
+                <span class="ribbon-tab-icon">🗺️</span>
+                <div class="ribbon-tab-texts">
+                    <span class="ribbon-tab-label">Visor Cartográfico GIS</span>
+                    <span class="ribbon-tab-sublabel">Google Satellite HD + DWG</span>
+                </div>
+            </button>
+
+            <button class="ribbon-tab" onclick="switchDrawerTab('tab-geodesia')">
+                <span class="ribbon-tab-icon">📐</span>
+                <div class="ribbon-tab-texts">
+                    <span class="ribbon-tab-label">Metrología &amp; Linderos</span>
+                    <span class="ribbon-tab-sublabel">Coordenadas UTM 18S WGS84</span>
+                </div>
+            </button>
+
+            <button class="ribbon-tab" onclick="switchDrawerTab('tab-edms')">
+                <span class="ribbon-tab-icon">📂</span>
+                <div class="ribbon-tab-texts">
+                    <span class="ribbon-tab-label">Bóveda EDMS (7 Cat)</span>
+                    <span class="ribbon-tab-sublabel">Expediente SHA-256</span>
+                </div>
+            </button>
+
+            <button class="ribbon-tab" onclick="switchDrawerTab('tab-saneamiento')">
+                <span class="ribbon-tab-icon">⚖️</span>
+                <div class="ribbon-tab-texts">
+                    <span class="ribbon-tab-label">Saneamiento SUNARP</span>
+                    <span class="ribbon-tab-sublabel">Semáforo Ley 27333</span>
+                </div>
+            </button>
+
+            <button class="ribbon-tab" onclick="switchDrawerTab('tab-tesoreria')">
+                <span class="ribbon-tab-icon">💳</span>
+                <div class="ribbon-tab-texts">
+                    <span class="ribbon-tab-label">Tesorería &amp; Cobranzas</span>
+                    <span class="ribbon-tab-sublabel">S/ 9,000/mes &bull; SAT 2025</span>
+                </div>
+            </button>
+
+            <button class="ribbon-tab" onclick="switchDrawerTab('tab-squad')">
+                <span class="ribbon-tab-icon">🤖</span>
+                <div class="ribbon-tab-texts">
+                    <span class="ribbon-tab-label">Squad Asistentes IA</span>
+                    <span class="ribbon-tab-sublabel">Valery, Lucía, Andrés, Benoit</span>
+                </div>
+            </button>
+
+            <a class="ribbon-tab" href="https://geeksoft.tech/cap-11-proptwin-architecture.html" target="_blank">
+                <span class="ribbon-tab-icon">📊</span>
+                <div class="ribbon-tab-texts">
+                    <span class="ribbon-tab-label">Arquitectura SoTA</span>
+                    <span class="ribbon-tab-sublabel">Capítulo 11 Masterclass</span>
+                </div>
+            </a>
+        </nav>
     </header>
 
-    <!-- MAIN INTERACTIVE CONTAINER -->
-    <div class="main-container">
-        <!-- MAP SECTION -->
-        <div class="map-wrapper">
-            <div id="map"></div>
-
-            <!-- FLOATING MAP CONTROLS -->
-            <div class="map-controls-floating">
-                <div class="glass-card predio-badge-card">
-                    <h3>📍 Av. Alejandro Iglesias N° 409-411-419</h3>
-                    <p>Chorrillos &bull; Parroquia / Seminario Santo Toribio</p>
-                    <div class="legend-bar">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background:#0284c7;"></div>
-                            <span>Topografía WGS84: 1,294.37 m²</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color" style="background:#d97706; border:1px dashed #b45309;"></div>
-                            <span>SUNARP: 1,204.66 m²</span>
-                        </div>
-                    </div>
-                    <div class="layer-toggle-bar">
-                        <button class="layer-btn active" id="btn-google-sat" onclick="setBaseLayer('google-sat')">🛰️ Google Satélite HD</button>
-                        <button class="layer-btn" id="btn-google-roads" onclick="setBaseLayer('google-roads')">🗺️ Google Calles</button>
-                        <button class="layer-btn" id="btn-osm" onclick="setBaseLayer('osm')">🌐 OpenStreetMap</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RADIAL POLAR HOVER TOOLTIP (NOTA #93) -->
-            <div id="radial-polar-tooltip">
-                <div class="tooltip-header">
-                    <div>
-                        <div class="tooltip-title">Partida 07001015 &bull; Iglesias 419</div>
-                        <div style="font-size:9px; color:var(--text-muted); font-family:var(--font-mono);">Suministro Luz: 103653</div>
-                    </div>
-                    <div class="tooltip-status">AL DÍA</div>
-                </div>
-                <div style="width:100%; height:180px; position:relative;">
-                    <canvas id="polarHoverChart"></canvas>
-                </div>
-                <div style="margin-top:6px; display:flex; justify-content:space-between; font-size:9.5px; font-weight:800;">
-                    <span style="color:var(--emerald);">Recaudación Anual: S/ 108,000</span>
-                    <span style="color:var(--sky);">Mora SBS: 0.00%</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- SPLIT DETAIL PANEL -->
-        <div class="sidebar-panel">
-            <div class="sidebar-tabs">
-                <button class="tab-btn active" onclick="switchTab('tab-ficha')">📋 Ficha 360°</button>
-                <button class="tab-btn" onclick="switchTab('tab-edms')">📁 Bóveda EDMS (7)</button>
-                <button class="tab-btn" onclick="switchTab('tab-geodesia')">📐 Geodesia WGS84</button>
-                <button class="tab-btn" onclick="switchTab('tab-finanzas')">💰 Tesorería</button>
-            </div>
-
+    <!-- 2. WORKSPACE: SIDEBAR ENTERPRISE + MASTER CONTENT -->
+    <div class="app-workspace">
+        
+        <!-- SIDEBAR ENTERPRISE APEFAC -->
+        <aside class="app-sidebar" id="appSidebar">
             <div class="sidebar-content">
-                <!-- TAB 1: FICHA 360 -->
-                <div id="tab-ficha" class="tab-pane active">
-                    <div class="info-card" style="border-left: 4px solid var(--amber);">
-                        <div class="info-card-header">
-                            <div class="info-card-title">⚖️ Semáforo Legal &amp; Saneamiento</div>
-                            <span class="semaphore-badge semaphore-yellow">AMARILLO / SANEAMIENTO</span>
-                        </div>
-                        <p style="font-size:10.5px; color:var(--text-muted); line-height:1.4;">
-                            Discrepancia favorable de <b>+89.71 m²</b> entre el levantamiento topográfico de Geokad (1,294.37 m²) y la Partida SUNARP 07001015 (1,204.66 m²).
-                        </p>
-                        <div style="margin-top:8px; font-size:10px; font-weight:800; color:var(--navy);">
-                            &bull; Acción Sugerida: Rectificación notarial de área y linderos bajo Ley 27333 sin oposición de colindantes.
-                        </div>
+                <!-- SECCIÓN 1: OPERACIONES -->
+                <div>
+                    <div class="sidebar-section-title">
+                        <span>Operaciones &amp; Catastro</span>
                     </div>
-
-                    <div class="info-card">
-                        <div class="info-card-title">🏛️ Métricas Inmobiliarias Consolidadas</div>
-                        <div class="meta-grid" style="margin-top:8px;">
-                            <div class="meta-item">
-                                <div class="meta-label">Área Registral SUNARP</div>
-                                <div class="meta-val">1,204.66 m²</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Área Real Geodésica</div>
-                                <div class="meta-val" style="color:var(--sky);">1,294.37 m²</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Perímetro Total</div>
-                                <div class="meta-val">144.95 ml</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Zonificación Chorrillos</div>
-                                <div class="meta-val">RDA / CZ</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="info-card">
-                        <div class="info-card-title">⚡ Suministros &amp; Servicios Básicos</div>
-                        <div class="meta-grid" style="margin-top:8px;">
-                            <div class="meta-item">
-                                <div class="meta-label">Luz del Sur NIS</div>
-                                <div class="meta-val" style="color:var(--emerald);">103653</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Tarifa &amp; Potencia</div>
-                                <div class="meta-val">BT5B &bull; 3.10 kW</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Tipo Medidor</div>
-                                <div class="meta-val">Trifásico 3 Hilos</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">SEDAPAL Agua</div>
-                                <div class="meta-val" style="color:var(--sky);">Activo / Operativo</div>
-                            </div>
-                        </div>
-                    </div>
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item active" onclick="switchDrawerTab('tab-ficha')">
+                            <span class="sidebar-nav-icon">🗺️</span>
+                            <span>Visor Satelital HD</span>
+                        </li>
+                        <li class="sidebar-nav-item" onclick="switchDrawerTab('tab-geodesia')">
+                            <span class="sidebar-nav-icon">📐</span>
+                            <span>Extractor CAD DWG</span>
+                        </li>
+                        <li class="sidebar-nav-item" onclick="switchDrawerTab('tab-edms')">
+                            <span class="sidebar-nav-icon">📑</span>
+                            <span>Bóveda Documental</span>
+                        </li>
+                    </ul>
                 </div>
 
-                <!-- TAB 2: EDMS DOCUMENT LAKE -->
-                <div id="tab-edms" class="tab-pane">
-                    <div class="info-card" style="background:#F0FDF4; border-color:#BBF7D0;">
-                        <div style="font-size:11px; font-weight:800; color:#166534;">
-                            🔒 Bóveda Criptográfica /storage/07001015/
-                        </div>
-                        <div style="font-size:9.5px; color:#15803D; margin-top:2px;">
-                            Todos los archivos cuentan con hash SHA-256 verificado y auditoría de OCR.
-                        </div>
+                <!-- SECCIÓN 2: JURÍDICO & SUNARP -->
+                <div>
+                    <div class="sidebar-section-title">
+                        <span>Legal &amp; Registral</span>
                     </div>
-
-                    <div class="edms-tree">
-                        <!-- 01 LEGAL SUNARP -->
-                        <div class="edms-folder">
-                            <div class="folder-header">
-                                <span>📜 01_legal_sunarp (1)</span>
-                                <span class="sha-pill">SUNARP</span>
-                            </div>
-                            <div class="file-list">
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>📄 Copia Literal 07001015 (16 págs)</span>
-                                    </div>
-                                    <span class="ocr-tag ocr-native">Nativo+Microforma</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 02 MUNICIPAL -->
-                        <div class="edms-folder">
-                            <div class="folder-header">
-                                <span>🏛️ 02_municipal_tributario (1)</span>
-                                <span class="sha-pill">Chorrillos</span>
-                            </div>
-                            <div class="file-list">
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>📊 HR.PU.pdf (6 págs)</span>
-                                    </div>
-                                    <span class="ocr-tag ocr-vision">Vision LLM Requerido</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 03 URBANISTICO -->
-                        <div class="edms-folder">
-                            <div class="folder-header">
-                                <span>📐 03_urbanistico_tecnico (3)</span>
-                                <span class="sha-pill">Geokad WGS84</span>
-                            </div>
-                            <div class="file-list">
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>📑 Informe Geokad Jun 2025 (24 págs)</span>
-                                    </div>
-                                    <span class="ocr-tag ocr-native">Nativo</span>
-                                </div>
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>🗺️ Parámetros Urbanísticos</span>
-                                    </div>
-                                    <span class="ocr-tag ocr-vision">Raster OCR</span>
-                                </div>
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>📐 Plano Perimétrico Cuadro Datos</span>
-                                    </div>
-                                    <span class="ocr-tag ocr-native">Vectorial</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 04 SERVICIOS -->
-                        <div class="edms-folder">
-                            <div class="folder-header">
-                                <span>⚡ 04_servicios_basicos (2)</span>
-                                <span class="sha-pill">Suministros</span>
-                            </div>
-                            <div class="file-list">
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>💡 Luz del Sur (Suministro 103653)</span>
-                                    </div>
-                                    <span class="ocr-tag ocr-native">Nativo</span>
-                                </div>
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>💧 SEDAPAL Recibo</span>
-                                    </div>
-                                    <span class="ocr-tag ocr-vision">Foto JPEG</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 07 METADATA LAKE -->
-                        <div class="edms-folder">
-                            <div class="folder-header">
-                                <span>🧬 07_metadata_lake (3)</span>
-                                <span class="sha-pill">Inmutable</span>
-                            </div>
-                            <div class="file-list">
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>🔐 manifest_checksums_sha256.json</span>
-                                    </div>
-                                    <span class="sha-pill">SHA-256</span>
-                                </div>
-                                <div class="file-row">
-                                    <div class="file-info">
-                                        <span>📋 proptwin_master_record.json</span>
-                                    </div>
-                                    <span class="sha-pill">JSON</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item" onclick="switchDrawerTab('tab-saneamiento')">
+                            <span class="sidebar-nav-icon">⚖️</span>
+                            <span>Semáforo SUNARP</span>
+                        </li>
+                        <li class="sidebar-nav-item" onclick="switchDrawerTab('tab-saneamiento')">
+                            <span class="sidebar-nav-icon">📜</span>
+                            <span>Partida 07001015</span>
+                        </li>
+                    </ul>
                 </div>
 
-                <!-- TAB 3: GEODESIA -->
-                <div id="tab-geodesia" class="tab-pane">
-                    <div class="info-card">
-                        <div class="info-card-title">📍 Cuadro de Datos Técnicos Geodésicos (WGS84 18S)</div>
-                        <table class="table-custom">
-                            <thead>
-                                <tr>
-                                    <th>Vértice</th>
-                                    <th>Este (X)</th>
-                                    <th>Norte (Y)</th>
-                                    <th>Tramo (ml)</th>
-                                    <th>Colindancia</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><b>A</b></td>
-                                    <td>279,720.1517</td>
-                                    <td>8,654,148.3020</td>
-                                    <td>35.46 m</td>
-                                    <td>Av. Alejandro Iglesias</td>
-                                </tr>
-                                <tr>
-                                    <td><b>B</b></td>
-                                    <td>279,745.3057</td>
-                                    <td>8,654,173.2938</td>
-                                    <td>19.82 m</td>
-                                    <td>Jr. Máximo Alvarado</td>
-                                </tr>
-                                <tr>
-                                    <td><b>C</b></td>
-                                    <td>279,765.1195</td>
-                                    <td>8,654,172.7840</td>
-                                    <td>30.09 m</td>
-                                    <td>Lote 4 / Seminario</td>
-                                </tr>
-                                <tr>
-                                    <td><b>D</b></td>
-                                    <td>279,764.6050</td>
-                                    <td>8,654,142.7004</td>
-                                    <td>9.35 m</td>
-                                    <td>Lote 5 / Seminario</td>
-                                </tr>
-                                <tr>
-                                    <td><b>E</b></td>
-                                    <td>279,755.4311</td>
-                                    <td>8,654,140.8750</td>
-                                    <td>20.33 m</td>
-                                    <td>Quiebre Interior</td>
-                                </tr>
-                                <tr>
-                                    <td><b>F</b></td>
-                                    <td>279,740.8418</td>
-                                    <td>8,654,126.7126</td>
-                                    <td>29.90 m</td>
-                                    <td>Jr. Numa Llona</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- SECCIÓN 3: FINANZAS & SAT -->
+                <div>
+                    <div class="sidebar-section-title">
+                        <span>Finanzas &amp; SAT</span>
                     </div>
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item" onclick="switchDrawerTab('tab-tesoreria')">
+                            <span class="sidebar-nav-icon">💰</span>
+                            <span>Renta Mensual S/ 9K</span>
+                        </li>
+                        <li class="sidebar-nav-item" onclick="switchDrawerTab('tab-tesoreria')">
+                            <span class="sidebar-nav-icon">🏛️</span>
+                            <span>Autovalúo 2025 SAT</span>
+                        </li>
+                    </ul>
                 </div>
 
-                <!-- TAB 4: FINANZAS -->
-                <div id="tab-finanzas" class="tab-pane">
-                    <div class="info-card">
-                        <div class="info-card-title">💳 Estado de Cuenta &amp; Flujo Mensual APEFAC</div>
-                        <div class="meta-grid" style="margin-top:8px;">
-                            <div class="meta-item">
-                                <div class="meta-label">Renta Mensual</div>
-                                <div class="meta-val" style="color:var(--emerald);">S/ 9,000.00</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Autovalúo 2025 SAT</div>
-                                <div class="meta-val">S/ 8,884.69</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Cadencia Vencimiento</div>
-                                <div class="meta-val">Fin de Mes</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Alertas Preventivas</div>
-                                <div class="meta-val" style="color:var(--sky);">D1, D-5, D-1, D</div>
-                            </div>
-                        </div>
+                <!-- SECCIÓN 4: SQUAD AGÉNTICO -->
+                <div>
+                    <div class="sidebar-section-title">
+                        <span>Squad IA Ingesta</span>
+                    </div>
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item" onclick="switchDrawerTab('tab-squad')">
+                            <span class="sidebar-nav-icon">🤖</span>
+                            <span>Asistentes IA Live</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-profile-badge">
+                    <div class="user-avatar">ADL</div>
+                    <div class="user-info">
+                        <span class="user-name">Arzobispado de Lima</span>
+                        <span class="user-role">Gestor Patrimonial</span>
+                    </div>
+                </div>
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Colapsar Sidebar">◀</button>
+            </div>
+        </aside>
+
+        <!-- MASTER CONTENT AREA -->
+        <main class="app-main-content">
+            
+            <!-- MASTER HEADER STRIP (1 SOLA LÍNEA HORIZONTAL) -->
+            <div class="master-header-strip">
+                <div class="strip-left">
+                    <span class="strip-title">📍 Predio Matriz: Iglesias 419 (Seminario Santo Toribio)</span>
+                    <div class="strip-divider"></div>
+                    <span style="font-size:11px; color:var(--text-muted);">Zonificación: <b>RDA / CZ</b></span>
+                </div>
+
+                <div class="strip-kpis">
+                    <div class="kpi-chip">
+                        <span class="kpi-label">Área Real (DWG):</span>
+                        <span class="kpi-val" style="color:var(--sky);">1,294.37 m²</span>
+                    </div>
+                    <div class="kpi-chip">
+                        <span class="kpi-label">Área SUNARP:</span>
+                        <span class="kpi-val" style="color:var(--amber);">1,204.66 m²</span>
+                    </div>
+                    <div class="kpi-chip">
+                        <span class="kpi-label">Discrepancia:</span>
+                        <span class="kpi-val" style="color:var(--emerald);">+89.71 m² (7.45%)</span>
+                    </div>
+                    <div class="kpi-chip">
+                        <span class="kpi-label">Renta Mensual:</span>
+                        <span class="kpi-val" style="color:var(--emerald);">S/ 9,000.00</span>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- DUAL VIEW: MAPA GIS + DRAWER ANALÍTICO -->
+            <div class="dual-view-container">
+                
+                <!-- LIENZO GIS INTERACTIVO -->
+                <div class="map-pane">
+                    <div id="map"></div>
+
+                    <!-- CONTROLES FLOTANTES -->
+                    <div class="map-floating-stack">
+                        <div class="glass-card-floating predio-badge-card">
+                            <h3>📍 Av. Alejandro Iglesias N° 409-411-419</h3>
+                            <p>Chorrillos &bull; Parroquia / Seminario Santo Toribio</p>
+                            <div style="margin-top: 6px; display: flex; gap: 8px; font-size: 10.5px; font-weight: 800;">
+                                <span style="color:var(--sky);">■ Topografía DWG: 1,294.37 m²</span>
+                                <span style="color:var(--amber);">■ SUNARP: 1,204.66 m²</span>
+                            </div>
+                        </div>
+
+                        <div class="layer-selector-floating">
+                            <button id="btn-google-sat" class="layer-btn active" onclick="setBaseLayer('google-sat')">
+                                🛰️ Google Satélite HD
+                            </button>
+                            <button id="btn-google-roads" class="layer-btn" onclick="setBaseLayer('google-roads')">
+                                🗺️ Google Calles
+                            </button>
+                            <button id="btn-osm" class="layer-btn" onclick="setBaseLayer('osm')">
+                                🌐 OpenStreetMap
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TOOLTIP POLAR RADIAL AL HOVER -->
+                    <div id="radial-polar-tooltip">
+                        <div style="font-size: 10px; font-weight: 800; color: var(--navy); margin-bottom: 4px; text-align: center;">
+                            ⏱️ Salud Financiera 12 Meses (S/ 9,000/mes)
+                        </div>
+                        <canvas id="polarHoverChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- DRAWER ANALÍTICO DERECHO -->
+                <div class="drawer-pane">
+                    <div class="drawer-nav-tabs">
+                        <button class="dtab-btn active" id="btn-tab-ficha" onclick="switchDrawerTab('tab-ficha')">
+                            📋 Ficha 360°
+                        </button>
+                        <button class="dtab-btn" id="btn-tab-edms" onclick="switchDrawerTab('tab-edms')">
+                            📂 Bóveda (7)
+                        </button>
+                        <button class="dtab-btn" id="btn-tab-geodesia" onclick="switchDrawerTab('tab-geodesia')">
+                            📐 Geodesia
+                        </button>
+                        <button class="dtab-btn" id="btn-tab-tesoreria" onclick="switchDrawerTab('tab-tesoreria')">
+                            💳 Tesorería
+                        </button>
+                        <button class="dtab-btn" id="btn-tab-squad" onclick="switchDrawerTab('tab-squad')">
+                            🤖 Squad IA
+                        </button>
+                    </div>
+
+                    <div class="drawer-content-scroll">
+                        
+                        <!-- TAB 1: FICHA 360° -->
+                        <div id="tab-ficha" class="tab-panel active">
+                            <!-- Semáforo Registral -->
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <span class="info-card-title">⚖️ Semáforo Legal &amp; Saneamiento</span>
+                                    <span class="badge-status badge-amber">AMARILLO / SANEAMIENTO</span>
+                                </div>
+                                <p style="font-size: 11px; color: var(--navy-light); line-height: 1.45;">
+                                    Discrepancia favorable de <b>+89.71 m²</b> entre el levantamiento topográfico de Geokad / Lazo Robles (1,294.37 m²) y la Partida SUNARP 07001015 (1,204.66 m²).
+                                </p>
+                                <div style="margin-top: 6px; font-size: 10.5px; font-weight: 700; color: var(--sky);">
+                                    &bull; Acción Sugerida: Rectificación notarial de área y linderos bajo Ley 27333 sin oposición de colindantes.
+                                </div>
+                            </div>
+
+                            <!-- Métricas Consolidadas -->
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <span class="info-card-title">🏛️ Métricas Inmobiliarias Consolidadas</span>
+                                </div>
+                                <div class="metric-grid-2">
+                                    <div class="metric-box">
+                                        <div class="metric-label">Área Registral SUNARP</div>
+                                        <div class="metric-value">1,204.66 m²</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Área Real Geodésica</div>
+                                        <div class="metric-value" style="color:var(--sky);">1,294.37 m²</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Perímetro Total</div>
+                                        <div class="metric-value">144.95 ml</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Zonificación</div>
+                                        <div class="metric-value">RDA / CZ</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Suministros -->
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <span class="info-card-title">⚡ Suministros &amp; Servicios Básicos</span>
+                                </div>
+                                <div class="metric-grid-2">
+                                    <div class="metric-box">
+                                        <div class="metric-label">Luz del Sur NIS</div>
+                                        <div class="metric-value" style="color:var(--emerald);">103653</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Tarifa &amp; Potencia</div>
+                                        <div class="metric-value" style="font-size:11px;">BT5B &bull; 3.10 kW</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Tipo Medidor</div>
+                                        <div class="metric-value" style="font-size:11px;">Trifásico 3 Hilos</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Sedapal Agua</div>
+                                        <div class="metric-value" style="color:var(--sky);">Activo / Operativo</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 2: BÓVEDA EDMS (7 CATEGORÍAS) -->
+                        <div id="tab-edms" class="tab-panel">
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <span class="info-card-title">📂 Bóveda Documental EDMS (Partida 07001015)</span>
+                                    <span class="badge-status badge-sky">7 CATEGORÍAS</span>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
+                                    <div class="metric-box" style="display:flex; justify-content:space-between; align-items:center;">
+                                        <span style="font-size:11px; font-weight:700;">01 - Títulos de Propiedad &amp; SUNARP</span>
+                                        <span class="badge-status badge-emerald">1 Doc (SHA-256)</span>
+                                    </div>
+                                    <div class="metric-box" style="display:flex; justify-content:space-between; align-items:center;">
+                                        <span style="font-size:11px; font-weight:700;">02 - Planos Catastrales, DWG &amp; Topografía</span>
+                                        <span class="badge-status badge-sky">PP_CHORRILLOS.dwg</span>
+                                    </div>
+                                    <div class="metric-box" style="display:flex; justify-content:space-between; align-items:center;">
+                                        <span style="font-size:11px; font-weight:700;">03 - Autovalúo HR-PU SAT &amp; Arbitrios</span>
+                                        <span class="badge-status badge-emerald">2025 S/ 8,884.69</span>
+                                    </div>
+                                    <div class="metric-box" style="display:flex; justify-content:space-between; align-items:center;">
+                                        <span style="font-size:11px; font-weight:700;">04 - Contratos de Arrendamiento</span>
+                                        <span class="badge-status badge-emerald">S/ 9,000/mes</span>
+                                    </div>
+                                    <div class="metric-box" style="display:flex; justify-content:space-between; align-items:center;">
+                                        <span style="font-size:11px; font-weight:700;">05 - Tasaciones &amp; Valuaciones Comerciales</span>
+                                        <span class="badge-status badge-amber">Peritaje 2025</span>
+                                    </div>
+                                    <div class="metric-box" style="display:flex; justify-content:space-between; align-items:center;">
+                                        <span style="font-size:11px; font-weight:700;">06 - Inspecciones Visuales &amp; Ortofotos</span>
+                                        <span class="badge-status badge-sky">Google HD</span>
+                                    </div>
+                                    <div class="metric-box" style="display:flex; justify-content:space-between; align-items:center;">
+                                        <span style="font-size:11px; font-weight:700;">07 - Certificados de Parámetros Urbanísticos</span>
+                                        <span class="badge-status badge-emerald">RDA / CZ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: GEODESIA WGS84 -->
+                        <div id="tab-geodesia" class="tab-panel">
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <span class="info-card-title">📐 Cuadro de Datos Técnicos Oficiales (DWG)</span>
+                                    <span class="badge-status badge-sky">EPSG:32718 &rarr; 4326</span>
+                                </div>
+                                <table class="table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Vértice</th>
+                                            <th>Este (X)</th>
+                                            <th>Norte (Y)</th>
+                                            <th>Tramo</th>
+                                            <th>Colindancia</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><b>A</b></td>
+                                            <td>279,720.15</td>
+                                            <td>8,654,148.30</td>
+                                            <td>35.46 m</td>
+                                            <td>Av. Alejandro Iglesias</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>B</b></td>
+                                            <td>279,745.31</td>
+                                            <td>8,654,173.29</td>
+                                            <td>19.82 m</td>
+                                            <td>Jr. Máximo Alvarado</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>C</b></td>
+                                            <td>279,765.12</td>
+                                            <td>8,654,172.78</td>
+                                            <td>30.09 m</td>
+                                            <td>Lote 4 / Seminario</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>D</b></td>
+                                            <td>279,764.61</td>
+                                            <td>8,654,142.70</td>
+                                            <td>9.35 m</td>
+                                            <td>Lote 5 / Seminario</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>E</b></td>
+                                            <td>279,755.43</td>
+                                            <td>8,654,140.88</td>
+                                            <td>20.33 m</td>
+                                            <td>Quiebre Interior</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>F</b></td>
+                                            <td>279,740.84</td>
+                                            <td>8,654,126.71</td>
+                                            <td>29.90 m</td>
+                                            <td>Jr. Numa Llona</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- TAB 4: TESORERÍA -->
+                        <div id="tab-tesoreria" class="tab-panel">
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <span class="info-card-title">💳 Estado Financiero &amp; Flujo Mensual</span>
+                                    <span class="badge-status badge-emerald">AL DÍA</span>
+                                </div>
+                                <div class="metric-grid-2" style="margin-top:6px;">
+                                    <div class="metric-box">
+                                        <div class="metric-label">Renta Mensual</div>
+                                        <div class="metric-value" style="color:var(--emerald);">S/ 9,000.00</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Autovalúo 2025 SAT</div>
+                                        <div class="metric-value">S/ 8,884.69</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Cadencia Alertas</div>
+                                        <div class="metric-value" style="font-size:11px; color:var(--sky);">D1, D-5, D-1, D</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Vigencia Contrato</div>
+                                        <div class="metric-value" style="font-size:11px;">31 Dic 2025</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 5: SQUAD ASISTENTES IA (CHAT EN VIVO) -->
+                        <div id="tab-squad" class="tab-panel">
+                            <div class="info-card" style="background:#FAF5FF; border-color:var(--purple-brd);">
+                                <div class="info-card-header">
+                                    <span class="info-card-title" style="color:var(--purple);">🤖 Squad de Asistentes IA (Peritaje Multidisciplinario)</span>
+                                </div>
+                                
+                                <!-- Benoit -->
+                                <div class="agent-msg-box" style="border-left: 3px solid var(--amber);">
+                                    <div class="agent-avatar" style="background:var(--amber);">🕵️</div>
+                                    <div class="agent-content">
+                                        <span class="agent-name">Benoit (Curador Jefe &amp; Orquestador)</span>
+                                        <p class="agent-text">He completado el ensamble del expediente para <b>Iglesias 419</b>. El archivo DWG ha sido digerido, la discrepancia registral evaluada y el hash <span class="agent-code-tag">SHA-256: af5aa413...</span> estampado en la bóveda.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Valery -->
+                                <div class="agent-msg-box" style="border-left: 3px solid var(--sky);">
+                                    <div class="agent-avatar" style="background:var(--sky);">📐</div>
+                                    <div class="agent-content">
+                                        <span class="agent-name">Arq. Valery (Catastro &amp; CAD/GIS)</span>
+                                        <p class="agent-text">Extraje los 6 vértices con <span class="agent-code-tag">cad_dwg_extractor.py</span>. El área topográfica calculada es de <b>1,294.3663 m²</b> y el frente A-B de 35.46 m encaja con precisión milimétrica sobre la Av. Iglesias.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Lucía -->
+                                <div class="agent-msg-box" style="border-left: 3px solid var(--purple);">
+                                    <div class="agent-avatar" style="background:var(--purple);">⚖️</div>
+                                    <div class="agent-content">
+                                        <span class="agent-name">Dra. Lucía (Saneamiento SUNARP)</span>
+                                        <p class="agent-text">La variación física vs registral es de <b>+7.45%</b> (supera la tolerancia del 1.0%). Conmuté el semáforo a <b>AMARILLO_SANEAMIENTO</b> y redacté la solicitud notarial de rectificación vía Art. 13 de la Ley 27333.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Andrés -->
+                                <div class="agent-msg-box" style="border-left: 3px solid var(--emerald);">
+                                    <div class="agent-avatar" style="background:var(--emerald);">💳</div>
+                                    <div class="agent-content">
+                                        <span class="agent-name">Econ. Andrés (Finanzas &amp; SAT)</span>
+                                        <p class="agent-text">Flujo anual proyectado: S/ 108,000.00 brutos. Autovalúo SAT 2025 conciliado en S/ 8,884.69. El radar polar de 12 meses está listo en el cursor.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
     </div>
 
+    <!-- SCRIPT DE CONTROL DEL MAPA & TABS -->
     <script>
-        // TAB SWITCHER
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-            
-            event.currentTarget.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        }
-
         // COORDENADAS RIGUROSAS EXTRAIDAS DIRECTAMENTE DEL DWG OFICIAL (PP_CHORRILLOS_MAY2025.dwg)
         // Ing. Ernesto Vicente Lazo Robles (CIP 54873) - EPSG:32718 WGS84 UTM Zona 18S -> EPSG:4326
         const coordsGeokad = [
@@ -965,7 +1414,6 @@
         }).addTo(map);
 
         // POLIGONO REGISTRAL COMPARATIVO SUNARP (1,204.66 m² - LINEA PUNTEADA AMBAR)
-        // Representa la diferencia física vs registral de 89.71 m²
         const coordsSunarp = [
             [-12.167085, -77.024385],
             [-12.166890, -77.024180],
@@ -1022,8 +1470,8 @@
         });
 
         function updateTooltipPosition(e) {
-            tooltipEl.style.left = (e.clientX - 10) + 'px';
-            tooltipEl.style.top = (e.clientY - 10) + 'px';
+            tooltipEl.style.left = (e.clientX + 15) + 'px';
+            tooltipEl.style.top = (e.clientY - 110) + 'px';
         }
 
         // INICIALIZACION RADAR POLAR CHART.JS (NOTA #93)
@@ -1059,6 +1507,27 @@
                 }
             }
         });
+
+        // DRAWER TAB SWITCHER
+        function switchDrawerTab(tabId) {
+            document.querySelectorAll('.dtab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            
+            const btn = document.getElementById('btn-' + tabId);
+            if (btn) btn.classList.add('active');
+            
+            const panel = document.getElementById(tabId);
+            if (panel) panel.classList.add('active');
+        }
+
+        // SIDEBAR TOGGLE
+        function toggleSidebar() {
+            const sb = document.getElementById('appSidebar');
+            sb.classList.toggle('collapsed');
+            const btn = sb.querySelector('.sidebar-toggle-btn');
+            btn.textContent = sb.classList.contains('collapsed') ? '▶' : '◀';
+            setTimeout(() => { map.invalidateSize(); }, 300);
+        }
     </script>
 </body>
 </html>
