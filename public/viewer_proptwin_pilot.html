@@ -811,43 +811,43 @@
                             <tbody>
                                 <tr>
                                     <td><b>A</b></td>
-                                    <td>279,745.12</td>
-                                    <td>8,654,188.30</td>
+                                    <td>279,720.1517</td>
+                                    <td>8,654,148.3020</td>
                                     <td>35.46 m</td>
                                     <td>Av. Alejandro Iglesias</td>
                                 </tr>
                                 <tr>
                                     <td><b>B</b></td>
-                                    <td>279,782.40</td>
-                                    <td>8,654,192.15</td>
+                                    <td>279,745.3057</td>
+                                    <td>8,654,173.2938</td>
                                     <td>19.82 m</td>
                                     <td>Jr. Máximo Alvarado</td>
                                 </tr>
                                 <tr>
                                     <td><b>C</b></td>
-                                    <td>279,795.80</td>
-                                    <td>8,654,160.22</td>
+                                    <td>279,765.1195</td>
+                                    <td>8,654,172.7840</td>
                                     <td>30.09 m</td>
-                                    <td>Lote 4 y 5 (Fondo)</td>
+                                    <td>Lote 4 / Seminario</td>
                                 </tr>
                                 <tr>
                                     <td><b>D</b></td>
-                                    <td>279,768.10</td>
-                                    <td>8,654,148.90</td>
+                                    <td>279,764.6050</td>
+                                    <td>8,654,142.7004</td>
                                     <td>9.35 m</td>
-                                    <td>Fondo Quiebre 1</td>
+                                    <td>Lote 5 / Seminario</td>
                                 </tr>
                                 <tr>
                                     <td><b>E</b></td>
-                                    <td>279,750.35</td>
-                                    <td>8,654,155.40</td>
+                                    <td>279,755.4311</td>
+                                    <td>8,654,140.8750</td>
                                     <td>20.33 m</td>
-                                    <td>Fondo Quiebre 2</td>
+                                    <td>Quiebre Interior</td>
                                 </tr>
                                 <tr>
                                     <td><b>F</b></td>
-                                    <td>279,738.90</td>
-                                    <td>8,654,170.10</td>
+                                    <td>279,740.8418</td>
+                                    <td>8,654,126.7126</td>
                                     <td>29.90 m</td>
                                     <td>Jr. Numa Llona</td>
                                 </tr>
@@ -894,19 +894,19 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // COORDENADAS CONVERTIDAS MATEMATICAMENTE CON PYPROJ (EPSG:32718 UTM 18S -> EPSG:4326 WGS84)
-        // Manzana real entre Av. Alejandro Iglesias, Jr. Maximo Alvarado y Jr. Numa Llona (Chorrillos)
+        // COORDENADAS RIGUROSAS EXTRAIDAS DIRECTAMENTE DEL DWG OFICIAL (PP_CHORRILLOS_MAY2025.dwg)
+        // Ing. Ernesto Vicente Lazo Robles (CIP 54873) - EPSG:32718 WGS84 UTM Zona 18S -> EPSG:4326
         const coordsGeokad = [
-            [-12.1673500, -77.0249000], // Vértice A (Frente Av. Iglesias / Esq Numa Llona - 35.46 m)
-            [-12.1671150, -77.0246850], // Vértice B (Frente Av. Iglesias / Esq Maximo Alvarado - 19.82 m)
-            [-12.1672350, -77.0245500], // Vértice C (Izquierda Jr. Máximo Alvarado - 30.09 m)
-            [-12.1674400, -77.0247350], // Vértice D (Fondo Tramo 1 - 9.35 m)
-            [-12.1673850, -77.0248000], // Vértice E (Fondo Tramo 2 - 20.33 m)
-            [-12.1675200, -77.0249250]  // Vértice F (Derecha Jr. Numa Llona - 29.90 m)
+            [-12.16709927, -77.02440119], // Vértice A (Av. Alejandro Iglesias - Tramo A-B: 35.46 m)
+            [-12.16687510, -77.02416841], // Vértice B (Av. Iglesias / Jr. Maximo Alvarado - Tramo B-C: 19.82 m)
+            [-12.16688104, -77.02398643], // Vértice C (Lote 4 / Seminario - Tramo C-D: 30.09 m)
+            [-12.16715289, -77.02399322], // Vértice D (Lote 5 / Seminario - Tramo D-E: 9.35 m)
+            [-12.16716877, -77.02407761], // Vértice E (Quiebre Interior - Tramo E-F: 20.33 m)
+            [-12.16729578, -77.02421260]  // Vértice F (Jr. Numa Llona - Tramo F-A: 29.90 m)
         ];
 
-        const latCenter = -12.16730;
-        const lngCenter = -77.02475;
+        const latCenter = -12.16706485;
+        const lngCenter = -77.02416427;
 
         // INICIALIZACION MAPA CON LEAFLET
         const map = L.map('map', {
@@ -956,7 +956,7 @@
             }
         }
 
-        // POLIGONO TOPOGRAFICO REAL (AZUL APEFAC - 1,294.37 m²)
+        // POLIGONO TOPOGRAFICO REAL (AZUL APEFAC - 1,294.37 m² - 144.95 ml)
         const polygonTopografico = L.polygon(coordsGeokad, {
             color: '#38bdf8',
             weight: 3.5,
@@ -965,13 +965,14 @@
         }).addTo(map);
 
         // POLIGONO REGISTRAL COMPARATIVO SUNARP (1,204.66 m² - LINEA PUNTEADA AMBAR)
+        // Representa la diferencia física vs registral de 89.71 m²
         const coordsSunarp = [
-            [-12.167330, -77.024880],
-            [-12.167130, -77.024700],
-            [-12.167220, -77.024580],
-            [-12.167410, -77.024750],
-            [-12.167360, -77.024810],
-            [-12.167490, -77.024905]
+            [-12.167085, -77.024385],
+            [-12.166890, -77.024180],
+            [-12.166895, -77.024010],
+            [-12.167135, -77.024015],
+            [-12.167150, -77.024090],
+            [-12.167265, -77.024205]
         ];
 
         const polygonRegistral = L.polygon(coordsSunarp, {
@@ -982,14 +983,14 @@
             fillOpacity: 0.20
         }).addTo(map);
 
-        // MARCADORES EN CADA VERTICE CON SU LETRA
+        // MARCADORES EN CADA VERTICE CON SU LETRA Y COTAS DEL DWG
         const verticesLabels = [
-            { letra: 'A', coord: coordsGeokad[0], desc: 'Vértice A - Av. Alejandro Iglesias (35.46 m)' },
-            { letra: 'B', coord: coordsGeokad[1], desc: 'Vértice B - Jr. Máximo Alvarado (19.82 m)' },
-            { letra: 'C', coord: coordsGeokad[2], desc: 'Vértice C - Fondo Lote 4/5 (30.09 m)' },
-            { letra: 'D', coord: coordsGeokad[3], desc: 'Vértice D - Fondo Quiebre 1 (9.35 m)' },
-            { letra: 'E', coord: coordsGeokad[4], desc: 'Vértice E - Fondo Quiebre 2 (20.33 m)' },
-            { letra: 'F', coord: coordsGeokad[5], desc: 'Vértice F - Jr. Numa Llona (29.90 m)' }
+            { letra: 'A', coord: coordsGeokad[0], desc: 'Vértice A - Este: 279,720.15 | Norte: 8,654,148.30 (Av. Iglesias 35.46 m)' },
+            { letra: 'B', coord: coordsGeokad[1], desc: 'Vértice B - Este: 279,745.31 | Norte: 8,654,173.29 (Jr. Max. Alvarado 19.82 m)' },
+            { letra: 'C', coord: coordsGeokad[2], desc: 'Vértice C - Este: 279,765.12 | Norte: 8,654,172.78 (Lote 4 / Fondo 30.09 m)' },
+            { letra: 'D', coord: coordsGeokad[3], desc: 'Vértice D - Este: 279,764.61 | Norte: 8,654,142.70 (Lote 5 / Fondo 9.35 m)' },
+            { letra: 'E', coord: coordsGeokad[4], desc: 'Vértice E - Este: 279,755.43 | Norte: 8,654,140.88 (Quiebre Interior 20.33 m)' },
+            { letra: 'F', coord: coordsGeokad[5], desc: 'Vértice F - Este: 279,740.84 | Norte: 8,654,126.71 (Jr. Numa Llona 29.90 m)' }
         ];
 
         verticesLabels.forEach(v => {
