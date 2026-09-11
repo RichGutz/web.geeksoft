@@ -67,7 +67,7 @@ Versión: v1.1.3-whatsapp-native-deeplink-phone-update
    - Esquema URI `whatsapp://send?phone=...` en dispositivos móviles para abrir la app instalada directamente sin pasar por landing web ni redirigir a Google Play.
    - Enlace `https://wa.me/...` para entornos de escritorio.
 
-2. Actualización de Número Oficial:
-   - Número actualizado a `51966350737` (966 350 737) en `src/app/page.tsx` y `src/app/sandbox-radar/page.tsx`.
+2. Configuración de Número Oficial:
+   - Número establecido en `51991090016` (991 090 016) en `src/app/page.tsx` y `src/app/sandbox-radar/page.tsx`.
    - Control de calidad (QC) con build y despliegue a producción en VPS.
 
