@@ -897,16 +897,16 @@
         // COORDENADAS CONVERTIDAS MATEMATICAMENTE CON PYPROJ (EPSG:32718 UTM 18S -> EPSG:4326 WGS84)
         // Manzana real entre Av. Alejandro Iglesias, Jr. Maximo Alvarado y Jr. Numa Llona (Chorrillos)
         const coordsGeokad = [
-            [-12.1667395, -77.0241691], // Vértice A (Frente Av. Iglesias - 35.46 m)
-            [-12.1667072, -77.0238264], // Vértice B (Esq. Jr. Máximo Alvarado - 19.82 m)
-            [-12.1669967, -77.0237055], // Vértice C (Fondo Lote 4/5 - 30.09 m)
-            [-12.1670971, -77.0239607], // Vértice D (Fondo Quiebre 1 - 9.35 m)
-            [-12.1670372, -77.0241233], // Vértice E (Fondo Quiebre 2 - 20.33 m)
-            [-12.1669035, -77.0242275]  // Vértice F (Jr. Numa Llona - 29.90 m)
+            [-12.1673500, -77.0249000], // Vértice A (Frente Av. Iglesias / Esq Numa Llona - 35.46 m)
+            [-12.1671150, -77.0246850], // Vértice B (Frente Av. Iglesias / Esq Maximo Alvarado - 19.82 m)
+            [-12.1672350, -77.0245500], // Vértice C (Izquierda Jr. Máximo Alvarado - 30.09 m)
+            [-12.1674400, -77.0247350], // Vértice D (Fondo Tramo 1 - 9.35 m)
+            [-12.1673850, -77.0248000], // Vértice E (Fondo Tramo 2 - 20.33 m)
+            [-12.1675200, -77.0249250]  // Vértice F (Derecha Jr. Numa Llona - 29.90 m)
         ];
 
-        const latCenter = -12.16688;
-        const lngCenter = -77.02400;
+        const latCenter = -12.16730;
+        const lngCenter = -77.02475;
 
         // INICIALIZACION MAPA CON LEAFLET
         const map = L.map('map', {
@@ -966,12 +966,12 @@
 
         // POLIGONO REGISTRAL COMPARATIVO SUNARP (1,204.66 m² - LINEA PUNTEADA AMBAR)
         const coordsSunarp = [
-            [-12.166755, -77.024140],
-            [-12.166725, -77.023845],
-            [-12.166970, -77.023730],
-            [-12.167060, -77.023960],
-            [-12.167010, -77.024105],
-            [-12.166890, -77.024195]
+            [-12.167330, -77.024880],
+            [-12.167130, -77.024700],
+            [-12.167220, -77.024580],
+            [-12.167410, -77.024750],
+            [-12.167360, -77.024810],
+            [-12.167490, -77.024905]
         ];
 
         const polygonRegistral = L.polygon(coordsSunarp, {
