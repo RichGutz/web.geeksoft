@@ -86,11 +86,12 @@ const openWhatsApp = () => {
   const phone = "51991090016";
   if (typeof window !== "undefined") {
     const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    const url = `https://api.whatsapp.com/send?phone=${phone}&text=${text}`;
     if (isMobile) {
-      // Protocolo directo nativo a la aplicación instalada (evita pasar por web intermedia y Google Play)
-      window.location.href = `whatsapp://send?phone=${phone}&text=${text}`;
+      // En móvil, asignar a location.href abre directo la app nativa de WhatsApp sin pasar por Google Play
+      window.location.href = url;
     } else {
-      window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+      window.open(url, "_blank");
     }
   }
 };
