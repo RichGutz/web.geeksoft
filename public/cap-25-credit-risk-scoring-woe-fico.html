@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capítulo 25: Modelado de Riesgo Crediticio, Scorecards WoE & FICO-SBS - GeekSoft Academy</title>
+    <title>Masterclass de Ingeniería: Riesgo Crediticio, Modelos ML & Regulación FICO/SBS - GeekSoft Academy</title>
     <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after {
             box-sizing: border-box; margin: 0; padding: 0;
@@ -33,14 +33,10 @@
             --red:         #E11D48;
             --red-dim:     rgba(225,29,72,0.08);
             --text:        #0F172A;
-            --text-dim:    rgba(15,23,42,0.68);
+            --text-dim:    rgba(15,23,42,0.74);
             --border:      rgba(15,23,42,0.12);
             --shadow:      0 4px 20px rgba(15,23,42,0.06);
             --shadow-lg:   0 12px 40px rgba(15,23,42,0.12);
-        }
-
-        @media print {
-            html, body { display: none !important; visibility: hidden !important; }
         }
 
         html, body {
@@ -51,400 +47,700 @@
             overflow: hidden;
         }
 
-        #watermark-layer {
-            position: fixed; inset: 0; z-index: 99998;
-            pointer-events: none; overflow: hidden;
-            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
-            opacity: 0.035; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
-            color: #0f172a; transform: rotate(-25deg) scale(1.15);
-        }
-        .wm-item { padding: 30px 40px; white-space: nowrap; }
-
         #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
 
         .slide {
             position: absolute; inset: 0;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            padding: 18px 48px 72px;
+            padding: 8px 28px 54px;
             opacity: 0; pointer-events: none;
             transition: opacity 0.35s ease, transform 0.35s ease;
+            transform: translateX(60px);
         }
         .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
 
         nav {
-            position: fixed; bottom: 20px; left: 50%;
+            position: fixed; bottom: 12px; left: 50%;
             transform: translateX(-50%);
-            display: flex; align-items: center; gap: 14px; z-index: 999;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            padding: 6px 16px; border-radius: 40px;
+            display: flex; align-items: center; gap: 8px; z-index: 999;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(14px);
+            padding: 4px 14px; border-radius: 40px;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-lg);
         }
         .nbtn {
-            width: 40px; height: 40px; border-radius: 50%;
+            width: 32px; height: 32px; border-radius: 50%;
             border: 1px solid var(--border);
-            background: var(--bg-card); color: var(--navy); font-size: 18px;
+            background: var(--bg-card); color: var(--navy); font-size: 13px;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             box-shadow: var(--shadow); transition: all 0.2s;
         }
-        .nbtn:hover { background: var(--sky-dim); border-color: var(--sky-brd); transform: scale(1.1); color: var(--sky); }
+        .nbtn:hover { background: var(--sky-dim); border-color: var(--sky-brd); transform: scale(1.08); color: var(--sky); }
         .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
         #counter {
-            font-size: 13px; color: var(--text-dim);
-            font-family: 'JetBrains Mono', monospace; min-width: 65px; text-align: center; font-weight: 800;
+            font-size: 11px; color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace; min-width: 80px; text-align: center; font-weight: 800;
         }
 
         .tag {
-            font-size: 11px; font-weight: 800; letter-spacing: 3px;
-            text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
-            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 9px; font-weight: 800; letter-spacing: 1.8px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 2px;
+            display: inline-flex; align-items: center; gap: 4px;
         }
-        h1 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: var(--navy); }
-        h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
-        .sub { font-size: clamp(0.92rem, 1.35vw, 1.1rem); color: var(--text-dim); font-weight: 400; margin-bottom: 14px; text-align: center; max-width: 1050px; line-height: 1.45; }
+
+        h1 { font-size: clamp(1.5rem, 2.1vw, 2.0rem); font-weight: 900; line-height: 1.15; margin-bottom: 2px; color: var(--navy); text-align: center; }
+        h2 { font-size: clamp(1.15rem, 1.65vw, 1.5rem); font-weight: 900; line-height: 1.15; margin-bottom: 2px; color: var(--navy); text-align: center; }
+        .sub { font-size: clamp(0.74rem, 0.90vw, 0.84rem); color: var(--text-dim); font-weight: 400; margin-bottom: 5px; text-align: center; max-width: 1150px; line-height: 1.3; }
         .hi   { color: var(--sky); }
         .hi-b { color: var(--emerald); }
         .hi-p { color: var(--purple); }
         .hi-a { color: var(--amber); }
+        .hi-r { color: var(--red); }
         .mono { font-family: 'JetBrains Mono', monospace; }
 
         .card {
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 16px; box-shadow: var(--shadow);
+            border-radius: 8px; box-shadow: var(--shadow);
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .card:hover { border-color: var(--sky-brd); }
 
-        .badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: var(--sky-dim); border: 1px solid var(--sky-brd);
-            border-radius: 100px; padding: 6px 18px; font-size: 12px;
-            color: var(--sky); font-weight: 800; letter-spacing: 0.5px;
-        }
-        .badge.green { background: var(--emerald-dim); border-color: var(--emerald-brd); color: var(--emerald); }
-        .badge.purple { background: var(--purple-dim); border-color: var(--purple-brd); color: var(--purple); }
-        .badge.amber { background: var(--amber-dim); border-color: var(--amber-brd); color: var(--amber); }
-
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 1240px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
-        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; max-width: 1240px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; max-width: 1260px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; width: 100%; max-width: 1260px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; width: 100%; max-width: 1260px; }
 
         .spec-box {
-            padding: 16px; display: flex; flex-direction: column; gap: 8px; text-align: left;
+            padding: 8px 10px; display: flex; flex-direction: column; gap: 3px; text-align: left;
         }
-        .spec-icon { font-size: 26px; }
-        .spec-title { font-size: 15px; font-weight: 800; color: var(--navy); }
-        .spec-desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+        .spec-icon { font-size: 16px; }
+        .spec-title { font-size: 11.8px; font-weight: 800; color: var(--navy); }
+        .spec-desc { font-size: 10px; color: var(--text-dim); line-height: 1.35; }
 
-        .flow-container {
-            display: flex; align-items: center; justify-content: space-between;
-            background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
-            padding: 14px 18px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
-            margin: 6px 0; gap: 8px;
+        .formula-box {
+            background: #0F172A; color: #38BDF8; font-family: 'JetBrains Mono', monospace;
+            font-size: 10.2px; padding: 6px 9px; border-radius: 5px; line-height: 1.38;
+            border-left: 3px solid var(--sky); margin: 2px 0; overflow-x: auto;
         }
-        .flow-node {
-            flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
-            padding: 10px 8px; text-align: center; display: flex; flex-direction: column; gap: 4px;
-        }
-        .flow-node.active { border-color: var(--sky); background: #f0f9ff; }
-        .flow-node.green  { border-color: var(--emerald); background: #ecfdf5; }
-        .flow-node.purple { border-color: var(--purple); background: #f5f3ff; }
-        .flow-node.amber  { border-color: var(--amber); background: #fffbeb; }
-        .flow-node-title { font-size: 12.5px; font-weight: 800; color: var(--navy); }
-        .flow-node-desc  { font-size: 10.5px; color: var(--text-dim); }
-        .flow-arrow { font-size: 16px; color: #94a3b8; font-weight: 900; }
+        .formula-box.green  { color: #34D399; border-left-color: var(--emerald); }
+        .formula-box.purple { color: #C084FC; border-left-color: var(--purple); }
+        .formula-box.amber  { color: #FBBF24; border-left-color: var(--amber); }
+        .formula-box.red    { color: #FB7185; border-left-color: var(--red); }
 
         .table-wrap {
-            width: 100%; max-width: 1240px; background: #ffffff;
-            border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+            width: 100%; max-width: 1260px; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 7px; overflow: hidden;
             box-shadow: var(--shadow);
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
-        th { background: #0f172a; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.5px; }
-        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 9.5px; }
+        th { background: #0F172A; color: #ffffff; padding: 5px 8px; font-weight: 700; letter-spacing: 0.4px; }
+        td { padding: 4px 8px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) { background: #f8fafc; }
 
         .footnote {
-            margin-top: 10px; font-size: 10.5px; color: #64748b;
-            line-height: 1.4; width: 100%; max-width: 1240px; text-align: left;
-            border-top: 1px dashed #cbd5e1; padding-top: 6px;
+            margin-top: 4px; font-size: 8.5px; color: #64748b;
+            line-height: 1.25; width: 100%; max-width: 1260px; text-align: left;
+            border-top: 1px dashed #cbd5e1; padding-top: 2px;
             display: flex; justify-content: space-between; align-items: center;
         }
     </style>
 </head>
 <body>
 
-    <div id="watermark-layer">
-        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
-        <div class="wm-item">GEEKSOFT ACADEMY 2026</div>
-        <div class="wm-item">CONFIDENCIAL &bull; PROPIEDAD INTELECTUAL</div>
-        <div class="wm-item">WWW.GEEKSOFT.TECH</div>
-        <div class="wm-item">MULTI-AGENT &bull; RAG &bull; SOTA</div>
-    </div>
-
     <div id="deck">
-<div class="slide active">
-        <div class="tag">🏛️ GOBERNANZA CUANTITATIVA &amp; BASILEA III</div>
-        <h1>Modelado de Riesgo Crediticio: <span class="hi">WoE &amp; Regresiones Calibradas</span></h1>
-        <p class="sub">Cómo se calcula matemáticamente la Probabilidad de Default (PD), el Scorecard Aditivo FICO (0-1000 Pts) y la regulación SBS Res. 11356-2008.</p>
-        <div class="grid-4" style="margin-top: 14px;">
-            <div class="card spec-box">
-                <span class="spec-icon">📐</span>
-                <span class="spec-title">1. Target de Default (PD)</span>
-                <p class="spec-desc">Horizonte de 12M rodantes, criterio objetivo &ge;90 DPD y clasificaciones SBS deterioradas.</p>
+
+        <!-- SLIDE 1: PORTADA EJECUTIVA -->
+        <div class="slide active">
+            <div class="tag">🏛️ MASTERCLASS DE INGENIERÍA CUANTITATIVA • EFIDE &amp; APEFAC</div>
+            <h1>Modelado de Default (PD), <span class="hi">Regresiones &amp; Regulación FICO/SBS</span></h1>
+            <p class="sub">Tratado completo de Econometría Financiera, optimización IRLS, derivación de WoE desde Kullback-Leibler, Gradient Boosting de 2do orden y marco legal FCRA/ECOA/SBS.</p>
+            
+            <div class="grid-4" style="margin-top: 6px;">
+                <div class="card spec-box" style="border-top: 3px solid var(--sky);">
+                    <span class="spec-icon">🔬</span>
+                    <span class="spec-title">1. KL-Divergence &amp; WoE</span>
+                    <p class="spec-desc">Log-Likelihood Ratio y J-Divergence simétrica de Jeffrey para linealización del Logit.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--emerald);">
+                    <span class="spec-icon">📈</span>
+                    <span class="spec-title">2. Optimización MLE / IRLS</span>
+                    <p class="spec-desc">Newton-Raphson con Hessiana H = -X'WX, Matriz de Fisher y regularización ElasticNet.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--purple);">
+                    <span class="spec-icon">📜</span>
+                    <span class="spec-title">3. Marco Legal FICO / SBS</span>
+                    <p class="spec-desc">FCRA Secc. 615(a) (4 Reason Codes), ECOA 12 CFR § 1002.2(p), SR 11-7 y SBS Res. 11356-2008.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--amber);">
+                    <span class="spec-icon">📦</span>
+                    <span class="spec-title">4. Frameworks Open Source</span>
+                    <p class="spec-desc">OptBinning (MILP/OR-Tools), Toad, Scorecardpy e ING Skorecard (Scikit-Learn Pipelines).</p>
+                </div>
             </div>
-            <div class="card spec-box">
-                <span class="spec-icon">📊</span>
-                <span class="spec-title">2. Transformación WoE &amp; IV</span>
-                <p class="spec-desc">Coarse classing monótono, Weight of Evidence e Information Value (&ge;0.10) con VIF &lt; 2.5.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-icon">📈</span>
-                <span class="spec-title">3. Regresión &amp; Escalamiento FICO</span>
-                <p class="spec-desc">Logit con regularización Lasso/Ridge + PDO, Factor y Offset para puntos aditivos 100% auditables.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-icon">🛡️</span>
-                <span class="spec-title">4. Harvard MLSys Production</span>
-                <p class="spec-desc">Confidential computing en RAM cifrada, inferencia &lt;15ms y monitoreo continuo de PSI &lt; 0.10.</p>
-            </div>
+            
+            <div class="footnote"><span>GeekSoft Innovation Labs &bull; Nota Cuantitativa #165 &bull; EFIDE Risk Masterclass</span><span>Slide 1 / 15</span></div>
         </div>
-        <div class="footnote"><span>GeekSoft Academy &bull; Basilea III &bull; FICO Scorecard &bull; SBS Perú</span><span>Slide 1 / 6</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">🔬 TRATAMIENTO DE DATOS &amp; MONOTONÍA</div>
-        <h2>Pipeline de Datos: <span class="hi">Fine &amp; Coarse Classing</span></h2>
-        <p class="sub">Por qué los modelos bancarios no usan variables crudas y cómo se transforman para garantizar linealidad.</p>
-        <div class="grid-3" style="margin-top: 8px;">
-            <div class="card spec-box">
-                <span class="spec-icon">1️⃣</span>
-                <span class="spec-title">Fine Classing (Cuantiles)</span>
-                <p class="spec-desc">Segmentación inicial en 20-50 micro-intervalos. Aísla outliers extremos y detecta no-linealidades complejas.</p>
+
+        <!-- SLIDE 2: DEFINICIÓN FORMAL DE DEFAULT -->
+        <div class="slide">
+            <div class="tag">📐 FUNDAMENTACIÓN PROBABILÍSTICA • TARGET Y</div>
+            <h2>Definición Formal del Evento de Default: <span class="hi">Y in {0, 1} en 12 Meses</span></h2>
+            <p class="sub">Espacio de probabilidad y criterio estocástico de parada según Basilea III y la Resolución SBS N° 11356-2008.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box">
+                    <span class="spec-title">1. Variable Aleatoria de Estado &amp; Horizonte Temporal</span>
+                    <div class="formula-box">
+Y_i | X_i ~ Bernoulli(p_i)    donde p_i = P( Y_i = 1 | X_i )
+Y_i = I( tau_i <= t_0 + 12 meses )
+tau_i = inf { t > t_0 : DPD_i(t) >= 90  v  Rating_SBS(t) in {DEF, DUD, PER} }
+                    </div>
+                    <p class="spec-desc">
+                        • <strong>Performance Window:</strong> 12 meses rodantes estándar.<br/>
+                        • <strong>Criterio Objetivo:</strong> Atraso consecutivo &ge; 90 días calendario.<br/>
+                        • <strong>Criterio Subjetivo:</strong> Refinanciación forzosa o cobranza judicial.
+                    </p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">2. Matriz de Estados Discretos SBS (Cadena de Markov)</span>
+                    <div class="formula-box green">
+Vector de Estado: pi_(t+1) = pi_t &times; P
+P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
+                    </div>
+                    <p class="spec-desc">
+                        • La calibración de la Probabilidad de Default (PD) es el vector de probabilidades de absorción hacia la categoría 4 (Pérdida) en t=12 meses.
+                    </p>
+                </div>
             </div>
-            <div class="card spec-box">
-                <span class="spec-icon">2️⃣</span>
-                <span class="spec-title">Coarse Classing Supervisado</span>
-                <p class="spec-desc">Fusión de bins contiguos asegurando <strong>monotonía estricta</strong> en la tasa de mora (Bad Rate) y volumen &ge; 5% por bin.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-icon">3️⃣</span>
-                <span class="spec-title">Tratamiento de Nulos / Cero</span>
-                <p class="spec-desc">Imputación explícita: los valores faltantes (NaN) y ceros operativos forman bins independientes con su propio riesgo.</p>
-            </div>
+            <div class="footnote"><span>Superintendencia de Banca, Seguros y AFP (SBS Perú) &bull; Basilea III Capital Accord</span><span>Slide 2 / 15</span></div>
         </div>
-        <div class="flow-container" style="margin-top: 14px;">
-            <div class="flow-node active"><span class="flow-node-title">Variable Cruda</span><span class="flow-node-desc">Días mora, Ratios</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-node purple"><span class="flow-node-title">Micro-Bins</span><span class="flow-node-desc">Fine Classing (50)</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-node green"><span class="flow-node-title">Macro-Bins</span><span class="flow-node-desc">Monotonía &ge; 5%</span></div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-node amber"><span class="flow-node-title">Transformación WoE</span><span class="flow-node-desc">Linealización Logit</span></div>
+
+        <!-- SLIDE 3: FINE & COARSE CLASSING -->
+        <div class="slide">
+            <div class="tag">🔬 TRATAMIENTO DE DATOS FINANCIEROS</div>
+            <h2>Pipeline de Binning: <span class="hi">Fine &amp; Coarse Classing Supervisado</span></h2>
+            <p class="sub">Por qué los modelos bancarios no usan variables crudas y cómo se asegura la monotonicidad de riesgo.</p>
+            
+            <div class="grid-3" style="margin-top: 4px;">
+                <div class="card spec-box" style="border-top: 3px solid var(--sky);">
+                    <span class="spec-title">1. Fine Classing (Cuantiles)</span>
+                    <p class="spec-desc">División en 20-50 micro-intervalos por percentiles. Aísla outliers extremos y detecta patrones de comportamiento no lineales.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--emerald);">
+                    <span class="spec-title">2. Coarse Classing Monótono</span>
+                    <p class="spec-desc">Fusión supervisada mediante programación lineal entera mixta (MILP). La tasa de mora (Bad Rate) debe ser <strong>estrictamente creciente o decreciente</strong> con volumen &ge; 5% por bin.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--purple);">
+                    <span class="spec-title">3. Tratamiento de Nulos</span>
+                    <p class="spec-desc">Los valores faltantes (Missing/NaN) y ceros operativos forman bins independientes para capturar su riesgo intrínseco sin imputaciones ciegas.</p>
+                </div>
+            </div>
+            <div class="footnote"><span>OptBinning MILP Solver &bull; Guillermo Navas-Palencia (Constraint Monotonic Optimization)</span><span>Slide 3 / 15</span></div>
         </div>
-        <div class="footnote"><span>Fundamento: BCBS Credit Risk Modeling Standards</span><span>Slide 2 / 6</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">📐 FORMULACIÓN MATEMÁTICA</div>
-        <h2>Weight of Evidence (WoE) &amp; <span class="hi">Information Value (IV)</span></h2>
-        <p class="sub">Cuantificación del poder de separación y selección rigurosa de variables predictoras.</p>
-        <div class="grid-2" style="margin-top: 8px;">
-            <div class="card spec-box" style="border-left: 4px solid var(--sky);">
-                <span class="spec-title">Fórmula del Weight of Evidence (WoE)</span>
-                <p class="spec-desc" style="font-size: 13px; font-family: 'JetBrains Mono', monospace; background: #f8fafc; padding: 10px; border-radius: 8px; margin: 4px 0;">
-                    WoE_i = ln( %Goods_i / %Bads_i )
-                </p>
-                <p class="spec-desc">• <strong>WoE &gt; 0:</strong> Concentra mayor proporción de cumplidores &rarr; <strong>Menor riesgo</strong>.<br/>• <strong>WoE &lt; 0:</strong> Concentra mayor proporción de mora &rarr; <strong>Mayor riesgo</strong>.<br/>• Convierte relaciones no lineales en lineales respecto al Logit.</p>
+
+        <!-- SLIDE 4: TEORÍA DE LA INFORMACIÓN: WoE & KULLBACK-LEIBLER -->
+        <div class="slide">
+            <div class="tag">🔬 TEORÍA DE LA INFORMACIÓN &amp; LIKELIHOOD RATIO</div>
+            <h2>Derivación de WoE e IV desde <span class="hi">Divergencia Kullback-Leibler</span></h2>
+            <p class="sub">Por qué el Weight of Evidence convierte relaciones no lineales en un logit lineal aditivo exacto.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box">
+                    <span class="spec-title">Derivación del Weight of Evidence (WoE)</span>
+                    <div class="formula-box">
+WoE_j = ln( g_j / b_j ) = ln( P(X in B_j | Good) / P(X in B_j | Bad) )
+Razón de Odds: Odds(Y=1|B_j) = Odds_Prior &times; e^(-WoE_j)
+&rArr; ln(Odds_Posterior) = ln(Odds_Prior) - WoE_j
+                    </div>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">Information Value (J-Divergence Simétrica)</span>
+                    <div class="formula-box green">
+IV = D_KL(Goods || Bads) + D_KL(Bads || Goods) = &Sigma; (g_j - b_j) &times; WoE_j
+• IV < 0.02: Ruido &rarr; Descarte.
+• 0.10 <= IV <= 0.50: Predictor Fuerte (Óptimo).
+• IV > 0.50: Sospechoso (Data Leakage / Sobreajuste).
+                    </div>
+                </div>
             </div>
-            <div class="card spec-box" style="border-left: 4px solid var(--emerald);">
-                <span class="spec-title">Fórmula del Information Value (IV)</span>
-                <p class="spec-desc" style="font-size: 13px; font-family: 'JetBrains Mono', monospace; background: #f8fafc; padding: 10px; border-radius: 8px; margin: 4px 0;">
-                    IV = &Sigma; ( %Goods_i - %Bads_i ) &times; WoE_i
-                </p>
-                <p class="spec-desc">• <strong>IV &lt; 0.02:</strong> Sin capacidad predictiva (Ruido &rarr; Descartar).<br/>• <strong>0.10 &le; IV &le; 0.50:</strong> Predictor Fuerte (Óptimo para Scorecard).<br/>• <strong>IV &gt; 0.50:</strong> Sospechoso (Auditar sobreajuste / Data Leakage).</p>
+
+            <div class="table-wrap" style="margin-top: 6px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bin (Días Mora SBS)</th>
+                            <th>Total Clientes</th>
+                            <th>Goods (Y=0)</th>
+                            <th>Bads (Y=1)</th>
+                            <th>Bad Rate (%)</th>
+                            <th>WoE</th>
+                            <th>IV Contribución</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0 días (Normal)</td><td>12,450</td><td>12,200 (61.0%)</td><td>250 (12.5%)</td><td>2.01%</td><td><span class="hi-b mono">+1.58</span></td><td>0.7663</td></tr>
+                        <tr><td>1 a 8 días</td><td>4,200</td><td>3,950 (19.8%)</td><td>250 (12.5%)</td><td>5.95%</td><td><span class="hi-b mono">+0.46</span></td><td>0.0336</td></tr>
+                        <tr><td>9 a 30 días (CPP)</td><td>2,150</td><td>1,650 (8.2%)</td><td>500 (25.0%)</td><td>23.25%</td><td><span class="hi-a mono">-1.11</span></td><td>0.1865</td></tr>
+                        <tr><td>&gt; 30 días (Deficiente+)</td><td>1,200</td><td>200 (1.0%)</td><td>1,000 (50.0%)</td><td>83.33%</td><td><span class="hi-r mono">-3.91</span></td><td>1.9159</td></tr>
+                        <tr style="background:#0F172A; color:#fff; font-weight:700;"><td colspan="6">TOTAL INFORMATION VALUE (IV GLOBAL DE LA VARIABLE)</td><td><span class="hi mono">2.9023 (Predictor Crítico)</span></td></tr>
+                    </tbody>
+                </table>
             </div>
+            <div class="footnote"><span>Propiedad: IV &ge; 0 en todo espacio de Borel &bull; Teorema de Kullback-Leibler (1951)</span><span>Slide 4 / 15</span></div>
         </div>
-        <div class="footnote"><span>Control Multicolinealidad: VIF &lt; 2.5 obligatorio antes de regresión</span><span>Slide 3 / 6</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">📈 MODELADO ADITIVO &amp; REGULACIÓN FICO</div>
-        <h2>Regresión Logística &amp; <span class="hi">Escalamiento a Puntos FICO (0-1000)</span></h2>
-        <p class="sub">De la probabilidad logit al cálculo aditivo transparente requerido por comités de riesgo y la SBS.</p>
-        <div class="table-wrap" style="margin-top: 6px;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Variable / Concepto</th>
-                        <th>Atributo / Bin</th>
-                        <th>WoE</th>
-                        <th>Coeficiente Beta</th>
-                        <th>Puntos Score (FICO)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background: #f1f5f9; font-weight: 700;">
-                        <td>Constante Base</td>
-                        <td>Calibración de Cartera (Score0 = 600, Odds0 = 50:1, PDO = 20)</td>
-                        <td>-</td>
-                        <td>Intercepto &beta;0</td>
-                        <td>+480 pts</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Atraso SBS Histórico 12M</strong></td>
-                        <td>0 días (100% Normal SBS)</td>
-                        <td>+0.92</td>
-                        <td>-0.45</td>
-                        <td><span class="hi-b" style="font-weight: 800;">+120 pts</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Atraso SBS Histórico 12M</strong></td>
-                        <td>&gt; 30 días o Protestos</td>
-                        <td>-1.65</td>
-                        <td>-0.45</td>
-                        <td><span class="hi-a" style="font-weight: 800;">-214 pts</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mora Factoring APEFAC</strong></td>
-                        <td>0 días mora en facturas de los 23 factores</td>
-                        <td>+0.75</td>
-                        <td>-0.52</td>
-                        <td><span class="hi-b" style="font-weight: 800;">+112 pts</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mora Factoring APEFAC</strong></td>
-                        <td>&gt; 15 días mora en facturas negociables</td>
-                        <td>-1.90</td>
-                        <td>-0.52</td>
-                        <td><span class="hi" style="font-weight: 800; color: var(--red);">-285 pts</span></td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <!-- SLIDE 5: ESTIMACIÓN MLE Y ALGORITMO IRLS -->
+        <div class="slide">
+            <div class="tag">📈 ESTIMACIÓN ECONOMÉTRICA &amp; OPTIMIZACIÓN</div>
+            <h2>Máxima Verosimilitud &amp; <span class="hi">Algoritmo IRLS / Newton-Raphson</span></h2>
+            <p class="sub">Cómo el motor computa los coeficientes beta exactos minimizando el riesgo de default.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box">
+                    <span class="spec-title">Log-Verosimilitud &amp; Gradiente (Score Vector)</span>
+                    <div class="formula-box">
+ell(beta) = &Sigma; [ y_i &times; x_i'beta - ln(1 + e^(x_i'beta)) ]
+Gradiente: g(beta) = &part;ell/&part;beta = X' (y - p)
+                    </div>
+                    <p class="spec-desc">• <strong>Condición de Primer Orden:</strong> X' (y - p) = 0.<br/>• No tiene solución analítica cerrada; requiere métodos iterativos de segundo orden.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">Matriz Hessiana &amp; Matriz de Información de Fisher</span>
+                    <div class="formula-box green">
+Hessiana: H = &part;&sup2;ell/&part;beta&part;beta' = - X' W X
+I(beta) = X' W X    donde W_ii = p_i (1 - p_i)
+                    </div>
+                    <p class="spec-desc">• <strong>Convexidad:</strong> W es estrictamente positiva &rarr; -H es definida positiva &rarr; Convergencia cóncava global única.</p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--purple);">
+                <span class="spec-title">Paso de Actualización Canónico IRLS (Iteratively Reweighted Least Squares)</span>
+                <div class="formula-box purple" style="font-size:10.5px;">
+beta^(t+1) = (X' W_t X)^(-1) X' W_t z_t    donde z_t = X beta^(t) + W_t^(-1) (y - p_t)
+                </div>
+                <p class="spec-desc">• <strong>Errores Estándar:</strong> SE(beta_j) = &radic;[ (X' W X)^(-1) ]_jj &bull; <strong>Test de Wald:</strong> W_j = (beta_j / SE(beta_j))&sup2; ~ &chi;&sup2;(1).</p>
+            </div>
+            <div class="footnote"><span>Scipy/Statsmodels &bull; Maximum Likelihood Estimation (MLE)</span><span>Slide 5 / 15</span></div>
         </div>
-        <div class="footnote"><span>Ecuación: Score = Offset - Factor &times; ( &beta;0 + &Sigma; &beta;j &times; WoEj ) &bull; Factor = PDO / ln(2)</span><span>Slide 4 / 6</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">🛡️ QUALITY GATES &amp; AUDITORÍA SBS</div>
-        <h2>Batería de Validación Cuantitativa &amp; <span class="hi">Control de Drift</span></h2>
-        <p class="sub">Métricas obligatorias para la certificación del modelo por Comités de Auditoría y Reguladores.</p>
-        <div class="grid-4" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-title">Kolmogorov-Smirnov (KS)</span>
-                <p class="spec-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--emerald); font-weight: 800;">KS &ge; 40%</p>
-                <p class="spec-desc">Mide la máxima separación entre acumuladas de buenos y malos. Garantiza corte óptimo.</p>
+
+        <!-- SLIDE 6: REGULARIZACIÓN COORDINATE DESCENT Y GLM PROBIT -->
+        <div class="slide">
+            <div class="tag">⚙️ MODELOS LINEALES AVANZADOS &amp; REGULARIZACIÓN</div>
+            <h2>ElasticNet, Coordinate Descent &amp; <span class="hi">GLM Probit vs. Logit</span></h2>
+            <p class="sub">Optimización de coeficientes bajo multicolinealidad severa y modelado de colas pesadas.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box">
+                    <span class="spec-title">1. ElasticNet &amp; Coordinate Descent</span>
+                    <div class="formula-box amber">
+min -ell(beta) + &lambda;1 ||beta||_1 + (&lambda;2/2) ||beta||_2&sup2;
+Operador Soft-Thresholding:
+S(z, &gamma;) = sign(z) &times; (|z| - &gamma;)_+
+beta_j^(t+1) = S( &Sigma; w_i r_i x_ij, &lambda;1 ) / ( &Sigma; w_i x_ij&sup2; + &lambda;2 )
+                    </div>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">2. GLM Probit vs. Logit (Colas Pesadas)</span>
+                    <div class="formula-box purple">
+Logit Link:   g(p) = ln( p / (1 - p) ) &rArr; F'(z) = e^-z / (1 + e^-z)&sup2;
+Probit Link:  g(p) = &Phi;^(-1)(p)     &rArr; F'(z) = (1/&radic;2&pi;) e^(-z&sup2;/2)
+Efecto Marginal: &part;p/&part;x_j = f(x'beta) &times; beta_j
+                    </div>
+                </div>
             </div>
-            <div class="card spec-box">
-                <span class="spec-title">Curva ROC / AUC</span>
-                <p class="spec-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--sky); font-weight: 800;">AUC &ge; 0.80</p>
-                <p class="spec-desc">Área bajo la curva de sensibilidad vs 1-especificidad. Equivalente a Gini &ge; 60%.</p>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--emerald);">
+                <span class="spec-title">Control de Multicolinealidad (VIF - Variance Inflation Factor)</span>
+                <p class="spec-desc">VIF_j = 1 / (1 - R_j&sup2;). Se exige que VIF_j &lt; 2.5 para todas las variables seleccionadas, asegurando ortogonalidad y estabilidad numérica en la matriz Hessiana.</p>
             </div>
-            <div class="card spec-box">
-                <span class="spec-title">Hosmer-Lemeshow Test</span>
-                <p class="spec-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--purple); font-weight: 800;">p-value &gt; 0.05</p>
-                <p class="spec-desc">Prueba de calibración entre defaults observados vs esperados por decil de riesgo.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title">Estabilidad Poblacional (PSI)</span>
-                <p class="spec-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--amber); font-weight: 800;">PSI &lt; 0.10</p>
-                <p class="spec-desc">Monitoreo mensual de degradación de cartera en producción para alerta temprana de corrimiento.</p>
-            </div>
+            <div class="footnote"><span>Referencia: Friedman, Hastie &amp; Tibshirani (2010), Regularization Paths for GLMs</span><span>Slide 6 / 15</span></div>
         </div>
-        <div class="footnote"><span>Cumplimiento: Resolución SBS N° 11356-2008 &bull; Basilea II/III IRB Approach</span><span>Slide 5 / 6</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">⚡ HARVARD MLSYS &amp; PRODUCCIÓN REAL</div>
-        <h2>Del Modelo Matemático al <span class="hi">Sistema en Tiempo Real</span></h2>
-        <p class="sub">Principios de ingeniería de sistemas de ML (Prof. Vijay Janapa Reddi - Harvard CS249r) aplicados a APEFAC y EFIDE.</p>
-        <div class="grid-3" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-icon">🔒</span>
-                <span class="spec-title">Confidential Computing</span>
-                <p class="spec-desc">Cálculo de matrices WoE en memoria RAM volátil descifrada puntualmente con AWS KMS. Cero persistencia en disco.</p>
+
+        <!-- SLIDE 7: DERIVACIÓN MATEMÁTICA DEL MOTOR FICO -->
+        <div class="slide">
+            <div class="tag">🎯 MOTOR DE ESCALAMIENTO FICO</div>
+            <h2>Demostración Formal: <span class="hi">De Probabilidades a Puntos (0-1000)</span></h2>
+            <p class="sub">Derivación matemática exacta de Factor, Offset y la regla de descomposición aditiva para Comités.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box">
+                    <span class="spec-title">1. Deducción de Factor &amp; Offset</span>
+                    <div class="formula-box amber">
+Score = Offset + Factor &times; ln( (1-p) / p )
+(1) Score0 = Offset + Factor &times; ln(Odds0)
+(2) Score0 + PDO = Offset + Factor &times; ln(2 &times; Odds0)
+(2) - (1) &rArr; PDO = Factor &times; ln(2)
+&rArr; Factor = PDO / ln(2)
+&rArr; Offset = Score0 - Factor &times; ln(Odds0)
+                    </div>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">2. Descomposición Aditiva por Variable</span>
+                    <div class="formula-box purple">
+Score = Offset - Factor &times; [ beta0 + &Sigma; beta_j &times; WoE_j ]
+Score = &Sigma; Points_j(x)
+Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &times; WoE_j,i
+                    </div>
+                </div>
             </div>
-            <div class="card spec-box">
-                <span class="spec-icon">⚡</span>
-                <span class="spec-title">Inferencia Sub-Milisegundo</span>
-                <p class="spec-desc">Producto punto vectorizado (&beta; &times; WoE) en microservicios C++/Python con latencia P99 &lt; 15 ms por RUC consultado.</p>
+
+            <div class="table-wrap" style="margin-top: 6px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Variable Crediticia</th>
+                            <th>Rango Evaluado (Bin)</th>
+                            <th>WoE Calculado</th>
+                            <th>Beta Estimado</th>
+                            <th>Puntos Aportados al Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background:#f1f5f9; font-weight:700;"><td>Base Fija de Calibración</td><td>Puntaje Base (Score0=600, Odds0=50:1, PDO=20)</td><td>-</td><td>Intercepto beta0</td><td><span class="hi-b mono">+480 pts</span></td></tr>
+                        <tr><td><strong>1. Atraso SBS Histórico 12M</strong></td><td>0 días (100% Normal SBS)</td><td>+0.92</td><td>-0.45</td><td><span class="hi-b mono">+120 pts</span></td></tr>
+                        <tr><td><strong>1. Atraso SBS Histórico 12M</strong></td><td>&gt; 30 días o Protestos Judiciales</td><td>-1.65</td><td>-0.45</td><td><span class="hi-r mono">-214 pts</span></td></tr>
+                        <tr><td><strong>2. Mora Factoring APEFAC</strong></td><td>0 días mora en factoring de los 23 factores</td><td>+0.75</td><td>-0.52</td><td><span class="hi-b mono">+112 pts</span></td></tr>
+                        <tr><td><strong>2. Mora Factoring APEFAC</strong></td><td>&gt; 15 días mora en facturas cedidas</td><td>-1.90</td><td>-0.52</td><td><span class="hi-r mono">-285 pts</span></td></tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="card spec-box">
-                <span class="spec-icon">📡</span>
-                <span class="spec-title">Telemetría de Drift en Vivo</span>
-                <p class="spec-desc">Cálculo automático de PSI en cada lote mensual. Alertas push inmediatas si la cartera sufre un cambio estructural.</p>
-            </div>
+            <div class="footnote"><span>Explicabilidad Total: Cumple con la Circular SBS G-140-2009 de Transparencia de Información</span><span>Slide 7 / 15</span></div>
         </div>
-        <div class="footnote"><span>GeekSoft Engineering &bull; Harvard MLSys Curriculum &bull; APEFAC Risk Core 2026</span><span>Slide 6 / 6</span></div>
-    </div>
+
+        <!-- SLIDE 8: MARCO LEGAL FICO, FCRA & ECOA -->
+        <div class="slide">
+            <div class="tag">📜 MARCO LEGAL INTERNACIONAL • FCRA &amp; ECOA</div>
+            <h2>¿Qué es la Regulación FICO y <span class="hi">Qué Regula Exactamente?</span></h2>
+            <p class="sub">Las leyes federales y estándares de supervisión que hacen obligatorio el diseño de Scorecards aditivos y transparentes.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box" style="border-left: 3px solid var(--sky);">
+                    <span class="spec-title">1. FCRA (Fair Credit Reporting Act - 15 U.S.C. § 1681)</span>
+                    <p class="spec-desc">
+                        • <strong>Adverse Action Notices (Secc. 615(a)):</strong> Si a un solicitante se le deniega crédito o se le aplica una tasa castigada, la ley exige entregar por escrito el puntaje y los <strong>4 factores principales de impacto negativo (Key Reason Codes)</strong>.<br/>
+                        • <strong>Por qué el Scorecard Aditivo es Mandatorio:</strong> Permite ordenar las variables por su contribución aritmética: Rank = argmin(Points_j) y extraer los 4 motivos sin ambigüedad. Un modelo de "caja negra" es ilegal bajo FCRA.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-left: 3px solid var(--purple);">
+                    <span class="spec-title">2. ECOA (Equal Credit Opportunity Act - 12 CFR Part 1002)</span>
+                    <p class="spec-desc">
+                        • <strong>Prohibición de Atributos Protegidos:</strong> Prohibido usar edad, sexo, raza, religión, nacionalidad o estado civil.<br/>
+                        • <strong>Doctrina del Impacto Desproporcionado (Disparate Impact):</strong> Variables neutrales que generen sesgo estadístico contra minorías sin justificación empírica son sancionadas.<br/>
+                        • <strong>Gobernanza SR 11-7 / OCC 2011-12:</strong> Conceptual Soundness, Ongoing Monitoring (PSI) e Independent Review.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--emerald);">
+                <span class="spec-title">Los 5 Mandatos Legales de un Scorecard Válido (12 CFR § 1002.2(p))</span>
+                <p class="spec-desc">1. Muestra Empírica Representativa &bull; 2. Metodología Científica (Logit / WoE) &bull; 3. Poder Separador Comprobado (KS &ge; 40%) &bull; 4. Validación OOT / OOS &bull; 5. Control de Drift (PSI &lt; 0.10).</p>
+            </div>
+            <div class="footnote"><span>Consumer Financial Protection Bureau (CFPB) &bull; Federal Reserve Board &bull; OCC Standards</span><span>Slide 8 / 15</span></div>
+        </div>
+
+        <!-- SLIDE 9: MARCO REGULATORIO SBS PERÚ -->
+        <div class="slide">
+            <div class="tag">🏛️ REGULACIÓN BANCARIA LOCAL • SBS PERÚ</div>
+            <h2>Marco Normativo de la SBS: <span class="hi">Res. 11356-2008 &amp; 3780-2011</span></h2>
+            <p class="sub">El estándar regulatorio peruano para calificación crediticia, provisiones requeridas y modelos internos IRB.</p>
+            
+            <div class="grid-3" style="margin-top: 4px;">
+                <div class="card spec-box" style="border-top: 3px solid var(--emerald);">
+                    <span class="spec-title">1. Las 5 Categorías SBS</span>
+                    <p class="spec-desc">
+                        • <strong>0 (Normal):</strong> 0 a 8 días mora.<br/>
+                        • <strong>1 (CPP):</strong> 9 a 30 días mora.<br/>
+                        • <strong>2 (Deficiente):</strong> 31 a 60 días.<br/>
+                        • <strong>3 (Dudoso):</strong> 61 a 120 días.<br/>
+                        • <strong>4 (Pérdida):</strong> &gt; 120 días / Cobranza judicial.
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--amber);">
+                    <span class="spec-title">2. Regla de Arrastre (Cross-Default)</span>
+                    <p class="spec-desc">Si un deudor incurre en <em>Deficiente</em> o <em>Dudoso</em> con cualquier banco del sistema, <strong>todas sus operaciones comerciales y facturas de factoring</strong> se degradan automáticamente a dicha categoría.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--sky);">
+                    <span class="spec-title">3. Fórmula de Provisiones SBS</span>
+                    <div class="formula-box green" style="font-size:9.5px;">
+Provisión = EAD &times; PD &times; LGD
+                    </div>
+                    <p class="spec-desc">Tasas de provisión mínimas obligatorias (0.70% a 100.0%) sobre el saldo no cubierto por garantías preferidas autoliquidables.</p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--purple);">
+                <span class="spec-title">Requisitos de Modelos Internos SBS (Res. 3780-2011 &amp; Circular G-140-2009)</span>
+                <p class="spec-desc">• Mínimo 5 a 7 años de datos históricos cubriendo ciclos económicos completos &bull; Pruebas de <em>Stress Testing</em> ante shocks macroeconómicos &bull; Derecho a la transparencia y explicabilidad de rechazo para los solicitantes.</p>
+            </div>
+            <div class="footnote"><span>Superintendencia de Banca, Seguros y AFP (SBS Perú) &bull; Reglamento de Gestión del Riesgo de Crédito</span><span>Slide 9 / 15</span></div>
+        </div>
+
+        <!-- SLIDE 10: BASILEA III Y CÓPULA DE VASICEK -->
+        <div class="slide">
+            <div class="tag">🏛️ REGULACIÓN DE CAPITAL BASILEA III</div>
+            <h2>Modelo ASRF de Vasicek &amp; <span class="hi">Cálculo de Capital Regulatorio (K)</span></h2>
+            <p class="sub">Estructura estocástica de activos, cópula gaussiana para pérdida inesperada y provisiones SBS.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box">
+                    <span class="spec-title">Dinámica de Activos de Vasicek (1 Factor Sistemático)</span>
+                    <div class="formula-box">
+A_i = &radic;&rho; &times; Z + &radic;(1 - &rho;) &times; &epsilon;_i    donde Z ~ N(0,1), &epsilon;_i ~ N(0,1)
+Default si: A_i &lt; c_i = &Phi;^(-1)(PD_i)
+PD_stressed (q=0.999) = &Phi;( [ &Phi;^(-1)(PD) + &radic;&rho; &times; &Phi;^(-1)(0.999) ] / &radic;(1 - &rho;) )
+                    </div>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">Requerimiento de Capital (K) &amp; Pérdida Esperada (EL)</span>
+                    <div class="formula-box green">
+EL = PD &times; LGD &times; EAD
+K = [ LGD &times; PD_stressed - PD &times; LGD ] &times; [ (1 + (M - 2.5)b) / (1 - 1.5b) ]
+donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
+                    </div>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--sky);">
+                <span class="spec-title">Matriz de Transición de Estados SBS Res. 11356-2008 (Cadena de Markov Discreta)</span>
+                <p class="spec-desc">El vector de probabilidades de calificación evoluciona como: <strong>&pi;_(t+1) = &pi;_t &times; P</strong>, donde P es la matriz de migración crediticia con el estado de <em>Pérdida / Default</em> como estado absorbente (P_55 = 1.0).</p>
+            </div>
+            <div class="footnote"><span>Basilea II/III Comprehensive IRB Formula &bull; BCBS Working Paper 54</span><span>Slide 10 / 15</span></div>
+        </div>
+
+        <!-- SLIDE 11: VALIDACIÓN CUANTITATIVA Y CALIBRACIÓN -->
+        <div class="slide">
+            <div class="tag">🛡️ QUALITY GATES CUANTITATIVOS</div>
+            <h2>Estadísticos Asintóticos: <span class="hi">KS, AUC, Gini &amp; Drift (PSI)</span></h2>
+            <p class="sub">Protocolo de certificación estadística para modelos de originación y seguimiento de carteras.</p>
+            
+            <div class="grid-4" style="margin-top: 4px;">
+                <div class="card spec-box">
+                    <span class="spec-title">Kolmogorov-Smirnov (KS)</span>
+                    <div class="formula-box green">KS = sup_s |F_Bad(s) - F_Good(s)|</div>
+                    <p class="spec-desc"><strong>Umbral: KS &ge; 40%</strong><br/>Máxima separación entre acumuladas. Garantiza poder discriminante de corte.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">Área ROC / Coef. Gini</span>
+                    <div class="formula-box">Gini = 2 &times; AUC - 1</div>
+                    <p class="spec-desc"><strong>Umbral: Gini &ge; 60% (AUC &ge; 0.80)</strong><br/>Probabilidad de que un Bad reciba un score menor a un Good aleatorio.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">Hosmer-Lemeshow Test</span>
+                    <div class="formula-box purple">&chi;&sup2; = &Sigma; (O_g - E_g)&sup2; / [E_g(1 - E_g/N)]</div>
+                    <p class="spec-desc"><strong>Umbral: p-value &gt; 0.05</strong><br/>Prueba que la PD estimada coincide con la tasa observada en cada decil.</p>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">Estabilidad Poblacional (PSI)</span>
+                    <div class="formula-box amber">PSI = &Sigma; (Act% - Base%) &times; ln(Act%/Base%)</div>
+                    <p class="spec-desc"><strong>Umbral: PSI &lt; 0.10</strong><br/>Alerta automática mensual de corrimiento poblacional antes de que aumente la mora.</p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--emerald);">
+                <span class="spec-title">Reglas de Gobernanza y Recalibración</span>
+                <p class="spec-desc">• <strong>PSI &lt; 0.10:</strong> Operación Normal &bull; <strong>0.10 &le; PSI &lt; 0.25:</strong> Alerta Amarilla (Monitoreo quincenal) &bull; <strong>PSI &ge; 0.25:</strong> Alerta Roja (Recalibración obligatoria de coeficientes beta y coarse classing).</p>
+            </div>
+            <div class="footnote"><span>Validación Independiente según Supervisory Guidance on Model Risk Management (SR 11-7)</span><span>Slide 11 / 15</span></div>
+        </div>
+
+        <!-- SLIDE 12: XGBOOST MATEMÁTICA DE 2DO ORDEN -->
+        <div class="slide">
+            <div class="tag">🌲 ALGORITMOS DE ENSAMBLE • MACHINE LEARNING</div>
+            <h2>XGBoost: <span class="hi">Expansión de Taylor de 2do Orden &amp; Split Gain</span></h2>
+            <p class="sub">Formulación matemática rigurosa del algoritmo de Gradient Boosting y optimización de hojas.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box">
+                    <span class="spec-title">1. Aproximación de Taylor de 2do Orden</span>
+                    <div class="formula-box">
+L^(t) &approx; &Sigma; [ l(y_i, y_hat^(t-1)) + g_i f_t(x_i) + (1/2) h_i f_t&sup2;(x_i) ] + &Omega;(f_t)
+g_i = &part;l / &part;y_hat = p_i - y_i    (Residuo de 1er Orden)
+h_i = &part;&sup2;l / &part;y_hat&sup2; = p_i(1 - p_i) (Hessiana de 2do Orden)
+                    </div>
+                </div>
+                <div class="card spec-box">
+                    <span class="spec-title">2. Peso Óptimo de Hoja &amp; Split Gain</span>
+                    <div class="formula-box green">
+Peso Óptimo: w_j* = - G_j / (H_j + &lambda;)
+Gain = (1/2) [ G_L&sup2;/(H_L+&lambda;) + G_R&sup2;/(H_R+&lambda;) - (G_L+G_R)&sup2;/(H_L+H_R+&lambda;) ] - &gamma;
+donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
+                    </div>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--purple);">
+                <span class="spec-title">Algoritmo TreeSHAP Polinomial O( T &times; L &times; D&sup2; )</span>
+                <p class="spec-desc">Recorre las rutas de decisión de los árboles de ensamble calculando la esperanza condicional exacta E[f(x)|x_S], entregando la contribución aditiva en puntos de cada variable en milisegundos.</p>
+            </div>
+            <div class="footnote"><span>Chen &amp; Guestrin (KDD 2016) &bull; Lundberg et al., Nature Machine Intelligence (2020)</span><span>Slide 12 / 15</span></div>
+        </div>
+
+        <!-- SLIDE 13: TOP 4 FRAMEWORKS OPEN SOURCE -->
+        <div class="slide">
+            <div class="tag">📦 REPOSITORIOS GIT OFICIALES • NO INVENTAR LA RUEDA</div>
+            <h2>Los 4 Frameworks Open Source de <span class="hi">Referencia Bancaria Global</span></h2>
+            <p class="sub">Librerías validadas por la industria financiera global para desarrollo de Scorecards FICO y WoE.</p>
+            
+            <div class="grid-4" style="margin-top: 4px;">
+                <div class="card spec-box" style="border-top: 3px solid var(--sky);">
+                    <span class="spec-title">1. OptBinning</span>
+                    <p class="spec-desc" style="color: var(--sky); font-weight:700;">Guillermo Navas-Palencia</p>
+                    <p class="spec-desc">Optimal Binning con <strong>Programación Lineal (MILP / OR-Tools)</strong>. Monotonía estricta garantizada matemáticamente.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--emerald);">
+                    <span class="spec-title">2. Scorecardpy</span>
+                    <p class="spec-desc" style="color: var(--emerald); font-weight:700;">Shichen Xie</p>
+                    <p class="spec-desc">Estándar de la banca tradicional (Port de R). Filtro IV, stepwise, curvas ROC, KS y monitoreo de PSI en 1 comando.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--purple);">
+                    <span class="spec-title">3. ING Skorecard</span>
+                    <p class="spec-desc" style="color: var(--purple); font-weight:700;">ING Bank Data Science</p>
+                    <p class="spec-desc">Desarrollado directamente por el banco global <strong>ING</strong>. Integración nativa con Scikit-Learn Pipelines para Basilea.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--amber);">
+                    <span class="spec-title">4. Toad FinTech</span>
+                    <p class="spec-desc" style="color: var(--amber); font-weight:700;">Dianrong FinTech Team</p>
+                    <p class="spec-desc">Motor ultra-rápido en Cython/C++ para originación masiva, filtrado de multicolinealidad y streaming de scoring.</p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--emerald);">
+                <span class="spec-title">Código de Integración Directa con OptBinning (Scorecard FICO en Producción)</span>
+                <div class="formula-box green" style="font-size:10px;">
+from optbinning import BinningProcess, Scorecard
+sc = Scorecard(binning_process=BinningProcess(features), estimator=LogisticRegression(), pdo=20, target_score=600, target_odds=50)
+sc.fit(X, y); print(sc.table(style="detailed"))
+                </div>
+            </div>
+            <div class="footnote"><span>GitHub Repositories: optbinning &bull; scorecardpy &bull; amphibian-dev/toad &bull; ing-bank/skorecard</span><span>Slide 13 / 15</span></div>
+        </div>
+
+        <!-- SLIDE 14: HARVARD MLSYS & PRODUCCIÓN EN RAM -->
+        <div class="slide">
+            <div class="tag">⚡ INGENIERÍA DE SISTEMAS DE PRODUCCIÓN</div>
+            <h2>Arquitectura Harvard MLSys: <span class="hi">Confidential RAM Enclaves</span></h2>
+            <p class="sub">Del modelo matemático en papel a la infraestructura de scoring en memoria volátil de sub-milisegundo.</p>
+            
+            <div class="grid-3" style="margin-top: 4px;">
+                <div class="card spec-box" style="border-top: 3px solid var(--sky);">
+                    <span class="spec-icon">🔒</span>
+                    <span class="spec-title">1. Confidential Computing</span>
+                    <p class="spec-desc">Desencriptación efímera en memoria RAM volátil mediante AWS KMS. El disco duro jamás almacena datos de carteras en texto plano.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--emerald);">
+                    <span class="spec-icon">⚡</span>
+                    <span class="spec-title">2. Inferencia SIMD Vectorizada</span>
+                    <p class="spec-desc">Cálculo del producto punto matricial (beta &times; WoE) mediante microservicios Rust/C++ con latencia P99 &lt; 12 ms por RUC.</p>
+                </div>
+                <div class="card spec-box" style="border-top: 3px solid var(--purple);">
+                    <span class="spec-title">3. Telemetría Continua de Drift</span>
+                    <p class="spec-desc">Cálculo de PSI en streaming. Si el índice supera 0.10, el sistema emite un ticket de alerta preventiva al Chief Risk Officer.</p>
+                </div>
+            </div>
+
+            <div class="card spec-box" style="margin-top: 5px; border-left: 3px solid var(--sky);">
+                <span class="spec-title">Principios de Harvard MLSys (Prof. Vijay Janapa Reddi - CS249r)</span>
+                <p class="spec-desc">TinyTorch &bull; Hardware Acceleration &bull; Continuous Batching &bull; Zero-Downtime Model Governance.</p>
+            </div>
+            <div class="footnote"><span>Harvard MLSys Project &bull; APEFAC Confidential Risk Core Architecture</span><span>Slide 14 / 15</span></div>
+        </div>
+
+        <!-- SLIDE 15: CHEAT SHEET PARA LA PRUEBA DE FUEGO -->
+        <div class="slide">
+            <div class="tag">🎯 CHEAT SHEET PARA LA PRUEBA DE FUEGO • DEFENSA ANTE EFIDE</div>
+            <h2>El Guión Cuantitativo de Alta Dirección: <span class="hi">Cómo Responder a EFIDE</span></h2>
+            <p class="sub">La estructura de 4 niveles para dominar y superar cualquier examen técnico de Comités de Riesgo o la SBS.</p>
+            
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box" style="border-left: 3px solid var(--sky);">
+                    <span class="spec-title">Nivel 1: Datos &amp; WoE (Kullback-Leibler)</span>
+                    <p class="spec-desc">
+                        <em>"No usamos variables continuas crudas: aplicamos <strong>Coarse Classing</strong> con programación lineal (MILP) asegurando monotonía estricta y derivamos el <strong>Weight of Evidence</strong> desde la divergencia simétrica de Kullback-Leibler, filtrando con <strong>Information Value (IV &ge; 0.10)</strong> y controlando <strong>VIF &lt; 2.5</strong>."</em>
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-left: 3px solid var(--emerald);">
+                    <span class="spec-title">Nivel 2: Regresión &amp; FICO (Reason Codes)</span>
+                    <p class="spec-desc">
+                        <em>"Ajustamos la <strong>Regresión Logística vía IRLS / Newton-Raphson</strong> con regularización Lasso/Ridge. Escalamos al <strong>Scorecard FICO aditivo (0-1000 Pts)</strong> mediante Factor = PDO/ln(2) y Offset, lo que nos permite extraer los <strong>4 Adverse Reason Codes</strong> que exige FCRA y la SBS ante cualquier rechazo."</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 4px;">
+                <div class="card spec-box" style="border-left: 3px solid var(--purple);">
+                    <span class="spec-title">Nivel 3: Validación &amp; Basilea III</span>
+                    <p class="spec-desc">
+                        <em>"Certificamos un <strong>KS &ge; 40%</strong> y <strong>Gini &ge; 60%</strong>, modelamos el capital regulatorio $K$ bajo la <strong>Cópula de Vasicek ASRF (Basilea III)</strong> y provisionamos según la <strong>Resolución SBS N° 11356-2008</strong> con matrices de migración crediticia de Markov."</em>
+                    </p>
+                </div>
+                <div class="card spec-box" style="border-left: 3px solid var(--amber);">
+                    <span class="spec-title">Nivel 4: Producción &amp; Drift (Harvard MLSys)</span>
+                    <p class="spec-desc">
+                        <em>"Implementamos el motor en <strong>memoria RAM volátil cifrada (Confidential Computing con AWS KMS)</strong> con latencia &lt; 15 ms y monitoreamos en streaming la estabilidad poblacional con <strong>PSI &lt; 0.10</strong> para alertar antes de que aumente la mora."</em>
+                    </p>
+                </div>
+            </div>
+            <div class="footnote"><span>GeekSoft Executive Risk Defense Framework &bull; Cero Humo &bull; 100% Rigor Institucional</span><span>Slide 15 / 15</span></div>
+        </div>
+
     </div>
 
     <nav>
-        <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 6</div>
-        <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
-        <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
+        <button class="nbtn" id="pbtn" onclick="prevSlide()" disabled>&larr;</button>
+        <span id="counter">1 / 15</span>
+        <button class="nbtn" id="nbtn" onclick="nextSlide()">&rarr;</button>
     </nav>
 
     <script>
-        const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const counter = document.getElementById('counter');
-        const fsBtn = document.getElementById('fs-btn');
         let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const counter = document.getElementById('counter');
+        const pbtn = document.getElementById('pbtn');
+        const nbtn = document.getElementById('nbtn');
+        const total = slides.length;
 
-        function updateDeck() {
-            slides.forEach((slide, idx) => {
-                slide.classList.remove('active');
-                if (idx === current) {
-                    slide.classList.add('active');
+        function updateSlide(idx) {
+            slides.forEach((s, i) => {
+                s.classList.remove('active');
+                if (i < idx) {
+                    s.style.transform = 'translateX(-60px)';
+                } else if (i > idx) {
+                    s.style.transform = 'translateX(60px)';
                 }
             });
-            counter.textContent = `${current + 1} / ${slides.length}`;
-            prevBtn.disabled = current === 0;
-            nextBtn.disabled = current === slides.length - 1;
+            slides[idx].classList.add('active');
+            slides[idx].style.transform = 'translateX(0)';
+            counter.innerText = `${idx + 1} / ${total}`;
+            pbtn.disabled = (idx === 0);
+            nbtn.disabled = (idx === total - 1);
         }
 
         function nextSlide() {
-            if (current < slides.length - 1) {
+            if (current < total - 1) {
                 current++;
-                updateDeck();
+                updateSlide(current);
             }
         }
 
         function prevSlide() {
             if (current > 0) {
                 current--;
-                updateDeck();
+                updateSlide(current);
             }
         }
 
-        prevBtn.addEventListener('click', prevSlide);
-        nextBtn.addEventListener('click', nextSlide);
-
-        window.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
                 nextSlide();
             } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
                 prevSlide();
-            } else if (e.key === 'Home') {
-                current = 0;
-                updateDeck();
-            } else if (e.key === 'End') {
-                current = slides.length - 1;
-                updateDeck();
             }
         });
-
-        fsBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(() => {});
-            } else {
-                document.exitFullscreen().catch(() => {});
-            }
-        });
-
-        updateDeck();
     </script>
 </body>
 </html>
