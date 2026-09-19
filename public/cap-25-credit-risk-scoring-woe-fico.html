@@ -40,12 +40,12 @@
             --text-body:   #334155;
             --text-muted:  #64748B;
             --border:      rgba(15,23,42,0.12);
-            --shadow-card: 0 4px 20px rgba(15,23,42,0.07), 0 1px 3px rgba(15,23,42,0.04);
-            --shadow-lg:   0 14px 38px rgba(15,23,42,0.14);
+            --shadow-card: 0 4px 18px rgba(15,23,42,0.06), 0 1px 3px rgba(15,23,42,0.04);
+            --shadow-lg:   0 12px 32px rgba(15,23,42,0.12);
         }
 
         html, body {
-            width: 100%; height: 100%;
+            width: 100vw; height: 100vh;
             background: #0B1120;
             color: var(--text-dark);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -54,61 +54,39 @@
 
         #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: #0B1120; }
 
+        /* SLIDE MASTER CONTAINER - FIXED STANDARDIZED VIEWPORT */
         .slide {
             position: absolute; inset: 0;
+            width: 100vw; height: 100vh; max-height: 100vh;
             display: flex; flex-direction: column;
-            justify-content: flex-start; align-items: center;
-            padding: 22px 48px 64px;
+            justify-content: space-between; align-items: center;
+            padding: 18px 44px 44px;
+            box-sizing: border-box;
             opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: translateX(40px);
-            overflow-y: auto;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            transform: translateX(30px);
+            overflow: hidden;
             background: var(--bg-slide);
         }
         .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
 
+        /* HEADER MASTER */
         .slide-header {
             width: 100%; max-width: 1540px; text-align: center;
             display: flex; flex-direction: column; align-items: center;
-            margin-bottom: 16px; flex-shrink: 0;
+            flex-shrink: 0; margin-bottom: 6px;
         }
-
-        nav {
-            position: fixed; bottom: 12px; left: 50%;
-            transform: translateX(-50%);
-            display: flex; align-items: center; gap: 12px; z-index: 999;
-            background: rgba(15, 23, 42, 0.94);
-            backdrop-filter: blur(16px);
-            padding: 6px 16px; border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-        .nbtn {
-            width: 34px; height: 34px; border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.12); color: #FFFFFF; font-size: 15px;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-        }
-        .nbtn:hover { background: var(--sky); border-color: var(--sky); transform: scale(1.08); }
-        .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
-        #counter {
-            font-size: 12px; color: #94A3B8;
-            font-family: 'JetBrains Mono', monospace; min-width: 85px; text-align: center; font-weight: 800;
-        }
-
         .tag {
-            font-size: 11px; font-weight: 800; letter-spacing: 1.8px;
-            text-transform: uppercase; color: var(--sky); margin-bottom: 4px;
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(2,132,199,0.08); padding: 3px 12px; border-radius: 20px;
+            font-size: 10.5px; font-weight: 800; letter-spacing: 1.6px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 2px;
+            display: inline-flex; align-items: center; gap: 5px;
+            background: rgba(2,132,199,0.08); padding: 2px 11px; border-radius: 20px;
             border: 1px solid rgba(2,132,199,0.22);
         }
+        h1 { font-size: clamp(1.55rem, 2.0vw, 2.05rem); font-weight: 900; line-height: 1.18; color: var(--navy); text-align: center; margin-bottom: 2px; }
+        h2 { font-size: clamp(1.3rem, 1.7vw, 1.7rem); font-weight: 900; line-height: 1.18; color: var(--navy); text-align: center; margin-bottom: 2px; }
+        .sub { font-size: clamp(0.85rem, 0.95vw, 0.95rem); color: var(--text-muted); font-weight: 400; text-align: center; max-width: 1350px; line-height: 1.35; }
 
-        h1 { font-size: clamp(1.75rem, 2.3vw, 2.35rem); font-weight: 900; line-height: 1.2; color: var(--navy); text-align: center; margin-bottom: 4px; }
-        h2 { font-size: clamp(1.4rem, 1.85vw, 1.85rem); font-weight: 900; line-height: 1.2; color: var(--navy); text-align: center; margin-bottom: 4px; }
-        .sub { font-size: clamp(0.92rem, 1.05vw, 1.05rem); color: var(--text-muted); font-weight: 400; text-align: center; max-width: 1350px; line-height: 1.42; }
-        
         .hi   { color: var(--sky); }
         .hi-b { color: var(--emerald); }
         .hi-p { color: var(--purple); }
@@ -116,54 +94,57 @@
         .hi-r { color: var(--red); }
         .mono { font-family: 'JetBrains Mono', monospace; }
 
+        /* CONTENT STAGE MASTER */
         .content-container {
             width: 100%; max-width: 1540px;
-            display: flex; flex-direction: column; gap: 14px;
-            flex: 1; justify-content: space-between;
-            min-height: 0;
+            display: flex; flex-direction: column; gap: 8px;
+            flex: 1; min-height: 0; justify-content: space-between;
+            overflow: hidden;
         }
 
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; flex: 1; align-items: stretch; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; flex: 1; align-items: stretch; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; flex: 1; align-items: stretch; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100%; flex: 1; min-height: 0; align-items: stretch; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; flex: 1; min-height: 0; align-items: stretch; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; flex: 1; min-height: 0; align-items: stretch; }
 
+        /* CARD MASTER */
         .card {
             background: var(--bg-card); border: 1px solid var(--border);
             border-radius: 12px; box-shadow: var(--shadow-card);
-            display: flex; flex-direction: column; gap: 12px;
-            padding: 20px 22px; text-align: left;
-            height: 100%; justify-content: space-between;
+            display: flex; flex-direction: column; gap: 8px;
+            padding: 14px 18px; text-align: left;
+            height: 100%; max-height: 100%; min-height: 0;
+            justify-content: space-between; overflow: hidden;
             transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
         }
         .card:hover { border-color: var(--sky-brd); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
         .card-header-bar {
             display: flex; align-items: center; justify-content: space-between; gap: 8px;
-            padding-bottom: 8px; border-bottom: 1px solid rgba(15,23,42,0.08);
+            padding-bottom: 6px; border-bottom: 1px solid rgba(15,23,42,0.08);
             flex-shrink: 0;
         }
         .card-title {
-            font-size: 16.5px; font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 8px;
+            font-size: 15px; font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 6px; line-height: 1.25;
         }
-        .card-icon { font-size: 20px; }
+        .card-icon { font-size: 18px; flex-shrink: 0; }
 
         .concept-badge {
-            font-size: 10.5px; font-weight: 800; text-transform: uppercase;
-            padding: 3px 9px; border-radius: 5px; background: rgba(2,132,199,0.12); color: var(--sky);
-            display: inline-block; width: fit-content;
+            font-size: 10px; font-weight: 800; text-transform: uppercase;
+            padding: 2px 8px; border-radius: 4px; background: rgba(2,132,199,0.12); color: var(--sky);
+            display: inline-block; width: fit-content; flex-shrink: 0;
         }
         .concept-badge.green  { background: rgba(5,150,105,0.12); color: var(--emerald); }
         .concept-badge.purple { background: rgba(124,58,237,0.12); color: var(--purple); }
         .concept-badge.amber  { background: rgba(217,119,6,0.12); color: var(--amber); }
 
         .desc-text {
-            font-size: 14px; color: var(--text-body); line-height: 1.55; text-align: left;
+            font-size: 13.5px; color: var(--text-body); line-height: 1.48; text-align: left; flex-shrink: 0;
         }
 
         .formula-box {
             background: #0F172A; color: #38BDF8; font-family: 'JetBrains Mono', monospace;
-            font-size: 13.5px; padding: 11px 15px; border-radius: 8px; line-height: 1.52;
-            border-left: 4px solid var(--sky); margin: 2px 0; overflow-x: auto; text-align: left;
+            font-size: 12.5px; padding: 8px 12px; border-radius: 6px; line-height: 1.45;
+            border-left: 4px solid var(--sky); margin: 1px 0; overflow-x: auto; text-align: left;
             flex-shrink: 0;
         }
         .formula-box.green  { color: #34D399; border-left-color: var(--emerald); }
@@ -173,42 +154,70 @@
 
         .concept-box {
             background: #F8FAFC; border: 1px solid rgba(15,23,42,0.08); border-radius: 8px;
-            padding: 12px 15px; font-size: 13.5px; color: #334155; line-height: 1.55; text-align: left;
-            flex: 1; display: flex; flex-direction: column; justify-content: center;
+            padding: 10px 14px; font-size: 13px; color: #334155; line-height: 1.48; text-align: left;
+            flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; justify-content: flex-start;
         }
         .concept-box strong { color: var(--navy); }
 
         .example-box {
             background: #FFFBEB; border: 1px solid rgba(217,119,6,0.25); border-left: 4px solid var(--amber);
-            border-radius: 8px; padding: 11px 14px; font-size: 13px; color: #92400E; line-height: 1.5;
+            border-radius: 8px; padding: 8px 12px; font-size: 12.2px; color: #92400E; line-height: 1.42;
             text-align: left; flex-shrink: 0;
         }
         .example-box strong { color: #78350F; }
 
+        /* GLOSSARY BAR DIRECTLY UNDER CARDS */
         .glossary-bar {
-            background: #EEF2F6; border-radius: 8px; padding: 10px 16px;
-            font-size: 12.8px; color: #0F172A; border-left: 5px solid var(--sky);
-            text-align: left; line-height: 1.5; margin-top: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            background: #EEF2F6; border-radius: 8px; padding: 7px 14px;
+            font-size: 11.8px; color: #0F172A; border-left: 4px solid var(--sky);
+            text-align: left; line-height: 1.42; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             width: 100%; flex-shrink: 0;
         }
         .glossary-bar strong { color: var(--navy); font-weight: 800; }
 
+        /* TABLE MASTER */
         .table-wrap {
             width: 100%; max-width: 1540px; background: #ffffff;
-            border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
-            box-shadow: var(--shadow-card); flex: 1; display: flex; flex-direction: column;
+            border: 1px solid var(--border); border-radius: 10px; overflow-y: auto;
+            box-shadow: var(--shadow-card); flex: 1; min-height: 0;
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; height: 100%; }
-        th { background: #0F172A; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.3px; font-size: 13.5px; }
-        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text-dark); line-height: 1.48; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12.5px; }
+        th { background: #0F172A; color: #ffffff; padding: 8px 12px; font-weight: 700; letter-spacing: 0.3px; font-size: 12.8px; position: sticky; top: 0; z-index: 10; }
+        td { padding: 7px 12px; border-bottom: 1px solid #f1f5f9; color: var(--text-dark); line-height: 1.42; }
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) { background: #f8fafc; }
 
+        /* FOOTNOTE MASTER */
         .footnote {
-            margin-top: 6px; font-size: 11px; color: #64748B;
-            line-height: 1.35; width: 100%; max-width: 1540px; text-align: left;
-            border-top: 1px dashed #CBD5E1; padding-top: 5px;
+            margin-top: 3px; font-size: 10.5px; color: #64748B;
+            line-height: 1.3; width: 100%; max-width: 1540px; text-align: left;
+            border-top: 1px dashed #CBD5E1; padding-top: 3px;
             display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+        }
+
+        /* NAVIGATION BAR */
+        nav {
+            position: fixed; bottom: 8px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 10px; z-index: 999;
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(16px);
+            padding: 4px 14px; border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .nbtn {
+            width: 30px; height: 30px; border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12); color: #FFFFFF; font-size: 14px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .nbtn:hover { background: var(--sky); border-color: var(--sky); transform: scale(1.08); }
+        .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
+        #counter {
+            font-size: 11.5px; color: #94A3B8;
+            font-family: 'JetBrains Mono', monospace; min-width: 80px; text-align: center; font-weight: 800;
         }
     </style>
 </head>
@@ -247,7 +256,7 @@
                         </div>
                         <p class="desc-text">Newton-Raphson de 2do orden con Hessiana $\mathbf{H} = -\mathbf{X}^T \mathbf{W} \mathbf{X}$ y penalización ElasticNet para convergencia cóncava global única.</p>
                         <div class="concept-box">
-                            <strong>Garantía Cuantitativa:</strong> Solución matemática única y óptima. Elimina la inestabilidad por multicolinealidad exigiendo estricto $	ext{VIF} < 2.5$.
+                            <strong>Garantía Cuantitativa:</strong> Solución matemática única y óptima. Elimina la inestabilidad por multicolinealidad exigiendo estricto $\text{VIF} < 2.5$.
                         </div>
                         <div class="example-box">
                             <strong>🌾 Ejemplo Real:</strong> Estima los coeficientes beta de interacción entre <em>Liquidez Corriente</em> y <em>Exposición Agrícola</em> con significancia $p < 0.001$.
@@ -317,14 +326,14 @@ tau_i = inf { t > t_0 : DPD_i(t) >= 90  v  Rating_SBS(t) in {DEF, DUD, PER} }
                         <div class="concept-box">
                             <strong>¿Qué significa conceptualmente esta fórmula?:</strong><br/>
                             • <strong>$Y_i \in \{0, 1\}$:</strong> Vale <strong>1 (Bad / Default)</strong> si el deudor incumple en los próximos 12 meses, y <strong>0 (Good / Solvente)</strong> si paga a tiempo.<br/>
-                            • <strong>$	au_i$ (Tiempo de Primera Parada):</strong> Instante exacto en que la empresa cruza el umbral de insolvencia.<br/>
+                            • <strong>$\tau_i$ (Tiempo de Primera Parada):</strong> Instante exacto en que la empresa cruza el umbral de insolvencia.<br/>
                             • <strong>¿Por qué 12 meses?:</strong> Estándar internacional que cubre un ciclo financiero y fiscal completo.<br/>
-                            • <strong>Criterio Objetivo:</strong> Atraso consecutivo $\ge 90$ días calendario ($	ext{DPD} \ge 90$).<br/>
+                            • <strong>Criterio Objetivo:</strong> Atraso consecutivo $\ge 90$ días calendario ($\text{DPD} \ge 90$).<br/>
                             • <strong>Criterio Subjetivo:</strong> Entrada en cobranza judicial, refinanciación forzosa o quiebra.
                         </div>
                         <div class="example-box">
                             <strong>🌾 Ejemplo Práctico (Agroexportación &amp; El Niño):</strong><br/>
-                            Una empresa productora de mangos en Piura sufre inundaciones por el Niño Costero. Al no poder cosechar, sus facturas cedidas a 90 días no se cobran. En $t = 91	ext{ días}$, $	au_i \le t_0 + 12	ext{M}$ se activa, marcando $Y_i = 1$ (Default) para el entrenamiento del modelo.
+                            Una empresa productora de mangos en Piura sufre inundaciones por el Niño Costero. Al no poder cosechar, sus facturas cedidas a 90 días no se cobran. En $t = 91\text{ días}$, $\tau_i \le t_0 + 12\text{M}$ se activa, marcando $Y_i = 1$ (Default) para el entrenamiento del modelo.
                         </div>
                     </div>
 
@@ -339,7 +348,7 @@ P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
                         </div>
                         <div class="concept-box">
                             <strong>¿Qué significa conceptualmente la Cadena de Markov?:</strong><br/>
-                            • <strong>$oldsymbol{\pi}_t$:</strong> Vector de distribución de la cartera: [Normal, CPP, Deficiente, Dudoso, Pérdida].<br/>
+                            • <strong>$\boldsymbol{\pi}_t$:</strong> Vector de distribución de la cartera: [Normal, CPP, Deficiente, Dudoso, Pérdida].<br/>
                             • <strong>Matriz $\mathbf{P}$:</strong> Probabilidades históricas de migración crediticia mes a mes.<br/>
                             • <strong>Estado Absorbente ($P_{55} = 1.0$):</strong> La categoría <em>Pérdida</em> es un punto sin retorno estadístico; una vez que cae en pérdida, la probabilidad de recupero sin castigo contable es nula.<br/>
                             • <strong>Cálculo de la PD:</strong> La PD a 12 meses es la probabilidad de absorción en la categoría 4 (Pérdida).
@@ -352,7 +361,7 @@ P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
                 </div>
 
                 <div class="glossary-bar">
-                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>$Y_i$:</strong> Variable binaria objetivo (1=Default, 0=Buen Pagador) | <strong>$	au_i$:</strong> Tiempo de primera parada (momento exacto del impago) | <strong>DPD:</strong> <em>Days Past Due</em> (Días de atraso en el pago) | <strong>$oldsymbol{\pi}_t$:</strong> Vector de distribución de estados de la cartera en el tiempo $t$ | <strong>Estado Absorbente:</strong> Condición irreversible en una cadena de Markov | <strong>Basilea III:</strong> Marco regulatorio bancario global.
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>$Y_i$:</strong> Variable binaria objetivo (1=Default, 0=Buen Pagador) | <strong>$\tau_i$:</strong> Tiempo de primera parada (momento exacto del impago) | <strong>DPD:</strong> <em>Days Past Due</em> (Días de atraso en el pago) | <strong>$\boldsymbol{\pi}_t$:</strong> Vector de distribución de estados de la cartera en el tiempo $t$ | <strong>Estado Absorbente:</strong> Condición irreversible en una cadena de Markov | <strong>Basilea III:</strong> Marco regulatorio bancario global.
                 </div>
             </div>
             
@@ -456,12 +465,12 @@ Razón de Odds: Odds(Y=1|B_j) = Odds_Prior &times; e^(-WoE_j)
                         </div>
                         <div class="concept-box">
                             • <strong>La Fuerza de la Evidencia:</strong> Compara el % de clientes solventes ($g_j$) vs el % de clientes morosos ($b_j$) dentro del bin $j$.<br/>
-                            • <strong>Interpretación Intuitiva:</strong> $	ext{WoE} > 0 ightarrow$ Disminuye el riesgo (+ Puntos) | $	ext{WoE} < 0 ightarrow$ Aumenta el riesgo (- Puntos).<br/>
+                            • <strong>Interpretación Intuitiva:</strong> $\text{WoE} > 0 \rightarrow$ Disminuye el riesgo (+ Puntos) | $\text{WoE} < 0 \rightarrow$ Aumenta el riesgo (- Puntos).<br/>
                             • <strong>La Magia del WoE:</strong> Linealiza perfectamente variables complejas sin generar distorsiones.
                         </div>
                         <div class="example-box">
                             <strong>🌾 Ejemplo Enriquecimiento Sectorial:</strong><br/>
-                            Si enriquecemos con la variable <em>Sector Económico</em>, el bin <code>Sector = Agro Piura FEN</code> arroja $g_j = 4\%$ de buenos y $b_j = 38\%$ de malos: $	ext{WoE} = \ln(0.04 / 0.38) = \mathbf{-2.25}$ (Impacto negativo contundente).
+                            Si enriquecemos con la variable <em>Sector Económico</em>, el bin <code>Sector = Agro Piura FEN</code> arroja $g_j = 4\%$ de buenos y $b_j = 38\%$ de malos: $\text{WoE} = \ln(0.04 / 0.38) = \mathbf{-2.25}$ (Impacto negativo contundente).
                         </div>
                     </div>
 
@@ -545,8 +554,8 @@ Gradiente (Score): g(beta) = &part;ell/&part;beta = X' (y - p)
                         </div>
                         <div class="concept-box">
                             <strong>¿Qué significa conceptualmente?:</strong><br/>
-                            • $\ell(eta)$ mide la probabilidad total de que los datos ocurran bajo los coeficientes $eta$.<br/>
-                            • El Gradiente $g(eta)$ es la pendiente. En el óptimo: $\mathbf{X}^T(\mathbf{y} - \mathbf{p}) = 0$.<br/>
+                            • $\ell(\beta)$ mide la probabilidad total de que los datos ocurran bajo los coeficientes $\beta$.<br/>
+                            • El Gradiente $g(\beta)$ es la pendiente. En el óptimo: $\mathbf{X}^T(\mathbf{y} - \mathbf{p}) = 0$.<br/>
                             • Requiere optimización numérica iterativa de 2do orden.
                         </div>
                         <div class="example-box">
@@ -584,8 +593,8 @@ Matriz de Fisher: I(beta) = X' W X    donde W_ii = p_i (1 - p_i)
 beta^(t+1) = (X' W_t X)^(-1) X' W_t z_t    donde z_t = X beta^(t) + W_t^(-1) (y - p_t)
                     </div>
                     <div class="concept-box">
-                        • <strong>¿Cómo opera?:</strong> Recalcula en cada paso la matriz $\mathbf{W}_t$ dando más peso a observaciones cerca de la frontera de decisión ($p pprox 0.5$) convergiendo en $< 6$ iteraciones.<br/>
-                        • <strong>Test de Wald:</strong> $W_{	ext{Agro}} = (eta_{	ext{Agro}} / 	ext{SE})^2 = 38.4 \sim \chi^2(1)$ confirma significancia extrema ($p < 0.0001$) del factor climático.
+                        • <strong>¿Cómo opera?:</strong> Recalcula en cada paso la matriz $\mathbf{W}_t$ dando más peso a observaciones cerca de la frontera de decisión ($p \approx 0.5$) convergiendo en $< 6$ iteraciones.<br/>
+                        • <strong>Test de Wald:</strong> $W_{\text{Agro}} = (\beta_{\text{Agro}} / \text{SE})^2 = 38.4 \sim \chi^2(1)$ confirma significancia extrema ($p < 0.0001$) del factor climático.
                     </div>
                 </div>
 
@@ -624,10 +633,10 @@ beta_j^(t+1) = S( &Sigma; w_i r_i x_ij, &lambda;1 ) / ( &Sigma; w_i x_ij&sup2; +
                             <strong>¿Qué hace conceptualmente?:</strong><br/>
                             • <strong>L1 (Lasso):</strong> Anula coeficientes de variables redundantes.<br/>
                             • <strong>L2 (Ridge):</strong> Contrae coeficientes correlacionados para evitar explosión de varianza.<br/>
-                            • <strong>Coordinate Descent:</strong> Optimiza un $eta_j$ a la vez con velocidad extrema.
+                            • <strong>Coordinate Descent:</strong> Optimiza un $\beta_j$ a la vez con velocidad extrema.
                         </div>
                         <div class="example-box">
-                            <strong>🌾 Ejemplo Multicolinealidad Agro:</strong> Si incluimos <em>"Lluvias SENAMHI"</em> y <em>"Humedad Suelo"</em>, Lasso elimina la repetitiva y Ridge estabiliza el $eta_{	ext{Agro}}$ sin distorsionar.
+                            <strong>🌾 Ejemplo Multicolinealidad Agro:</strong> Si incluimos <em>"Lluvias SENAMHI"</em> y <em>"Humedad Suelo"</em>, Lasso elimina la repetitiva y Ridge estabiliza el $\beta_{\text{Agro}}$ sin distorsionar.
                         </div>
                     </div>
 
@@ -658,7 +667,7 @@ Efecto Marginal: &part;p/&part;x_j = f(x'beta) &times; beta_j
                         <span class="concept-badge green">Ortogonalidad</span>
                     </div>
                     <div class="concept-box">
-                        • <strong>Fórmula:</strong> $	ext{VIF}_j = rac{1}{1 - R_j^2}$. Se exige $	ext{VIF} < 2.5$ para todas las variables seleccionadas.<br/>
+                        • <strong>Fórmula:</strong> $\text{VIF}_j = \frac{1}{1 - R_j^2}$. Se exige $\text{VIF} < 2.5$ para todas las variables seleccionadas.<br/>
                         • <strong>Certificación:</strong> Garantiza que el impacto del sector agroindustrial sea ortogonal e independiente del historial financiero previo.
                     </div>
                 </div>
@@ -699,11 +708,11 @@ Score = Offset + Factor &times; ln( (1-p) / p )
                         </div>
                         <div class="concept-box">
                             <strong>¿Qué significa conceptualmente?:</strong><br/>
-                            • $	ext{Score}_0 = 600$, $	ext{Odds}_0 = 50:1$, $	ext{PDO} = 20$.<br/>
+                            • $\text{Score}_0 = 600$, $\text{Odds}_0 = 50:1$, $\text{PDO} = 20$.<br/>
                             • Cada 20 puntos adicionales, la probabilidad de cumplimiento se duplica (el riesgo cae al 50%).
                         </div>
                         <div class="example-box">
-                            <strong>🌾 Ejemplo:</strong> Un deudor agroindustrial con score de 520 puntos tiene $4	imes$ más probabilidad de default que uno con 560 puntos ($2 	imes 	ext{PDO}$).
+                            <strong>🌾 Ejemplo:</strong> Un deudor agroindustrial con score de 520 puntos tiene $4\times$ más probabilidad de default que uno con 560 puntos ($2 \times \text{PDO}$).
                         </div>
                     </div>
 
@@ -723,7 +732,7 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                             • Permite auditar exactamente cuántos puntos suma o resta cada variable.
                         </div>
                         <div class="example-box">
-                            <strong>🌾 Ejemplo Aditivo:</strong> El atributo <em>Sector = Agro FEN</em> descuenta exactamente $-185	ext{ puntos}$ del score total de la empresa evaluada.
+                            <strong>🌾 Ejemplo Aditivo:</strong> El atributo <em>Sector = Agro FEN</em> descuenta exactamente $-185\text{ puntos}$ del score total de la empresa evaluada.
                         </div>
                     </div>
                 </div>
@@ -741,7 +750,7 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="background:#f1f5f9; font-weight:700;"><td>Puntaje Base de Origen</td><td>Calibración Base ($	ext{Score}_0=600, 	ext{Odds}_0=50:1, 	ext{PDO}=20$)</td><td>-</td><td>Intercepto $eta_0$</td><td><span class="hi-b mono">+480 pts</span></td><td>Punto de partida homogéneo</td></tr>
+                            <tr style="background:#f1f5f9; font-weight:700;"><td>Puntaje Base de Origen</td><td>Calibración Base ($\text{Score}_0=600, \text{Odds}_0=50:1, \text{PDO}=20$)</td><td>-</td><td>Intercepto $\beta_0$</td><td><span class="hi-b mono">+480 pts</span></td><td>Punto de partida homogéneo</td></tr>
                             <tr><td><strong>1. Atraso SBS Histórico 12M</strong></td><td>0 días (100% Normal SBS)</td><td>+0.92</td><td>-0.45</td><td><span class="hi-b mono">+120 pts</span></td><td>Excelente comportamiento bancario</td></tr>
                             <tr><td><strong>1. Atraso SBS Histórico 12M</strong></td><td>&gt; 30 días o Protestos Judiciales</td><td>-1.65</td><td>-0.45</td><td><span class="hi-r mono">-214 pts</span></td><td>Castigo por morosidad previa</td></tr>
                             <tr><td><strong>2. Mora Factoring APEFAC</strong></td><td>0 días mora en factoring de los 23 factores</td><td>+0.75</td><td>-0.52</td><td><span class="hi-b mono">+112 pts</span></td><td>Cumplimiento puntual en facturas</td></tr>
@@ -781,7 +790,7 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                             <strong>¿Qué exige la Sección 615(a) (Adverse Action Notices)?:</strong><br/>
                             Al rechazar o castigar una solicitud, la entidad <strong>debe entregar por escrito los 4 factores principales de impacto negativo (Key Reason Codes)</strong>.<br/><br/>
                             <strong>¿Por qué hace mandatorio el Scorecard Aditivo?:</strong><br/>
-                            Permite ordenar: $	ext{Rank} = rg\min_j(	ext{Points}_j)$ y extraer los 4 motivos sin ambigüedad. Las "cajas negras" son <strong>ilegales bajo FCRA</strong>.
+                            Permite ordenar: $\text{Rank} = \arg\min_j(\text{Points}_j)$ y extraer los 4 motivos sin ambigüedad. Las "cajas negras" son <strong>ilegales bajo FCRA</strong>.
                         </div>
                         <div class="example-box">
                             <strong>🌾 Ejemplo Reason Code Automático:</strong><br/>
@@ -935,7 +944,7 @@ PD_stressed (q=0.999) = &Phi;( [ &Phi;^(-1)(PD) + &radic;&rho; &times; &Phi;^(-1
                             <strong>¿Qué significa conceptualmente?:</strong><br/>
                             • $Z$: Estado macroeconómico general del país.<br/>
                             • $\epsilon_i$: Gestión interna de la empresa.<br/>
-                            • $ho$: Correlación de activos sectorial.<br/>
+                            • $\rho$: Correlación de activos sectorial.<br/>
                             • <strong>PD Stressed (99.9%):</strong> Probabilidad de default en el peor año macroeconómico imaginable (1 vez cada 1000 años).
                         </div>
                         <div class="example-box">
@@ -970,12 +979,12 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         <span class="concept-badge">Evolución de Cartera</span>
                     </div>
                     <div class="concept-box">
-                        $oldsymbol{\pi}_{t+1} = oldsymbol{\pi}_t 	imes \mathbf{P}$, donde $\mathbf{P}$ es la matriz de migración crediticia con la categoría <em>Pérdida</em> como estado absorbente ($P_{55} = 1.0$).
+                        $\boldsymbol{\pi}_{t+1} = \boldsymbol{\pi}_t \times \mathbf{P}$, donde $\mathbf{P}$ es la matriz de migración crediticia con la categoría <em>Pérdida</em> como estado absorbente ($P_{55} = 1.0$).
                     </div>
                 </div>
 
                 <div class="glossary-bar">
-                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>ASRF:</strong> <em>Asymptotic Single Risk Factor</em> (Modelo de Factor de Riesgo Único Asintótico de Vasicek) | <strong>Z:</strong> Factor macroeconómico común | <strong>$ho$:</strong> Correlación inter-empresas | <strong>EL:</strong> <em>Expected Loss</em> (Pérdida Esperada) | <strong>Capital K:</strong> Requerimiento de solvencia patrimonial para pérdidas inesperadas.
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>ASRF:</strong> <em>Asymptotic Single Risk Factor</em> (Modelo de Factor de Riesgo Único Asintótico de Vasicek) | <strong>Z:</strong> Factor macroeconómico común | <strong>$\rho$:</strong> Correlación inter-empresas | <strong>EL:</strong> <em>Expected Loss</em> (Pérdida Esperada) | <strong>Capital K:</strong> Requerimiento de solvencia patrimonial para pérdidas inesperadas.
                 </div>
             </div>
             
@@ -1015,10 +1024,10 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         </div>
                         <div class="formula-box">Gini = 2 &times; AUC - 1</div>
                         <div class="concept-box">
-                            <strong>Umbral: $	ext{Gini} \ge 60\%$ ($	ext{AUC} \ge 0.80$)</strong><br/>
+                            <strong>Umbral: $\text{Gini} \ge 60\%$ ($\text{AUC} \ge 0.80$)</strong><br/>
                             Probabilidad de que un cliente moroso reciba menor score que un solvente.
                         </div>
-                        <div class="example-box"><strong>🌾 $	ext{Gini} = 68.5\%$</strong> de alta precisión.</div>
+                        <div class="example-box"><strong>🌾 $\text{Gini} = 68.5\%$</strong> de alta precisión.</div>
                     </div>
 
                     <div class="card">
@@ -1028,7 +1037,7 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         </div>
                         <div class="formula-box purple">&chi;&sup2; = &Sigma; (O_g - E_g)&sup2; / [E_g(1 - E_g/N)]</div>
                         <div class="concept-box">
-                            <strong>Umbral: $p	ext{-value} > 0.05$</strong><br/>
+                            <strong>Umbral: $p\text{-value} > 0.05$</strong><br/>
                             Prueba que la PD estimada coincide con la mora real observada por decil.
                         </div>
                         <div class="example-box"><strong>🌾 $p = 0.42$</strong> (Ajuste impecable).</div>
@@ -1041,10 +1050,10 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         </div>
                         <div class="formula-box amber">PSI = &Sigma; (Act% - Base%) &times; ln(Act%/Base%)</div>
                         <div class="concept-box">
-                            <strong>Umbral: $	ext{PSI} < 0.10$</strong><br/>
+                            <strong>Umbral: $\text{PSI} < 0.10$</strong><br/>
                             Monitorea mensualmente si la población actual cambió respecto a la histórica.
                         </div>
-                        <div class="example-box"><strong>🌾 $	ext{PSI} = 0.28$ (Alerta FEN):</strong> Avalancha de solicitudes del agro.</div>
+                        <div class="example-box"><strong>🌾 $\text{PSI} = 0.28$ (Alerta FEN):</strong> Avalancha de solicitudes del agro.</div>
                     </div>
                 </div>
 
@@ -1054,7 +1063,7 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         <span class="concept-badge green">Gobernanza SR 11-7</span>
                     </div>
                     <div class="concept-box">
-                        • <strong>$	ext{PSI} < 0.10$:</strong> Población Estable &bull; <strong>$0.10 \le 	ext{PSI} < 0.25$:</strong> Alerta Amarilla de Drift &bull; <strong>$	ext{PSI} \ge 0.25$:</strong> Alerta Roja (Recalibración obligatoria y contención de líneas agrícolas).
+                        • <strong>$\text{PSI} < 0.10$:</strong> Población Estable &bull; <strong>$0.10 \le \text{PSI} < 0.25$:</strong> Alerta Amarilla de Drift &bull; <strong>$\text{PSI} \ge 0.25$:</strong> Alerta Roja (Recalibración obligatoria y contención de líneas agrícolas).
                     </div>
                 </div>
 
@@ -1124,7 +1133,7 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
                         <span class="concept-badge purple">Auditoría SBS</span>
                     </div>
                     <div class="concept-box">
-                        • <strong>TreeSHAP $\mathcal{O}(T 	imes L 	imes D^2)$</strong> aproxima la importancia de variables, pero las interacciones no lineales generan explicaciones inestables.<br/>
+                        • <strong>TreeSHAP $\mathcal{O}(T \times L \times D^2)$</strong> aproxima la importancia de variables, pero las interacciones no lineales generan explicaciones inestables.<br/>
                         • El <strong>Scorecard Logit-WoE</strong> garantiza <strong>puntos fijos, auditables e inmutables</strong> requeridos por la SBS y el FCRA.
                     </div>
                 </div>
@@ -1260,8 +1269,8 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                         </div>
                         <div class="concept-box">
                             <strong>Cálculo Matricial en Microsegundos:</strong><br/>
-                            La evaluación del Score ($\sum 	ext{Points}_{j,i}$) se ejecuta como un producto punto de instrucciones vectoriales SIMD en microservicios Rust/C++.<br/><br/>
-                            <strong>Latencia:</strong> Tiempo de respuesta P99 $< 12	ext{ ms}$ por RUC consultado.
+                            La evaluación del Score ($\sum \text{Points}_{j,i}$) se ejecuta como un producto punto de instrucciones vectoriales SIMD en microservicios Rust/C++.<br/><br/>
+                            <strong>Latencia:</strong> Tiempo de respuesta P99 $< 12\text{ ms}$ por RUC consultado.
                         </div>
                         <div class="example-box"><strong>🌾 Escala:</strong> Evaluación instantánea de lotes de 10,000 facturas agrícolas en campañas de cosecha.</div>
                     </div>
@@ -1274,7 +1283,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                         <div class="concept-box">
                             <strong>Detección Preventiva de Fallas:</strong><br/>
                             El sistema calcula el Population Stability Index en tiempo real con cada lote de consultas.<br/><br/>
-                            <strong>Alerta Temprana:</strong> Si el $	ext{PSI} \ge 0.10$, se emite una notificación preventiva al Chief Risk Officer antes de que aumente la mora.
+                            <strong>Alerta Temprana:</strong> Si el $\text{PSI} \ge 0.10$, se emite una notificación preventiva al Chief Risk Officer antes de que aumente la mora.
                         </div>
                         <div class="example-box"><strong>🌾 Alerta FEN:</strong> Detecta el cambio en el perfil de solicitudes agrícolas antes de que venzan las facturas.</div>
                     </div>
@@ -1319,7 +1328,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                             <span class="concept-badge">Kullback-Leibler</span>
                         </div>
                         <div class="concept-box">
-                            <em>"No usamos variables continuas crudas ni asumimos relaciones lineales a ciegas: aplicamos <strong>Coarse Classing supervisado mediante optimización lineal entera mixta (MILP)</strong> asegurando <strong>monotonicidad estricta</strong> en las tasas de mora, y transformamos las variables a <strong>Weight of Evidence (WoE)</strong> derivado formalmente de la <strong>divergencia de Kullback-Leibler</strong>, filtrando con <strong>Information Value ($IV \ge 0.10$)</strong> y controlando colinealidad con <strong>$	ext{VIF} < 2.5$</strong> (ej. penalizando formalmente el riesgo del sector agroindustrial ante El Niño)."</em>
+                            <em>"No usamos variables continuas crudas ni asumimos relaciones lineales a ciegas: aplicamos <strong>Coarse Classing supervisado mediante optimización lineal entera mixta (MILP)</strong> asegurando <strong>monotonicidad estricta</strong> en las tasas de mora, y transformamos las variables a <strong>Weight of Evidence (WoE)</strong> derivado formalmente de la <strong>divergencia de Kullback-Leibler</strong>, filtrando con <strong>Information Value ($IV \ge 0.10$)</strong> y controlando colinealidad con <strong>$\text{VIF} < 2.5$</strong> (ej. penalizando formalmente el riesgo del sector agroindustrial ante El Niño)."</em>
                         </div>
                     </div>
 
@@ -1329,7 +1338,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                             <span class="concept-badge green">Reason Codes</span>
                         </div>
                         <div class="concept-box">
-                            <em>"Ajustamos la <strong>Regresión Logística por Máxima Verosimilitud vía el algoritmo IRLS / Newton-Raphson</strong>. Escalamos los log-odds al <strong>Scorecard FICO aditivo (0-1000 Puntos)</strong> mediante $	ext{Factor} = 	ext{PDO}/\ln(2)$ y $	ext{Offset}$, lo que nos permite cumplir con el mandato del <strong>FCRA Sección 615(a)</strong> y el estándar <strong>ECOA</strong>, entregando al cliente los <strong>4 Códigos de Razón Adversa (Reason Codes)</strong> exactos en cualquier rechazo."</em>
+                            <em>"Ajustamos la <strong>Regresión Logística por Máxima Verosimilitud vía el algoritmo IRLS / Newton-Raphson</strong>. Escalamos los log-odds al <strong>Scorecard FICO aditivo (0-1000 Puntos)</strong> mediante $\text{Factor} = \text{PDO}/\ln(2)$ y $\text{Offset}$, lo que nos permite cumplir con el mandato del <strong>FCRA Sección 615(a)</strong> y el estándar <strong>ECOA</strong>, entregando al cliente los <strong>4 Códigos de Razón Adversa (Reason Codes)</strong> exactos en cualquier rechazo."</em>
                         </div>
                     </div>
                 </div>
@@ -1341,7 +1350,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                             <span class="concept-badge purple">Vasicek &amp; SBS</span>
                         </div>
                         <div class="concept-box">
-                            <em>"Certificamos un poder discriminante con <strong>$KS \ge 40\%$</strong> y <strong>$	ext{Gini} \ge 60\%$</strong>, calculamos el capital regulatorio $K$ bajo la <strong>Cópula Unifactorial de Vasicek ASRF (Basilea III)</strong> al 99.9% de confianza y aprovisionamos la cartera según las 5 categorías y reglas de arrastre (Cross-Default) de la <strong>Resolución SBS N° 11356-2008</strong> con matrices de migración crediticia de Markov."</em>
+                            <em>"Certificamos un poder discriminante con <strong>$KS \ge 40\%$</strong> y <strong>$\text{Gini} \ge 60\%$</strong>, calculamos el capital regulatorio $K$ bajo la <strong>Cópula Unifactorial de Vasicek ASRF (Basilea III)</strong> al 99.9% de confianza y aprovisionamos la cartera según las 5 categorías y reglas de arrastre (Cross-Default) de la <strong>Resolución SBS N° 11356-2008</strong> con matrices de migración crediticia de Markov."</em>
                         </div>
                     </div>
 
@@ -1351,7 +1360,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                             <span class="concept-badge amber">Harvard MLSys</span>
                         </div>
                         <div class="concept-box">
-                            <em>"Implementamos el motor en <strong>memoria RAM volátil cifrada (Confidential Computing con AWS KMS)</strong> con latencia $	ext{P99} < 12	ext{ ms}$ y monitoreamos en streaming la estabilidad poblacional con <strong>$	ext{PSI} < 0.10$</strong> para alertar preventivamente al Comité de Riesgos antes de que se materialice la mora."</em>
+                            <em>"Implementamos el motor en <strong>memoria RAM volátil cifrada (Confidential Computing con AWS KMS)</strong> con latencia $\text{P99} < 12\text{ ms}$ y monitoreamos en streaming la estabilidad poblacional con <strong>$\text{PSI} < 0.10$</strong> para alertar preventivamente al Comité de Riesgos antes de que se materialice la mora."</em>
                         </div>
                     </div>
                 </div>
