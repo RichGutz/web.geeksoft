@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Litho & Terrain - Arquitectura C4 & Living Maps para AI Agents (Capítulo 15) - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #0F172A;
+            --bg-card:     #1E293B;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #38BDF8;
+            --sky-dim:     rgba(56,189,248,0.12);
+            --sky-brd:     rgba(56,189,248,0.30);
+            --emerald:     #10B981;
+            --emerald-dim: rgba(16,185,129,0.12);
+            --emerald-brd: rgba(16,185,129,0.30);
+            --purple:      #A855F7;
+            --purple-dim:  rgba(168,85,247,0.12);
+            --purple-brd:  rgba(168,85,247,0.30);
+            --amber:       #F59E0B;
+            --amber-dim:   rgba(245,158,11,0.12);
+            --amber-brd:   rgba(245,158,11,0.30);
+            --red:         #F43F5E;
+            --red-dim:     rgba(244,63,94,0.12);
+            --text:        #F8FAFC;
+            --text-dim:    rgba(248,250,252,0.70);
+            --border:      rgba(255,255,255,0.10);
+            --shadow:      0 8px 32px rgba(0,0,0,0.35);
+            --shadow-lg:   0 16px 48px rgba(0,0,0,0.50);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.04; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #ffffff; transform: rotate(-25deg) scale(1.15);
+        }
+        .wm-item { padding: 30px 40px; white-space: nowrap; }
+
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 24px 50px 80px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: scale(0.98);
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: scale(1); }
+
+        .top-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px; border-radius: 9999px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+            text-transform: uppercase; margin-bottom: 12px;
+            border: 1px solid var(--sky-brd); background: var(--sky-dim); color: var(--sky);
+        }
+
+        h1 {
+            font-size: clamp(26px, 3.8vw, 44px);
+            font-weight: 900; line-height: 1.15;
+            text-align: center; margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--sky) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: clamp(20px, 2.5vw, 30px);
+            font-weight: 800; margin-bottom: 14px; color: #FFFFFF;
+        }
+
+        .subtitle {
+            font-size: clamp(13px, 1.4vw, 16px);
+            color: var(--text-dim); text-align: center; max-width: 900px;
+            line-height: 1.5; margin-bottom: 24px;
+        }
+
+        .grid-3 {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 16px; width: 100%; max-width: 1200px;
+        }
+
+        .grid-4 {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; width: 100%; max-width: 1200px;
+        }
+
+        .grid-2 {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 20px; width: 100%; max-width: 1100px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px; padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.25s ease;
+            position: relative; overflow: hidden;
+        }
+        .card:hover {
+            border-color: var(--sky-brd);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        .card-sky { border-top: 3px solid var(--sky); }
+        .card-emerald { border-top: 3px solid var(--emerald); }
+        .card-purple { border-top: 3px solid var(--purple); }
+        .card-amber { border-top: 3px solid var(--amber); }
+
+        .card-title {
+            font-size: 15px; font-weight: 700; color: #FFFFFF;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .card-desc {
+            font-size: 13px; color: var(--text-dim); line-height: 1.5;
+        }
+
+        .code-box {
+            background: #020617; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; padding: 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; color: #38BDF8; line-height: 1.6; overflow-x: auto;
+            text-align: left; width: 100%; max-width: 1000px;
+        }
+
+        /* ─── INTERACTIVE C4 INSPECTOR ─── */
+        .c4-container {
+            display: flex; gap: 18px; width: 100%; max-width: 1150px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 20px; box-shadow: var(--shadow-lg);
+        }
+        .c4-sidebar {
+            width: 280px; display: flex; flex-direction: column; gap: 10px;
+        }
+        .c4-tab {
+            padding: 12px 14px; border-radius: 10px; font-size: 13px; font-weight: 600;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+            color: var(--text-dim); cursor: pointer; text-align: left; transition: all 0.2s;
+        }
+        .c4-tab.active {
+            background: var(--sky-dim); border-color: var(--sky); color: #FFFFFF;
+        }
+        .c4-body {
+            flex: 1; background: #020617; border-radius: 10px; padding: 18px;
+            border: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: var(--text-dim);
+            line-height: 1.6;
+        }
+        .c4-badge {
+            display: inline-block; padding: 3px 8px; border-radius: 6px;
+            font-size: 10px; font-weight: 700; background: var(--emerald-dim);
+            color: var(--emerald); border: 1px solid var(--emerald-brd); margin-bottom: 8px;
+        }
+
+        /* ─── BOTTOM NAVIGATION ─── */
+        nav {
+            position: fixed; bottom: 18px; left: 50%;
+            transform: translateX(-50%); z-index: 99999;
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(12px);
+            padding: 8px 18px; border-radius: 9999px;
+            border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+        }
+        .nav-btn {
+            background: rgba(255,255,255,0.08); border: none; color: #FFFFFF;
+            width: 32px; height: 32px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; cursor: pointer;
+            font-size: 14px; transition: all 0.2s;
+        }
+        .nav-btn:hover { background: var(--sky); color: #020617; }
+        .slide-counter {
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            font-weight: 700; color: var(--sky); min-width: 60px; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <span class="wm-item">GEEKSOFT ACADEMY · SOTA 2026</span>
+        <span class="wm-item">LITHO & TERRAIN C4 ENGINE</span>
+        <span class="wm-item">CONFIDENTIAL · LIVE DECK</span>
+    </div>
+
+    <main id="deck">
+
+        <!-- SLIDE 1: PORTADA -->
+        <section class="slide active">
+            <span class="top-badge">⚡ MASTERCLASS SOTA 2026 · CAPÍTULO 15</span>
+            <h1>Litho & Terrain</h1>
+            <p class="subtitle">Generador Inteligente de Documentación Técnica, Arquitectura C4 y Living Maps para AI Agents en Rust</p>
+            
+            <div class="grid-3" style="max-width: 1000px; margin-top: 10px;">
+                <div class="card card-sky">
+                    <div class="card-title">🦀 Rust High-Performance</div>
+                    <div class="card-desc">Escaneo paralelo de repositorios masivos en milisegundos mediante Tree-sitter y Tokio.</div>
+                </div>
+                <div class="card card-purple">
+                    <div class="card-title">🏛️ C4 Model Automatizado</div>
+                    <div class="card-desc">Síntesis jerárquica en 4 niveles (Context, Container, Component, Code) con diagramas Mermaid.</div>
+                </div>
+                <div class="card card-emerald">
+                    <div class="card-title">🤖 Contexto para Agentes (ACP)</div>
+                    <div class="card-desc">Evolución a Terrain: living map del codebase consumible por Claude Code, Cursor y Codex.</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 24px; font-size: 12px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;">
+                Repo Oficial: github.com/sopaco/deepwiki-rs · Bóveda GeekSoft #127
+            </p>
+        </section>
+
+        <!-- SLIDE 2: EL PROBLEMA: DOC-ROT & CEGUERA AGÉNTICA -->
+        <section class="slide">
+            <span class="top-badge" style="border-color: var(--amber-brd); background: var(--amber-dim); color: var(--amber);">⚠️ EL RETO DE LA INGENIERÍA MODERNA</span>
+            <h2>El Síndrome del Doc-Rot y la Deriva de Arquitectura</h2>
+            <p class="subtitle">¿Por qué la documentación manual fracasa en la era de los Coding Agents y Vibe Coding?</p>
+
+            <div class="grid-2">
+                <div class="card" style="border-left: 4px solid var(--red);">
+                    <div class="card-title" style="color: var(--red);">❌ Documentación Manual Tradicional</div>
+                    <ul style="font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-left: 18px; text-align: left;">
+                        <li>Queda obsoleta a los pocos días de desarrollo activo.</li>
+                        <li>Formatos fragmentados y diagramas desconectados del código real.</li>
+                        <li>Costo de mantenimiento insostenible para squads ágiles.</li>
+                        <li><strong>Ceguera de Agentes:</strong> LLMs pierden tokens re-leyendo archivos redundantes.</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--emerald);">
+                    <div class="card-title" style="color: var(--emerald);">✅ Living Wiki con Litho & CI/CD</div>
+                    <ul style="font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-left: 18px; text-align: left;">
+                        <li><strong>100% Sincronizado:</strong> Regeneración automática en cada Git commit.</li>
+                        <li><strong>Estándar C4 Estricto:</strong> Comprensión multinivel para humanos y agentes.</li>
+                        <li><strong>Auto-Repair Mermaid:</strong> Cero diagramas rotos en el pipeline.</li>
+                        <li><strong>Memoria Estructurada:</strong> Living map instantáneo para Claude Code.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: PIPELINE DE 4 FASES -->
+        <section class="slide">
+            <span class="top-badge">🔄 ARQUITECTURA DEL MOTOR</span>
+            <h2>Pipeline de Procesamiento en 4 Fases de Litho</h2>
+            <p class="subtitle">De código crudo a arquitectura verificada sin alucinaciones</p>
+
+            <div class="grid-4">
+                <div class="card card-sky">
+                    <span class="c4-badge">FASE 1</span>
+                    <div class="card-title">AST Preprocessor</div>
+                    <div class="card-desc">Escaneo multi-lenguaje (Rust, Py, TS, Go, Java), extracción de firmas, types y segmentación en Memory Chunks.</div>
+                </div>
+                <div class="card card-purple">
+                    <span class="c4-badge">FASE 2</span>
+                    <div class="card-title">ReAct Researcher</div>
+                    <div class="card-desc">Descubrimiento de Bounded Contexts, mapeo de workflows y detección de dependencias clave vía LLM.</div>
+                </div>
+                <div class="card card-amber">
+                    <span class="c4-badge">FASE 3</span>
+                    <div class="card-title">C4 Doc Editor</div>
+                    <div class="card-desc">Redacción modular de especificaciones y generación de diagramas Mermaid en los 4 niveles C4.</div>
+                </div>
+                <div class="card card-emerald">
+                    <span class="c4-badge">FASE 4</span>
+                    <div class="card-title">Mermaid Fixer</div>
+                    <div class="card-desc">Validación en sandbox JS aislado y auto-reparación de sintaxis antes del commit final en la wiki.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: C4 MODEL INTERACTIVO -->
+        <section class="slide">
+            <span class="top-badge">🏛️ VISOR DE LOS 4 NIVELES C4</span>
+            <h2>Inspección de la Jerarquía de Arquitectura C4</h2>
+            <p class="subtitle">Haz clic en cada nivel para ver cómo Litho estructura el conocimiento del sistema</p>
+
+            <div class="c4-container">
+                <div class="c4-sidebar">
+                    <button class="c4-tab active" onclick="showC4('ctx')">1. Context Diagram (Sistema)</button>
+                    <button class="c4-tab" onclick="showC4('cnt')">2. Container Diagram (Apps/DBs)</button>
+                    <button class="c4-tab" onclick="showC4('cmp')">3. Component Diagram (Módulos)</button>
+                    <button class="c4-tab" onclick="showC4('cod')">4. Code & ERD (Clases/Esquemas)</button>
+                </div>
+                <div class="c4-body" id="c4-content">
+                    <strong style="color: var(--sky);">Nivel 1 — System Context:</strong><br/>
+                    Muestra el ecosistema de alto nivel: actores (usuarios, contratistas, inversionistas), sistemas externos (SBS, FastMCP, Supabase) y el límite perimetral de la solución.<br/><br/>
+                    <em>Entregable:</em> Diagrama de contexto Mermaid y resumen ejecutivo para líderes técnicos y stakeholders.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: ECOSISTEMA ECO & TERRAIN -->
+        <section class="slide">
+            <span class="top-badge">🌐 ECOSISTEMA AMPLIADO</span>
+            <h2>El Ecosistema Litho Eco & La Evolución a Terrain</h2>
+            <p class="subtitle">Una suite completa para generación, lectura interactiva y consumo agentico</p>
+
+            <div class="grid-3">
+                <div class="card card-sky">
+                    <div class="card-title">📖 Litho Book</div>
+                    <div class="card-desc">Lector web hiper-rápido en Rust + Axum. Renderizado en vivo de Mermaid, búsqueda difusa y asistente de chat técnico integrado.</div>
+                </div>
+                <div class="card card-purple">
+                    <div class="card-title">🔧 Mermaid Fixer</div>
+                    <div class="card-desc">Utilidad autónoma con motor V8 que intercepta y subsana errores sintácticos en diagramas generados por IA.</div>
+                </div>
+                <div class="card card-emerald">
+                    <div class="card-title">🗺️ Terrain (ACP Protocol)</div>
+                    <div class="card-desc">Convierte la wiki en un mapa vivo consumible por Claude Code, DeepSeek Harness y Codex mediante el estándar ACP.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: TRANSFERENCIA A PROYECTOS GEEKSOFT -->
+        <section class="slide">
+            <span class="top-badge">🎯 IMPACTO EN GEEKSOFT</span>
+            <h2>Integración en MIFUNE, PROPTWIN, ARBN.CPJS & Factory</h2>
+            <p class="subtitle">Cómo Litho acelera los proyectos de ingeniería de GeekSoft</p>
+
+            <div class="grid-2">
+                <div class="card card-amber">
+                    <div class="card-title">💰 MIFUNE #10 & PROPTWIN #11</div>
+                    <div class="card-desc">Documenta los 8 microservicios de tesorería y el motor de polígonos PostGIS, evitando que los agentes generen código redundante.</div>
+                </div>
+                <div class="card card-sky">
+                    <div class="card-title">🏠 ARBN.CPJS #12 & Hyrax #121</div>
+                    <div class="card-desc">Alimenta el gate de verificación de 13 pasos y el Squad Multi-Agente con un mapa vivo de WBS y metrados.</div>
+                </div>
+            </div>
+
+            <div class="code-box" style="margin-top: 18px;">
+                # Comando rápido de ejecución en CI/CD GeekSoft<br/>
+                litho generate --path ./src --extra-context ./specs/arbn_boq.pdf --output ./docs/living-wiki
+            </div>
+        </section>
+
+    </main>
+
+    <!-- NAVEGACIÓN -->
+    <nav>
+        <button class="nav-btn" onclick="prevSlide()">◀</button>
+        <div class="slide-counter" id="counter">01 / 06</div>
+        <button class="nav-btn" onclick="nextSlide()">▶</button>
+    </nav>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const counter = document.getElementById('counter');
+
+        function updateDeck() {
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentSlide);
+            });
+            counter.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateDeck();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateDeck();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
+            if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+        });
+
+        const c4Data = {
+            ctx: "<strong style='color: var(--sky);'>Nivel 1 — System Context:</strong><br/>Muestra el ecosistema de alto nivel: actores (usuarios, contratistas, inversionistas), sistemas externos (SBS, FastMCP, Supabase) y el límite perimetral de la solución.<br/><br/><em>Entregable:</em> Diagrama de contexto Mermaid y resumen ejecutivo para líderes técnicos y stakeholders.",
+            cnt: "<strong style='color: var(--purple);'>Nivel 2 — Container Diagram:</strong><br/>Desglosa las aplicaciones web (Frontend React 19), APIs REST/FastAPI, microservicios backend, bases de datos PostgreSQL/PostGIS y almacenes de objetos.<br/><br/><em>Entregable:</em> Topología de despliegue, protocolos de red (HTTP/gRPC/WebSocket) y asignación de responsabilidades.",
+            cmp: "<strong style='color: var(--amber);'>Nivel 3 — Component Diagram:</strong><br/>Detalla la arquitectura interna de cada contenedor: controladores de ruta, servicios de dominio, adaptadores de integración (ERP, CAD) y repositorios de datos.<br/><br/><em>Entregable:</em> Bounded contexts identificados con tipado estricto y desacoplamiento limpio.",
+            cod: "<strong style='color: var(--emerald);'>Nivel 4 — Code & ERD:</strong><br/>Muestra las estructuras críticas, interfaces clave, esquemas relacionales de base de datos extraídos de archivos SQL y diagramas ERD automáticos.<br/><br/><em>Entregable:</em> Modelos de datos vivos y mapeo relacional exacto sin discrepancias de esquema."
+        };
+
+        function showC4(type) {
+            document.querySelectorAll('.c4-tab').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('c4-content').innerHTML = c4Data[type];
+        }
+    </script>
+</body>
+</html>

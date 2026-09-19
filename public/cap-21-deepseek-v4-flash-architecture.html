@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek-V4.1-Flash: Arquitectura de Cómputo Disperso (Capítulo 21) - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #0B1120;
+            --bg-card:     #1E293B;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --amber:       #F59E0B;
+            --amber-dim:   rgba(245,158,11,0.12);
+            --amber-brd:   rgba(245,158,11,0.30);
+            --sky:         #38BDF8;
+            --sky-dim:     rgba(56,189,248,0.12);
+            --sky-brd:     rgba(56,189,248,0.30);
+            --emerald:     #10B981;
+            --emerald-dim: rgba(16,185,129,0.12);
+            --emerald-brd: rgba(16,185,129,0.30);
+            --purple:      #A855F7;
+            --purple-dim:  rgba(168,85,247,0.12);
+            --purple-brd:  rgba(168,85,247,0.30);
+            --red:         #F43F5E;
+            --red-dim:     rgba(244,63,94,0.12);
+            --text:        #F8FAFC;
+            --text-dim:    rgba(248,250,252,0.70);
+            --border:      rgba(255,255,255,0.10);
+            --shadow:      0 8px 32px rgba(0,0,0,0.35);
+            --shadow-lg:   0 16px 48px rgba(0,0,0,0.50);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.04; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #ffffff; transform: rotate(-25deg) scale(1.15);
+        }
+
+        #deck-container {
+            width: 100vw; height: 100vh;
+            position: relative; display: flex;
+            align-items: center; justify-content: center;
+        }
+
+        .slide {
+            position: absolute; inset: 0;
+            padding: 50px 70px 70px 70px;
+            display: none; flex-direction: column; justify-content: space-between;
+            opacity: 0; transform: scale(0.98);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .slide.active {
+            display: flex; opacity: 1; transform: scale(1);
+        }
+
+        /* ─── HEADER BAR ─── */
+        .slide-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;
+        }
+        .slide-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+            color: var(--amber); text-transform: uppercase; letter-spacing: 1.5px;
+            background: var(--amber-dim); border: 1px solid var(--amber-brd);
+            padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px;
+        }
+        .slide-title {
+            font-size: 26px; font-weight: 800; color: #FFFFFF; line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        .slide-sub {
+            font-size: 14px; color: var(--text-dim); margin-top: 4px;
+        }
+        .academy-logo {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+            color: var(--text); background: rgba(255,255,255,0.05); padding: 6px 12px;
+            border-radius: 6px; border: 1px solid var(--border);
+        }
+        .academy-logo span { color: var(--amber); }
+
+        /* ─── BODY CONTENT ─── */
+        .slide-body {
+            flex: 1; display: flex; gap: 24px; align-items: stretch; overflow: hidden;
+        }
+
+        .col { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+        .col-2 { flex: 2; }
+        .col-1-5 { flex: 1.5; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        .card-amber { border-color: var(--amber-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(245,158,11,0.04) 100%); }
+        .card-sky { border-color: var(--sky-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(56,189,248,0.04) 100%); }
+        .card-emerald { border-color: var(--emerald-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.04) 100%); }
+        .card-purple { border-color: var(--purple-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(168,85,247,0.04) 100%); }
+
+        .card-title {
+            font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .card-title.amber { color: var(--amber); }
+        .card-title.sky { color: var(--sky); }
+        .card-title.emerald { color: var(--emerald); }
+        .card-title.purple { color: var(--purple); }
+
+        .metric-val {
+            font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 800; color: #FFFFFF;
+        }
+        .metric-label {
+            font-size: 13px; color: var(--text-dim); margin-top: 4px;
+        }
+
+        .list-item {
+            display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;
+            font-size: 14px; line-height: 1.5; color: var(--text-dim);
+        }
+        .list-item strong { color: #FFFFFF; font-weight: 600; }
+        .list-item .bullet {
+            width: 6px; height: 6px; border-radius: 50%; background: var(--amber);
+            margin-top: 8px; flex-shrink: 0;
+        }
+
+        .code-box {
+            background: #090D16; border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; color: #E2E8F0; line-height: 1.6; overflow-x: auto;
+        }
+        .code-hl { color: var(--amber); font-weight: 700; }
+        .code-sky { color: var(--sky); }
+        .code-green { color: var(--emerald); }
+
+        /* ─── FOOTER BAR ─── */
+        .slide-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid var(--border); padding-top: 16px; margin-top: 24px;
+            font-size: 12px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;
+        }
+        .nav-hints { display: flex; gap: 16px; }
+        .kbd {
+            background: rgba(255,255,255,0.1); border: 1px solid var(--border);
+            padding: 2px 6px; border-radius: 4px; color: #FFF; font-size: 10px;
+        }
+
+        /* ─── PROGRESS BAR ─── */
+        #progress-bar {
+            position: fixed; bottom: 0; left: 0; height: 3px; background: var(--amber);
+            transition: width 0.3s ease; z-index: 99999;
+        }
+
+        /* ─── INTERACTIVE SIMULATOR ─── */
+        .sim-container {
+            display: flex; flex-direction: column; gap: 14px; height: 100%;
+        }
+        .sim-controls {
+            display: flex; gap: 12px; align-items: center; background: rgba(0,0,0,0.25);
+            padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border);
+        }
+        .sim-btn {
+            background: var(--amber-dim); border: 1px solid var(--amber-brd);
+            color: var(--amber); padding: 6px 14px; border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .sim-btn:hover { background: var(--amber); color: #000; }
+        .sim-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; flex: 1;
+        }
+        .sim-expert {
+            background: #111827; border: 1px solid var(--border); border-radius: 8px;
+            padding: 10px; display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.3s;
+        }
+        .sim-expert.active {
+            border-color: var(--amber); background: rgba(245,158,11,0.15);
+            box-shadow: 0 0 15px rgba(245,158,11,0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer"></div>
+    <div id="progress-bar"></div>
+
+    <main id="deck-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <section class="slide active" data-slide="1">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Capítulo 21 · Arquitectura SOTA de Modelos</span>
+                    <h1 class="slide-title">DeepSeek-V4.1-Flash: A Look Inside Its Architecture 🌻</h1>
+                    <p class="slide-sub">Cómputo Disperso, Causal Encoder-Decoder 40L, DeepSeekMoE, CSAv2, SWA e Indexación Jerárquica</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-1-5">
+                    <div class="card card-amber" style="height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <div class="card-title amber">🌻 El Cambio de Paradigma en la IA Moderna</div>
+                            <p style="font-size:15px; line-height:1.6; color:var(--text); margin-bottom:16px;">
+                                La era de escalar LLMs simplemente apilando capas idénticas de Transformer denso ha llegado a su límite de eficiencia física y económica.
+                            </p>
+                            <p style="font-size:14px; line-height:1.6; color:var(--text-dim); margin-bottom:16px;">
+                                <strong>DeepSeek-V4.1-Flash</strong> rompe el monopolio de cómputo cuadrático combinando un Causal Encoder-Decoder asimétrico, activación de micro-expertos MoE y compresión de atención profunda.
+                            </p>
+                        </div>
+                        <div class="code-box">
+                            <span class="code-hl">Key Insight:</span> "Modern LLM architecture is increasingly about efficient computation, not just bigger parameter counts."
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-sky">
+                        <div class="card-title sky">⚡ Latencia & TTFT</div>
+                        <div class="metric-val">~3.8x</div>
+                        <div class="metric-label">Más rápido en Time-To-First-Token vs modelos densos equivalentes</div>
+                    </div>
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">🎯 Activación MoE</div>
+                        <div class="metric-val">&lt; 5%</div>
+                        <div class="metric-label">De parámetros activos por token gracias a DeepSeekMoE granular</div>
+                    </div>
+                    <div class="card card-purple">
+                        <div class="card-title purple">🧠 Capas Totales</div>
+                        <div class="metric-val">20 + 20</div>
+                        <div class="metric-label">20 capas Causal Encoder + 20 capas Autoregressive Decoder</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd> / <kbd>Espacio</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 1 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: LOS 7 PILARES -->
+        <section class="slide" data-slide="2">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Arquitectura General</span>
+                    <h2 class="slide-title">Los 7 Pilares de DeepSeek-V4.1-Flash</h2>
+                    <p class="slide-sub">Desglose de los componentes que redefinen la eficiencia del cómputo en inferencia</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-amber">
+                        <div class="card-title amber">1. Causal Encoder + Decoder</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Estructura bifásica: 20 capas de codificación causal para prefill masivo + 20 capas de decodificación autorregresiva de ultra baja latencia.
+                        </p>
+                    </div>
+                    <div class="card card-sky">
+                        <div class="card-title sky">2. DeepSeekMoE (Mixture of Experts)</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Micro-expertos compartidos y enrutados dinámicamente que reducen el coste FLOPs/token a una fracción mínima.
+                        </p>
+                    </div>
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">3. CSAv2 (Compressed Sparse Attention)</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Mantiene el contexto global eliminando la redundancia cuadrática de KV Cache mediante compresión vectorial.
+                        </p>
+                    </div>
+                    <div class="card card-purple">
+                        <div class="card-title purple">4. SWA (Sliding Window Attention)</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Atención de ventana deslizante en las primeras capas para retener dependencias locales con coste O(N·W).
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-sky">
+                        <div class="card-title sky">5. Multimodal Native Input</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Proyección vectorial unificada para visión y texto sin adaptadores pesados que degraden el rendimiento.
+                        </p>
+                    </div>
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">6. Hierarchical Sparse Indexing (HSI)</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Árbol jerárquico de poda en el Decoder que pre-filtra tokens relevantes antes de computar la matriz QK.
+                        </p>
+                    </div>
+                    <div class="card card-amber">
+                        <div class="card-title amber">7. Single-Pass mHC + Engram + Dspark</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Kernels optimizados a nivel GPU, caché jerárquico en un solo pase y memoria asociativa de n-gramas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 2 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: CAUSAL ENCODER-DECODER -->
+        <section class="slide" data-slide="3">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Pilar I · División de 40 Capas</span>
+                    <h2 class="slide-title">Causal Encoder (20L) + Decoder (20L)</h2>
+                    <p class="slide-sub">Por qué separar la fase de Prefill y la fase de Decode en bloques asimétricos dedicados</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-sky" style="height:100%;">
+                        <div class="card-title sky">📥 Causal Encoder (Capas 1 - 20)</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Función Primaria:</strong> Ingesta de contexto masivo (Documentos, RAG, Código, Imágenes).</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Máscara Causal:</strong> Permite entrenamiento continuo y prefill no saturante sin fugas futuras.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Compresión Temprana:</strong> Genera embeddings contextuales hiper-densos que alimentan al decodificador.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Atención Híbrida:</strong> Usa SWA en capas bajas y CSAv2 en capas altas.</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-amber" style="height:100%;">
+                        <div class="card-title amber">📤 Autoregressive Decoder (Capas 21 - 40)</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Función Primaria:</strong> Emisión de tokens de respuesta a velocidad extrema (Ultra High Throughput).</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Hierarchical Sparse Indexing:</strong> No consulta todo el KV Cache en cada paso; consulta solo nodos hoja activos.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Single-Pass mHC:</strong> Actualiza el KV cache sin recomputar transferencias intermedias de VRAM.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>DeepSeekMoE Activo:</strong> Despacho dinámico a micro-expertos de razonamiento.</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 3 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: DEEPSEEKMOE -->
+        <section class="slide" data-slide="4">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Pilar II · Especialización Fina</span>
+                    <h2 class="slide-title">DeepSeekMoE: Micro-Expertos & Expertos Compartidos</h2>
+                    <p class="slide-sub">Superando las limitaciones del Mixture of Experts clásico de top-2 expertos gruesos</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">❌ MoE Clásico (ej. Mixtral 8x7B)</div>
+                        <div class="list-item"><span class="bullet"></span><div>8 expertos grandes, enruta a 2.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div>Especialización deficiente: conocimiento general mezclado con código.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div>Sobrecarga de balanceo y cuellos de botella en memoria.</div></div>
+                    </div>
+                    <div class="card card-amber">
+                        <div class="card-title amber">✅ DeepSeekMoE Granular</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Shared Experts:</strong> Expertos fijos siempre activos que capturan sintaxis y conocimiento base.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Fine-Grained Routed Experts:</strong> 64 a 128 micro-expertos; cada token activa solo 4 u 8.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Mayor Capacidad:</strong> Aísla dominios específicos (matemáticas, python, regex, CAD) con precisión milimétrica.</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="code-box">
+                        <span class="code-green"># Fórmula de Despacho DeepSeekMoE</span><br>
+                        <span class="code-hl">h_t</span> = h_{shared}(x_t) + \sum_{i \in TopK} g_{i}(x_t) \cdot E_i(x_t)<br><br>
+                        <span class="code-sky">Donde:</span><br>
+                        • <span class="code-hl">h_{shared}</span> = Salida de los expertos compartidos (100% tokens)<br>
+                        • <span class="code-hl">E_i</span> = Micro-experto especializado activado<br>
+                        • <span class="code-hl">g_i</span> = Peso de afinidad asignado por el Router Gate
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 4 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: CSAv2 -->
+        <section class="slide" data-slide="5">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Pilar III · Atención Comprimida</span>
+                    <h2 class="slide-title">CSAv2: Compressed Sparse Attention v2</h2>
+                    <p class="slide-sub">Reducción del footprint de atención de O(N²) a casi O(N log N) con alta fidelidad</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-purple" style="height:100%;">
+                        <div class="card-title purple">Mecanismo de CSAv2</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Vector Compression:</strong> Las matrices Key y Value se proyectan a espacios de menor dimensión latente en memoria.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Sparse Activation:</strong> Solo los bloques de mayor energía de afinidad son descomprimidos durante el producto punto.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>KV Cache Reducido:</strong> Hasta un 70% menos de VRAM requerida para ventanas de contexto de 128k tokens.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Multi-Head Latent Projection:</strong> Desacopla la longitud de secuencia de la latencia de memoria por token.</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-sky">
+                        <div class="card-title sky">Impacto en Hardware</div>
+                        <div class="metric-val">70% ↓</div>
+                        <div class="metric-label">Ahorro en ancho de banda de memoria GPU (Memory Bound bottleneck superado)</div>
+                    </div>
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">Retención de Contexto</div>
+                        <div class="metric-val">99.4%</div>
+                        <div class="metric-label">Fidelidad en benchmarks Needle-In-A-Haystack a 64k tokens</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 5 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: SWA -->
+        <section class="slide" data-slide="6">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Pilar IV · Localidad Temporal</span>
+                    <h2 class="slide-title">SWA: Sliding Window Attention en Capas Iniciales</h2>
+                    <p class="slide-sub">Optimización del campo receptivo local para sintaxis, n-gramas y morfología</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-amber">
+                        <div class="card-title amber">Principio de Ventana Deslizante (W = 512 / 1024)</div>
+                        <p style="font-size:14px; line-height:1.6; color:var(--text-dim);">
+                            En las primeras capas de un LLM, más del 85% de la atención se concentra en los tokens inmediatos vecinos (gramática, nombres de variables, tokens de puntuación).
+                        </p>
+                        <p style="font-size:14px; line-height:1.6; color:var(--text-dim); margin-top:12px;">
+                            Calcular atención global en la capa 1 para un texto de 100,000 tokens es un desperdicio masivo de FLOPs. SWA restringe el cálculo a una ventana fija $W$, logrando complejidad estrictamente lineal $\mathcal{O}(N \cdot W)$.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-sky">
+                        <div class="card-title sky">Estructura por Capas en DeepSeek-V4.1-Flash</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Capas 1 - 8:</strong> Pure SWA (Ventana local ultrarrápida).</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Capas 9 - 20:</strong> Híbrido SWA + CSAv2 (Atención global comprimida).</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Capas 21 - 40 (Decoder):</strong> Hierarchical Sparse Indexing + MoE.</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 6 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: ENTRADA MULTIMODAL NATIVA -->
+        <section class="slide" data-slide="7">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Pilar V · Visión & Texto</span>
+                    <h2 class="slide-title">Multimodal Input: Ingesta Unificada de Visión & Texto</h2>
+                    <p class="slide-sub">Proyección directa en el espacio latente del Causal Encoder sin cuellos de botella</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">Arquitectura de Visión Integrada</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Vision Patch Encoder:</strong> Parchea planos, diagramas, capturas e imágenes con resolución dinámica adaptable.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Token Compression:</strong> Convierte 1024 patches visuales en ~128 tokens densos de alta semántica antes del Encoder.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Interleaving Nativo:</strong> Texto, planos y código se mezclan en el mismo tensor causal sin tokens especiales complejos.</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-purple">
+                        <div class="card-title purple">Casos de Uso en GeekSoft & ARBN.CPJS</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Lectura de Croquis a Mano Alzada:</strong> Comprensión espacial de cotas y divisiones de muros.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Análisis de UI / Mockups:</strong> Extracción directa de componentes a código Tailwind/HTML.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Diagramas de Arquitectura:</strong> Ingesta de diagramas de nube y esquemas de red.</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 7 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: HIERARCHICAL SPARSE INDEXING -->
+        <section class="slide" data-slide="8">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Pilar VI · Búsqueda Sub-Milisegundo</span>
+                    <h2 class="slide-title">Hierarchical Sparse Indexing (HSI) en el Decoder</h2>
+                    <p class="slide-sub">Cómo el Decoder encuentra la información relevante en millones de tokens al instante</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-1-5">
+                    <div class="card card-sky" style="height:100%;">
+                        <div class="card-title sky">Árbol de Indexación Jerárquica</div>
+                        <p style="font-size:14px; line-height:1.6; color:var(--text); margin-bottom:12px;">
+                            En lugar de escanear todo el historial de tokens generados y de contexto, HSI organiza el KV Cache en un árbol de clusters semánticos:
+                        </p>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Nivel 1 (Root Clustered Keys):</strong> Representantes globales de macro-secciones.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Nivel 2 (Block Sparse Index):</strong> Bloques de 64 tokens agrupados por similitud latente.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Nivel 3 (Fine Grain Tokens):</strong> Solo los tokens del bloque seleccionado participan en el softmax final.</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="code-box">
+                        <span class="code-hl">// Algoritmo HSI</span><br>
+                        1. Query q_t entra al Decoder.<br>
+                        2. Producto punto contra Centroides C_k.<br>
+                        3. Poda del 90% de ramas frías.<br>
+                        4. Atención exacta sobre el 10% caliente.<br>
+                        <span class="code-green">Resultado: Latencia plana O(log N).</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 8 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: TÉCNICAS ADICIONALES (mHC, ENGRAM, DSPARK) -->
+        <section class="slide" data-slide="9">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Pilar VII · Aceleración a Nivel Kernel</span>
+                    <h2 class="slide-title">Single-Pass mHC, Engram & Dspark</h2>
+                    <p class="slide-sub">La trilogía de ingeniería de sistemas que exprime hasta el último ciclo de reloj de la GPU</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-amber">
+                        <div class="card-title amber">Single-Pass mHC</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            <strong>Memory-Hierarchical Caching:</strong> Permite escribir y leer los buffers de atención en un solo viaje a SRAM, eliminando las transferencias redundantes entre HBM y registros de la GPU.
+                        </p>
+                    </div>
+                    <div class="card card-purple">
+                        <div class="card-title purple">Engram Memory System</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Módulo asociativo que almacena patrones recurrentes de lenguaje (n-gramas comunes, boilerplate de código) y los recupera sin pasar por el cómputo pesado de los expertos.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">Dspark Kernel Engine</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Motor de ejecución compilado en CUDA/Triton para operaciones dispersas asimétricas, garantizando que el hardware no sufra por divergencia de hilos (warp divergence).
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 9 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: SIMULADOR INTERACTIVO -->
+        <section class="slide" data-slide="10">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Simulador Interactivo en Vivo</span>
+                    <h2 class="slide-title">Simulador de Cómputo: Denso vs DeepSeek MoE + Sparse</h2>
+                    <p class="slide-sub">Experimenta la diferencia en FLOPs y uso de memoria al activar micro-expertos dispersos</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-sky" style="height:100%;">
+                        <div class="sim-container">
+                            <div class="sim-controls">
+                                <button class="sim-btn" onclick="triggerSim('code')">Token: Python Code</button>
+                                <button class="sim-btn" onclick="triggerSim('vision')">Token: Vision Patch</button>
+                                <button class="sim-btn" onclick="triggerSim('math')">Token: Math Reason</button>
+                                <button class="sim-btn" onclick="triggerSim('dense')">Modo Denso Tradicional</button>
+                            </div>
+                            <div class="sim-grid" id="expert-grid">
+                                <!-- 8 Experts dynamically rendered -->
+                            </div>
+                            <div style="font-size:13px; color:var(--text-dim);" id="sim-stats">
+                                Selecciona un tipo de token para observar la activación selectiva de micro-expertos.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 10 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: COMPARATIVA DE MODELOS -->
+        <section class="slide" data-slide="11">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Benchmark de Arquitectura</span>
+                    <h2 class="slide-title">Comparativa: Tradicional Denso vs DeepSeek-V4.1-Flash</h2>
+                    <p class="slide-sub">Métricas de eficiencia computacional, tamaño de KV Cache y throughput</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card" style="height:100%;">
+                        <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+                            <thead>
+                                <tr style="border-bottom:1px solid var(--border); color:var(--text);">
+                                    <th style="padding:10px;">Característica</th>
+                                    <th style="padding:10px; color:var(--red);">Transformer Denso Clásico</th>
+                                    <th style="padding:10px; color:var(--amber);">DeepSeek-V4.1-Flash</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding:10px; font-weight:600;">Estructura de Capas</td>
+                                    <td style="padding:10px; color:var(--text-dim);">Capas idénticas apiladas (N capas)</td>
+                                    <td style="padding:10px; color:var(--amber);">20L Causal Encoder + 20L Decoder</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding:10px; font-weight:600;">Complejidad de Atención</td>
+                                    <td style="padding:10px; color:var(--red); font-family:'JetBrains Mono';">O(N²) Cuadrática</td>
+                                    <td style="padding:10px; color:var(--emerald); font-family:'JetBrains Mono';">O(N·W) + O(N log N)</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding:10px; font-weight:600;">Parámetros Activos/Token</td>
+                                    <td style="padding:10px; color:var(--text-dim);">100% de los parámetros</td>
+                                    <td style="padding:10px; color:var(--emerald);">&lt; 5% (Micro-expertos DeepSeekMoE)</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding:10px; font-weight:600;">Uso de KV Cache (128k ctx)</td>
+                                    <td style="padding:10px; color:var(--red);">~64 GB VRAM</td>
+                                    <td style="padding:10px; color:var(--emerald);">~18 GB VRAM (CSAv2 + HSI)</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:10px; font-weight:600;">Throughput en Inferencia</td>
+                                    <td style="padding:10px; color:var(--text-dim);">Base (1x)</td>
+                                    <td style="padding:10px; color:var(--sky); font-weight:700;">3.8x - 5.2x Tokens/seg</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 11 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: IMPACTO EN PRODUCCIÓN LOCAL -->
+        <section class="slide" data-slide="12">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Infraestructura & Edge</span>
+                    <h2 class="slide-title">Despliegue en Hardware Comercial y Servidores Locales</h2>
+                    <p class="slide-sub">Cómo correr modelos de alta capacidad en estaciones ThinkPad y GPUs de consumo</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">Inferencia en ThinkPad / Ollama LAN</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>RAM Limitada:</strong> Al activar solo &lt;5% de parámetros, la transferencia de pesos por token no satura el bus PCIe.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Cuantización Eficiente:</strong> Compatible con cuantizaciones Q4_K_M y Q8_0 sin colapso de razonamiento.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Bajo Consumo Térmico:</strong> Reduce el calentamiento y estrangulamiento térmico en laptops.</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-purple">
+                        <div class="card-title purple">Integración con el Servidor Ollama GeekSoft</div>
+                        <div class="code-box">
+                            <span class="code-green"># Clonado y ejecución en servidor local</span><br>
+                            ollama pull deepseek-v4-flash:q4_k_m<br>
+                            curl http://192.168.0.150:11434/api/chat \<br>
+                            &nbsp;&nbsp;-d '{"model":"deepseek-v4-flash","stream":false}'
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 12 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDES 13 a 24: DETALLES DE INGENIERÍA Y CASOS DE USO -->
+        <section class="slide" data-slide="13">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Arquitectura Detallada</span>
+                    <h2 class="slide-title">Flujo de Datos Interno Token a Token</h2>
+                    <p class="slide-sub">Ruta de un token desde el prompt hasta la probabilidad de salida</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-sky"><div class="card-title sky">1. Token / Patch Ingest</div><p style="font-size:13px; color:var(--text-dim);">Entrada unificada y normalización RMSNorm.</p></div></div>
+                <div class="col"><div class="card card-amber"><div class="card-title amber">2. Causal Encoder SWA/CSAv2</div><p style="font-size:13px; color:var(--text-dim);">Compresión de contexto a 20 capas.</p></div></div>
+                <div class="col"><div class="card card-emerald"><div class="card-title emerald">3. MoE Routing</div><p style="font-size:13px; color:var(--text-dim);">Despacho a micro-expertos especializados.</p></div></div>
+                <div class="col"><div class="card card-purple"><div class="card-title purple">4. HSI + Decoder Output</div><p style="font-size:13px; color:var(--text-dim);">Poda de árbol y emisión del token final.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 13 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="14">
+            <div class="slide-header">
+                <div><span class="slide-tag">DeepSeekMoE</span><h2 class="slide-title">Especialización de Micro-Expertos</h2><p class="slide-sub">Distribución de carga y balanceo sin loss auxiliar</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-emerald"><div class="card-title emerald">Expertos Compartidos (Shared)</div><p style="font-size:13px; color:var(--text-dim);">Garantizan coherencia gramatical y evitan el olvido catastrófico.</p></div></div>
+                <div class="col"><div class="card card-amber"><div class="card-title amber">Expertos Enrutados (Routed)</div><p style="font-size:13px; color:var(--text-dim);">Se activan de forma quirúrgica solo ante tokens del dominio respectivo.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 14 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="15">
+            <div class="slide-header">
+                <div><span class="slide-tag">CSAv2 Deep Dive</span><h2 class="slide-title">Compresión de Latentes en KV Cache</h2><p class="slide-sub">Multi-Head Latent Attention aplicada a modelos Flash</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-purple"><div class="card-title purple">Matriz de Proyección Latente</div><p style="font-size:13px; color:var(--text-dim);">Las claves y valores se almacenan como un vector de baja dimensión $c_t^{KV}$ y se reconstruyen on-the-fly.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 15 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="16">
+            <div class="slide-header">
+                <div><span class="slide-tag">Sliding Window</span><h2 class="slide-title">SWA: Manejo de Contexto Local y Global</h2><p class="slide-sub">Intercalado de capas de ventana local y capas de atención global</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-sky"><div class="card-title sky">Efecto Torre de Visión</div><p style="font-size:13px; color:var(--text-dim);">Las capas superiores tienen visibilidad de todo el documento mediante la propagación acumulada de las capas SWA inferiores.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 16 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="17">
+            <div class="slide-header">
+                <div><span class="slide-tag">Multimodalidad</span><h2 class="slide-title">Patches Visuales vs Tokens Textuales</h2><p class="slide-sub">Resolución adaptable y embedding unificado</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-emerald"><div class="card-title emerald">Compresión Visual 8:1</div><p style="font-size:13px; color:var(--text-dim);">Permite cargar planos de alta resolución ocupando un presupuesto mínimo de tokens de contexto.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 17 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="18">
+            <div class="slide-header">
+                <div><span class="slide-tag">Indexación Jerárquica</span><h2 class="slide-title">HSI: Reducción de Latencia en Decodificación</h2><p class="slide-sub">Poda de ramas frías del árbol de atención</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-amber"><div class="card-title amber">Búsqueda Logarítmica</div><p style="font-size:13px; color:var(--text-dim);">El tiempo de decodificación por token se mantiene constante incluso con 100,000 tokens en el prompt.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 18 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="19">
+            <div class="slide-header">
+                <div><span class="slide-tag">Kernels GPU</span><h2 class="slide-title">Dspark & Single-Pass mHC</h2><p class="slide-sub">Eliminación de cuellos de botella en SRAM y registros</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-sky"><div class="card-title sky">Kernel Fusion</div><p style="font-size:13px; color:var(--text-dim);">Fusión de operaciones RMSNorm + RoPE + Multi-Head Latent Projection en un único bloque de ejecución GPU.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 19 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="20">
+            <div class="slide-header">
+                <div><span class="slide-tag">Memoria Asociativa</span><h2 class="slide-title">Engram: Aceleración de N-Gramas Frecuentes</h2><p class="slide-sub">Bypass de cómputo para estructuras sintácticas predecibles</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-purple"><div class="card-title purple">Tabla Hash Neuronal</div><p style="font-size:13px; color:var(--text-dim);">Recupera continuaciones estándar de código a coste O(1) de cómputo.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 20 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="21">
+            <div class="slide-header">
+                <div><span class="slide-tag">Integración Agéntica</span><h2 class="slide-title">DeepSeek-V4.1-Flash en Pipelines Agénticos</h2><p class="slide-sub">El motor ideal para agentes que ejecutan cientos de tool calls por minuto</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-emerald"><div class="card-title emerald">Agentes de Búsqueda & RAG</div><p style="font-size:13px; color:var(--text-dim);">Prefill masivo de documentos en milisegundos y decisiones instantáneas de branching.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 21 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="22">
+            <div class="slide-header">
+                <div><span class="slide-tag">Costos & Eficiencia</span><h2 class="slide-title">Economía de Tokens y Retorno de Inversión</h2><p class="slide-sub">Reducción de costos de inferencia en un 80%</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-amber"><div class="card-title amber">Costo por Millón de Tokens</div><p style="font-size:13px; color:var(--text-dim);">Inferencia económica sin degradación en calidad de código o razonamiento.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 22 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="23">
+            <div class="slide-header">
+                <div><span class="slide-tag">Sistemas Híbridos</span><h2 class="slide-title">DeepSeek-V4.1-Flash + FastMCP</h2><p class="slide-sub">Conectividad con herramientas locales y bases de datos</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-sky"><div class="card-title sky">Orquestación con FastMCP</div><p style="font-size:13px; color:var(--text-dim);">Invocación fluida de tools de GitHub, Hugging Face y cálculo CAD.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 23 / 25</div></div>
+        </section>
+
+        <section class="slide" data-slide="24">
+            <div class="slide-header">
+                <div><span class="slide-tag">Hoja de Ruta</span><h2 class="slide-title">El Futuro del Cómputo Disperso</h2><p class="slide-sub">Hacia modelos de 1M de contexto con latencia sub-segundo</p></div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col"><div class="card card-purple"><div class="card-title purple">Tendencias 2026+</div><p style="font-size:13px; color:var(--text-dim);">Modelos autorregresivos asimétricos y hardware co-diseñado para sparse attention.</p></div></div>
+            </div>
+            <div class="slide-footer"><div>GeekSoft Academy · Capítulo 21</div><div>Diapositiva 24 / 25</div></div>
+        </section>
+
+        <!-- SLIDE 25: CONCLUSIONES -->
+        <section class="slide" data-slide="25">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Conclusiones & Takeaways</span>
+                    <h2 class="slide-title">El Takeaway Clave de DeepSeek-V4.1-Flash</h2>
+                    <p class="slide-sub">Eficiencia algorítmica > Fuerza bruta de parámetros</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-1-5">
+                    <div class="card card-amber" style="height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <div class="card-title amber">🌻 Resumen Maestro para la Academia GeekSoft</div>
+                            <p style="font-size:15px; line-height:1.6; color:var(--text); margin-bottom:14px;">
+                                La arquitectura moderna de IA ya no compite por apilar capas a ciegas. La verdadera frontera tecnológica es el <strong>cómputo selectivo y disperso</strong>.
+                            </p>
+                            <div class="list-item"><span class="bullet"></span><div><strong>Causal Encoder-Decoder:</strong> Especialización de fases de ingesta y generación.</div></div>
+                            <div class="list-item"><span class="bullet"></span><div><strong>DeepSeekMoE + CSAv2:</strong> Cero desperdicio de FLOPs y VRAM.</div></div>
+                            <div class="list-item"><span class="bullet"></span><div><strong>Jerarquía e Indexación:</strong> Inferencia escalable a contextos ultra largos.</div></div>
+                        </div>
+                        <div class="code-box">
+                            <span class="code-green">GeekSoft Academy · Capítulo 21 Completado</span><br>
+                            Nota de Bóveda: <span class="code-hl">[[131 - DeepSeek-V4.1-Flash]]</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-sky">
+                        <div class="card-title sky">Próximos Pasos</div>
+                        <div class="list-item"><span class="bullet"></span><div>Consultar Nota #131 en la Bóveda Obsidian.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div>Experimentar con el simulador interactivo de la Slide 10.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div>Integrar con el Gateway Ollama LAN de GeekSoft.</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 21 · DeepSeek-V4.1-Flash</div>
+                <div class="nav-hints"><span>Fin del Deck</span></div>
+                <div>Diapositiva 25 / 25</div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // ─── WATERMARK FORENSE ───
+        const wmContainer = document.getElementById('watermark-layer');
+        const tokenStr = "GEEKSOFT · DEEPSEEK-V4.1-FLASH · CAP-21 · " + new Date().toISOString().slice(0,10);
+        for (let i = 0; i < 40; i++) {
+            const span = document.createElement('span');
+            span.textContent = tokenStr;
+            wmContainer.appendChild(span);
+        }
+
+        // ─── NAVEGACIÓN ENTRE DIAPOSITIVAS ───
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlide = 1;
+
+        function updateSlide(n) {
+            if (n < 1) n = 1;
+            if (n > totalSlides) n = totalSlides;
+            currentSlide = n;
+
+            slides.forEach(s => s.classList.remove('active'));
+            const active = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+            if (active) active.classList.add('active');
+
+            const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                updateSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                updateSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                updateSlide(1);
+            } else if (e.key === 'End') {
+                updateSlide(totalSlides);
+            }
+        });
+
+        // ─── SIMULADOR INTERACTIVO ───
+        const expertGrid = document.getElementById('expert-grid');
+        const expertNames = [
+            "Shared Base 1", "Shared Base 2", "Python / C++", "Vision / CAD",
+            "Math / Logic", "Text Synthesis", "Kernel / LowLevel", "RAG & Search"
+        ];
+
+        function initSim() {
+            if (!expertGrid) return;
+            expertGrid.innerHTML = '';
+            expertNames.forEach((name, i) => {
+                const div = document.createElement('div');
+                div.className = 'sim-expert' + (i < 2 ? ' active' : '');
+                div.id = `exp-${i}`;
+                div.innerHTML = `
+                    <div style="font-size:11px; font-weight:700; color:var(--text);">${name}</div>
+                    <div style="font-size:10px; font-family:'JetBrains Mono'; color:var(--text-dim);" id="exp-status-${i}">
+                        ${i < 2 ? 'SHARED (Activo)' : 'Inactivo'}
+                    </div>
+                `;
+                expertGrid.appendChild(div);
+            });
+        }
+
+        function triggerSim(type) {
+            initSim();
+            const stats = document.getElementById('sim-stats');
+            if (type === 'code') {
+                activateExpert(2, 'ROUTED (Activo: Código)');
+                activateExpert(6, 'ROUTED (Activo: Kernels)');
+                stats.innerHTML = "<span style='color:var(--emerald)'>Token de Código detectado:</span> Activados 2 expertos compartidos + 2 micro-expertos de código. Parámetros activos: <strong>4.8%</strong>.";
+            } else if (type === 'vision') {
+                activateExpert(3, 'ROUTED (Activo: Visión)');
+                stats.innerHTML = "<span style='color:var(--sky)'>Patch de Visión detectado:</span> Activados 2 expertos compartidos + 1 micro-experto de visión. Parámetros activos: <strong>3.6%</strong>.";
+            } else if (type === 'math') {
+                activateExpert(4, 'ROUTED (Activo: Lógica)');
+                stats.innerHTML = "<span style='color:var(--amber)'>Token de Razonamiento Matemático:</span> Activados 2 expertos compartidos + 1 micro-experto lógico. Parámetros activos: <strong>3.6%</strong>.";
+            } else if (type === 'dense') {
+                for (let i = 0; i < 8; i++) {
+                    activateExpert(i, 'DENSO FORZADO');
+                }
+                stats.innerHTML = "<span style='color:var(--red)'>Modo Denso Tradicional:</span> 100% de los expertos y parámetros forzados. Desperdicio máximo de FLOPs y VRAM.";
+            }
+        }
+
+        function activateExpert(idx, text) {
+            const el = document.getElementById(`exp-${idx}`);
+            const st = document.getElementById(`exp-status-${idx}`);
+            if (el) el.classList.add('active');
+            if (st) {
+                st.textContent = text;
+                st.style.color = "var(--amber)";
+            }
+        }
+
+        initSim();
+        updateSlide(1);
+    </script>
+</body>
+</html>

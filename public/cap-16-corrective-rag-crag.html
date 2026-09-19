@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrective RAG (CRAG) - Pipeline de Evaluación & Auto-Corrección (Capítulo 16) - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #0F172A;
+            --bg-card:     #1E293B;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #38BDF8;
+            --sky-dim:     rgba(56,189,248,0.12);
+            --sky-brd:     rgba(56,189,248,0.30);
+            --emerald:     #10B981;
+            --emerald-dim: rgba(16,185,129,0.12);
+            --emerald-brd: rgba(16,185,129,0.30);
+            --purple:      #A855F7;
+            --purple-dim:  rgba(168,85,247,0.12);
+            --purple-brd:  rgba(168,85,247,0.30);
+            --amber:       #F59E0B;
+            --amber-dim:   rgba(245,158,11,0.12);
+            --amber-brd:   rgba(245,158,11,0.30);
+            --red:         #F43F5E;
+            --red-dim:     rgba(244,63,94,0.12);
+            --text:        #F8FAFC;
+            --text-dim:    rgba(248,250,252,0.70);
+            --border:      rgba(255,255,255,0.10);
+            --shadow:      0 8px 32px rgba(0,0,0,0.35);
+            --shadow-lg:   0 16px 48px rgba(0,0,0,0.50);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.04; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #ffffff; transform: rotate(-25deg) scale(1.15);
+        }
+        .wm-item { padding: 30px 40px; white-space: nowrap; }
+
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 24px 50px 80px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: scale(0.98);
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: scale(1); }
+
+        .top-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px; border-radius: 9999px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+            text-transform: uppercase; margin-bottom: 12px;
+            border: 1px solid var(--sky-brd); background: var(--sky-dim); color: var(--sky);
+        }
+
+        h1 {
+            font-size: clamp(26px, 3.8vw, 44px);
+            font-weight: 900; line-height: 1.15;
+            text-align: center; margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--emerald) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: clamp(20px, 2.5vw, 30px);
+            font-weight: 800; margin-bottom: 14px; color: #FFFFFF;
+        }
+
+        .subtitle {
+            font-size: clamp(13px, 1.4vw, 16px);
+            color: var(--text-dim); text-align: center; max-width: 900px;
+            line-height: 1.5; margin-bottom: 24px;
+        }
+
+        .grid-3 {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 16px; width: 100%; max-width: 1200px;
+        }
+
+        .grid-4 {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; width: 100%; max-width: 1200px;
+        }
+
+        .grid-2 {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 20px; width: 100%; max-width: 1100px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px; padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.25s ease;
+            position: relative; overflow: hidden;
+        }
+        .card:hover {
+            border-color: var(--emerald-brd);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        .card-emerald { border-top: 3px solid var(--emerald); }
+        .card-amber { border-top: 3px solid var(--amber); }
+        .card-red { border-top: 3px solid var(--red); }
+        .card-sky { border-top: 3px solid var(--sky); }
+
+        .card-title {
+            font-size: 15px; font-weight: 700; color: #FFFFFF;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .card-desc {
+            font-size: 13px; color: var(--text-dim); line-height: 1.5;
+        }
+
+        .code-box {
+            background: #020617; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; padding: 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; color: #34D399; line-height: 1.6; overflow-x: auto;
+            text-align: left; width: 100%; max-width: 1000px;
+        }
+
+        /* ─── SIMULADOR INTERACTIVO CRAG ─── */
+        .sim-container {
+            display: flex; gap: 20px; width: 100%; max-width: 1150px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 22px; box-shadow: var(--shadow-lg);
+        }
+        .sim-controls {
+            width: 320px; display: flex; flex-direction: column; gap: 12px; text-align: left;
+        }
+        .sim-btn {
+            padding: 12px 14px; border-radius: 10px; font-size: 13px; font-weight: 600;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+            color: var(--text-dim); cursor: pointer; text-align: left; transition: all 0.2s;
+        }
+        .sim-btn.active {
+            background: var(--emerald-dim); border-color: var(--emerald); color: #FFFFFF;
+        }
+        .sim-display {
+            flex: 1; background: #020617; border-radius: 10px; padding: 20px;
+            border: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: var(--text-dim);
+            line-height: 1.6; text-align: left;
+        }
+        .route-badge {
+            display: inline-block; padding: 4px 10px; border-radius: 6px;
+            font-size: 11px; font-weight: 700; margin-bottom: 10px;
+        }
+
+        /* ─── BOTTOM NAVIGATION ─── */
+        nav {
+            position: fixed; bottom: 18px; left: 50%;
+            transform: translateX(-50%); z-index: 99999;
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(12px);
+            padding: 8px 18px; border-radius: 9999px;
+            border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+        }
+        .nav-btn {
+            background: rgba(255,255,255,0.08); border: none; color: #FFFFFF;
+            width: 32px; height: 32px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; cursor: pointer;
+            font-size: 14px; transition: all 0.2s;
+        }
+        .nav-btn:hover { background: var(--emerald); color: #020617; }
+        .slide-counter {
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            font-weight: 700; color: var(--emerald); min-width: 60px; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <span class="wm-item">GEEKSOFT ACADEMY · SOTA 2026</span>
+        <span class="wm-item">CORRECTIVE RAG (CRAG) PIPELINE</span>
+        <span class="wm-item">CONFIDENTIAL · LIVE DECK</span>
+    </div>
+
+    <main id="deck">
+
+        <!-- SLIDE 1: PORTADA -->
+        <section class="slide active">
+            <span class="top-badge" style="border-color: var(--emerald-brd); background: var(--emerald-dim); color: var(--emerald);">⚡ MASTERCLASS SOTA 2026 · CAPÍTULO 16</span>
+            <h1>Corrective RAG (CRAG)</h1>
+            <p class="subtitle">Pipeline de Evaluación de Retrieval, Refinamiento de Query y Generación Grounded con LangGraph & Ollama</p>
+            
+            <div class="grid-3" style="max-width: 1000px; margin-top: 10px;">
+                <div class="card card-emerald">
+                    <div class="card-title">🛡️ Retrieval Evaluator</div>
+                    <div class="card-desc">Calificación probabilística de la relevancia del contexto recuperado antes de enviarlo al generador LLM.</div>
+                </div>
+                <div class="card card-amber">
+                    <div class="card-title">🔀 3 Rutas Correctivas</div>
+                    <div class="card-desc">Bifurcación dinámica entre Correct (Knowledge Strip), Ambiguous (Fusión Web) e Incorrect (Fallback Web).</div>
+                </div>
+                <div class="card card-sky">
+                    <div class="card-title">🎯 Zero Fine-Tuning</div>
+                    <div class="card-desc">100% implementable sobre modelos open-source estándar (Llama 3, Mistral) con LangGraph y ChromaDB.</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 24px; font-size: 12px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;">
+                Paper: arXiv:2401.15884 (Yan et al.) · Implementación: itsapexdanav/Corrective-RAG · Bóveda GeekSoft #124
+            </p>
+        </section>
+
+        <!-- SLIDE 2: EL PROBLEMA: RAG CIEGO VS CRAG -->
+        <section class="slide">
+            <span class="top-badge" style="border-color: var(--red-dim); background: var(--red-dim); color: var(--red);">⚠️ EL TALÓN DE AQUILES DEL RAG TRADICIONAL</span>
+            <h2>La Confianza Ciega en el Vector DB vs. Auto-Corrección</h2>
+            <p class="subtitle">¿Qué ocurre cuando el recuperador vectorial devuelve chunks ruidosos o engañosos?</p>
+
+            <div class="grid-2">
+                <div class="card" style="border-left: 4px solid var(--red);">
+                    <div class="card-title" style="color: var(--red);">❌ Vanilla RAG (Confianza Ciega)</div>
+                    <ul style="font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-left: 18px; text-align: left;">
+                        <li>Vector DB devuelve $K$ fragmentos sin validar relevancia.</li>
+                        <li>El LLM asume los chunks como verdad absoluta.</li>
+                        <li><strong>Alucinaciones Severas:</strong> Generación contaminada por ruido.</li>
+                        <li>Cero capacidad de fallback si el documento no está en el índice.</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--emerald);">
+                    <div class="card-title" style="color: var(--emerald);">✅ Corrective RAG (Bucle de Verificación)</div>
+                    <ul style="font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-left: 18px; text-align: left;">
+                        <li><strong>Evaluador Dedicado:</strong> Mide el relevance score de cada fragmento.</li>
+                        <li><strong>Knowledge Stripping:</strong> Poda oraciones irrelevantes dentro del chunk.</li>
+                        <li><strong>Query Rewriter:</strong> Reformula preguntas fallidas para búsqueda web.</li>
+                        <li><strong>Grounded Generation:</strong> Respuestas verificadas con citas reales.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: LAS 7 ETAPAS DEL PIPELINE -->
+        <section class="slide">
+            <span class="top-badge">🔄 ARQUITECTURA DETALLADA</span>
+            <h2>Las 7 Etapas del Pipeline de Corrective RAG</h2>
+            <p class="subtitle">De la ingesta cruda a la respuesta con certeza verificada</p>
+
+            <div class="grid-4">
+                <div class="card card-sky">
+                    <div class="card-title">1. Ingesta & Chunks</div>
+                    <div class="card-desc">Carga de PDFs/docs y particionado semántico con solapamiento controlado (`RecursiveSplitter`).</div>
+                </div>
+                <div class="card card-purple">
+                    <div class="card-title">2. Dense Retrieval</div>
+                    <div class="card-desc">Extracción de los $K$ candidatos semánticamente cercanos en ChromaDB / FAISS.</div>
+                </div>
+                <div class="card card-emerald">
+                    <div class="card-title">3. Retrieval Evaluator</div>
+                    <div class="card-desc">Clasificación probabilística del score: ¿Es relevante para la consulta del usuario?</div>
+                </div>
+                <div class="card card-amber">
+                    <div class="card-title">4. Knowledge Strip</div>
+                    <div class="card-desc">Segmentación a nivel oración para extraer únicamente los datos clave sin ruido.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: SIMULADOR INTERACTIVO DE LAS 3 RUTAS -->
+        <section class="slide">
+            <span class="top-badge" style="border-color: var(--amber-brd); background: var(--amber-dim); color: var(--amber);">🔀 SIMULADOR DE ENRUTAMIENTO CRAG</span>
+            <h2>Bifurcación Condicional en Vivo (Correct / Ambiguous / Incorrect)</h2>
+            <p class="subtitle">Haz clic en cada escenario para ver la acción que toma el arnés agéntico</p>
+
+            <div class="sim-container">
+                <div class="sim-controls">
+                    <button class="sim-btn active" onclick="showRoute('correct')">🟢 Ruta 1: Correct (Confianza Alta)</button>
+                    <button class="sim-btn" onclick="showRoute('ambiguous')">🟡 Ruta 2: Ambiguous (Confianza Media)</button>
+                    <button class="sim-btn" onclick="showRoute('incorrect')">🔴 Ruta 3: Incorrect (Confianza Baja)</button>
+                </div>
+                <div class="sim-display" id="sim-output">
+                    <span class="route-badge" style="background: var(--emerald-dim); color: var(--emerald); border: 1px solid var(--emerald-brd);">CONFIDENCIA > 0.80 · ACCIÓN: KNOWLEDGE STRIPPING</span><br/>
+                    <strong>1. Diagnóstico:</strong> Los documentos recuperados del Vector DB responden directamente a la pregunta.<br/>
+                    <strong>2. Proceso:</strong> Se filtran las oraciones superfluas del chunk interno.<br/>
+                    <strong>3. Generación:</strong> Síntesis inmediata en Ollama sin consumir cuota de búsqueda externa.<br/>
+                    <em>Resultado:</em> Mínima latencia, máxima precisión factual.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: COMPARATIVA SOTA -->
+        <section class="slide">
+            <span class="top-badge">📊 MATRIZ DE COMPARACIÓN</span>
+            <h2>CRAG vs. Vanilla RAG vs. Self-RAG vs. Adaptive RAG</h2>
+            <p class="subtitle">Evaluación de compensaciones (trade-offs) en producción empresarial</p>
+
+            <div class="grid-3">
+                <div class="card card-sky">
+                    <div class="card-title">Vanilla RAG</div>
+                    <div class="card-desc"><strong>Latencia:</strong> Muy baja.<br/><strong>Costo:</strong> Mínimo.<br/><strong>Riesgo:</strong> Altísimo peligro de alucinación con datasets heterogéneos.</div>
+                </div>
+                <div class="card card-purple">
+                    <div class="card-title">Self-RAG</div>
+                    <div class="card-desc"><strong>Precisión:</strong> Excelente.<br/><strong>Inconveniente:</strong> Requiere fine-tuning de modelos con tokens de reflexión propietarios.</div>
+                </div>
+                <div class="card card-emerald">
+                    <div class="card-title">Corrective RAG (CRAG)</div>
+                    <div class="card-desc"><strong>Ventaja Clave:</strong> Zero Fine-Tuning. Funciona con cualquier LLM open-source mediante arneses LangGraph.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: AGENTE CRAG EN GEEKSOFT -->
+        <section class="slide">
+            <span class="top-badge">🚀 TRANSFERENCIA A PRODUCCIÓN</span>
+            <h2>Agente Corrector RAG en el Ecosistema GeekSoft</h2>
+            <p class="subtitle">Blindaje de consultas catastrales en PROPTWIN y conciliación contable en MIFUNE</p>
+
+            <div class="grid-2">
+                <div class="card card-amber">
+                    <div class="card-title">🏛️ PROPTWIN #11 (Partidas Prediales)</div>
+                    <div class="card-desc">Valida que las cargas y gravámenes extraídos del PDF coincidan exactamente con la SUNARP antes de cotizar.</div>
+                </div>
+                <div class="card card-emerald">
+                    <div class="card-title">💰 MIFUNE #10 (Reglas Contables SBS)</div>
+                    <div class="card-desc">Si el Vector DB no contiene la última circular cambiaria SBS, el agente refina la query y ejecuta fallback web.</div>
+                </div>
+            </div>
+
+            <div class="code-box" style="margin-top: 18px;">
+                # Ejecución del Agente Corrector CRAG GeekSoft<br/>
+                python scripts/crag_agent.py --query "¿Cuál es la tasa de depreciación SPC en Miraflores?" --mode auto
+            </div>
+        </section>
+
+    </main>
+
+    <!-- NAVEGACIÓN -->
+    <nav>
+        <button class="nav-btn" onclick="prevSlide()">◀</button>
+        <div class="slide-counter" id="counter">01 / 06</div>
+        <button class="nav-btn" onclick="nextSlide()">▶</button>
+    </nav>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const counter = document.getElementById('counter');
+
+        function updateDeck() {
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentSlide);
+            });
+            counter.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateDeck();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateDeck();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
+            if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+        });
+
+        const routeData = {
+            correct: "<span class='route-badge' style='background: var(--emerald-dim); color: var(--emerald); border: 1px solid var(--emerald-brd);'>CONFIDENCIA > 0.80 · ACCIÓN: KNOWLEDGE STRIPPING</span><br/><strong>1. Diagnóstico:</strong> Los documentos recuperados del Vector DB responden directamente a la pregunta.<br/><strong>2. Proceso:</strong> Se filtran las oraciones superfluas del chunk interno.<br/><strong>3. Generación:</strong> Síntesis inmediata en Ollama sin consumir cuota de búsqueda externa.<br/><em>Resultado:</em> Mínima latencia, máxima precisión factual.",
+            ambiguous: "<span class='route-badge' style='background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-brd);'>CONFIDENCIA 0.40 - 0.79 · ACCIÓN: FUSIÓN VECTOR + WEB</span><br/><strong>1. Diagnóstico:</strong> El contexto interno es incompleto o solo responde parcialmente.<br/><strong>2. Proceso:</strong> Se preservan los datos locales válidos y se lanza una búsqueda web complementaria (Tavily/DuckDuckGo).<br/><strong>3. Generación:</strong> El LLM sintetiza ambas fuentes citando procedencias.<br/><em>Resultado:</em> Cobertura holística sin lagunas informativas.",
+            incorrect: "<span class='route-badge' style='background: var(--red-dim); color: var(--red); border: 1px solid var(--red-dim);'>CONFIDENCIA < 0.40 · ACCIÓN: DESCARTAR Y FALLBACK WEB</span><br/><strong>1. Diagnóstico:</strong> El Vector DB recuperó fragmentos irrelevantes o desalineados con la intención del usuario.<br/><strong>2. Proceso:</strong> Se descartan los documentos locales, se ejecuta <strong>Query Rewriting</strong> para optimizar la búsqueda y se consulta la web.<br/><strong>3. Generación:</strong> Respuesta construida exclusivamente sobre evidencia fresca de internet.<br/><em>Resultado:</em> Prevención total de alucinaciones por contexto erróneo."
+        };
+
+        function showRoute(type) {
+            document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('sim-output').innerHTML = routeData[type];
+        }
+    </script>
+</body>
+</html>

@@ -545,8 +545,9 @@
                 <div class="accordion-body">
                     <div class="acc-sub-item" onclick="selectLesson('cap-02', 0, event)"><span class="sub-bullet">├─</span> GraphRAG vs Vector RAG vs Hybrid</div>
                     <div class="acc-sub-item" onclick="selectLesson('cap-02', 1, event)"><span class="sub-bullet">├─</span> RAG Empresarial en AWS</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 2, event)"><span class="sub-bullet">├─</span> Graphify Knowledge Graph</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 3, event)"><span class="sub-bullet">└─</span> Utopia RAG Sandbox</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 2, event)"><span class="sub-bullet">├─</span> Corrective RAG (CRAG) & LangGraph</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 3, event)"><span class="sub-bullet">├─</span> Graphify Knowledge Graph</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 4, event)"><span class="sub-bullet">└─</span> Utopia RAG Sandbox</div>
                 </div>
             </div>
 
@@ -706,6 +707,67 @@
                 </div>
             </div>
 
+            <!-- Cap 13 -->
+            <div class="accordion-item" data-target="cap-13">
+                <div class="accordion-header" onclick="selectChapter('cap-13', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">13</span>
+                        <span class="acc-text">Claude Code Templates (AITMPL)</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 0, event)"><span class="sub-bullet">├─</span> Mina de Oro: +1,000 Componentes</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 1, event)"><span class="sub-bullet">├─</span> 5 Agentes Especialistas (Security, DB, Frontend)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 2, event)"><span class="sub-bullet">└─</span> Skills & MCPs (Bright Data, Neon, Vercel)</div>
+                </div>
+            </div>
+
+            <!-- Cap 14 -->
+            <div class="accordion-item" data-target="cap-14">
+                <div class="accordion-header" onclick="selectChapter('cap-14', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">14</span>
+                        <span class="acc-text">Cómputo Distribuido en LAN UniFi</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-14', 0, event)"><span class="sub-bullet">├─</span> Parallel Computing vs Distributed vs Offloading</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-14', 1, event)"><span class="sub-bullet">├─</span> Arquitectura Thin-Client (180 ➔ 150)</div>
+                        <!-- Cap 24 -->
+            <div class="accordion-item" data-target="cap-24">
+                <div class="accordion-header" onclick="selectChapter('cap-24', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">24</span>
+                        <span class="acc-text">OpenViking & Context Databases</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 0, event)"><span class="sub-bullet">├─</span> El Colapso del Flat Vector RAG & Context Bloat</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 1, event)"><span class="sub-bullet">├─</span> Virtual Filesystem (viking://) & Comandos ls/tree/read</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 2, event)"><span class="sub-bullet">├─</span> Tiered Loading L0/L1/L2 (Ahorro 34.3% - 91% Tokens)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 3, event)"><span class="sub-bullet">└─</span> Integración: Agente VIKINGO en ARBN.CPJS</div>
+                </div>
+            </div>
+            <!-- Cap 23 -->
+            <div class="accordion-item" data-target="cap-23">
+                <div class="accordion-header" onclick="selectChapter('cap-23', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">23</span>
+                        <span class="acc-text">LevelField-1 & CAPP Industrial</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 0, event)"><span class="sub-bullet">├─</span> Anatomía de LevelField-1 (9B, Qwen3.5, 100K Planos)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 1, event)"><span class="sub-bullet">├─</span> Catálogo de 18 Operaciones CAPP & Prelación CNC</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 2, event)"><span class="sub-bullet">├─</span> Pipeline Híbrido: Mano Alzada ➔ CAD ➔ CAPP</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 3, event)"><span class="sub-bullet">└─</span> Despliegue vLLM & Thinking Mode</div>
+                </div>
+            </div>
+
         </aside>
 
         <!-- CUERPO PRINCIPAL DINÁMICO (SOLO MUESTRA EL CAPÍTULO SELECCIONADO) -->
@@ -718,6 +780,20 @@
     <!-- BASE DE DATOS Y CONTROLADOR REACTIVO -->
     <script>
         const CHAPTER_DATA = {
+            "cap-24": {
+                id: "24",
+                title: "OpenViking y Bases de Datos de Contexto",
+                badge: "ByteDance Volcengine & Agent Memory",
+                subtitle: "Sistema de archivos virtual viking://, comandos deterministas y carga jerárquica L0-L1-L2 con ahorro del 91% en tokens.",
+                deckUrl: "cap-24-openviking-context-database.html",
+                summary: "Tratado sobre la superación del RAG vectorial plano mediante Context Databases. Se analiza cómo OpenViking organiza la memoria episódica y el conocimiento del proyecto en un árbol virtual navegable, permitiendo a los agentes leer resúmenes L0/L1 antes de volcar archivos L2 completos a la ventana de contexto.",
+                classes: [
+                    { title: "El Colapso del Flat RAG", desc: "Saturación de contexto, amnesia inter-sesión y costos exponenciales de tokens.", tag: "Nota 145" },
+                    { title: "Arquitectura VFS viking://", desc: "Organización jerárquica con knowledge/, memories/ y experiences/ navegables con ls y tree.", tag: "ByteDance" },
+                    { title: "Carga Escalonada L0 / L1 / L2", desc: "Abstract (15 tokens), Overview (150 tokens) y Full Content bajo demanda.", tag: "SOTA 2026" },
+                    { title: "Agente VIKINGO en el Squad", desc: "Broker de contexto para ARBN.CPJS y reducción de consumo de tokens en 91%.", tag: "Software Factory" }
+                ]
+            },
             "cap-01": {
                 id: "01",
                 title: "Sistemas Agénticos & Orquestación",
@@ -746,6 +822,7 @@
                 classes: [
                     { title: "GraphRAG vs Vector RAG vs Hybrid RAG", desc: "Guía de arquitectura, selección y optimización de latencia.", tag: "Nota 59" },
                     { title: "Arquitectura RAG Empresarial en AWS", desc: "Bedrock, OpenSearch Serverless, Aurora pgvector y FastAPI.", tag: "Nota 52" },
+                    { title: "Corrective RAG (CRAG) & LangGraph", desc: "Retrieval Evaluator, 3-way branching, knowledge stripping y web search con Ollama.", tag: "Nota 124" },
                     { title: "Graphify Knowledge Graph Engine", desc: "Transformación de repositorios de código y SQL a grafos de conocimiento.", tag: "Nota 02" },
                     { title: "Utopia Vector Store", desc: "Sandbox de experimentación y recuperación semántica de alta fidelidad.", tag: "Nota 13" }
                 ],
@@ -905,19 +982,74 @@
             },
             "cap-12": {
                 id: "12",
-                title: "Arquitectura ARBN.CPJS (Airbnb Twin & Remodeling)",
-                badge: "Virtual Staging & BOQ Engine",
-                subtitle: "Gemelo micro-inmobiliario para remodelación express, Virtual Staging con IA, despiece BOQ y puesta a punto Airbnb.",
+                title: "Arquitectura ARBN.CPJS (Airbnb Twin & OpenConstructionERP)",
+                badge: "Virtual Staging IA & OpenConstructionERP Engine",
+                subtitle: "Gemelo micro-inmobiliario para remodelación express, planos a mano alzada, Virtual Staging con IA y despiece BOQ a escala empresarial.",
                 deckUrl: "cap-12-arbn-cpjs-architecture.html",
-                summary: "Plataforma de remodelación integral y puesta a punto comercial para Airbnb. Caso piloto de 60 m² (Anny Rojas). Transforma cotizaciones informales en presupuestos BOQ de 6 partidas, genera renders Before/After con ControlNet preservando estructuras y audita el equipamiento indispensable de 5 estrellas.",
+                portalUrl: "arbn-cpjs-portal.html",
+                summary: "Plataforma de remodelación integral y puesta a punto comercial para Airbnb. Ingesta multimodal de 3 vías (fotos reales, planos PDF y croquis a mano alzada), genera renders Before/After con ControlNet preservando estructuras, ejecuta el desglose de partidas WBS con OpenConstructionERP y audita el checklist 5 estrellas para Superhost.",
                 classes: [
-                    { title: "Blueprint de Arquitectura ARBN.CPJS", desc: "El Gemelo Digital de Remodelación & Airbnb Staging.", tag: "Nota 78" },
-                    { title: "Motor de Costos BOQ & Checklist Airbnb", desc: "Despiece de cotizaciones, selector de partidas y checklist 5 estrellas.", tag: "Nota 79" },
-                    { title: "Stack Tecnológico & Sandbox en Contabo", desc: "React 19 TS, Python FastAPI, Supabase Storage y UI APEFAC.", tag: "Nota 80" }
+                    { title: "Blueprint de Arquitectura ARBN.CPJS", desc: "El Gemelo Digital de Remodelación & Ingesta Multimodal.", tag: "Nota 78" },
+                    { title: "Motor de Costos BOQ con OpenConstructionERP", desc: "Desglose WBS en 6 partidas maestras, APU y checklist 5 estrellas.", tag: "Nota 79" },
+                    { title: "Stack Tecnológico, UI APEFAC & Contabo VPS", desc: "React 19 TS, Python FastAPI, Supabase Storage y Sandbox Docker.", tag: "Nota 80" },
+                    { title: "Squad de Asistentes IA ARBN.CPJS", desc: "4 agentes especializados (Ingesta, Staging, BOQ, Hospitalidad).", tag: "Nota 81" }
                 ],
                 metrics: [
-                    { label: "Caso Piloto", val: "60 m² Anny Rojas" },
-                    { label: "Categorías BOQ", val: "6 Partidas Clave" }
+                    { label: "Caso Piloto", val: "60 m² (Pardo 965, Miraflores)" },
+                    { label: "ERP Engine", val: "OpenConstructionERP" }
+                ]
+            },
+            "cap-13": {
+                id: "13",
+                title: "Claude Code Templates (AITMPL - +1,000 Componentes)",
+                badge: "Ecosistema Open Source & Agent Hub",
+                subtitle: "La colección de componentes, agentes, skills, hooks y MCPs para convertir Claude Code en una Software Factory a medida.",
+                deckUrl: "cap-13-claude-code-aitmpl.html",
+                summary: "Repositorio y CLI de código abierto (AITMPL by Daniel Ávila) con más de 1,000 plantillas curadas por Anthropic y la comunidad. Permite inyectar agentes especializados de seguridad, frontend, bases de datos, code review y servidores MCP (Bright Data, Neon, Vercel) con un solo comando npx sin configurar desde cero.",
+                classes: [
+                    { title: "Mina de Oro: +1,000 Componentes AITMPL", desc: "Catálogo completo, respaldo Vercel/Neon y CLI cct.", tag: "Nota 97" },
+                    { title: "5 Agentes Especialistas de Producción", desc: "Security Auditor, Frontend React 19, DB Postgres y QC.", tag: "Nota 82" },
+                    { title: "Skills, MCPs & Verification Loops", desc: "Bright Data Web Scraping, Neon Branching y reglas AGENTS.md.", tag: "Nota 85" }
+                ],
+                metrics: [
+                    { label: "Componentes", val: "+1,000 Curados" },
+                    { label: "Instalación", val: "< 30s con npx" }
+                ]
+            },
+            "cap-14": {
+                id: "14",
+                title: "Cómputo Distribuido en LAN UniFi y Offloading de Agentes",
+                badge: "Parallel Computing & Headless Worker Node",
+                subtitle: "Desacoplamiento Thin-Client (192.168.0.180) y servidor de inferencia Ollama con Qwen 2.5 Coder en ThinkPad T430s (192.168.0.150 - 12GB RAM).",
+                deckUrl: "cap-14-computo-distribuido-unifi.html",
+                summary: "Arquitectura real de ingeniería para solucionar congelamientos en la máquina de desarrollo principal. Combina red local de alta velocidad Ubiquiti UniFi (<1ms latencia), demonio systemd de Ollama escuchando en 0.0.0.0:11434 y delegación de tareas pesadas (inferencia LLM, compilación, Whisper STT, scrapers) a un nodo de 12GB RAM sin interrumpir el monitor de Netdata en su pantalla.",
+                classes: [
+                    { title: "¿Es Parallel Computing? Taxonomía", desc: "Task Parallelism, Distributed Grid y Thin-Client Offloading.", tag: "Nota 120" },
+                    { title: "Arquitectura Real UniFi (180 ➔ 150)", desc: "Mando Windows 11 + ThinkPad Ubuntu 12GB + OpenSSH.", tag: "Nota 120" },
+                    { title: "6 Casos de Uso Potentes Desbloqueados", desc: "Code completion, RAG/Embeddings, VoiceStudio, Scrapers 24/7 y FastMCP.", tag: "Nota 120" },
+                    { title: "Certificación en Vivo (3.96s Latencia)", desc: "Ejecución real de qwen2.5-coder:1.5b con 0% de uso de CPU local.", tag: "Nota 120" }
+                ],
+                metrics: [
+                    { label: "Latencia Test", val: "3.96 Segundos" },
+                    { label: "Ahorro RAM Local", val: "100% Offloaded" }
+                ]
+            },
+            "cap-23": {
+                id: "23",
+                title: "LevelField-1: Visión Multimodal para Planos 2D y CAPP Industrial",
+                badge: "Industrial VLM & Autonomous CAPP",
+                subtitle: "De dibujos técnicos en PDF/PNG a secuencias completas de 18 procesos de mecanizado con Qwen3.5-9B y Thinking Mode.",
+                deckUrl: "cap-23-levelfield-capp-industrial.html",
+                summary: "Análisis exhaustivo del modelo abierto LevelField-1 (9B) para manufactura no estándar. Entrenado con 100K planos de 16 plantas y 36 ingenieros senior (>95% concordancia). Incluye arquitectura de despliegue vLLM, catálogo de 18 operaciones CNC y resolución técnica para dibujos a mano alzada mediante pipeline híbrido en 2 fases.",
+                classes: [
+                    { title: "Anatomía de LevelField-1 (9B, Qwen3.5, 100K Planos)", desc: "Dataset industrial, thinking mode, GD&T y extracción de metadatos.", tag: "Nota 142" },
+                    { title: "Catálogo de 18 Operaciones CAPP & Prelación", desc: "Reglas de taller: torneado, fresado 5 ejes, temple, rectificado y EDM.", tag: "Nota 142" },
+                    { title: "Pipeline Híbrido: Mano Alzada ➔ CAD ➔ CAPP", desc: "Resolución del reto de bocetos libres mediante CadQuery y normalización 2D.", tag: "Nota 143" },
+                    { title: "Despliegue vLLM & Inferencia Python", desc: "Servidor local vLLM con thinking mode y cliente OpenAI en JSON.", tag: "Nota 143" }
+                ],
+                metrics: [
+                    { label: "Concordancia Senior", val: "> 95%" },
+                    { label: "Reducción Tiempo", val: "~60% Ahorro" }
                 ]
             }
         };
@@ -934,13 +1066,17 @@
                             <div class="breadcrumb">
                                 GeekSoft Academy &bull; Capítulo <strong>${data.id}</strong> &bull; ${data.badge}
                             </div>
-                            <h2 class="hero-title">${data.title}</h2>
-                            <p class="hero-subtitle">${data.subtitle}</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <a href="${data.deckUrl}" class="deck-launch-btn">
+                                <span class="play-icon">▶</span>
+                                <span>Ver Deck Interactivo PPT</span>
+                            </a>
+                            ${data.portalUrl ? `
+                            <a href="${data.portalUrl}" class="deck-launch-btn" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+                                <span class="play-icon">🛋️</span>
+                                <span>Abrir Portal APEFAC en Vivo</span>
+                            </a>` : ''}
                         </div>
-                        <a href="${data.deckUrl}" class="deck-launch-btn">
-                            <span class="play-icon">▶</span>
-                            <span>Ver Deck Interactivo PPT</span>
-                        </a>
                     </div>
 
                     <div class="grid-detail">

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Cost: Gemelo Digital de Don Estuardo Ramos (Capítulo 22) - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #0F172A;
+            --bg-card:     #1E293B;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --emerald:     #10B981;
+            --emerald-dim: rgba(16,185,129,0.12);
+            --emerald-brd: rgba(16,185,129,0.30);
+            --amber:       #F59E0B;
+            --amber-dim:   rgba(245,158,11,0.12);
+            --amber-brd:   rgba(245,158,11,0.30);
+            --sky:         #38BDF8;
+            --sky-dim:     rgba(56,189,248,0.12);
+            --sky-brd:     rgba(56,189,248,0.30);
+            --purple:      #A855F7;
+            --purple-dim:  rgba(168,85,247,0.12);
+            --purple-brd:  rgba(168,85,247,0.30);
+            --red:         #F43F5E;
+            --text:        #F8FAFC;
+            --text-dim:    rgba(248,250,252,0.70);
+            --border:      rgba(255,255,255,0.10);
+            --shadow:      0 8px 32px rgba(0,0,0,0.35);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.04; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #ffffff; transform: rotate(-25deg) scale(1.15);
+        }
+
+        #deck-container {
+            width: 100vw; height: 100vh;
+            position: relative; display: flex;
+            align-items: center; justify-content: center;
+        }
+
+        .slide {
+            position: absolute; inset: 0;
+            padding: 50px 70px 70px 70px;
+            display: none; flex-direction: column; justify-content: space-between;
+            opacity: 0; transform: scale(0.98);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .slide.active {
+            display: flex; opacity: 1; transform: scale(1);
+        }
+
+        .slide-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;
+        }
+        .slide-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+            color: var(--emerald); text-transform: uppercase; letter-spacing: 1.5px;
+            background: var(--emerald-dim); border: 1px solid var(--emerald-brd);
+            padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px;
+        }
+        .slide-title {
+            font-size: 26px; font-weight: 800; color: #FFFFFF; line-height: 1.2;
+            letter-spacing: -0.5px; font-family: 'Space Grotesk', sans-serif;
+        }
+        .slide-sub {
+            font-size: 14px; color: var(--text-dim); margin-top: 4px;
+        }
+        .academy-logo {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+            color: var(--text); background: rgba(255,255,255,0.05); padding: 6px 12px;
+            border-radius: 6px; border: 1px solid var(--border);
+        }
+        .academy-logo span { color: var(--emerald); }
+
+        .slide-body {
+            flex: 1; display: flex; gap: 24px; align-items: stretch; overflow: hidden;
+        }
+
+        .col { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+        .col-2 { flex: 2; }
+        .col-1-5 { flex: 1.5; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        .card-emerald { border-color: var(--emerald-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.04) 100%); }
+        .card-amber { border-color: var(--amber-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(245,158,11,0.04) 100%); }
+        .card-sky { border-color: var(--sky-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(56,189,248,0.04) 100%); }
+        .card-purple { border-color: var(--purple-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(168,85,247,0.04) 100%); }
+
+        .card-title {
+            font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .card-title.emerald { color: var(--emerald); }
+        .card-title.amber { color: var(--amber); }
+        .card-title.sky { color: var(--sky); }
+        .card-title.purple { color: var(--purple); }
+
+        .metric-val {
+            font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 800; color: #FFFFFF;
+        }
+        .metric-label {
+            font-size: 13px; color: var(--text-dim); margin-top: 4px;
+        }
+
+        .list-item {
+            display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;
+            font-size: 14px; line-height: 1.5; color: var(--text-dim);
+        }
+        .list-item strong { color: #FFFFFF; font-weight: 600; }
+        .list-item .bullet {
+            width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
+            margin-top: 8px; flex-shrink: 0;
+        }
+
+        .slide-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid var(--border); padding-top: 16px; margin-top: 24px;
+            font-size: 12px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;
+        }
+        .nav-hints { display: flex; gap: 16px; }
+        .kbd {
+            background: rgba(255,255,255,0.1); border: 1px solid var(--border);
+            padding: 2px 6px; border-radius: 4px; color: #FFF; font-size: 10px;
+        }
+
+        #progress-bar {
+            position: fixed; bottom: 0; left: 0; height: 3px; background: var(--emerald);
+            transition: width 0.3s ease; z-index: 99999;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer"></div>
+    <div id="progress-bar"></div>
+
+    <main id="deck-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <section class="slide active" data-slide="1">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Capítulo 22 · Gemelo Digital & Consultoría Agro-Contable</span>
+                    <h1 class="slide-title">Dr. Cost: El Gemelo Digital de Don Estuardo Ramos 🐖</h1>
+                    <p class="slide-sub">Portal Socrático de Aprendizaje, Squad Dual NIC 41 vs FCR y Resolución de la Brecha SAP en San Fernando</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-1-5">
+                    <div class="card card-emerald" style="height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <div class="card-title emerald">🎓 Don Estuardo Ramos (84 Años)</div>
+                            <p style="font-size:15px; line-height:1.6; color:var(--text); margin-bottom:14px;">
+                                Máxima autoridad en el Perú sobre contabilidad de costos en la industria porcina y agropecuaria. Autor del libro <em>"Costos en la Industria Porcina"</em> y creador del software original <strong>Dr. Cost</strong>.
+                            </p>
+                            <p style="font-size:14px; line-height:1.6; color:var(--text-dim);">
+                                Contratado como consultor por <strong>San Fernando</strong> debido a que su ERP SAP corporativo no logra modelar la dinámica biológica de costos (FCR, mortalidad, depreciación de marranas y etapas porcinas).
+                            </p>
+                        </div>
+                        <div style="background:#090D16; padding:12px; border-radius:8px; font-family:'JetBrains Mono'; font-size:12px; color:var(--emerald);">
+                            Misión: Capturar su heurística en un portal socrático (Profesor vs Alumno IA) y revivir el motor Dr. Cost.
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-amber">
+                        <div class="card-title amber">🏛️ Cliente & Caso Activo</div>
+                        <div class="metric-val">San Fernando</div>
+                        <div class="metric-label">Líder nacional en crianza de cerdos, pavos y aves</div>
+                    </div>
+                    <div class="card card-sky">
+                        <div class="card-title sky">👥 Arquitectura Agéntica</div>
+                        <div class="metric-val">Dual Squad</div>
+                        <div class="metric-label">Camino A (NIC 41 / SAP) vs Camino B (Zootecnia / FCR)</div>
+                    </div>
+                    <div class="card card-purple">
+                        <div class="card-title purple">⚡ Ergonomía Senior</div>
+                        <div class="metric-val">&lt; 400 ms</div>
+                        <div class="metric-label">Portal APEFAC de alto contraste con entrada por voz</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 22 · Gemelo Digital Dr. Cost</div>
+                <div class="nav-hints"><span>Avanzar: <kbd>→</kbd></span> <span>Retroceder: <kbd>←</kbd></span></div>
+                <div>Diapositiva 1 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: EL PROBLEMA EN SAN FERNANDO -->
+        <section class="slide" data-slide="2">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">El Problema de Negocio</span>
+                    <h2 class="slide-title">¿Por Qué Falla SAP en la Industria Porcina?</h2>
+                    <p class="slide-sub">La rigidez de los centros de costo estáticos ante la transformación biológica continua</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-amber">
+                        <div class="card-title amber">❌ Limitaciones Estructurales de SAP / ERPs Clásicos</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Omisión de Mortalidad Dinámica:</strong> SAP distribuye costos fijos sin ajustar el costo unitario cuando la mortalidad en engorde fluctúa entre 2% y 6%.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Depreciación Calendario vs Reproductiva:</strong> Deprecia marranas en meses lineales en vez de amortizarlas por camadas nacidas vivas (5-6 partos).</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Desconexión de FCR:</strong> No integra la curva de conversión alimenticia diaria en el costo incremental por kilo ganado.</div></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">✅ Solución Dr. Cost (Estuardo Ramos)</div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Norma NIC 41 + FCR Real:</strong> Modelo híbrido contable-zootécnico ajustado a cada lote.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Amortización por Lechón Destetado:</strong> El desgaste de la madre se transfiere exactamente a los lechones viables.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div><strong>Prorrateo de CIF Biológico:</strong> Asignación proporcional a la biomasa activa de cada galpón.</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 22</div>
+                <div>Diapositiva 2 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: EL SQUAD DUAL -->
+        <section class="slide" data-slide="3">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Arquitectura Agéntica</span>
+                    <h2 class="slide-title">Squad Dual con Árbitro de Consenso Contable-Zootécnico</h2>
+                    <p class="slide-sub">Dos caminos paralelos contrastados por un árbitro determinista para cero error</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-sky">
+                        <div class="card-title sky">Camino A: Auditor Contable-Financiero (NIC 41 / SAP)</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Modela la valoración a valor razonable menos costos de venta, asientos contables de traspaso entre etapas y depreciación de reproductoras según NIIF.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-emerald">
+                        <div class="card-title emerald">Camino B: Ingeniero Zootécnico (Granja / FCR)</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Modela el consumo de raciones (preiniciador, inicio, crecimiento, acabado), kilos ganados por día y costo biológico de mortalidad.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-amber">
+                        <div class="card-title amber">Árbitro de Consenso (MIFUNE #48 + CRAG #124)</div>
+                        <p style="font-size:13px; color:var(--text-dim); line-height:1.5;">
+                            Compara ambos caminos, detecta variaciones de inventario y emite el dictamen canónico para San Fernando.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 22</div>
+                <div>Diapositiva 3 / 25</div>
+            </div>
+        </section>
+
+        <!-- SLIDES 4 a 24: DETALLES, HERRAMIENTAS Y ERGONOMÍA -->
+        <section class="slide" data-slide="4"><div class="slide-header"><div><span class="slide-tag">El Portal Socrático</span><h2 class="slide-title">El Modelo Profesor vs Alumno IA</h2><p class="slide-sub">Ergonomía cognitiva diseñada para estimular a Don Estuardo a dictar cátedra</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-emerald"><div class="card-title emerald">Rol del Agente IA: El Alumno Humilde y Curioso</div><p style="font-size:14px; color:var(--text-dim); line-height:1.6;">El agente nunca contradice con soberbia; formula preguntas socráticas fundamentadas en el libro, anotando las explicaciones en una pizarra dinámica en vivo.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 4 / 25</div></div></section>
+
+        <section class="slide" data-slide="5"><div class="slide-header"><div><span class="slide-tag">Herramientas SoTA</span><h2 class="slide-title">El Arsenal Tecnológico Integrado</h2><p class="slide-sub">GitHub & Hugging Face</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-purple"><div class="card-title purple">Docling Graph #99 + RepoLens #130 + CRAG #124</div><p style="font-size:13px; color:var(--text-dim);">Parsing de tablas contables, RAG Híbrido RRF y Knowledge Stripping con fallback web a cotizaciones de maíz y soya.</p></div></div><div class="col"><div class="card card-sky"><div class="card-title sky">VoiceStudio #118 + MIFUNE #48 + Ponytail #107</div><p style="font-size:13px; color:var(--text-dim);">Clonado de voz de Don Estuardo, arnés determinista LibreOffice Sandbox y código Python sin dependencias infladas.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 5 / 25</div></div></section>
+
+        <!-- SLIDES 6 a 24 sintetizadas para el deck completo -->
+        <section class="slide" data-slide="6"><div class="slide-header"><div><span class="slide-tag">Etapas Porcinas</span><h2 class="slide-title">1. Lactancia & Maternidad</h2><p class="slide-sub">Costo inicial del lechón nacido vivo</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-emerald"><div class="card-title emerald">Transferencia de Costo Materno</div><p style="font-size:13px; color:var(--text-dim);">Alimento de gestación y lactancia prorrateado por camada viable.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 6 / 25</div></div></section>
+
+        <section class="slide" data-slide="7"><div class="slide-header"><div><span class="slide-tag">Etapas Porcinas</span><h2 class="slide-title">2. Destete & Gorrinera (6 kg a 20 kg)</h2><p class="slide-sub">La fase de alimento preiniciador de mayor costo</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-amber"><div class="card-title amber">FCR Crítico en Gorrinera</div><p style="font-size:13px; color:var(--text-dim);">FCR 1.35 a 1.50 con raciones de alto valor biológico.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 7 / 25</div></div></section>
+
+        <section class="slide" data-slide="8"><div class="slide-header"><div><span class="slide-tag">Etapas Porcinas</span><h2 class="slide-title">3. Crecimiento & Engorde (20 kg a 105 kg)</h2><p class="slide-sub">El 75% del consumo total de biomasa de la granja</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-sky"><div class="card-title sky">Engorde Eficiente</div><p style="font-size:13px; color:var(--text-dim);">FCR 2.65 a 2.85. Sensibilidad máxima al precio del maíz y torta de soya.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 8 / 25</div></div></section>
+
+        <section class="slide" data-slide="9"><div class="slide-header"><div><span class="slide-tag">Etapas Porcinas</span><h2 class="slide-title">4. Saca & Liquidación de Lote</h2><p class="slide-sub">Cierre de costos, mermas de transporte y rendimiento en canal</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-purple"><div class="card-title purple">Rendimiento en Canal 78%</div><p style="font-size:13px; color:var(--text-dim);">Cálculo del costo por kilo de carne fría versus kilo vivo en pie.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 9 / 25</div></div></section>
+
+        <section class="slide" data-slide="10"><div class="slide-header"><div><span class="slide-tag">Norma Contable</span><h2 class="slide-title">NIC 41: Valoración de Activos Biológicos</h2><p class="slide-sub">Valor razonable menos costos de venta vs costo histórico</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-emerald"><div class="card-title emerald">Tratamiento NIIF en Granjas</div><p style="font-size:13px; color:var(--text-dim);">Reconocimiento de la ganancia por transformación biológica antes del sacrificio.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 10 / 25</div></div></section>
+
+        <section class="slide" data-slide="11"><div class="slide-header"><div><span class="slide-tag">Activo Biológico Fijo</span><h2 class="slide-title">Depreciación de Marranas Reproductoras</h2><p class="slide-sub">Amortización por ciclo de partos efectivos</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-amber"><div class="card-title amber">Fórmula de Don Estuardo</div><p style="font-size:13px; color:var(--text-dim);">$\text{Cuota Parto} = (\text{Costo Reemplazo} - \text{Valor Descarte}) / \text{N° Partos}$.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 11 / 25</div></div></section>
+
+        <section class="slide" data-slide="12"><div class="slide-header"><div><span class="slide-tag">Costos Indirectos</span><h2 class="slide-title">Prorrateo de CIF en Galpones</h2><p class="slide-sub">Bases de distribución por biomasa y horas-galponero</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-sky"><div class="card-title sky">Cero Distorsión</div><p style="font-size:13px; color:var(--text-dim);">Prorrateo en función de días-cerdo y peso metabólico.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 12 / 25</div></div></section>
+
+        <section class="slide" data-slide="13"><div class="slide-header"><div><span class="slide-tag">Motor Determinista</span><h2 class="slide-title">Dr. Cost Core: Python & Pydantic V2</h2><p class="slide-sub">Reemplazo del software legacy de 15 años con arquitectura moderna</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-purple"><div class="card-title purple">Cómputo Preciso</div><p style="font-size:13px; color:var(--text-dim);">Modelos Pydantic V2 con decimales exactos y exportación directa a Excel/SAP.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 13 / 25</div></div></section>
+
+        <section class="slide" data-slide="14"><div class="slide-header"><div><span class="slide-tag">UX Senior</span><h2 class="slide-title">Leyes de UX Aplicadas a Don Estuardo</h2><p class="slide-sub">Ergonomía, contraste y accesibilidad para un usuario de 84 años</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-emerald"><div class="card-title emerald">APEFAC Light UI & Doherty &lt; 400ms</div><p style="font-size:13px; color:var(--text-dim);">Tipografía Space Grotesk 20px, botón de micrófono XL y streaming instantáneo.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 14 / 25</div></div></section>
+
+        <section class="slide" data-slide="15"><div class="slide-header"><div><span class="slide-tag">Voice Companion</span><h2 class="slide-title">Voz Bidireccional con VoiceStudio #118</h2><p class="slide-sub">Conversación fluida sin necesidad de teclear</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-sky"><div class="card-title sky">Reconocimiento & Síntesis</div><p style="font-size:13px; color:var(--text-dim);">Transcripción en español peruano y respuesta con entonación respetuosa.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 15 / 25</div></div></section>
+
+        <section class="slide" data-slide="16"><div class="slide-header"><div><span class="slide-tag">Consultoría</span><h2 class="slide-title">Dictamen Ejecutivo para San Fernando</h2><p class="slide-sub">El entregable de consultoría para el directorio</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-amber"><div class="card-title amber">Informe de Brechas SAP</div><p style="font-size:13px; color:var(--text-dim);">Identificación exacta de la desviación de costos por kilo en pie.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 16 / 25</div></div></section>
+
+        <section class="slide" data-slide="17"><div class="slide-header"><div><span class="slide-tag">Infraestructura</span><h2 class="slide-title">Despliegue Híbrido Contabo & LAN</h2><p class="slide-sub">ThinkPad T430s para inferencia local y Contabo para hosting</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-purple"><div class="card-title purple">Zero Cloud Cost</div><p style="font-size:13px; color:var(--text-dim);">Ollama LAN en `192.168.0.150` y Docker en VPS Contabo.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 17 / 25</div></div></section>
+
+        <section class="slide" data-slide="18"><div class="slide-header"><div><span class="slide-tag">RAG Híbrido</span><h2 class="slide-title">Indexación de Notas Obsidian PIGCOSTS</h2><p class="slide-sub">Fusión de BM25 + Vector Search en el libro de Don Estuardo</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-emerald"><div class="card-title emerald">RepoLens AI #130 FastMCP</div><p style="font-size:13px; color:var(--text-dim);">Búsqueda por palabra clave exacta y afinidad semántica.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 18 / 25</div></div></section>
+
+        <section class="slide" data-slide="19"><div class="slide-header"><div><span class="slide-tag">CRAG Guard</span><h2 class="slide-title">Cero Alucinaciones Contables con CRAG #124</h2><p class="slide-sub">Evaluación estricta de relevancia y conocimiento fundamentado</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-amber"><div class="card-title amber">Knowledge Stripping</div><p style="font-size:13px; color:var(--text-dim);">Poda de texto innecesario y validación cruzada antes de emitir cálculos.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 19 / 25</div></div></section>
+
+        <section class="slide" data-slide="20"><div class="slide-header"><div><span class="slide-tag">Calibración</span><h2 class="slide-title">Captura de Heurística Tácita</h2><p class="slide-sub">El conocimiento no escrito en los libros</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-sky"><div class="card-title sky">Criterios de Campo</div><p style="font-size:13px; color:var(--text-dim);">Reglas de decisión ante brotes sanitarios, golpes de calor y cambios de formulación.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 20 / 25</div></div></section>
+
+        <section class="slide" data-slide="21"><div class="slide-header"><div><span class="slide-tag">Integración SAP</span><h2 class="slide-title">Conector Dr. Cost ➔ SAP RFC / OData</h2><p class="slide-sub">Inyección de metrados de costo por lote al ERP corporativo</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-purple"><div class="card-title purple">Puente de Datos</div><p style="font-size:13px; color:var(--text-dim);">Alimentación de órdenes CO-PC en SAP con datos biológicos reales.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 21 / 25</div></div></section>
+
+        <section class="slide" data-slide="22"><div class="slide-header"><div><span class="slide-tag">Economía de Granja</span><h2 class="slide-title">Sensibilidad de Costos por Insumos</h2><p class="slide-sub">Impacto del maíz ($USD/TM) y tipo de cambio en el margen neto</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-emerald"><div class="card-title emerald">Matriz de Elasticidad</div><p style="font-size:13px; color:var(--text-dim);">Proyección de márgenes en tiempo real para la toma de decisiones.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 22 / 25</div></div></section>
+
+        <section class="slide" data-slide="23"><div class="slide-header"><div><span class="slide-tag">Gobernanza</span><h2 class="slide-title">Quality Gates Deterministas en Sandbox</h2><p class="slide-sub">Validación matemática automática sin margen de error</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-amber"><div class="card-title amber">MIFUNE QC Suite</div><p style="font-size:13px; color:var(--text-dim);">Validación de balance cuadrado y conciliación 100% bancaria/física.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 23 / 25</div></div></section>
+
+        <section class="slide" data-slide="24"><div class="slide-header"><div><span class="slide-tag">Hoja de Ruta</span><h2 class="slide-title">Siguientes Pasos de Ejecución</h2><p class="slide-sub">De la prueba piloto al despliegue integral</p></div><div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div></div><div class="slide-body"><div class="col"><div class="card card-sky"><div class="card-title sky">Fases 1 a 3</div><p style="font-size:13px; color:var(--text-dim);">Re-ingesta del libro PDF con Docling, entrevistas con Don Estuardo y entrega a San Fernando.</p></div></div></div><div class="slide-footer"><div>GeekSoft Academy · Capítulo 22</div><div>Diapositiva 24 / 25</div></div></section>
+
+        <!-- SLIDE 25: CONCLUSIÓN -->
+        <section class="slide" data-slide="25">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Conclusiones & Legado</span>
+                    <h2 class="slide-title">El Legado de Don Estuardo Ramos en la Era de la IA</h2>
+                    <p class="slide-sub">Preservar y potenciar 60 años de maestría contable mediante agentes cognitivos</p>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-1-5">
+                    <div class="card card-emerald" style="height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <div class="card-title emerald">🐖 Resumen Maestro para la Academia GeekSoft</div>
+                            <p style="font-size:15px; line-height:1.6; color:var(--text); margin-bottom:14px;">
+                                La verdadera IA no reemplaza la sabiduría humana; la inmortaliza y la escala. El Gemelo Digital de Don Estuardo Ramos resuelve un problema multimillonario en San Fernando que los ERPs tradicionales no pudieron solucionar.
+                            </p>
+                            <div class="list-item"><span class="bullet"></span><div><strong>Portal Socrático APEFAC:</strong> Aprendizaje continuo Profesor-Alumno.</div></div>
+                            <div class="list-item"><span class="bullet"></span><div><strong>Squad Dual & Árbitro:</strong> FCR Biológico + NIC 41 Contable.</div></div>
+                            <div class="list-item"><span class="bullet"></span><div><strong>Dr. Cost Reborn:</strong> SaaS moderno de costos porcinos en producción.</div></div>
+                        </div>
+                        <div style="background:#090D16; padding:12px; border-radius:8px; font-family:'JetBrains Mono'; font-size:12px; color:var(--emerald);">
+                            GeekSoft Academy · Capítulo 22 Completado · Nota <span style="color:#FFF;">[[132 - Gemelo Digital de Estuardo Ramos]]</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-sky">
+                        <div class="card-title sky">Portal Web Disponible</div>
+                        <div class="list-item"><span class="bullet"></span><div>Acceder a `https://academy.geeksoft.tech/dr-cost-portal.html`</div></div>
+                        <div class="list-item"><span class="bullet"></span><div>Interactuar por voz con Don Estuardo.</div></div>
+                        <div class="list-item"><span class="bullet"></span><div>Revisar el simulador de FCR en vivo.</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft Academy · Capítulo 22 · Gemelo Digital Dr. Cost</div>
+                <div class="nav-hints"><span>Fin del Deck</span></div>
+                <div>Diapositiva 25 / 25</div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // ─── WATERMARK FORENSE ───
+        const wmContainer = document.getElementById('watermark-layer');
+        const tokenStr = "GEEKSOFT · DR.COST · CAP-22 · " + new Date().toISOString().slice(0,10);
+        for (let i = 0; i < 40; i++) {
+            const span = document.createElement('span');
+            span.textContent = tokenStr;
+            wmContainer.appendChild(span);
+        }
+
+        // ─── NAVEGACIÓN ───
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlide = 1;
+
+        function updateSlide(n) {
+            if (n < 1) n = 1;
+            if (n > totalSlides) n = totalSlides;
+            currentSlide = n;
+
+            slides.forEach(s => s.classList.remove('active'));
+            const active = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+            if (active) active.classList.add('active');
+
+            const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                updateSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                updateSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                updateSlide(1);
+            } else if (e.key === 'End') {
+                updateSlide(totalSlides);
+            }
+        });
+
+        updateSlide(1);
+    </script>
+</body>
+</html>

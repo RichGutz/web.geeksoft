@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragonfly - In-Memory Data Store Multi-Threaded SOTA (Capítulo 17) - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #0F172A;
+            --bg-card:     #1E293B;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #38BDF8;
+            --sky-dim:     rgba(56,189,248,0.12);
+            --sky-brd:     rgba(56,189,248,0.30);
+            --emerald:     #10B981;
+            --emerald-dim: rgba(16,185,129,0.12);
+            --emerald-brd: rgba(16,185,129,0.30);
+            --purple:      #A855F7;
+            --purple-dim:  rgba(168,85,247,0.12);
+            --purple-brd:  rgba(168,85,247,0.30);
+            --amber:       #F59E0B;
+            --amber-dim:   rgba(245,158,11,0.12);
+            --amber-brd:   rgba(245,158,11,0.30);
+            --red:         #F43F5E;
+            --red-dim:     rgba(244,63,94,0.12);
+            --text:        #F8FAFC;
+            --text-dim:    rgba(248,250,252,0.70);
+            --border:      rgba(255,255,255,0.10);
+            --shadow:      0 8px 32px rgba(0,0,0,0.35);
+            --shadow-lg:   0 16px 48px rgba(0,0,0,0.50);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.04; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #ffffff; transform: rotate(-25deg) scale(1.15);
+        }
+        .wm-item { padding: 30px 40px; white-space: nowrap; }
+
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 24px 50px 80px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: scale(0.98);
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: scale(1); }
+
+        .top-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px; border-radius: 9999px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+            text-transform: uppercase; margin-bottom: 12px;
+            border: 1px solid var(--amber-brd); background: var(--amber-dim); color: var(--amber);
+        }
+
+        h1 {
+            font-size: clamp(26px, 3.8vw, 44px);
+            font-weight: 900; line-height: 1.15;
+            text-align: center; margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--amber) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: clamp(20px, 2.5vw, 30px);
+            font-weight: 800; margin-bottom: 14px; color: #FFFFFF;
+        }
+
+        .subtitle {
+            font-size: clamp(13px, 1.4vw, 16px);
+            color: var(--text-dim); text-align: center; max-width: 900px;
+            line-height: 1.5; margin-bottom: 24px;
+        }
+
+        .grid-3 {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 16px; width: 100%; max-width: 1200px;
+        }
+
+        .grid-4 {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; width: 100%; max-width: 1200px;
+        }
+
+        .grid-2 {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 20px; width: 100%; max-width: 1100px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px; padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.25s ease;
+            position: relative; overflow: hidden;
+        }
+        .card:hover {
+            border-color: var(--amber-brd);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        .card-amber { border-top: 3px solid var(--amber); }
+        .card-sky { border-top: 3px solid var(--sky); }
+        .card-emerald { border-top: 3px solid var(--emerald); }
+        .card-purple { border-top: 3px solid var(--purple); }
+
+        .card-title {
+            font-size: 15px; font-weight: 700; color: #FFFFFF;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .card-desc {
+            font-size: 13px; color: var(--text-dim); line-height: 1.5;
+        }
+
+        .code-box {
+            background: #020617; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; padding: 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; color: #F59E0B; line-height: 1.6; overflow-x: auto;
+            text-align: left; width: 100%; max-width: 1000px;
+        }
+
+        /* ─── SIMULADOR INTERACTIVO DRAGONFLY VS REDIS ─── */
+        .bench-container {
+            display: flex; gap: 20px; width: 100%; max-width: 1150px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 22px; box-shadow: var(--shadow-lg);
+        }
+        .bench-controls {
+            width: 320px; display: flex; flex-direction: column; gap: 12px; text-align: left;
+        }
+        .bench-btn {
+            padding: 12px 14px; border-radius: 10px; font-size: 13px; font-weight: 600;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+            color: var(--text-dim); cursor: pointer; text-align: left; transition: all 0.2s;
+        }
+        .bench-btn.active {
+            background: var(--amber-dim); border-color: var(--amber); color: #FFFFFF;
+        }
+        .bench-display {
+            flex: 1; background: #020617; border-radius: 10px; padding: 20px;
+            border: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: var(--text-dim);
+            line-height: 1.6; text-align: left;
+        }
+
+        /* ─── BOTTOM NAVIGATION ─── */
+        nav {
+            position: fixed; bottom: 18px; left: 50%;
+            transform: translateX(-50%); z-index: 99999;
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(12px);
+            padding: 8px 18px; border-radius: 9999px;
+            border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+        }
+        .nav-btn {
+            background: rgba(255,255,255,0.08); border: none; color: #FFFFFF;
+            width: 32px; height: 32px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; cursor: pointer;
+            font-size: 14px; transition: all 0.2s;
+        }
+        .nav-btn:hover { background: var(--amber); color: #020617; }
+        .slide-counter {
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            font-weight: 700; color: var(--amber); min-width: 60px; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <span class="wm-item">GEEKSOFT ACADEMY · SOTA 2026</span>
+        <span class="wm-item">DRAGONFLY IN-MEMORY SOTA</span>
+        <span class="wm-item">CONFIDENTIAL · LIVE DECK</span>
+    </div>
+
+    <main id="deck">
+
+        <!-- SLIDE 1: PORTADA -->
+        <section class="slide active">
+            <span class="top-badge">⚡ MASTERCLASS SOTA 2026 · CAPÍTULO 17</span>
+            <h1>Dragonfly (In-Memory SOTA)</h1>
+            <p class="subtitle">El Almacén en Memoria Multi-Threaded que Reemplaza a Redis con 3.8M QPS y -80% de RAM</p>
+            
+            <div class="grid-3" style="max-width: 1000px; margin-top: 10px;">
+                <div class="card card-amber">
+                    <div class="card-title">🚀 25× Throughput (3.8M QPS)</div>
+                    <div class="card-desc">Escalado vertical real sobre todos los núcleos de CPU sin complejidad de clústeres.</div>
+                </div>
+                <div class="card card-sky">
+                    <div class="card-title">🔄 100% Drop-in Redis API</div>
+                    <div class="card-desc">Cero cambios en tu código: compatible con redis-py, ioredis, Celery, BullMQ y Spring.</div>
+                </div>
+                <div class="card card-emerald">
+                    <div class="card-title">🛡️ Fork-less Snapshotting</div>
+                    <div class="card-desc">Persistencia asíncrona sin invocar fork() de Linux, eliminando caídas por OOM Killer.</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 24px; font-size: 12px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;">
+                Repo Oficial: github.com/dragonflydb/dragonfly (+31K ⭐) · Bóveda GeekSoft #128
+            </p>
+        </section>
+
+        <!-- SLIDE 2: EL CUELLO DE BOTELLA DE REDIS -->
+        <section class="slide">
+            <span class="top-badge" style="border-color: var(--red-dim); background: var(--red-dim); color: var(--red);">⚠️ EL LÍMITE MONOHILO DE REDIS</span>
+            <h2>Servidores Modernos de 16 Cores vs. Event Loop de 1 Core</h2>
+            <p class="subtitle">¿Por qué Redis desperdicia el 90% de la potencia de tu servidor VPS?</p>
+
+            <div class="grid-2">
+                <div class="card" style="border-left: 4px solid var(--red);">
+                    <div class="card-title" style="color: var(--red);">❌ Redis Clásico (Single-Threaded)</div>
+                    <ul style="font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-left: 18px; text-align: left;">
+                        <li>Satura 1 solo núcleo de CPU mientras los otros 15 quedan ociosos.</li>
+                        <li>Escalar requiere clústeres complejos (Sentinel / Redis Cluster).</li>
+                        <li><strong>Riesgo OOM:</strong> <code>bgsave</code> invoca <code>fork()</code> y duplica memoria en Copy-on-Write.</li>
+                        <li>Overhead de memoria elevado (~80 bytes por clave).</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--emerald);">
+                    <div class="card-title" style="color: var(--emerald);">✅ Dragonfly (Multi-Threaded Shared-Nothing)</div>
+                    <ul style="font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-left: 18px; text-align: left;">
+                        <li><strong>100% Cores Usados:</strong> Particionado de claves por thread de CPU.</li>
+                        <li><strong>Transacciones VLL:</strong> Operaciones multi-clave sin mutexes ni locks.</li>
+                        <li><strong>Fork-less Snapshot:</strong> Cero picos de memoria durante respaldos.</li>
+                        <li><strong>Dash Hash Table:</strong> Hasta 80% de ahorro en consumo de RAM.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: PILARES DE INVESTIGACIÓN -->
+        <section class="slide">
+            <span class="top-badge">🔬 INNOVACIONES CIENTÍFICAS</span>
+            <h2>Tres Pilares de Sistemas Distribuidos en Dragonfly</h2>
+            <p class="subtitle">Ingeniería algorítmica de vanguardia para superar las barreras de contención</p>
+
+            <div class="grid-3">
+                <div class="card card-purple">
+                    <div class="card-title">⚖️ VLL Lock Manager</div>
+                    <div class="card-desc">Basado en investigación VLL (*Very Large Lock Manager*). Permite transacciones multi-key atómicas entre shards sin mutexes tradicionales ni deadlocks.</div>
+                </div>
+                <div class="card card-amber">
+                    <div class="card-title">🗄️ Dash Scalable Hash</div>
+                    <div class="card-desc">Estructura hash dinámica que compacta punteros y metadatos de expiración, reduciendo el footprint en RAM hasta un 80%.</div>
+                </div>
+                <div class="card card-emerald">
+                    <div class="card-title">🛡️ Snapshotting Sin Fork</div>
+                    <div class="card-desc">Versionado asíncrono sobre shards concurrentes sin duplicación de páginas de memoria en el kernel de Linux.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: SIMULADOR DE BENCHMARKS -->
+        <section class="slide">
+            <span class="top-badge">📊 BENCHMARKS AWS EN VIVO</span>
+            <h2>Comparativa de Throughput: Dragonfly vs. Redis</h2>
+            <p class="subtitle">Haz clic en cada tipo de instancia para ver la brecha de rendimiento real</p>
+
+            <div class="bench-container">
+                <div class="bench-controls">
+                    <button class="bench-btn active" onclick="showBench('m5large')">1. Servidor m5.large (2 vCPU)</button>
+                    <button class="bench-btn" onclick="showBench('m5xlarge')">2. Servidor m5.xlarge (4 vCPU)</button>
+                    <button class="bench-btn" onclick="showBench('c6gn')">3. Servidor c6gn.16xlarge (64 vCPU)</button>
+                </div>
+                <div class="bench-display" id="bench-output">
+                    <strong style="color: var(--sky);">Instancia m5.large (2 vCPU):</strong><br/>
+                    • <strong>Redis:</strong> 159K QPS (SET) | 194K QPS (GET) · Latencia P99: 0.82ms<br/>
+                    • <strong>Dragonfly:</strong> 173K QPS (SET) | 191K QPS (GET) · Latencia P99: 0.90ms<br/><br/>
+                    <em>Conclusión:</em> En hardware pequeño monohilo, el rendimiento es parejo.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: DESPLIEGUE EN 1 LÍNEA -->
+        <section class="slide">
+            <span class="top-badge">💻 ADOPCIÓN DROP-IN INMEDIATA</span>
+            <h2>Despliegue en VPS & Conexión con Clientes</h2>
+            <p class="subtitle">Cambia el motor sin modificar ni una sola línea en tus aplicaciones</p>
+
+            <div class="code-box">
+                # Despliegue en Contabo VPS con Docker<br/>
+                docker run -d --name dragonfly -p 6379:6379 --ulimit memlock=-1 \<br/>
+                &nbsp;&nbsp;-v /var/data/dragonfly:/data \<br/>
+                &nbsp;&nbsp;docker.dragonflydb.io/dragonflydb/dragonfly --dir /data --cache_mode=true
+            </div>
+
+            <div class="grid-2" style="margin-top: 16px;">
+                <div class="card card-emerald">
+                    <div class="card-title">🐍 Python (redis-py / Celery)</div>
+                    <div class="card-desc">Usa <code>redis.Redis(host='localhost', port=6379)</code> exactamente igual. Tu backend FastAPI no nota la diferencia, pero procesa 25× más peticiones.</div>
+                </div>
+                <div class="card card-sky">
+                    <div class="card-title">⚡ Node.js / TS (ioredis / BullMQ)</div>
+                    <div class="card-desc">Compatible con colas de trabajos en segundo plano y sockets de WebSockets sin reconfiguraciones de clúster.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: TRANSFERENCIA A GEEKSOFT -->
+        <section class="slide">
+            <span class="top-badge">🎯 IMPACTO EN GEEKSOFT</span>
+            <h2>Aceleración de MIFUNE, PROPTWIN, ARBN.CPJS & VPS</h2>
+            <p class="subtitle">Infraestructura central de microsegundos para el ecosistema de IA</p>
+
+            <div class="grid-3">
+                <div class="card card-amber">
+                    <div class="card-title">💰 MIFUNE #10</div>
+                    <div class="card-desc">Caché de tipos de cambio SBS en tiempo real, conciliación y sesiones JWT con invalidación en microsegundos.</div>
+                </div>
+                <div class="card card-sky">
+                    <div class="card-title">🏛️ PROPTWIN #11</div>
+                    <div class="card-desc">Mallas GeoJSON y estados de sesión de parsing DXF almacenados en memoria con 80% menos RAM.</div>
+                </div>
+                <div class="card card-emerald">
+                    <div class="card-title">🏠 ARBN.CPJS #12</div>
+                    <div class="card-desc">Message broker para sincronizar al Squad Dual (A1.1/A1.2, A2.1/A2.2) y el Árbitro de Consenso sin cuellos de botella.</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- NAVEGACIÓN -->
+    <nav>
+        <button class="nav-btn" onclick="prevSlide()">◀</button>
+        <div class="slide-counter" id="counter">01 / 06</div>
+        <button class="nav-btn" onclick="nextSlide()">▶</button>
+    </nav>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const counter = document.getElementById('counter');
+
+        function updateDeck() {
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentSlide);
+            });
+            counter.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateDeck();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateDeck();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
+            if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+        });
+
+        const benchData = {
+            m5large: "<strong style='color: var(--sky);'>Instancia m5.large (2 vCPU):</strong><br/>• <strong>Redis:</strong> 159K QPS (SET) | 194K QPS (GET) · Latencia P99: 0.82ms<br/>• <strong>Dragonfly:</strong> 173K QPS (SET) | 191K QPS (GET) · Latencia P99: 0.90ms<br/><br/><em>Conclusión:</em> En hardware pequeño monohilo, el rendimiento es parejo.",
+            m5xlarge: "<strong style='color: var(--amber);'>Instancia m5.xlarge (4 vCPU):</strong><br/>• <strong>Redis:</strong> 190K QPS (SET) | 220K QPS (GET) · Latencia P99: 0.97ms<br/>• <strong>Dragonfly:</strong> 279K QPS (SET) | 305K QPS (GET) · Latencia P99: 1.48ms<br/><br/><em>Conclusión:</em> La brecha comienza a abrirse a medida que aumentan los núcleos de CPU.",
+            c6gn: "<strong style='color: var(--emerald);'>Instancia c6gn.16xlarge (64 vCPU) - DOMINANCIA TOTAL:</strong><br/>• <strong>Redis (Single Process):</strong> 150K QPS (Saturación total en 1 core)<br/>• <strong>Dragonfly (Single Instance):</strong> <span style='color:#10B981; font-weight:800;'>3.8 MILLONES DE QPS</span> (25× más rápido) · Latencia P99: 0.80ms<br/>• <strong>Pipeline Mode:</strong> Hasta <span style='color:#38BDF8; font-weight:800;'>15 MILLONES DE QPS</span>.<br/><br/><em>Conclusión:</em> Dragonfly escala linealmente con el hardware moderno, mientras Redis se estanca."
+        };
+
+        function showBench(type) {
+            document.querySelectorAll('.bench-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('bench-output').innerHTML = benchData[type];
+        }
+    </script>
+</body>
+</html>

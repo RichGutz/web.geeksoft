@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Cost · Gemelo Digital de Don Estuardo Ramos - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+        }
+
+        :root {
+            --bg-body:       #F8FAFC;
+            --bg-card:       #FFFFFF;
+            --navy-dark:     #0F172A;
+            --navy-mid:      #1E293B;
+            --navy-light:    #334155;
+            --emerald-main:  #059669;
+            --emerald-light: #10B981;
+            --emerald-dim:   rgba(16, 185, 129, 0.08);
+            --emerald-brd:   rgba(16, 185, 129, 0.25);
+            --amber-main:    #D97706;
+            --amber-dim:     rgba(217, 119, 6, 0.08);
+            --amber-brd:     rgba(217, 119, 6, 0.25);
+            --sky-main:      #0284C7;
+            --sky-dim:       rgba(2, 132, 199, 0.08);
+            --text-main:     #0F172A;
+            --text-muted:    #475569;
+            --border:        #E2E8F0;
+            --border-focus:  #059669;
+            --shadow-sm:     0 2px 8px rgba(15, 23, 42, 0.04);
+            --shadow-md:     0 8px 24px rgba(15, 23, 42, 0.06);
+            --shadow-lg:     0 16px 40px rgba(15, 23, 42, 0.09);
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ─── HEADER BAR APEFAC ─── */
+        header {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-badge {
+            background: var(--emerald-dim);
+            color: var(--emerald-main);
+            border: 1px solid var(--emerald-brd);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .brand-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .san-fernando-tag {
+            background: var(--amber-dim);
+            border: 1px solid var(--amber-brd);
+            color: var(--amber-main);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--emerald-light);
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* ─── MAIN LAYOUT ─── */
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 28px;
+            padding: 28px 36px;
+            max-width: 1700px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ─── CARD BASE ─── */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FAFCFF;
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ─── DIALOG PANEL (LEFT) ─── */
+        .dialog-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 170px);
+        }
+
+        .chat-stream {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: #FFFFFF;
+        }
+
+        .msg-bubble {
+            display: flex;
+            gap: 16px;
+            max-width: 92%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg-bubble.ai {
+            align-self: flex-start;
+        }
+
+        .msg-bubble.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 46px; height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .avatar.ai {
+            background: var(--emerald-dim);
+            border: 1px solid var(--emerald-brd);
+            color: var(--emerald-main);
+        }
+
+        .avatar.user {
+            background: #EEF2FF;
+            border: 1px solid #C7D2FE;
+            color: #4338CA;
+        }
+
+        .msg-content {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--navy-dark);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .msg-bubble.user .msg-content {
+            background: #0F172A;
+            color: #FFFFFF;
+            border-color: #0F172A;
+        }
+
+        .msg-author {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            color: var(--emerald-main);
+        }
+
+        .msg-bubble.user .msg-author {
+            color: #94A3B8;
+            text-align: right;
+        }
+
+        /* ─── QUICK TOPIC BUTTONS ─── */
+        .topics-bar {
+            padding: 12px 20px;
+            background: #FAFCFF;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .topic-btn {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .topic-btn:hover {
+            border-color: var(--emerald-main);
+            color: var(--emerald-main);
+            background: var(--emerald-dim);
+            transform: translateY(-1px);
+        }
+
+        /* ─── INPUT CONTROLS SENIOR ─── */
+        .chat-input-area {
+            padding: 20px 24px;
+            background: #FFFFFF;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .mic-btn-large {
+            width: 58px; height: 58px;
+            border-radius: 50%;
+            background: var(--emerald-main);
+            color: #FFFFFF;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+            transition: all 0.2s;
+        }
+
+        .mic-btn-large:hover {
+            background: var(--emerald-light);
+            transform: scale(1.05);
+        }
+
+        .mic-btn-large.recording {
+            background: #DC2626;
+            animation: pulse-mic 1s infinite;
+        }
+
+        @keyframes pulse-mic {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+            70% { box-shadow: 0 0 0 14px rgba(220, 38, 38, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+        }
+
+        .text-input-senior {
+            flex: 1;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            outline: none;
+            font-family: inherit;
+            color: var(--navy-dark);
+            transition: border-color 0.2s;
+        }
+
+        .text-input-senior:focus {
+            border-color: var(--emerald-main);
+        }
+
+        .send-btn-senior {
+            background: var(--navy-dark);
+            color: #FFFFFF;
+            border: none;
+            padding: 0 24px;
+            height: 56px;
+            border-radius: 14px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .send-btn-senior:hover {
+            background: var(--emerald-main);
+            transform: translateY(-1px);
+        }
+
+        /* ─── RIGHT COLUMN (NOTES & SIMULATOR) ─── */
+        .side-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            height: calc(100vh - 170px);
+            overflow-y: auto;
+        }
+
+        /* Pizarra de Apuntes */
+        .whiteboard-box {
+            background: #FAFCFF;
+            border: 2px dashed #CBD5E1;
+            border-radius: 14px;
+            padding: 18px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .whiteboard-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--emerald-main);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+
+        .notes-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--navy-dark);
+            line-height: 1.5;
+        }
+
+        .notes-list li {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .notes-list li::before {
+            content: '📌';
+            position: absolute;
+            left: 0;
+            top: 1px;
+            font-size: 12px;
+        }
+
+        /* Live Simulator Box */
+        .sim-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sim-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .sim-slider-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sim-slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy-dark);
+        }
+
+        .slider-control {
+            width: 100%;
+            accent-color: var(--emerald-main);
+            height: 6px;
+            cursor: pointer;
+        }
+
+        .sim-result-card {
+            background: var(--emerald-dim);
+            border: 1px solid var(--emerald-brd);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sim-result-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--emerald-main);
+        }
+
+        .sim-sap-diff {
+            font-size: 12px;
+            color: var(--amber-main);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── HEADER BAR APEFAC ─── -->
+    <header>
+        <div class="brand-box">
+            <div class="brand-badge">GeekSoft Academy · Dr. Cost</div>
+            <div>
+                <h1 class="brand-title">Gemelo Digital: Don Estuardo Ramos</h1>
+                <p class="brand-sub">Portal Socrático de Aprendizaje Contable-Porcícola & Consultoría San Fernando</p>
+            </div>
+        </div>
+        <div class="header-status">
+            <div class="san-fernando-tag">
+                <span class="pulse-dot"></span> Caso Activo: San Fernando (Brecha SAP)
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── MAIN LAYOUT ─── -->
+    <main>
+
+        <!-- COLUMNA IZQUIERDA: DIÁLOGO SOCRÁTICO ALUMNO-PROFESOR -->
+        <section class="card dialog-container">
+            <div class="card-header">
+                <div class="card-title">
+                    <span>🎓</span> Diálogo Socrático (El Alumno de IA aprende del Profesor)
+                </div>
+                <div style="font-size:13px; color:var(--text-muted); font-weight:600;">
+                    Profesor Invitado: <strong>Don Estuardo Ramos (84 años)</strong>
+                </div>
+            </div>
+
+            <!-- STREAM DE MENSAJES -->
+            <div class="chat-stream" id="chat-stream">
+                <div class="msg-bubble ai">
+                    <div class="avatar ai">👨‍🎓</div>
+                    <div class="msg-content">
+                        <div class="msg-author">Alumno Socrático (IA GeekSoft)</div>
+                        ¡Buenas tardes, Don Estuardo! Es un verdadero honor tenerlo aquí como nuestro Profesor Maestro. He estado estudiando a fondo su libro <em>"Costos en la Industria Porcina"</em> para entender por qué los módulos estándar de SAP en <strong>San Fernando</strong> fallan al calcular los costos biológicos.
+                        <br><br>
+                        Para comenzar nuestra clase de hoy, <strong>¿podría explicarme cómo afecta la tasa de conversión alimenticia (FCR) y la depreciación de las marranas por ciclo de partos al costo final del kilo en pie?</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SELECTOR DE TEMAS RÁPIDOS -->
+            <div class="topics-bar">
+                <button class="topic-btn" onclick="askTopic('sap_gap')">⚠️ ¿Por qué SAP falla en San Fernando?</button>
+                <button class="topic-btn" onclick="askTopic('marranas_depr')">🐖 Depreciación de Marranas (5 Partos)</button>
+                <button class="topic-btn" onclick="askTopic('fcr_stages')">⚖️ FCR en Destete vs Engorde</button>
+                <button class="topic-btn" onclick="askTopic('nic41_valuation')">📜 Valoración Biológica NIC 41</button>
+                <button class="topic-btn" onclick="askTopic('cif_allocation')">🏭 Prorrateo de CIF en Granja</button>
+            </div>
+
+            <!-- CONTROLES SENIOR DE ENTRADA -->
+            <div class="chat-input-area">
+                <button class="mic-btn-large" id="mic-btn" onclick="toggleMic()" title="Hablar por micrófono (Voz a Texto)">
+                    🎙️
+                </button>
+                <input type="text" class="text-input-senior" id="user-input" placeholder="Escriba su respuesta o presione el micrófono para dictar cátedra..." onkeydown="handleKey(event)" />
+                <button class="send-btn-senior" onclick="sendMessage()">Dictar Lección</button>
+            </div>
+        </section>
+
+        <!-- COLUMNA DERECHA: PIZARRA DE APUNTES & SIMULADOR EN VIVO -->
+        <aside class="side-container">
+
+            <!-- PIZARRA DE APUNTES DE CLASE -->
+            <div class="card" style="flex: 1;">
+                <div class="card-header">
+                    <div class="card-title"><span>📋</span> Pizarra de Apuntes de Clase (En Vivo)</div>
+                </div>
+                <div style="padding: 20px; overflow-y: auto;">
+                    <div class="whiteboard-box">
+                        <div class="whiteboard-title">💡 Conceptos Clave Capturados de Don Estuardo</div>
+                        <ul class="notes-list" id="notes-list">
+                            <li><strong>NIC 41 (Activos Biológicos):</strong> El cerdo en crecimiento incrementa su valor por transformación biológica, no solo por acumulación de insumos.</li>
+                            <li><strong>Depreciación de Reproductoras:</strong> La marrana no es activo fijo lineal; se amortiza en base a camadas nacidas vivas ($5 \text{ a } 6$ partos).</li>
+                            <li><strong>Punto Crítico en San Fernando:</strong> SAP asigna costos fijos por centro de costo estático, distorsionando el costo por lote cuando la mortalidad sube del $3\%$.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULADOR DR. COST REBORN (FCR vs NIC 41) -->
+            <div class="card" style="flex: 1.1;">
+                <div class="card-header">
+                    <div class="card-title"><span>🧮</span> Simulador Dr. Cost (FCR vs Costo Kilo Vivo)</div>
+                    <span style="font-size:12px; font-weight:700; color:var(--emerald-main);">Motor Pydantic V2</span>
+                </div>
+                <div style="padding: 20px;" class="sim-box">
+                    <div class="sim-slider-wrap">
+                        <div class="sim-slider-header">
+                            <span>Índice de Conversión Alimenticia (FCR):</span>
+                            <strong id="val-fcr" style="color:var(--emerald-main);">2.65 kg alim/kg carne</strong>
+                        </div>
+                        <input type="range" class="slider-control" min="2.1" max="3.4" step="0.05" value="2.65" oninput="updateSim()" id="input-fcr" />
+                    </div>
+
+                    <div class="sim-slider-wrap">
+                        <div class="sim-slider-header">
+                            <span>Precio Alimento Balanceado (USD/Ton):</span>
+                            <strong id="val-feed">$410 USD</strong>
+                        </div>
+                        <input type="range" class="slider-control" min="320" max="550" step="5" value="410" oninput="updateSim()" id="input-feed" />
+                    </div>
+
+                    <div class="sim-slider-wrap">
+                        <div class="sim-slider-header">
+                            <span>Tasa de Mortalidad en Engorde (%):</span>
+                            <strong id="val-mort">2.8%</strong>
+                        </div>
+                        <input type="range" class="slider-control" min="1.0" max="8.0" step="0.2" value="2.8" oninput="updateSim()" id="input-mort" />
+                    </div>
+
+                    <div class="sim-result-card">
+                        <div>
+                            <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Costo Real Dr. Cost / Kg Vivo</div>
+                            <div class="sim-result-val" id="res-cost">$1.68 USD/kg</div>
+                            <div class="sim-sap-diff" id="res-diff">▲ Brecha SAP: +$0.24 USD/kg no detectado</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-size:11px; color:var(--text-muted);">Costo por Cerdo (105 kg):</div>
+                            <div style="font-size:18px; font-weight:800; color:var(--navy-dark);" id="res-pig">$176.40 USD</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <script>
+        // ─── LÓGICA DEL CHAT SOCRÁTICO ───
+        const chatStream = document.getElementById('chat-stream');
+        const userInput = document.getElementById('user-input');
+        const micBtn = document.getElementById('mic-btn');
+        const notesList = document.getElementById('notes-list');
+
+        let isRecording = false;
+
+        function addMessage(role, author, text) {
+            const bubble = document.createElement('div');
+            bubble.className = `msg-bubble ${role}`;
+            bubble.innerHTML = `
+                <div class="avatar ${role}">${role === 'ai' ? '👨‍🎓' : '👴'}</div>
+                <div class="msg-content">
+                    <div class="msg-author">${author}</div>
+                    ${text}
+                </div>
+            `;
+            chatStream.appendChild(bubble);
+            chatStream.scrollTop = chatStream.scrollHeight;
+        }
+
+        function addNote(noteText) {
+            const li = document.createElement('li');
+            li.innerHTML = noteText;
+            notesList.appendChild(li);
+        }
+
+        function handleKey(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            addMessage('user', 'Profesor Don Estuardo Ramos', text);
+            userInput.value = '';
+
+            // Respuesta Socrática Simulada del Alumno (Sub-400ms Doherty)
+            setTimeout(() => {
+                const response = generateSocraticResponse(text);
+                addMessage('ai', 'Alumno Socrático (IA GeekSoft)', response.text);
+                if (response.newNote) {
+                    addNote(response.newNote);
+                }
+            }, 350);
+        }
+
+        function askTopic(topicKey) {
+            const topics = {
+                sap_gap: "¿Por qué el sistema SAP de San Fernando comete errores al no considerar la mortalidad biológica en el prorrateo de los lechones destetados?",
+                marranas_depr: "Profesor Estuardo, ¿cómo debemos calcular contablemente el costo de reposición y depreciación de una marrana F1 que produce 5 camadas?",
+                fcr_stages: "Explíqueme por favor, ¿cómo varía el costo marginal del kilo de alimento en la etapa de destete (preiniciador caro) comparado con el engorde masivo?",
+                nic41_valuation: "¿Cómo aplicamos la Norma NIC 41 para reflejar el valor razonable de los cerdos en pie antes del beneficio sin distorsionar el costo histórico?",
+                cif_allocation: "¿Cuál es la base de prorrateo más justa para los gastos de bioseguridad, vacunas y energía en los galpones de San Fernando?"
+            };
+
+            const query = topics[topicKey] || "Profesor, profundicemos en este punto.";
+            addMessage('ai', 'Alumno Socrático (IA GeekSoft)', query);
+        }
+
+        function generateSocraticResponse(userText) {
+            const lower = userText.toLowerCase();
+            if (lower.includes('marrana') || lower.includes('parto') || lower.includes('reproductora')) {
+                return {
+                    text: "¡Extraordinaria lección, Profesor Estuardo! Entiendo perfectamente: la marrana traslada su costo de desgaste a la primera etapa de vida del lechón. Si una marrana pare 12 lechones viables por parto durante 5 partos (60 lechones en total), el costo unitario de amortización debe asignarse a cada lechón vivo y no a los días calendario. ¿Es correcto anotarlo así en el informe para San Fernando?",
+                    newNote: "<strong>Depreciación Reproductiva:</strong> Amortización por lechón destetado ($\text{Costo Madre} / \text{Total Lechones Vida Útil}$), evitando subestimar el costo de destete."
+                };
+            } else if (lower.includes('fcr') || lower.includes('alimento') || lower.includes('conversion')) {
+                return {
+                    text: "Tiene toda la razón, Don Estuardo. El alimento representa entre el 72% y el 78% del costo total de producción. Cualquier desvío de 0.1 en el FCR representa cientos de miles de dólares en granjas como las de San Fernando. He actualizado el simulador de la derecha con sus parámetros exactos.",
+                    newNote: "<strong>Impacto FCR:</strong> Un incremento de 0.1 en FCR a $410 USD/Ton encarece el lote en $0.041 USD por kg vivo."
+                };
+            } else {
+                return {
+                    text: "Comprendido con absoluta claridad, Don Estuardo. Su experiencia práctica en campo resuelve lo que ningún manual teórico de SAP contempla. He registrado este principio en la pizarra para el dictamen final. ¿Desea que evaluemos el siguiente caso práctico de galpón?",
+                    newNote: `<strong>Cátedra Don Estuardo:</strong> ${userText.slice(0, 80)}...`
+                };
+            }
+        }
+
+        // ─── MICRÓFONO CON RECONOCIMIENTO DE VOZ ───
+        function toggleMic() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert('El reconocimiento de voz no está soportado nativamente en este navegador. Por favor escriba en el recuadro.');
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'es-PE';
+            recognition.continuous = false;
+
+            if (!isRecording) {
+                recognition.start();
+                isRecording = true;
+                micBtn.classList.add('recording');
+                userInput.placeholder = "Escuchando a Don Estuardo... hable con confianza.";
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    userInput.value = transcript;
+                    sendMessage();
+                };
+
+                recognition.onerror = () => {
+                    isRecording = false;
+                    micBtn.classList.remove('recording');
+                    userInput.placeholder = "Escriba su respuesta o presione el micrófono...";
+                };
+
+                recognition.onend = () => {
+                    isRecording = false;
+                    micBtn.classList.remove('recording');
+                    userInput.placeholder = "Escriba su respuesta o presione el micrófono...";
+                };
+            }
+        }
+
+        // ─── SIMULADOR DR. COST REBORN ───
+        function updateSim() {
+            const fcr = parseFloat(document.getElementById('input-fcr').value);
+            const feedPriceTon = parseFloat(document.getElementById('input-feed').value);
+            const mort = parseFloat(document.getElementById('input-mort').value);
+
+            document.getElementById('val-fcr').textContent = `${fcr.toFixed(2)} kg alim/kg carne`;
+            document.getElementById('val-feed').textContent = `$${feedPriceTon.toFixed(0)} USD`;
+            document.getElementById('val-mort').textContent = `${mort.toFixed(1)}%`;
+
+            // Fórmulas Deterministas Dr. Cost (Estuardo Ramos)
+            const feedCostPerKg = (feedPriceTon / 1000) * fcr;
+            const cifAndLaborPerKg = 0.48; // Mano de obra, sanidad, energía
+            const mortalityFactor = 1 + (mort / 100);
+            
+            const costPerKgVivo = (feedCostPerKg + cifAndLaborPerKg) * mortalityFactor;
+            const costPerPig = costPerKgVivo * 105; // 105 kg peso comercial
+            const sapTheoretical = (feedPriceTon / 1000) * 2.45 + 0.42; // SAP subestima FCR y omite mort
+            const sapDiff = costPerKgVivo - sapTheoretical;
+
+            document.getElementById('res-cost').textContent = `$${costPerKgVivo.toFixed(2)} USD/kg`;
+            document.getElementById('res-pig').textContent = `$${costPerPig.toFixed(2)} USD`;
+            document.getElementById('res-diff').textContent = `▲ Brecha SAP: +$${sapDiff.toFixed(2)} USD/kg no detectado`;
+        }
+
+        updateSim();
+    </script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoLens AI - Investigador Agéntico de Repositorios GitHub (Capítulo 20) - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #0F172A;
+            --bg-card:     #1E293B;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #38BDF8;
+            --sky-dim:     rgba(56,189,248,0.12);
+            --sky-brd:     rgba(56,189,248,0.30);
+            --emerald:     #10B981;
+            --emerald-dim: rgba(16,185,129,0.12);
+            --emerald-brd: rgba(16,185,129,0.30);
+            --purple:      #A855F7;
+            --purple-dim:  rgba(168,85,247,0.12);
+            --purple-brd:  rgba(168,85,247,0.30);
+            --amber:       #F59E0B;
+            --amber-dim:   rgba(245,158,11,0.12);
+            --amber-brd:   rgba(245,158,11,0.30);
+            --red:         #F43F5E;
+            --red-dim:     rgba(244,63,94,0.12);
+            --text:        #F8FAFC;
+            --text-dim:    rgba(248,250,252,0.70);
+            --border:      rgba(255,255,255,0.10);
+            --shadow:      0 8px 32px rgba(0,0,0,0.35);
+            --shadow-lg:   0 16px 48px rgba(0,0,0,0.50);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.04; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #ffffff; transform: rotate(-25deg) scale(1.15);
+        }
+
+        #deck-container {
+            width: 100vw; height: 100vh;
+            position: relative; display: flex;
+            align-items: center; justify-content: center;
+        }
+
+        .slide {
+            position: absolute; inset: 0;
+            padding: 50px 70px 70px 70px;
+            display: none; flex-direction: column; justify-content: space-between;
+            opacity: 0; transform: scale(0.98);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .slide.active {
+            display: flex; opacity: 1; transform: scale(1);
+        }
+
+        /* ─── HEADER BAR ─── */
+        .slide-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;
+        }
+        .slide-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+            color: var(--sky); text-transform: uppercase; letter-spacing: 1.5px;
+            background: var(--sky-dim); border: 1px solid var(--sky-brd);
+            padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px;
+        }
+        .slide-title {
+            font-size: 26px; font-weight: 800; color: #FFFFFF; line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        .slide-sub {
+            font-size: 14px; color: var(--text-dim); margin-top: 4px;
+        }
+        .academy-logo {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+            color: var(--text); background: rgba(255,255,255,0.05); padding: 6px 12px;
+            border-radius: 6px; border: 1px solid var(--border);
+        }
+        .academy-logo span { color: var(--emerald); }
+
+        /* ─── BODY CONTENT ─── */
+        .slide-body {
+            flex: 1; display: flex; gap: 24px; align-items: stretch; overflow: hidden;
+        }
+
+        .col { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+        .col-2 { flex: 2; }
+        .col-1-5 { flex: 1.5; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        .card-sky { border-color: var(--sky-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(56,189,248,0.04) 100%); }
+        .card-emerald { border-color: var(--emerald-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.04) 100%); }
+        .card-purple { border-color: var(--purple-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(168,85,247,0.04) 100%); }
+        .card-amber { border-color: var(--amber-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(245,158,11,0.04) 100%); }
+        .card-red { border-color: var(--red-dim); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(244,63,94,0.04) 100%); }
+
+        .card-title {
+            font-size: 15px; font-weight: 700; color: #FFFFFF; display: flex;
+            align-items: center; gap: 8px; margin-bottom: 12px;
+        }
+        .card-title svg, .card-title span.icon { font-size: 18px; }
+
+        p, li { font-size: 13.5px; line-height: 1.6; color: var(--text-dim); }
+        ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        ul li { position: relative; padding-left: 18px; }
+        ul li::before {
+            content: "▹"; position: absolute; left: 0; color: var(--sky); font-weight: 800;
+        }
+        ul.emerald li::before { color: var(--emerald); }
+        ul.purple li::before { color: var(--purple); }
+        ul.amber li::before { color: var(--amber); }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .stat-box {
+            background: rgba(0,0,0,0.25); border: 1px solid var(--border);
+            border-radius: 8px; padding: 14px; text-align: center;
+        }
+        .stat-val { font-size: 24px; font-weight: 900; font-family: 'JetBrains Mono', monospace; }
+        .stat-lbl { font-size: 11px; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; letter-spacing: 0.5px; }
+
+        .code-box {
+            background: #090D16; border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; line-height: 1.5; color: #E2E8F0; overflow-x: auto;
+        }
+        .code-hl { color: var(--emerald); font-weight: 700; }
+        .code-sky { color: var(--sky); }
+        .code-amber { color: var(--amber); }
+        .code-purple { color: var(--purple); }
+
+        /* ─── SIMULADOR INTERACTIVO RAG HÍBRIDO ─── */
+        .rag-sim-box {
+            display: flex; flex-direction: column; gap: 12px; height: 100%;
+        }
+        .search-mode-tabs {
+            display: flex; gap: 8px;
+        }
+        .search-tab {
+            flex: 1; padding: 8px; text-align: center; font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-dim);
+            transition: all 0.2s;
+        }
+        .search-tab.active {
+            background: var(--sky-dim); border-color: var(--sky); color: var(--sky);
+        }
+
+        .sim-results-pane {
+            flex: 1; background: #090D16; border: 1px solid var(--border); border-radius: 8px;
+            padding: 14px; display: flex; flex-direction: column; gap: 8px; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; overflow-y: auto;
+        }
+        .result-item {
+            padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--sky);
+            background: rgba(255,255,255,0.02); display: flex; justify-content: space-between; align-items: center;
+        }
+
+        /* ─── FOOTER BAR ─── */
+        .slide-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid var(--border); padding-top: 14px; margin-top: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim);
+        }
+        .slide-nav-hint { display: flex; gap: 16px; align-items: center; }
+        .key-badge {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            padding: 2px 6px; border-radius: 4px; font-weight: 700; color: #FFF;
+        }
+        .progress-bar-wrap {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 4px;
+            background: rgba(255,255,255,0.05); z-index: 99999;
+        }
+        .progress-bar {
+            height: 100%; width: 4%; background: linear-gradient(90deg, var(--sky), var(--purple), var(--emerald));
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <span class="wm-item">GEEKSOFT ACADEMY</span>
+        <span class="wm-item">INGENIERÍA AGÉNTICA SOTA 2026</span>
+        <span class="wm-item">REPOLENS AI • RAG HÍBRIDO</span>
+        <span class="wm-item">APEFAC LICENSED</span>
+    </div>
+
+    <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div id="deck-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide active">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Capítulo 20 • RAG Híbrido & FastMCP</span>
+                    <h1 class="slide-title">RepoLens AI — Investigador Agéntico de Repositorios GitHub</h1>
+                    <div class="slide-sub">Búsqueda Híbrida (Dense + BM25 con RRF), Orquestación LangGraph y Servidor FastMCP Desacoplado</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-1-5">
+                    <div class="card card-sky" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="card-title"><span class="icon">🔎</span> La Tesis Central (RepoLens AI)</div>
+                            <p style="font-size: 15px; color: #FFFFFF; font-weight: 500; margin-bottom: 12px;">
+                                "Inspeccionar manualmente árboles de código en GitHub es lento e ineficiente. RepoLens AI convierte cualquier repositorio en un <strong>grafo conversacional consultable</strong> mediante RAG Híbrido."
+                            </p>
+                            <p>
+                                Combina embeddings densos en <strong>Pinecone</strong> con búsqueda léxica <strong>BM25</strong> y fusión <strong>Reciprocal Rank Fusion (RRF)</strong>, complementado con un servidor <strong>FastMCP</strong> independiente operable por agentes externos.
+                            </p>
+                        </div>
+                        <div class="stat-grid">
+                            <div class="stat-box">
+                                <div class="stat-val" style="color: var(--sky);">RRF</div>
+                                <div class="stat-lbl">Reciprocal Rank Fusion</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-val" style="color: var(--emerald);">FastMCP</div>
+                                <div class="stat-lbl">Protocolo Abierto</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-emerald">
+                        <div class="card-title"><span class="icon">🌐</span> Despliegue en Vivo & Endpoints</div>
+                        <div class="code-box" style="margin-bottom: 8px;">
+                            <span class="code-sky">Frontend:</span> repolens-ai.streamlit.app<br>
+                            <span class="code-emerald">Backend API:</span> repolens-fastapi.onrender.com<br>
+                            <span class="code-purple">MCP Server:</span> repolens-mcp-16hr.onrender.com
+                        </div>
+                    </div>
+                    <div class="card card-purple">
+                        <div class="card-title"><span class="icon">🛠️</span> Stack & Bóveda</div>
+                        <div class="code-box">
+                            <span class="code-sky">Repo:</span> github.com/shraddhatakmoge/RepoLens-AI<br>
+                            <span class="code-emerald">Bóveda:</span> [[130 - RepoLens AI]]<br>
+                            <span class="code-amber">Tecnologías:</span> LangGraph, Pinecone, Groq, FastMCP
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 20</div>
+                <div class="slide-nav-hint">Usa <span class="key-badge">←</span> <span class="key-badge">→</span> o <span class="key-badge">Espacio</span> para navegar</div>
+                <div id="slide-num">1 / 25</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: POR QUÉ RAG HÍBRIDO EN CÓDIGO -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Arquitectura de Retrieval</span>
+                    <h1 class="slide-title">El Dilema del Retrieval en Codebases: ¿Por qué Falla el RAG Tradicional?</h1>
+                    <div class="slide-sub">Por qué los embeddings densos solos no bastan para buscar código fuente</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-red" style="height: 100%;">
+                        <div class="card-title"><span class="icon">❌</span> El Fallo del Dense Search Aislado</div>
+                        <p style="margin-bottom: 10px;">Los embeddings vectoriales entienden semántica, pero fallan rotundamente con identificadores exactos:</p>
+                        <ul>
+                            <li>Si buscas <code>authenticate_jwt_token()</code>, el embedding denso puede devolverte un archivo de hashing genérico porque "hablan de seguridad".</li>
+                            <li>No distingue entre nombres de variables críticas como <code>is_admin</code> vs <code>is_active</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-emerald" style="height: 100%;">
+                        <div class="card-title"><span class="icon">✅</span> La Solución: Fusión Híbrida RRF (Dense + BM25)</div>
+                        <p style="margin-bottom: 10px;">RepoLens combina lo mejor de ambos mundos:</p>
+                        <ul>
+                            <li><strong>BM25 (Sparse):</strong> Atrapa símbolos exactos, nombres de funciones y variables.</li>
+                            <li><strong>Dense (Vector):</strong> Atrapa intenciones conceptuales (*"mecanismo de reintentos con backoff"*).</li>
+                            <li><strong>RRF (Reciprocal Rank Fusion):</strong> Intercala y re-ordena con la fórmula $1 / (60 + r_m(d))$.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 20</div>
+                <div>Slide 2 / 25</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: FASTMCP & LANGGRAPH -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Protocolos & Orquestación</span>
+                    <h1 class="slide-title">Arquitectura Desacoplada: FastMCP + LangGraph Stateful</h1>
+                    <div class="slide-sub">Permitiendo que agentes externos investiguen GitHub mediante llamadas MCP estándar</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-purple" style="height: 100%;">
+                        <div class="card-title"><span class="icon">🔌</span> Servidor FastMCP Desacoplado</div>
+                        <p style="margin-bottom: 10px;">El servidor expone herramientas universales JSON-RPC 2.0:</p>
+                        <div class="code-box">
+                            <span class="code-sky">list_repository_tree</span>(owner, repo, branch)<br>
+                            <span class="code-emerald">read_file_content</span>(owner, repo, path)<br>
+                            <span class="code-amber">semantic_code_search</span>(query, repo_id)
+                        </div>
+                        <p style="margin-top: 10px;">Cualquier agente externo (Claude Code, Cursor, Antigravity) puede conectarse directamente a <code>repolens-mcp-16hr.onrender.com</code>.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-sky" style="height: 100%;">
+                        <div class="card-title"><span class="icon">🧠</span> LangGraph State Machine</div>
+                        <p style="margin-bottom: 10px;">Orquestación conversacional con estado persistente:</p>
+                        <ul class="purple">
+                            <li><strong>Multi-Thread Sessions:</strong> Mantiene sesiones de auditoría independientes por repositorio.</li>
+                            <li><strong>Memoria Contextual:</strong> Recuerda qué archivos ya fueron explorados para evitar lecturas redundantes.</li>
+                            <li><strong>Inferencia Groq:</strong> Generación a +500 t/s para interacción fluida en tiempo real.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 20</div>
+                <div>Slide 3 / 25</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: SIMULADOR INTERACTIVO RAG HÍBRIDO -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Laboratorio Interactivo</span>
+                    <h1 class="slide-title">Simulador: Dense vs BM25 vs Fusión Híbrida RRF</h1>
+                    <div class="slide-sub">Observa cómo cambia la precisión de búsqueda al consultar un codebase real</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-2">
+                    <div class="rag-sim-box">
+                        <div class="search-mode-tabs">
+                            <div class="search-tab" onclick="setSearchMode('dense')" id="tab-dense">1. DENSE SEARCH (Solo Vectores)</div>
+                            <div class="search-tab" onclick="setSearchMode('bm25')" id="tab-bm25">2. BM25 (Solo Palabras Clave)</div>
+                            <div class="search-tab active" onclick="setSearchMode('rrf')" id="tab-rrf">3. HYBRID RRF (RepoLens SOTA)</div>
+                        </div>
+                        <div class="sim-results-pane" id="sim-results-box">
+                            <!-- Inyectado por JS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-emerald" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="card-title"><span class="icon">📈</span> Métrica de Precisión (NDCG@10)</div>
+                            <div class="stat-grid" style="margin-bottom: 12px;">
+                                <div class="stat-box">
+                                    <div class="stat-val" id="ndcg-score" style="color: var(--emerald);">0.942</div>
+                                    <div class="stat-lbl">NDCG Score</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-val" id="hit-rate" style="color: var(--sky);">98.5%</div>
+                                    <div class="stat-lbl">Hit Rate @ 5</div>
+                                </div>
+                            </div>
+                            <p id="mode-explanation" style="font-size: 13px;">
+                                La Fusión RRF combina el ranking de coincidencia léxica exacta (BM25) con la similitud semántica (Dense), entregando primero los archivos más relevantes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 20</div>
+                <div>Slide 4 / 25</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: APLICACIÓN GEEKSOFT & CIERRE -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Casos de Uso en GeekSoft</span>
+                    <h1 class="slide-title">Integración en PROPTWIN & ARBN.CPJS</h1>
+                    <div class="slide-sub">Auditoría forense de repositorios open-source y aceleración del ciclo agéntico</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-sky">
+                        <div class="card-title"><span class="icon">🏛️</span> Escaneo Forense con el Agente Benoit Blanc (#126)</div>
+                        <p>
+                            En <strong>PROPTWIN</strong> y <strong>ARBN.CPJS</strong>, el Agente Benoit Blanc utiliza FastMCP para auditar librerías externas (como <code>OpenConstructionERP</code>) y verificar funciones de metrado sin clonar gigabytes en local.
+                        </p>
+                    </div>
+                    <div class="card card-emerald">
+                        <div class="card-title"><span class="icon">🚀</span> Servidor FastMCP Unificado</div>
+                        <p>
+                            Las tools de RepoLens se integran con nuestro servidor <code>hf-mcp</code> (`#116`) y la suite CRAG (`#124`), unificando búsqueda de código y búsqueda web en un solo pipeline.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-purple" style="height: 100%;">
+                        <div class="card-title"><span class="icon">🏆</span> Conclusiones del Capítulo 20</div>
+                        <ul class="purple">
+                            <li>El RAG para código fuente <strong>exige obligatoriamente búsqueda híbrida</strong> con RRF.</li>
+                            <li>Desacoplar la capa de herramientas en un servidor <strong>FastMCP</strong> multiplica la interoperabilidad agéntica.</li>
+                            <li>LangGraph provee la columna vertebral para conversaciones con estado y auditoría profunda de repositorios.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 20</div>
+                <div>Slide 5 / 25 • ¡Capítulo Completado!</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progress-bar');
+
+        const searchData = {
+            dense: {
+                ndcg: "0.684",
+                hit: "71.0%",
+                exp: "Dense Search entiende la semántica abstracta pero falla en encontrar identificadores exactos de funciones y constantes.",
+                results: [
+                    { file: "auth/security_utils.py", desc: "Coincidencia semántica con 'tokens de seguridad' (Score: 0.81)" },
+                    { file: "core/crypto_helpers.py", desc: "Manejo genérico de criptografía y hashing (Score: 0.77)" },
+                    { file: "api/jwt_handler.py", desc: "Función real authenticate_jwt() clasificada en 3er lugar (Score: 0.74)" }
+                ]
+            },
+            bm25: {
+                ndcg: "0.745",
+                hit: "79.2%",
+                exp: "BM25 encuentra palabras clave exactas rápidamente, pero ignora sinónimos y conceptos no explícitos en el texto.",
+                results: [
+                    { file: "api/jwt_handler.py", desc: "Coincidencia exacta de término 'JWT_SECRET' (Score BM25: 14.8)" },
+                    { file: "tests/test_auth.py", desc: "Múltiples menciones de 'jwt' en aserciones de tests (Score BM25: 12.1)" },
+                    { file: "docs/architecture.md", desc: "Mención en texto de documentación (Score BM25: 9.4)" }
+                ]
+            },
+            rrf: {
+                ndcg: "0.942",
+                hit: "98.5%",
+                exp: "Hybrid RRF combina Dense + BM25 con la fórmula 1/(60+r), posicionando el archivo de autenticación exacto en el Top 1.",
+                results: [
+                    { file: "api/jwt_handler.py", desc: "🥇 TOP 1 RRF: Coincidencia léxica exacta + alta similitud semántica (RRF: 0.0328)" },
+                    { file: "auth/security_utils.py", desc: "🥈 TOP 2 RRF: Middleware de validación de claims y expiración (RRF: 0.0294)" },
+                    { file: "core/config.py", desc: "🥉 TOP 3 RRF: Definición de variables de entorno de seguridad (RRF: 0.0241)" }
+                ]
+            }
+        };
+
+        function setSearchMode(mode) {
+            document.getElementById('tab-dense').classList.toggle('active', mode === 'dense');
+            document.getElementById('tab-bm25').classList.toggle('active', mode === 'bm25');
+            document.getElementById('tab-rrf').classList.toggle('active', mode === 'rrf');
+
+            const data = searchData[mode];
+            document.getElementById('ndcg-score').innerText = data.ndcg;
+            document.getElementById('hit-rate').innerText = data.hit;
+            document.getElementById('mode-explanation').innerText = data.exp;
+
+            let html = `<div style="color:var(--sky); font-weight:700; margin-bottom:6px;">Consulta: "validación y firma de tokens JWT"</div>`;
+            data.results.forEach((r, idx) => {
+                html += `
+                    <div class="result-item">
+                        <div>
+                            <span style="color:#FFF; font-weight:700;">#${idx+1} ${r.file}</span>
+                            <div style="color:var(--text-dim); font-size:11px; margin-top:2px;">${r.desc}</div>
+                        </div>
+                        <span style="color:var(--emerald); font-weight:800; font-size:11px;">PASS</span>
+                    </div>
+                `;
+            });
+            document.getElementById('sim-results-box').innerHTML = html;
+        }
+
+        function updateSlide() {
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentSlide);
+            });
+            const pct = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = pct + '%';
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 0;
+                updateSlide();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = slides.length - 1;
+                updateSlide();
+            }
+        });
+
+        // Inicializar simulador
+        setSearchMode('rrf');
+        updateSlide();
+    </script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las 4 Capas de la Ingeniería de IA (Capítulo 19) - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #0F172A;
+            --bg-card:     #1E293B;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #38BDF8;
+            --sky-dim:     rgba(56,189,248,0.12);
+            --sky-brd:     rgba(56,189,248,0.30);
+            --emerald:     #10B981;
+            --emerald-dim: rgba(16,185,129,0.12);
+            --emerald-brd: rgba(16,185,129,0.30);
+            --purple:      #A855F7;
+            --purple-dim:  rgba(168,85,247,0.12);
+            --purple-brd:  rgba(168,85,247,0.30);
+            --amber:       #F59E0B;
+            --amber-dim:   rgba(245,158,11,0.12);
+            --amber-brd:   rgba(245,158,11,0.30);
+            --red:         #F43F5E;
+            --red-dim:     rgba(244,63,94,0.12);
+            --text:        #F8FAFC;
+            --text-dim:    rgba(248,250,252,0.70);
+            --border:      rgba(255,255,255,0.10);
+            --shadow:      0 8px 32px rgba(0,0,0,0.35);
+            --shadow-lg:   0 16px 48px rgba(0,0,0,0.50);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.04; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #ffffff; transform: rotate(-25deg) scale(1.15);
+        }
+
+        #deck-container {
+            width: 100vw; height: 100vh;
+            position: relative; display: flex;
+            align-items: center; justify-content: center;
+        }
+
+        .slide {
+            position: absolute; inset: 0;
+            padding: 50px 70px 70px 70px;
+            display: none; flex-direction: column; justify-content: space-between;
+            opacity: 0; transform: scale(0.98);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .slide.active {
+            display: flex; opacity: 1; transform: scale(1);
+        }
+
+        /* ─── HEADER BAR ─── */
+        .slide-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;
+        }
+        .slide-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+            color: var(--sky); text-transform: uppercase; letter-spacing: 1.5px;
+            background: var(--sky-dim); border: 1px solid var(--sky-brd);
+            padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px;
+        }
+        .slide-title {
+            font-size: 26px; font-weight: 800; color: #FFFFFF; line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        .slide-sub {
+            font-size: 14px; color: var(--text-dim); margin-top: 4px;
+        }
+        .academy-logo {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+            color: var(--text); background: rgba(255,255,255,0.05); padding: 6px 12px;
+            border-radius: 6px; border: 1px solid var(--border);
+        }
+        .academy-logo span { color: var(--emerald); }
+
+        /* ─── BODY CONTENT ─── */
+        .slide-body {
+            flex: 1; display: flex; gap: 24px; align-items: stretch; overflow: hidden;
+        }
+
+        .col { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+        .col-2 { flex: 2; }
+        .col-1-5 { flex: 1.5; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        .card-sky { border-color: var(--sky-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(56,189,248,0.04) 100%); }
+        .card-emerald { border-color: var(--emerald-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.04) 100%); }
+        .card-purple { border-color: var(--purple-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(168,85,247,0.04) 100%); }
+        .card-amber { border-color: var(--amber-brd); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(245,158,11,0.04) 100%); }
+        .card-red { border-color: var(--red-dim); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(244,63,94,0.04) 100%); }
+
+        .card-title {
+            font-size: 15px; font-weight: 700; color: #FFFFFF; display: flex;
+            align-items: center; gap: 8px; margin-bottom: 12px;
+        }
+        .card-title svg, .card-title span.icon { font-size: 18px; }
+
+        p, li { font-size: 13.5px; line-height: 1.6; color: var(--text-dim); }
+        ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        ul li { position: relative; padding-left: 18px; }
+        ul li::before {
+            content: "▹"; position: absolute; left: 0; color: var(--sky); font-weight: 800;
+        }
+        ul.emerald li::before { color: var(--emerald); }
+        ul.purple li::before { color: var(--purple); }
+        ul.amber li::before { color: var(--amber); }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .stat-box {
+            background: rgba(0,0,0,0.25); border: 1px solid var(--border);
+            border-radius: 8px; padding: 14px; text-align: center;
+        }
+        .stat-val { font-size: 24px; font-weight: 900; font-family: 'JetBrains Mono', monospace; }
+        .stat-lbl { font-size: 11px; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; letter-spacing: 0.5px; }
+
+        .code-box {
+            background: #090D16; border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; line-height: 1.5; color: #E2E8F0; overflow-x: auto;
+        }
+        .code-hl { color: var(--emerald); font-weight: 700; }
+        .code-sky { color: var(--sky); }
+        .code-amber { color: var(--amber); }
+        .code-purple { color: var(--purple); }
+
+        /* ─── SIMULADOR INTERACTIVO 4 CAPAS ─── */
+        .layer-selector {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;
+        }
+        .layer-btn {
+            background: var(--bg-card); border: 1px solid var(--border);
+            padding: 12px 8px; border-radius: 8px; color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700;
+            text-align: center; cursor: pointer; transition: all 0.2s;
+        }
+        .layer-btn:hover { border-color: var(--sky); color: #FFF; }
+        .layer-btn.active {
+            background: var(--sky-dim); border-color: var(--sky); color: var(--sky);
+        }
+
+        .layer-details-box {
+            flex: 1; background: #090D16; border: 1px solid var(--border);
+            border-radius: 8px; padding: 16px; display: flex; flex-direction: column;
+            gap: 12px; justify-content: center;
+        }
+
+        /* ─── FOOTER BAR ─── */
+        .slide-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid var(--border); padding-top: 14px; margin-top: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim);
+        }
+        .slide-nav-hint { display: flex; gap: 16px; align-items: center; }
+        .key-badge {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            padding: 2px 6px; border-radius: 4px; font-weight: 700; color: #FFF;
+        }
+        .progress-bar-wrap {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 4px;
+            background: rgba(255,255,255,0.05); z-index: 99999;
+        }
+        .progress-bar {
+            height: 100%; width: 4%; background: linear-gradient(90deg, var(--sky), var(--purple), var(--emerald));
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <span class="wm-item">GEEKSOFT ACADEMY</span>
+        <span class="wm-item">INGENIERÍA AGÉNTICA SOTA 2026</span>
+        <span class="wm-item">LAS 4 CAPAS DE IA</span>
+        <span class="wm-item">APEFAC LICENSED</span>
+    </div>
+
+    <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div id="deck-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide active">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Capítulo 19 • Arquitectura & Fundamentos</span>
+                    <h1 class="slide-title">Las 4 Capas de la Ingeniería de IA</h1>
+                    <div class="slide-sub">Prompt Engineering vs Context Engineering vs Harness Engineering vs Loop Engineering (Rocky Bhatia)</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-1-5">
+                    <div class="card card-sky" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="card-title"><span class="icon">⚡</span> La Tesis Fundamental</div>
+                            <p style="font-size: 15px; color: #FFFFFF; font-weight: 500; margin-bottom: 12px;">
+                                "Si todavía estás hablando únicamente de prompts, ya te has quedado atrás. El futuro no es hacer mejores preguntas al modelo, sino <strong>construir mejores sistemas a su alrededor</strong>."
+                            </p>
+                            <p>
+                                Construir sistemas de IA confiables en producción exige entender las 4 capas evolutivas: desde la instrucción básica de texto hasta los bucles cerrados de auto-verificación con árbitros de consenso.
+                            </p>
+                        </div>
+                        <div class="stat-grid">
+                            <div class="stat-box">
+                                <div class="stat-val" style="color: var(--sky);">4 CAPAS</div>
+                                <div class="stat-lbl">Jerarquía de Sistemas</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-val" style="color: var(--emerald);">LOOP</div>
+                                <div class="stat-lbl">Nivel GeekSoft SoTA</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-purple">
+                        <div class="card-title"><span class="icon">🏛️</span> Las 4 Capas de un Vistazo</div>
+                        <ul class="purple">
+                            <li><strong>1. Prompt Engineering:</strong> Ayuda al modelo a <em>responder</em>.</li>
+                            <li><strong>2. Context Engineering:</strong> Ayuda al modelo a <em>entender</em>.</li>
+                            <li><strong>3. Harness Engineering:</strong> Ayuda al modelo a <em>operar seguro</em>.</li>
+                            <li><strong>4. Loop Engineering:</strong> Ayuda al modelo a <em>completar el trabajo</em>.</li>
+                        </ul>
+                    </div>
+                    <div class="card card-emerald">
+                        <div class="card-title"><span class="icon">🛠️</span> Fuentes & Bóveda</div>
+                        <div class="code-box">
+                            <span class="code-sky">Autor:</span> Rocky Bhatia (LinkedIn Radar)<br>
+                            <span class="code-emerald">Nota Bóveda:</span> [[129 - Las 4 Capas de la Ingenieria de IA]]<br>
+                            <span class="code-amber">Aplicación:</span> ARBN.CPJS (#81) & PROPTWIN (#75)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 19</div>
+                <div class="slide-nav-hint">Usa <span class="key-badge">←</span> <span class="key-badge">→</span> o <span class="key-badge">Espacio</span> para navegar</div>
+                <div id="slide-num">1 / 25</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: CAPAS 1 Y 2 (PROMPT & CONTEXT) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Niveles 1 y 2 • Entrada & Conocimiento</span>
+                    <h1 class="slide-title">Capa 1 (Prompt) vs Capa 2 (Context Engineering)</h1>
+                    <div class="slide-sub">De diseñar mejores instrucciones a inyectar el conocimiento adecuado antes de responder</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-sky" style="height: 100%;">
+                        <div class="card-title"><span class="icon">1️⃣</span> Capa 1: Prompt Engineering</div>
+                        <p style="margin-bottom: 10px;"><strong>Propósito:</strong> Diseñar instrucciones precisas que controlen tono, formato y restricciones de salida.</p>
+                        <ul>
+                            <li><strong>Controla:</strong> Formato JSON/Markdown, estilo aséptico (<code>i-have-adhd</code>), roles y reglas de negocio inmediatas.</li>
+                            <li><strong>Flujo:</strong> <code>Tarea ➔ Prompt ➔ LLM ➔ Salida ➔ Refinar</code>.</li>
+                            <li><strong>Ideal para:</strong> Redacción, resúmenes, traducción y asistentes Q&A.</li>
+                            <li><strong>Límite:</strong> Cero capacidad de consultar fuentes vivas o interactuar con el entorno.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-purple" style="height: 100%;">
+                        <div class="card-title"><span class="icon">2️⃣</span> Capa 2: Context Engineering</div>
+                        <p style="margin-bottom: 10px;"><strong>Propósito:</strong> Alimentar al modelo con los datos exactos que necesita para responder sin alucinar.</p>
+                        <ul>
+                            <li><strong>Componentes:</strong> Pipelines RAG, Knowledge Graphs (Docling Graph #99), memoria conversacional y CRAG (#124).</li>
+                            <li><strong>Flujo:</strong> <code>Tarea ➔ Retrieve Context ➔ Rank ➔ LLM ➔ Salida Informada</code>.</li>
+                            <li><strong>Ideal para:</strong> Copilotos empresariales, auditoría documental y búsqueda jurídica/inmobiliaria.</li>
+                            <li><strong>Límite:</strong> El modelo sabe más, pero no puede ejecutar herramientas ni validar código.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 19</div>
+                <div>Slide 2 / 25</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: CAPAS 3 Y 4 (HARNESS & LOOP) -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Niveles 3 y 4 • Ejecución & Autonomía</span>
+                    <h1 class="slide-title">Capa 3 (Harness) vs Capa 4 (Loop Engineering)</h1>
+                    <div class="slide-sub">El verdadero salto a producción: arneses de ejecución segura y bucles de gobernanza autónoma</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-amber" style="height: 100%;">
+                        <div class="card-title"><span class="icon">3️⃣</span> Capa 3: Harness Engineering</div>
+                        <p style="margin-bottom: 10px;"><strong>Propósito:</strong> Construir el andamiaje de ejecución segura y herramientas alrededor del LLM.</p>
+                        <ul>
+                            <li><strong>Componentes:</strong> Tool Calling (Python stdlib, Shapely, ezdxf, MCP #116), Sandboxes Docker, Observabilidad (Langfuse) y Guardrails.</li>
+                            <li><strong>Flujo:</strong> <code>Tarea ➔ Prompt + Contexto ➔ Tools + Reglas ➔ Salida Verificada</code>.</li>
+                            <li><strong>Principio:</strong> El LLM no calcula matemáticas ni ejecuta en el host; el arnés aísla y verifica.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-emerald" style="height: 100%;">
+                        <div class="card-title"><span class="icon">4️⃣</span> Capa 4: Loop Engineering</div>
+                        <p style="margin-bottom: 10px;"><strong>Propósito:</strong> Diseñar sistemas con bucles cerrados donde el agente planifica, actúa, revisa y reintenta.</p>
+                        <ul>
+                            <li><strong>Componentes:</strong> Grafos de estado (LangGraph), Árbitros de Consenso (PolyIoU / DINOv2), Quality Gates y retroalimentación iterativa.</li>
+                            <li><strong>Flujo:</strong> <code>Objetivo ➔ Plan ➔ Actuar ➔ Revisar (QC) ➔ ¿Reintentar o Fin? ➔ Entrega</code>.</li>
+                            <li><strong>Principio:</strong> La tarea no concluye cuando el LLM "cree que terminó", sino cuando los tests pasan 100%.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 19</div>
+                <div>Slide 3 / 25</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: SIMULADOR INTERACTIVO DE LAS 4 CAPAS -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Laboratorio Interactivo</span>
+                    <h1 class="slide-title">Simulador: Explorador de las 4 Capas en Tiempo Real</h1>
+                    <div class="slide-sub">Selecciona una capa para ver su arquitectura, flujo de datos y nivel de confiabilidad operativa</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col col-2">
+                    <div class="layer-selector">
+                        <div class="layer-btn" onclick="selectLayer(1)" id="btn-layer-1">1. PROMPT ENG</div>
+                        <div class="layer-btn" onclick="selectLayer(2)" id="btn-layer-2">2. CONTEXT ENG</div>
+                        <div class="layer-btn" onclick="selectLayer(3)" id="btn-layer-3">3. HARNESS ENG</div>
+                        <div class="layer-btn active" onclick="selectLayer(4)" id="btn-layer-4">4. LOOP ENG</div>
+                    </div>
+                    <div class="layer-details-box" id="layer-details-content">
+                        <!-- Renderizado dinámico por JS -->
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-sky" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="card-title"><span class="icon">📊</span> Nivel de Madurez Operativa</div>
+                            <div class="stat-grid" style="margin-bottom: 12px;">
+                                <div class="stat-box">
+                                    <div class="stat-val" id="layer-reliability" style="color: var(--emerald);">99.8%</div>
+                                    <div class="stat-lbl">Confiabilidad</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-val" id="layer-autonomy" style="color: var(--sky);">NIVEL 4</div>
+                                    <div class="stat-lbl">Autonomía</div>
+                                </div>
+                            </div>
+                            <p id="layer-summary" style="font-size: 13px;">
+                                En Loop Engineering, el sistema detecta discrepancias de cotas o acabados automáticamente mediante árbitros de consenso y ejecuta bucles de reajuste antes de emitir el plano final.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 19</div>
+                <div>Slide 4 / 25</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: ARQUITECTURA GEEKSOFT & CIERRE -->
+        <div class="slide">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Arquitectura GeekSoft en Producción</span>
+                    <h1 class="slide-title">¿Qué Arquitectura Usamos en GeekSoft y Por Qué?</h1>
+                    <div class="slide-sub">La integración de Harness + Loop Engineering en ARBN.CPJS, PROPTWIN y MIFUNE</div>
+                </div>
+                <div class="academy-logo">GEEKSOFT <span>ACADEMY</span></div>
+            </div>
+            <div class="slide-body">
+                <div class="col">
+                    <div class="card card-emerald">
+                        <div class="card-title"><span class="icon">👥</span> El Patrón Dual-Path Ensemble con Árbitro (#81)</div>
+                        <p>
+                            En <strong>ARBN.CPJS</strong> no confiamos en un solo agente. Desplegamos parejas redundantes (<code>A1.1 OCR</code> vs <code>A1.2 VLM LAN</code>; <code>A2.1 ControlNet</code> vs <code>A2.2 FLUX.1</code>).
+                        </p>
+                        <p style="margin-top: 8px;">
+                            El <strong>Árbitro de Consenso</strong> compara con <code>Shapely PolyIoU</code> y, si $\text{IoU} < 0.96$, activa un <strong>bucle de retroalimentación iterativa</strong> (Loop Engineering puro).
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-purple" style="height: 100%;">
+                        <div class="card-title"><span class="icon">🛡️</span> Los 3 Motivos de Nuestra Elección</div>
+                        <ul class="purple">
+                            <li><strong>1. Determinismo en Finanzas & CAD:</strong> Un error de $0.15\text{m}$ arruina el plano; el arnés de Python impone ortogonalidad obligatoria a 90°.</li>
+                            <li><strong>2. Blindaje de Precios (CRAG #124):</strong> Knowledge Stripping y búsqueda web para erradicar alucinaciones de cotizaciones.</li>
+                            <li><strong>3. Offloading Eficiente en LAN:</strong> Inferencia pesada descargada a la <strong>ThinkPad T430s (192.168.0.150)</strong> para cero latencia en el puesto de mando.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div>GeekSoft AI Academy • Capítulo 19</div>
+                <div>Slide 5 / 25 • ¡Capítulo Completado!</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progress-bar');
+
+        const layerData = {
+            1: {
+                title: "1️⃣ PROMPT ENGINEERING (Responder)",
+                flow: "Tarea ➔ Prompt (Instrucciones) ➔ LLM ➔ Salida ➔ Refinamiento Manual",
+                desc: "Diseña instrucciones, tono, formato estructurado y restricciones de estilo. No accede a bases de datos ni ejecuta herramientas.",
+                reliability: "60.0%",
+                autonomy: "NIVEL 1",
+                summary: "El prompt guía el estilo de respuesta pero carece de contexto externo y no puede verificar si lo que dice es verdad."
+            },
+            2: {
+                title: "2️⃣ CONTEXT ENGINEERING (Entender)",
+                flow: "Tarea ➔ Recuperar Documentos (RAG) ➔ Ranquear/Filtrar ➔ LLM ➔ Salida Fundamentada",
+                desc: "Alimenta al modelo con la información relevante antes de generar texto. Reduce alucinaciones mediante memoria y bases de datos.",
+                reliability: "82.5%",
+                autonomy: "NIVEL 2",
+                summary: "El modelo comprende el contexto del negocio pero sigue limitado a generar texto sin capacidad de actuar sobre el mundo."
+            },
+            3: {
+                title: "3️⃣ HARNESS ENGINEERING (Operar Seguro)",
+                flow: "Tarea ➔ Prompt + Contexto ➔ Herramientas (Python/APIs) + Guardrails ➔ Salida Verificada",
+                desc: "Construye la infraestructura de ejecución alrededor del LLM: sandboxes Docker, APIs, observabilidad y control de errores.",
+                reliability: "94.0%",
+                autonomy: "NIVEL 3",
+                summary: "El arnés convierte al modelo en un operador técnico seguro, aislando la ejecución en sandboxes y validando con código determinista."
+            },
+            4: {
+                title: "4️⃣ LOOP ENGINEERING (Completar el Trabajo)",
+                flow: "Objetivo ➔ Planificar ➔ Actuar ➔ Revisar (QC/Árbitro) ➔ ¿Consenso? (Sí: Entrega / No: Bucle Feedback)",
+                desc: "Sistemas autónomos con grafos de estado, agentes árbitros, bucles de auto-corrección y condiciones de parada deterministas.",
+                reliability: "99.8%",
+                autonomy: "NIVEL 4 (GeekSoft)",
+                summary: "En Loop Engineering, el sistema nunca se rinde hasta que los Quality Gates certifican el 100% de cumplimiento del objetivo."
+            }
+        };
+
+        function selectLayer(lvl) {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`btn-layer-${i}`).classList.toggle('active', i === lvl);
+            }
+            const data = layerData[lvl];
+            document.getElementById('layer-details-content').innerHTML = `
+                <div style="font-size: 15px; font-weight: 800; color: #FFFFFF;">${data.title}</div>
+                <div class="code-box" style="margin: 4px 0;"><span class="code-sky">Flujo:</span> ${data.flow}</div>
+                <p style="color: var(--text-dim); font-size: 13px;">${data.desc}</p>
+            `;
+            document.getElementById('layer-reliability').innerText = data.reliability;
+            document.getElementById('layer-autonomy').innerText = data.autonomy;
+            document.getElementById('layer-summary').innerText = data.summary;
+        }
+
+        function updateSlide() {
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentSlide);
+            });
+            const pct = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = pct + '%';
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 0;
+                updateSlide();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = slides.length - 1;
+                updateSlide();
+            }
+        });
+
+        // Inicializar simulador
+        selectLayer(4);
+        updateSlide();
+    </script>
+</body>
+</html>

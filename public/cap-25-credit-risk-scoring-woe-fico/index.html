@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capítulo 10: Arquitectura MIFUNE - GeekSoft Academy</title>
+    <title>Capítulo 25: Modelado de Riesgo Crediticio, Scorecards WoE & FICO-SBS - GeekSoft Academy</title>
     <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -182,152 +182,205 @@
         <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
         <div class="wm-item">GEEKSOFT ACADEMY 2026</div>
         <div class="wm-item">CONFIDENCIAL &bull; PROPIEDAD INTELECTUAL</div>
-        <div class="wm-item">ACADEMY.GEEKSOFT.TECH</div>
+        <div class="wm-item">WWW.GEEKSOFT.TECH</div>
         <div class="wm-item">MULTI-AGENT &bull; RAG &bull; SOTA</div>
     </div>
 
     <div id="deck">
 <div class="slide active">
-        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
-            <span class="badge green">🛡️ CAPÍTULO 10</span>
-            <span class="badge">CASO REAL EN PRODUCCIÓN</span>
-        </div>
-        <h1>Arquitectura MIFUNE: Arnés de Modelado Financiero</h1>
-        <h2>Dual-Agent Harness, LibreOffice Sandbox &amp; Skills Registry en VPS</h2>
-        <p class="sub">Plataforma empresarial de modelado 3-Statements con checkpoints humanos (HITL), neutralidad de modelos, consistencia FAST y cero desvío contable.</p>
+        <div class="tag">🏛️ GOBERNANZA CUANTITATIVA &amp; BASILEA III</div>
+        <h1>Modelado de Riesgo Crediticio: <span class="hi">WoE &amp; Regresiones Calibradas</span></h1>
+        <p class="sub">Cómo se calcula matemáticamente la Probabilidad de Default (PD), el Scorecard Aditivo FICO (0-1000 Pts) y la regulación SBS Res. 11356-2008.</p>
         <div class="grid-4" style="margin-top: 14px;">
             <div class="card spec-box">
-                <span class="spec-icon">🏛️</span>
-                <span class="spec-title">Job Runner vs Web App</span>
-                <span class="spec-desc">Arquitectura asíncrona desacoplada con FastAPI y Redis Job Queue en VPS.</span>
+                <span class="spec-icon">📐</span>
+                <span class="spec-title">1. Target de Default (PD)</span>
+                <p class="spec-desc">Horizonte de 12M rodantes, criterio objetivo &ge;90 DPD y clasificaciones SBS deterioradas.</p>
             </div>
             <div class="card spec-box">
-                <span class="spec-icon">📦</span>
-                <span class="spec-title">Skills Registry S3</span>
-                <span class="spec-desc">Versionado semántico inmutable (SemVer) con verificación SHA-256 en MinIO.</span>
+                <span class="spec-icon">📊</span>
+                <span class="spec-title">2. Transformación WoE &amp; IV</span>
+                <p class="spec-desc">Coarse classing monótono, Weight of Evidence e Information Value (&ge;0.10) con VIF &lt; 2.5.</p>
             </div>
             <div class="card spec-box">
-                <span class="spec-icon">🧪</span>
-                <span class="spec-title">Sandbox LibreOffice</span>
-                <span class="spec-desc">Recálculo contable real en Calc Headless con suite QC de 26 pruebas automáticas.</span>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-icon">🌐</span>
-                <span class="spec-title">Live Dashboard SSL</span>
-                <span class="spec-desc">Desplegado en producción en <strong style="color:var(--sky);">https://mifune.geeksoft.tech</strong>.</span>
-            </div>
-        </div>
-        <div class="footnote"><span>GeekSoft Academy &bull; Bóveda: [[48 - MIFUNE]] y [[58 - Bitacora Despliegue]]</span><span>Slide 1 / 5</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">🔄 Pipeline de Ejecución</div>
-        <h2>El Ciclo Operativo de Corrida MIFUNE (4.5 Segundos)</h2>
-        <p class="sub">Flujo determinista desde la ingesta de supuestos hasta la entrega de Excel, PDF y JSON certificados.</p>
-        <div class="flow-container">
-            <div class="flow-node active">
-                <span class="flow-node-title">1. Request</span>
-                <span class="flow-node-desc">Supuestos de Entrada</span>
-            </div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-node purple">
-                <span class="flow-node-title">2. Skill Registry</span>
-                <span class="flow-node-desc">MinIO S3 Canon v1.0.0</span>
-            </div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-node">
-                <span class="flow-node-title">3. Worker Sandbox</span>
-                <span class="flow-node-desc">openpyxl &amp; Pandas</span>
-            </div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-node green">
-                <span class="flow-node-title">4. Calc Headless</span>
-                <span class="flow-node-desc">Recálculo &amp; PDF</span>
-            </div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-node green">
-                <span class="flow-node-title">5. QC Suite</span>
-                <span class="flow-node-desc">26 Tests Contables PASS</span>
-            </div>
-            <span class="flow-arrow">&rarr;</span>
-            <div class="flow-node active">
-                <span class="flow-node-title">6. Dashboard</span>
-                <span class="flow-node-desc">Entrega Ejecutiva</span>
-            </div>
-        </div>
-        <div class="footnote"><span>Validado en Contabo VPS: 4.5s por corrida completa</span><span>Slide 2 / 5</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">🧪 Quality Gates Contables</div>
-        <h2>Los 4 Gates de Verificación Obligatorios en MIFUNE</h2>
-        <p class="sub">Gobernanza financiera estricta: si un solo gate falla, el modelo no se certifica.</p>
-        <div class="grid-4" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--sky);">Gate A: Anti-Hardcode</span>
-                <p class="spec-desc">Verifica que no existan constantes numéricas quemadas dentro de celdas que deben ser fórmulas dinámicas.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--purple);">Gate A2: Consistencia FAST</span>
-                <p class="spec-desc">Auditoría de consistencia horizontal en todas las columnas temporales del Estado de Resultados.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--emerald);">Gate B: Balance Cuadrado</span>
-                <p class="spec-desc">Verificación matemática: <code style="color:var(--emerald);">Activo = Pasivo + Patrimonio</code> con delta &lt; $0.01 en todos los periodos.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-title" style="color:var(--amber);">Gate C: Recálculo Calc</span>
-                <p class="spec-desc">LibreOffice Headless recalcula el árbol de dependencias y exporta el PDF ejecutivo sin desfase.</p>
-            </div>
-        </div>
-        <div class="footnote"><span>Suite de pruebas documentada en [[58E - Paso E - Ejecucion de Modelo y Suite QC]]</span><span>Slide 3 / 5</span></div>
-    </div>
-<div class="slide">
-        <div class="tag">🌐 Producción en Vivo</div>
-        <h2>MIFUNE Web Dashboard en https://mifune.geeksoft.tech</h2>
-        <p class="sub">Interfaz corporativa con Dark Mode, Glassmorphism, telemetría en streaming y descargas de Excel/PDF.</p>
-        <div class="grid-3" style="margin-top: 10px;">
-            <div class="card spec-box">
-                <span class="spec-icon">⚡</span>
-                <span class="spec-title">FastAPI Job Runner</span>
-                <p class="spec-desc">Puerto 8100 &bull; Enrutado vía Traefik con SSL Let's Encrypt automático y red aislada Coolify.</p>
-            </div>
-            <div class="card spec-box">
-                <span class="spec-icon">🗄️</span>
-                <span class="spec-title">MinIO Skills Registry</span>
-                <p class="spec-desc">Puertos 9100/9101 &bull; Buckets `mifune-skills-canon` y `mifune-runs-output` con 8 artefactos por corrida.</p>
+                <span class="spec-icon">📈</span>
+                <span class="spec-title">3. Regresión &amp; Escalamiento FICO</span>
+                <p class="spec-desc">Logit con regularización Lasso/Ridge + PDO, Factor y Offset para puntos aditivos 100% auditables.</p>
             </div>
             <div class="card spec-box">
                 <span class="spec-icon">🛡️</span>
-                <span class="spec-title">Logo Capitán MIFUNE</span>
-                <p class="spec-desc">Exoesqueleto de combate APU &bull; Identidad visual oficial de la plataforma de defensa financiera.</p>
+                <span class="spec-title">4. Harvard MLSys Production</span>
+                <p class="spec-desc">Confidential computing en RAM cifrada, inferencia &lt;15ms y monitoreo continuo de PSI &lt; 0.10.</p>
             </div>
         </div>
-        <div class="footnote"><span>Dominio oficial: <strong>https://mifune.geeksoft.tech</strong></span><span>Slide 4 / 5</span></div>
+        <div class="footnote"><span>GeekSoft Academy &bull; Basilea III &bull; FICO Scorecard &bull; SBS Perú</span><span>Slide 1 / 6</span></div>
     </div>
 <div class="slide">
-        <div class="tag">🚀 Escalabilidad</div>
-        <h2>Próximos Pasos de la Plataforma MIFUNE</h2>
-        <p class="sub">Evolución hacia el agente conversacional por WhatsApp y orquestación multi-modelo.</p>
-        <div class="grid-3" style="margin-top: 10px;">
+        <div class="tag">🔬 TRATAMIENTO DE DATOS &amp; MONOTONÍA</div>
+        <h2>Pipeline de Datos: <span class="hi">Fine &amp; Coarse Classing</span></h2>
+        <p class="sub">Por qué los modelos bancarios no usan variables crudas y cómo se transforman para garantizar linealidad.</p>
+        <div class="grid-3" style="margin-top: 8px;">
             <div class="card spec-box">
-                <span class="spec-title">1. WhatsApp Agent Harness</span>
-                <p class="spec-desc">Integración con Evolution API para solicitar corridas financieras y recibir el Excel/PDF por chat.</p>
+                <span class="spec-icon">1️⃣</span>
+                <span class="spec-title">Fine Classing (Cuantiles)</span>
+                <p class="spec-desc">Segmentación inicial en 20-50 micro-intervalos. Aísla outliers extremos y detecta no-linealidades complejas.</p>
             </div>
             <div class="card spec-box">
-                <span class="spec-title">2. Dual-Agent OmniRoute</span>
-                <p class="spec-desc">Ruteo de razonamiento con DeepSeek-R1 y generación de código con Claude 3.5 Sonnet.</p>
+                <span class="spec-icon">2️⃣</span>
+                <span class="spec-title">Coarse Classing Supervisado</span>
+                <p class="spec-desc">Fusión de bins contiguos asegurando <strong>monotonía estricta</strong> en la tasa de mora (Bad Rate) y volumen &ge; 5% por bin.</p>
             </div>
             <div class="card spec-box">
-                <span class="spec-title">3. Módulos DCF &amp; LBO</span>
-                <p class="spec-desc">Incorporación de nuevas skills canónicas para valoración por flujos descontados y fusiones.</p>
+                <span class="spec-icon">3️⃣</span>
+                <span class="spec-title">Tratamiento de Nulos / Cero</span>
+                <p class="spec-desc">Imputación explícita: los valores faltantes (NaN) y ceros operativos forman bins independientes con su propio riesgo.</p>
             </div>
         </div>
-        <div class="footnote"><span>GeekSoft Innovation Labs &bull; Proyecto MIFUNE 2026</span><span>Slide 5 / 5</span></div>
+        <div class="flow-container" style="margin-top: 14px;">
+            <div class="flow-node active"><span class="flow-node-title">Variable Cruda</span><span class="flow-node-desc">Días mora, Ratios</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node purple"><span class="flow-node-title">Micro-Bins</span><span class="flow-node-desc">Fine Classing (50)</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node green"><span class="flow-node-title">Macro-Bins</span><span class="flow-node-desc">Monotonía &ge; 5%</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node amber"><span class="flow-node-title">Transformación WoE</span><span class="flow-node-desc">Linealización Logit</span></div>
+        </div>
+        <div class="footnote"><span>Fundamento: BCBS Credit Risk Modeling Standards</span><span>Slide 2 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">📐 FORMULACIÓN MATEMÁTICA</div>
+        <h2>Weight of Evidence (WoE) &amp; <span class="hi">Information Value (IV)</span></h2>
+        <p class="sub">Cuantificación del poder de separación y selección rigurosa de variables predictoras.</p>
+        <div class="grid-2" style="margin-top: 8px;">
+            <div class="card spec-box" style="border-left: 4px solid var(--sky);">
+                <span class="spec-title">Fórmula del Weight of Evidence (WoE)</span>
+                <p class="spec-desc" style="font-size: 13px; font-family: 'JetBrains Mono', monospace; background: #f8fafc; padding: 10px; border-radius: 8px; margin: 4px 0;">
+                    WoE_i = ln( %Goods_i / %Bads_i )
+                </p>
+                <p class="spec-desc">• <strong>WoE &gt; 0:</strong> Concentra mayor proporción de cumplidores &rarr; <strong>Menor riesgo</strong>.<br/>• <strong>WoE &lt; 0:</strong> Concentra mayor proporción de mora &rarr; <strong>Mayor riesgo</strong>.<br/>• Convierte relaciones no lineales en lineales respecto al Logit.</p>
+            </div>
+            <div class="card spec-box" style="border-left: 4px solid var(--emerald);">
+                <span class="spec-title">Fórmula del Information Value (IV)</span>
+                <p class="spec-desc" style="font-size: 13px; font-family: 'JetBrains Mono', monospace; background: #f8fafc; padding: 10px; border-radius: 8px; margin: 4px 0;">
+                    IV = &Sigma; ( %Goods_i - %Bads_i ) &times; WoE_i
+                </p>
+                <p class="spec-desc">• <strong>IV &lt; 0.02:</strong> Sin capacidad predictiva (Ruido &rarr; Descartar).<br/>• <strong>0.10 &le; IV &le; 0.50:</strong> Predictor Fuerte (Óptimo para Scorecard).<br/>• <strong>IV &gt; 0.50:</strong> Sospechoso (Auditar sobreajuste / Data Leakage).</p>
+            </div>
+        </div>
+        <div class="footnote"><span>Control Multicolinealidad: VIF &lt; 2.5 obligatorio antes de regresión</span><span>Slide 3 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">📈 MODELADO ADITIVO &amp; REGULACIÓN FICO</div>
+        <h2>Regresión Logística &amp; <span class="hi">Escalamiento a Puntos FICO (0-1000)</span></h2>
+        <p class="sub">De la probabilidad logit al cálculo aditivo transparente requerido por comités de riesgo y la SBS.</p>
+        <div class="table-wrap" style="margin-top: 6px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variable / Concepto</th>
+                        <th>Atributo / Bin</th>
+                        <th>WoE</th>
+                        <th>Coeficiente Beta</th>
+                        <th>Puntos Score (FICO)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f1f5f9; font-weight: 700;">
+                        <td>Constante Base</td>
+                        <td>Calibración de Cartera (Score0 = 600, Odds0 = 50:1, PDO = 20)</td>
+                        <td>-</td>
+                        <td>Intercepto &beta;0</td>
+                        <td>+480 pts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Atraso SBS Histórico 12M</strong></td>
+                        <td>0 días (100% Normal SBS)</td>
+                        <td>+0.92</td>
+                        <td>-0.45</td>
+                        <td><span class="hi-b" style="font-weight: 800;">+120 pts</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Atraso SBS Histórico 12M</strong></td>
+                        <td>&gt; 30 días o Protestos</td>
+                        <td>-1.65</td>
+                        <td>-0.45</td>
+                        <td><span class="hi-a" style="font-weight: 800;">-214 pts</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mora Factoring APEFAC</strong></td>
+                        <td>0 días mora en facturas de los 23 factores</td>
+                        <td>+0.75</td>
+                        <td>-0.52</td>
+                        <td><span class="hi-b" style="font-weight: 800;">+112 pts</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mora Factoring APEFAC</strong></td>
+                        <td>&gt; 15 días mora en facturas negociables</td>
+                        <td>-1.90</td>
+                        <td>-0.52</td>
+                        <td><span class="hi" style="font-weight: 800; color: var(--red);">-285 pts</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footnote"><span>Ecuación: Score = Offset - Factor &times; ( &beta;0 + &Sigma; &beta;j &times; WoEj ) &bull; Factor = PDO / ln(2)</span><span>Slide 4 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🛡️ QUALITY GATES &amp; AUDITORÍA SBS</div>
+        <h2>Batería de Validación Cuantitativa &amp; <span class="hi">Control de Drift</span></h2>
+        <p class="sub">Métricas obligatorias para la certificación del modelo por Comités de Auditoría y Reguladores.</p>
+        <div class="grid-4" style="margin-top: 10px;">
+            <div class="card spec-box">
+                <span class="spec-title">Kolmogorov-Smirnov (KS)</span>
+                <p class="spec-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--emerald); font-weight: 800;">KS &ge; 40%</p>
+                <p class="spec-desc">Mide la máxima separación entre acumuladas de buenos y malos. Garantiza corte óptimo.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title">Curva ROC / AUC</span>
+                <p class="spec-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--sky); font-weight: 800;">AUC &ge; 0.80</p>
+                <p class="spec-desc">Área bajo la curva de sensibilidad vs 1-especificidad. Equivalente a Gini &ge; 60%.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title">Hosmer-Lemeshow Test</span>
+                <p class="spec-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--purple); font-weight: 800;">p-value &gt; 0.05</p>
+                <p class="spec-desc">Prueba de calibración entre defaults observados vs esperados por decil de riesgo.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title">Estabilidad Poblacional (PSI)</span>
+                <p class="spec-desc" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--amber); font-weight: 800;">PSI &lt; 0.10</p>
+                <p class="spec-desc">Monitoreo mensual de degradación de cartera en producción para alerta temprana de corrimiento.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>Cumplimiento: Resolución SBS N° 11356-2008 &bull; Basilea II/III IRB Approach</span><span>Slide 5 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">⚡ HARVARD MLSYS &amp; PRODUCCIÓN REAL</div>
+        <h2>Del Modelo Matemático al <span class="hi">Sistema en Tiempo Real</span></h2>
+        <p class="sub">Principios de ingeniería de sistemas de ML (Prof. Vijay Janapa Reddi - Harvard CS249r) aplicados a APEFAC y EFIDE.</p>
+        <div class="grid-3" style="margin-top: 10px;">
+            <div class="card spec-box">
+                <span class="spec-icon">🔒</span>
+                <span class="spec-title">Confidential Computing</span>
+                <p class="spec-desc">Cálculo de matrices WoE en memoria RAM volátil descifrada puntualmente con AWS KMS. Cero persistencia en disco.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">⚡</span>
+                <span class="spec-title">Inferencia Sub-Milisegundo</span>
+                <p class="spec-desc">Producto punto vectorizado (&beta; &times; WoE) en microservicios C++/Python con latencia P99 &lt; 15 ms por RUC consultado.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">📡</span>
+                <span class="spec-title">Telemetría de Drift en Vivo</span>
+                <p class="spec-desc">Cálculo automático de PSI en cada lote mensual. Alertas push inmediatas si la cartera sufre un cambio estructural.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>GeekSoft Engineering &bull; Harvard MLSys Curriculum &bull; APEFAC Risk Core 2026</span><span>Slide 6 / 6</span></div>
     </div>
     </div>
 
     <nav>
         <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
-        <div id="counter">1 / 5</div>
+        <div id="counter">1 / 6</div>
         <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
         <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
     </nav>
@@ -395,4 +448,3 @@
     </script>
 </body>
 </html>
-
