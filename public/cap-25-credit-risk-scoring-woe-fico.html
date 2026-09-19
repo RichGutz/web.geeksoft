@@ -154,6 +154,12 @@
             flex-grow: 1; display: flex; flex-direction: column; justify-content: center;
         }
 
+        .example-box {
+            background: #FFFBEB; border: 1px solid rgba(217,119,6,0.25); border-left: 3px solid var(--amber);
+            border-radius: 6px; padding: 6px 10px; font-size: 10.2px; color: #92400E; line-height: 1.4; margin-top: 5px;
+        }
+        .example-box strong { color: #78350F; }
+
         .table-wrap {
             width: 100%; max-width: 1360px; background: #ffffff;
             border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
@@ -199,6 +205,7 @@
                         <p class="spec-desc"><strong>Fundamento Teórico:</strong> Derivación formal de la divergencia simétrica de Jeffrey para transformar variables no lineales en Log-Odds puramente lineales.</p>
                     </div>
                     <div class="concept-text"><strong>Impacto de Negocio:</strong> Permite que variables complejas (edad de la PYME, ventas, protestos) se sumen como puntos transparentes sin perder precisión.</div>
+                    <div class="example-box"><strong>🌾 Ejemplo Real:</strong> Si ingresa la variable <em>Sector = Agroexportación Norte</em>, el WoE cuantifica exactamente el peso de riesgo ante alertas climáticas.</div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
                     <div>
@@ -207,6 +214,7 @@
                         <p class="spec-desc"><strong>Algoritmo Numérico:</strong> Newton-Raphson de segundo orden con Hessiana $\mathbf{H} = -\mathbf{X}^T \mathbf{W} \mathbf{X}$ y penalización ElasticNet para convergencia cóncava global.</p>
                     </div>
                     <div class="concept-text"><strong>Garantía Cuantitativa:</strong> Solución matemática única y óptima. Elimina la inestabilidad por multicolinealidad con $VIF < 2.5$.</div>
+                    <div class="example-box"><strong>🌾 Ejemplo Real:</strong> Estima los betas de interacción entre <em>Liquidez Corriente</em> y <em>Exposición Agrícola</em> con significancia $p < 0.001$.</div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--purple);">
                     <div>
@@ -215,6 +223,7 @@
                         <p class="spec-desc"><strong>Normativa &amp; Auditoría:</strong> Cumplimiento de FCRA 615(a) (4 Adverse Reason Codes), ECOA 12 CFR § 1002.2(p), Basilea III ASRF y Resolución SBS N° 11356-2008.</p>
                     </div>
                     <div class="concept-text"><strong>Blinded Regulatorio:</strong> Cero modelos "caja negra". Cada rechazo tiene sustento legal y justificación matemática punto por punto.</div>
+                    <div class="example-box"><strong>🌾 Ejemplo Real:</strong> Justificación legal obligatoria al rechazar una factura: <em>"R-104: Exposición a zona declarada en emergencia por El Niño"</em>.</div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--amber);">
                     <div>
@@ -223,6 +232,7 @@
                         <p class="spec-desc"><strong>Implementación en Código:</strong> OptBinning (MILP/OR-Tools de Google), Toad (Cython de alta velocidad), Scorecardpy e ING Skorecard (Scikit-Learn).</p>
                     </div>
                     <div class="concept-text"><strong>Cero Humo:</strong> Librerías validadas internacionalmente por bancos de primer nivel como ING y JPMorgan.</div>
+                    <div class="example-box"><strong>🌾 Ejemplo Real:</strong> Script OptBinning que procesa millones de facturas agrícolas y comerciales exportando el scorecard aditivo.</div>
                 </div>
             </div>
             
@@ -253,11 +263,15 @@ tau_i = inf { t > t_0 : DPD_i(t) >= 90  v  Rating_SBS(t) in {DEF, DUD, PER} }
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué significa conceptualmente esta fórmula?:</strong><br/>
-                        • <strong>$Y_i \in \{0, 1\}$:</strong> Es la variable binaria objetivo. Vale <strong>1 (Bad / Default)</strong> si el deudor incumple sus obligaciones en los próximos 12 meses, y <strong>0 (Good / Solvente)</strong> si paga a tiempo.<br/>
-                        • <strong>$	au_i$ (Tiempo de Primera Parada):</strong> Es el instante exacto en que la empresa cruza el umbral de insolvencia.<br/>
-                        • <strong>¿Por qué 12 meses de horizonte?:</strong> Es el estándar regulatorio internacional de Basilea y la SBS; cubre un ciclo financiero anual completo, eliminando distorsiones por estacionalidad de ventas.<br/>
-                        • <strong>Criterio Objetivo Irrefutable:</strong> Atraso consecutivo $\ge 90$ días calendario (DPD $\ge 90$).<br/>
-                        • <strong>Criterio Subjetivo Regulatorio:</strong> Entrada en cobranza judicial, refinanciación forzosa o quiebra.
+                        • <strong>$Y_i \in \{0, 1\}$:</strong> Vale <strong>1 (Bad / Default)</strong> si el deudor incumple sus obligaciones en los próximos 12 meses, y <strong>0 (Good / Solvente)</strong> si paga a tiempo.<br/>
+                        • <strong>$	au_i$ (Tiempo de Primera Parada):</strong> Instante exacto en que la empresa cruza el umbral de insolvencia.<br/>
+                        • <strong>¿Por qué 12 meses?:</strong> Estándar internacional que cubre un ciclo financiero y fiscal completo.<br/>
+                        • <strong>Criterio Objetivo:</strong> Atraso consecutivo $\ge 90$ días calendario ($	ext{DPD} \ge 90$).<br/>
+                        • <strong>Criterio Subjetivo:</strong> Entrada en cobranza judicial, refinanciación forzosa o quiebra.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Práctico (Agroexportación &amp; El Niño):</strong><br/>
+                        Una empresa productora de mangos en Piura sufre inundaciones por el Fenómeno de El Niño (FEN). Al no poder cosechar, sus facturas cedidas a 90 días no se cobran. En $t = 91	ext{ días}$, $	au_i \le t_0 + 12	ext{M}$ se activa, marcando $Y_i = 1$ (Default) para el entrenamiento del modelo.
                     </div>
                 </div>
                 <div class="card spec-box">
@@ -271,10 +285,14 @@ P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué significa conceptualmente la Cadena de Markov?:</strong><br/>
-                        • <strong>$\pi_t$:</strong> Vector que representa en qué categoría SBS se encuentra la cartera hoy: [Normal, CPP, Deficiente, Dudoso, Pérdida].<br/>
-                        • <strong>Matriz $P$:</strong> Contiene las probabilidades históricas de que un cliente salte de una categoría a otra mes a mes (migración crediticia).<br/>
-                        • <strong>Estado Absorbente ($P_{55} = 1.0$):</strong> La categoría <em>Pérdida</em> es un punto sin retorno estadístico; una vez que una empresa cae en pérdida o cobranza judicial, la probabilidad de recuperarla sin pérdidas severas es nula.<br/>
-                        • <strong>Cálculo de la PD:</strong> La PD a 12 meses calculada por el modelo es exactamente la probabilidad de ser absorbido por la categoría 4 (Pérdida) en $t=12$.
+                        • <strong>$\pi_t$:</strong> Vector de distribución de la cartera: [Normal, CPP, Deficiente, Dudoso, Pérdida].<br/>
+                        • <strong>Matriz $P$:</strong> Probabilidades históricas de migración crediticia mes a mes.<br/>
+                        • <strong>Estado Absorbente ($P_{55} = 1.0$):</strong> La categoría <em>Pérdida</em> es un punto sin retorno estadístico; una vez que cae en pérdida, la probabilidad de recupero sin castigo contable es prácticamente nula.<br/>
+                        • <strong>Cálculo de la PD:</strong> La PD a 12 meses es la probabilidad de absorción en la categoría 4 (Pérdida).
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Práctico (Migración Crediticia):</strong><br/>
+                        Durante El Niño, la matriz histórica $P$ muestra que la tasa de migración de empresas agrícolas desde <em>CPP</em> a <em>Pérdida</em> salta del 8% al 45%, acelerando la necesidad de provisiones contables anticipadas en EFIDE.
                     </div>
                 </div>
             </div>
@@ -303,8 +321,11 @@ P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
                         <strong>¿Qué hace conceptualmente?:</strong><br/>
                         Toma cada variable continua cruda (ej. Facturación mensual, ratio de apalancamiento, saldo SBS) y la divide en <strong>20 a 50 micro-intervalos de igual densidad (cuantiles)</strong>.<br/><br/>
                         <strong>¿Por qué es indispensable?:</strong><br/>
-                        • Aísla y neutraliza <em>outliers</em> extremos (ej. una empresa con 500 días de atraso no distorsiona al resto).<br/>
-                        • Permite observar el comportamiento real de la tasa de mora en micro-segmentos antes de forzar cualquier supuesto lineal.
+                        • Aísla y neutraliza <em>outliers</em> extremos.<br/>
+                        • Permite observar el comportamiento real de la tasa de mora en micro-segmentos antes de forzar supuestos lineales.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Agro:</strong> Empresas con ventas de 100M no sesgan a los pequeños fundos de 500k; cada uno cae en su cuantil correspondiente.
                     </div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
@@ -314,9 +335,12 @@ P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué es la Monotonicidad?:</strong><br/>
-                        Es el <strong>principio de racionalidad económica</strong>: a mayor riesgo (más días de mora o menor cobertura de deuda), la tasa de clientes morosos (<em>Bad Rate</em>) debe ser <strong>estrictamente creciente o decreciente en una sola dirección</strong>, sin altibajos ilógicos.<br/><br/>
+                        A mayor riesgo (más días de mora o menor cobertura de caja), la tasa de mora (<em>Bad Rate</em>) debe ser <strong>estrictamente creciente o decreciente en una sola dirección</strong>.<br/><br/>
                         <strong>¿Qué es el Solver MILP?:</strong><br/>
-                        <em>Mixed Integer Linear Programming</em> (Programación Lineal Entera Mixta). Es un algoritmo matemático que fusiona los micro-bins encontrando los límites de corte óptimos globales bajo 2 reglas estrictas: <strong>Monotonía obligatoria</strong> y <strong>mínimo 5% de clientes por bin</strong>.
+                        <em>Mixed Integer Linear Programming</em>. Algoritmo de optimización que fusiona los micro-bins encontrando los cortes óptimos bajo 2 restricciones duras: <strong>Monotonía obligatoria</strong> y <strong>mínimo 5% de clientes por bin</strong>.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Agro:</strong> Si la variable es <em>Días de Lluvias Torrenciales</em>, el Bad Rate sube monótonamente: [0-5 días: 2%] &rarr; [6-15 días: 12%] &rarr; [&gt;15 días: 48%].
                     </div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--purple);">
@@ -328,8 +352,11 @@ P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
                         <strong>¿Qué se hace con valores faltantes?:</strong><br/>
                         En banca regulada <strong>está terminantemente prohibido imputar nulos con la media o mediana</strong>.<br/><br/>
                         <strong>¿Por qué?:</strong><br/>
-                        • Que una PYME no tenga declaraciones tributarias o historial en SBS (NaN) es en sí mismo un patrón de riesgo crucial.<br/>
-                        • Los nulos (Missing) y los ceros operativos se aíslan en <strong>bins independientes</strong> para asignarles un peso de riesgo WoE exacto y auditable.
+                        • Que una PYME agrícola no reporte estados auditados o historial SBS (NaN) es en sí una señal crítica de riesgo.<br/>
+                        • Los nulos forman un <strong>bin independiente</strong> con su propio peso WoE.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Agro:</strong> Agricultores informales sin historial SBS entran al bin <em>"Missing_SBS"</em> con un WoE negativo calibrado a su riesgo real.
                     </div>
                 </div>
             </div>
@@ -362,10 +389,14 @@ Razón de Odds: Odds(Y=1|B_j) = Odds_Prior &times; e^(-WoE_j)
                     <div class="concept-text">
                         • <strong>La Fuerza de la Evidencia:</strong> Compara el % de clientes solventes ($g_j$) vs el % de clientes morosos ($b_j$) dentro del bin $j$.<br/>
                         • <strong>Interpretación Intuitiva:</strong><br/>
-                        &nbsp;&nbsp;- Si $	ext{WoE} > 0$: El bin tiene más buenos pagadores que malos $ightarrow$ <strong>Disminuye el riesgo</strong> $ightarrow$ Aporta puntos positivos al cliente.<br/>
-                        &nbsp;&nbsp;- Si $	ext{WoE} = 0$: El bin no aporta información (riesgo neutro igual al promedio).<br/>
-                        &nbsp;&nbsp;- Si $	ext{WoE} < 0$: El bin concentra alta morosidad $ightarrow$ <strong>Aumenta el riesgo</strong> $ightarrow$ Resta puntos.<br/>
-                        • <strong>La Magia del WoE:</strong> Convierte cualquier escala compleja (años, montos, categorías) en una escala logarítmica donde la relación con el default es <strong>estrictamente lineal</strong>.
+                        &nbsp;&nbsp;- Si $	ext{WoE} > 0$: Mayor proporción de buenos $ightarrow$ <strong>Disminuye el riesgo</strong> $ightarrow$ Suma puntos al cliente.<br/>
+                        &nbsp;&nbsp;- Si $	ext{WoE} = 0$: Riesgo neutro igual al promedio.<br/>
+                        &nbsp;&nbsp;- Si $	ext{WoE} < 0$: Alta morosidad $ightarrow$ <strong>Aumenta el riesgo</strong> $ightarrow$ Resta puntos.<br/>
+                        • <strong>La Magia del WoE:</strong> Linealiza perfectamente variables complejas sin generar distorsiones.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Enriquecimiento Sectorial:</strong><br/>
+                        Si enriquecemos con la variable <em>Sector Económico</em>, el bin <code>Sector = Agro Piura FEN</code> arroja $g_j = 4\%$ de buenos y $b_j = 38\%$ de malos: $	ext{WoE} = \ln(0.04 / 0.38) = \mathbf{-2.25}$ (Impacto negativo contundente).
                     </div>
                 </div>
                 <div class="card spec-box">
@@ -381,9 +412,13 @@ IV = D_KL(Goods || Bads) + D_KL(Bads || Goods) = &Sigma; (g_j - b_j) &times; WoE
                         </div>
                     </div>
                     <div class="concept-text">
-                        • <strong>Distancia Probabilística:</strong> El $IV$ mide qué tan separadas están las curvas de probabilidad de los buenos pagadores frente a los morosos.<br/>
-                        • <strong>Filtro Cuantitativo:</strong> Si una variable tiene $IV < 0.10$, se elimina del modelo por no aportar discriminación suficiente.<br/>
-                        • <strong>Propiedad de No Negatividad:</strong> Por el Teorema de Shannon y la Divergencia de Kullback-Leibler, el $IV \ge 0$ siempre; jamás puede dar un valor negativo.
+                        • <strong>Distancia Probabilística:</strong> Mide la separación estadística entre las distribuciones de buenos y malos.<br/>
+                        • <strong>Filtro Cuantitativo:</strong> Si $IV < 0.10$, se elimina la variable por no aportar poder separador.<br/>
+                        • <strong>Propiedad:</strong> $IV \ge 0$ garantizado por la desigualdad de Jensen y entropía de Shannon.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Predictivo:</strong><br/>
+                        La variable <em>Exposición Geográfica a El Niño</em> obtiene un $IV = 0.42$, calificando como <strong>Predictor Fuerte de Alta Prioridad</strong> para el comité de riesgos de factoring.
                     </div>
                 </div>
             </div>
@@ -392,21 +427,21 @@ IV = D_KL(Goods || Bads) + D_KL(Bads || Goods) = &Sigma; (g_j - b_j) &times; WoE
                 <table>
                     <thead>
                         <tr>
-                            <th>Bin (Días Mora SBS)</th>
+                            <th>Bin (Variable Sectorial + Mora SBS)</th>
                             <th>Total Clientes</th>
                             <th>Goods (Y=0)</th>
                             <th>Bads (Y=1)</th>
                             <th>Bad Rate (%)</th>
                             <th>WoE Calculado</th>
                             <th>IV Contribución</th>
-                            <th>Impacto Conceptual</th>
+                            <th>Impacto en Factoring</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>0 días (Normal)</td><td>12,450</td><td>12,200 (61.0%)</td><td>250 (12.5%)</td><td>2.01%</td><td><span class="hi-b mono">+1.58</span></td><td>0.7663</td><td>Excelente solvencia (+ Puntos)</td></tr>
-                        <tr><td>1 a 8 días</td><td>4,200</td><td>3,950 (19.8%)</td><td>250 (12.5%)</td><td>5.95%</td><td><span class="hi-b mono">+0.46</span></td><td>0.0336</td><td>Riesgo bajo controlado (+ Puntos)</td></tr>
-                        <tr><td>9 a 30 días (CPP)</td><td>2,150</td><td>1,650 (8.2%)</td><td>500 (25.0%)</td><td>23.25%</td><td><span class="hi-a mono">-1.11</span></td><td>0.1865</td><td>Deterioro preventivo (- Puntos)</td></tr>
-                        <tr><td>&gt; 30 días (Deficiente+)</td><td>1,200</td><td>200 (1.0%)</td><td>1,000 (50.0%)</td><td>83.33%</td><td><span class="hi-r mono">-3.91</span></td><td>1.9159</td><td>Riesgo crítico de default (- Puntos)</td></tr>
+                        <tr><td>Servicios / Comercio (Lima 0 Días Mora)</td><td>12,450</td><td>12,200 (61.0%)</td><td>250 (12.5%)</td><td>2.01%</td><td><span class="hi-b mono">+1.58</span></td><td>0.7663</td><td>Bajo riesgo (+120 pts)</td></tr>
+                        <tr><td>Manufactura / Textil (1 a 8 días)</td><td>4,200</td><td>3,950 (19.8%)</td><td>250 (12.5%)</td><td>5.95%</td><td><span class="hi-b mono">+0.46</span></td><td>0.0336</td><td>Riesgo moderado (+35 pts)</td></tr>
+                        <tr><td>Construcción / Obras Públicas (9 a 30 días)</td><td>2,150</td><td>1,650 (8.2%)</td><td>500 (25.0%)</td><td>23.25%</td><td><span class="hi-a mono">-1.11</span></td><td>0.1865</td><td>Deterioro (-95 pts)</td></tr>
+                        <tr><td><strong>Agroexportación Piura / La Libertad (FEN)</strong></td><td>1,200</td><td>200 (1.0%)</td><td>1,000 (50.0%)</td><td>83.33%</td><td><span class="hi-r mono">-3.91</span></td><td>1.9159</td><td><strong>Riesgo crítico FEN (-240 pts)</strong></td></tr>
                         <tr style="background:#0F172A; color:#fff; font-weight:700;"><td colspan="6">TOTAL INFORMATION VALUE (IV GLOBAL DE LA VARIABLE)</td><td><span class="hi mono">2.9023</span></td><td><span class="hi mono">Predictor Crítico &ge; 0.50</span></td></tr>
                     </tbody>
                 </table>
@@ -438,9 +473,12 @@ Gradiente (Score): g(beta) = &part;ell/&part;beta = X' (y - p)
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué significa conceptualmente?:</strong><br/>
-                        • $\ell(eta)$ mide la probabilidad total de que los datos observados en el histórico hayan ocurrido bajo los coeficientes $eta$. El objetivo es encontrar el punto más alto de esta función.<br/>
-                        • El Gradiente $g(eta)$ representa la <strong>pendiente de la montaña</strong>. La solución óptima ocurre cuando la pendiente es cero: $\mathbf{X}^T(\mathbf{y} - \mathbf{p}) = 0$.<br/>
-                        • Como no existe fórmula algebraica cerrada, se requiere un algoritmo iterativo de segundo orden.
+                        • $\ell(eta)$ mide la probabilidad total de que los datos ocurran bajo los coeficientes $eta$.<br/>
+                        • El Gradiente $g(eta)$ es la pendiente. En el óptimo: $\mathbf{X}^T(\mathbf{y} - \mathbf{p}) = 0$.<br/>
+                        • Requiere optimización numérica iterativa de 2do orden.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Numérico:</strong> Si el modelo predice $p_i = 0.10$ pero una agroexportadora defaultea por El Niño ($y_i=1$), el gradiente genera un residuo fuerte $y_i - p_i = +0.90$ para corregir los betas hacia arriba.
                     </div>
                 </div>
                 <div class="card spec-box">
@@ -454,9 +492,12 @@ Matriz de Fisher: I(beta) = X' W X    donde W_ii = p_i (1 - p_i)
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué significa conceptualmente?:</strong><br/>
-                        • La Hessiana $\mathbf{H}$ mide la <strong>curvatura de la montaña</strong>.<br/>
-                        • Como la matriz de ponderaciones $\mathbf{W}$ tiene en su diagonal las varianzas binomiales $p_i(1-p_i) > 0$, la matriz $-\mathbf{H}$ es <strong>estrictamente definida positiva</strong>.<br/>
-                        • <strong>Garantía Matemática:</strong> La función es estrictamente cóncava; existe un <strong>único máximo global</strong>. Es imposible que el algoritmo se quede atrapado en falsos óptimos locales.
+                        • La Hessiana $\mathbf{H}$ mide la curvatura del error.<br/>
+                        • Como las varianzas binomiales $W_{ii} = p_i(1-p_i) > 0$, $-\mathbf{H}$ es estrictamente definida positiva.<br/>
+                        • <strong>Garantía:</strong> Convergencia garantizada a un <strong>único máximo global cóncavo</strong>.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo de Estabilidad:</strong> Aunque agreguemos 15 variables climáticas y sectoriales, la concavidad estricta asegura que el algoritmo siempre encuentre la solución óptima sin oscilaciones.
                     </div>
                 </div>
             </div>
@@ -470,8 +511,8 @@ beta^(t+1) = (X' W_t X)^(-1) X' W_t z_t    donde z_t = X beta^(t) + W_t^(-1) (y 
                     </div>
                 </div>
                 <div class="concept-text">
-                    • <strong>¿Cómo opera?:</strong> En cada iteración $t$, el algoritmo recalcula la matriz de pesos $\mathbf{W}_t$ otorgando mayor relevancia a los clientes cerca de la frontera de decisión ($p pprox 0.5$) y actualiza el vector $eta$ hasta que el error sea menor a $10^{-6}$ (generalmente en menos de 6 iteraciones).<br/>
-                    • <strong>Test de Wald:</strong> $W_j = (eta_j / 	ext{SE}(eta_j))^2 \sim \chi^2(1)$ valida la significancia estadística individual de cada variable ($p	ext{-value} < 0.05$).
+                    • <strong>¿Cómo opera?:</strong> Recalcula en cada paso la matriz $\mathbf{W}_t$ dando más peso a observaciones cerca de la frontera de decisión ($p pprox 0.5$) convergiendo en $< 6$ iteraciones.<br/>
+                    • <strong>Test de Wald:</strong> $W_{	ext{Agro}} = (eta_{	ext{Agro}} / 	ext{SE})^2 = 38.4 \sim \chi^2(1)$ confirma significancia extrema ($p < 0.0001$) del factor climático.
                 </div>
             </div>
             
@@ -502,9 +543,12 @@ beta_j^(t+1) = S( &Sigma; w_i r_i x_ij, &lambda;1 ) / ( &Sigma; w_i x_ij&sup2; +
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué hace conceptualmente?:</strong><br/>
-                        • <strong>Penalización L1 (Lasso):</strong> Fuerza a cero los coeficientes de variables redundantes, realizando selección automática de variables.<br/>
-                        • <strong>Penalización L2 (Ridge):</strong> Contrae los coeficientes de variables correlacionadas, evitando que los betas exploten por multicolinealidad.<br/>
-                        • <strong>Coordinate Descent:</strong> Optimiza un coeficiente $eta_j$ a la vez manteniendo los demás fijos, logrando velocidad y estabilidad extrema.
+                        • <strong>L1 (Lasso):</strong> Anula coeficientes de variables redundantes.<br/>
+                        • <strong>L2 (Ridge):</strong> Contrae coeficientes correlacionados para evitar explosión de varianza.<br/>
+                        • <strong>Coordinate Descent:</strong> Optimiza un $eta_j$ a la vez con velocidad extrema.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Multicolinealidad Agro:</strong> Si incluimos <em>"Lluvias SENAMHI"</em> y <em>"Humedad Suelo"</em>, Lasso elimina la repetitiva y Ridge estabiliza el $eta_{	ext{Agro}}$ sin distorsionar.
                     </div>
                 </div>
                 <div class="card spec-box">
@@ -518,9 +562,12 @@ Efecto Marginal: &part;p/&part;x_j = f(x'beta) &times; beta_j
                         </div>
                     </div>
                     <div class="concept-text">
-                        <strong>¿Por qué la banca prefiere Logit sobre Probit?:</strong><br/>
-                        • <strong>Colas Más Pesadas (Fat Tails):</strong> La función Logística tiene colas con decaimiento exponencial simple ($e^{-z}$), capturando mejor los eventos extremos de default en crisis crediticias que la Normal ($\Phi$).<br/>
-                        • <strong>Interpretabilidad FICO:</strong> Solo el Logit permite derivar directamente el Scorecard Aditivo mediante razones de momios ($	ext{Odds} = e^{\mathbf{x}'oldsymbol{eta}}$).
+                        <strong>¿Por qué Logit es el estándar?:</strong><br/>
+                        • <strong>Colas Pesadas (Fat Tails):</strong> Captura mejor los eventos raros de quiebras masivas que la distribución Gaussiana ($\Phi$).<br/>
+                        • <strong>Interpretabilidad FICO:</strong> Es la única base matemática que permite descomponer el puntaje en sumas aditivas de puntos.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Crisis Climática:</strong> En una crisis por El Niño donde 30% de los deudores caen en impago simultáneo, Logit asigna la probabilidad correcta sin subestimar el riesgo de cola.
                     </div>
                 </div>
             </div>
@@ -531,8 +578,8 @@ Efecto Marginal: &part;p/&part;x_j = f(x'beta) &times; beta_j
                     <span class="spec-title">Factor de Inflación de la Varianza (VIF &lt; 2.5)</span>
                 </div>
                 <div class="concept-text">
-                    • <strong>Fórmula:</strong> $	ext{VIF}_j = rac{1}{1 - R_j^2}$, donde $R_j^2$ es el $R^2$ de regresar la variable $j$ contra todas las demás.<br/>
-                    • <strong>Regla de Calidad APEFAC/EFIDE:</strong> Se exige que todo $	ext{VIF}_j < 2.5$. Si dos variables están correlacionadas (ej. Atraso SBS y Protestos), se elimina la de menor $IV$ para evitar que los betas tengan signos invertidos o errores inflados.
+                    • <strong>Fórmula:</strong> $	ext{VIF}_j = rac{1}{1 - R_j^2}$. Se exige $	ext{VIF} < 2.5$ para todas las variables seleccionadas.<br/>
+                    • <strong>Certificación:</strong> Garantiza que el impacto del sector agroindustrial sea ortogonal e independiente del historial financiero previo.
                 </div>
             </div>
             
@@ -566,8 +613,11 @@ Score = Offset + Factor &times; ln( (1-p) / p )
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué significa conceptualmente?:</strong><br/>
-                        • <strong>$	ext{Score}_0$ &amp; $	ext{Odds}_0$:</strong> Puntaje de referencia (ej. 600 puntos corresponden a una razón de 50 buenos por 1 malo).<br/>
-                        • <strong>PDO (Points to Double the Odds):</strong> Es la "escala métrica". Si $	ext{PDO} = 20$, cada vez que un cliente sube 20 puntos, su probabilidad de pago se duplica (el riesgo se reduce a la mitad).
+                        • $	ext{Score}_0 = 600$, $	ext{Odds}_0 = 50:1$, $	ext{PDO} = 20$.<br/>
+                        • Cada 20 puntos adicionales, la probabilidad de cumplimiento se duplica (el riesgo cae al 50%).
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo:</strong> Un deudor agroindustrial con score de 520 puntos tiene $4	imes$ más probabilidad de default que uno con 560 puntos ($2 	imes 	ext{PDO}$).
                     </div>
                 </div>
                 <div class="card spec-box">
@@ -582,8 +632,11 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                     </div>
                     <div class="concept-text">
                         <strong>¿Por qué esta fórmula es revolucionaria?:</strong><br/>
-                        • Convierte un cálculo matemático complejo de regresión en una <strong>tabla de suma directa de puntos enteros</strong>.<br/>
-                        • Cualquier ejecutivo de crédito o auditor de la SBS puede verificar el puntaje en una hoja de papel sumando los puntos de cada atributo.
+                        • Convierte el modelo en una <strong>suma directa de puntos en hoja de papel</strong>.<br/>
+                        • Permite auditar exactamente cuántos puntos suma o resta cada variable.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Aditivo:</strong> El atributo <em>Sector = Agro FEN</em> descuenta exactamente $-185	ext{ puntos}$ del score total de la empresa evaluada.
                     </div>
                 </div>
             </div>
@@ -592,20 +645,21 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                 <table>
                     <thead>
                         <tr>
-                            <th>Variable Crediticia</th>
+                            <th>Variable Crediticia / Sectorial</th>
                             <th>Rango Evaluado (Bin)</th>
                             <th>WoE Calculado</th>
                             <th>Beta Estimado</th>
                             <th>Puntos Aportados al Score</th>
-                            <th>Justificación Técnica</th>
+                            <th>Efecto en Factoring EFIDE</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="background:#f1f5f9; font-weight:700;"><td>Puntaje Base de Origen</td><td>Calibración Base ($	ext{Score}_0=600, 	ext{Odds}_0=50:1, 	ext{PDO}=20$)</td><td>-</td><td>Intercepto $eta_0$</td><td><span class="hi-b mono">+480 pts</span></td><td>Constante de partida para todo solicitante</td></tr>
-                        <tr><td><strong>1. Atraso SBS Histórico 12M</strong></td><td>0 días (100% Normal SBS)</td><td>+0.92</td><td>-0.45</td><td><span class="hi-b mono">+120 pts</span></td><td>Historial impecable en el sistema bancario</td></tr>
-                        <tr><td><strong>1. Atraso SBS Histórico 12M</strong></td><td>&gt; 30 días o Protestos Judiciales</td><td>-1.65</td><td>-0.45</td><td><span class="hi-r mono">-214 pts</span></td><td>Penalización por mora o cobranza legal</td></tr>
-                        <tr><td><strong>2. Mora Factoring APEFAC</strong></td><td>0 días mora en factoring de los 23 factores</td><td>+0.75</td><td>-0.52</td><td><span class="hi-b mono">+112 pts</span></td><td>Comportamiento intachable en factoring</td></tr>
-                        <tr><td><strong>2. Mora Factoring APEFAC</strong></td><td>&gt; 15 días mora en facturas cedidas</td><td>-1.90</td><td>-0.52</td><td><span class="hi-r mono">-285 pts</span></td><td>Alto riesgo de impago en facturas comerciales</td></tr>
+                        <tr style="background:#f1f5f9; font-weight:700;"><td>Puntaje Base de Origen</td><td>Calibración Base ($	ext{Score}_0=600, 	ext{Odds}_0=50:1, 	ext{PDO}=20$)</td><td>-</td><td>Intercepto $eta_0$</td><td><span class="hi-b mono">+480 pts</span></td><td>Punto de partida homogéneo</td></tr>
+                        <tr><td><strong>1. Atraso SBS Histórico 12M</strong></td><td>0 días (100% Normal SBS)</td><td>+0.92</td><td>-0.45</td><td><span class="hi-b mono">+120 pts</span></td><td>Excelente comportamiento bancario</td></tr>
+                        <tr><td><strong>1. Atraso SBS Histórico 12M</strong></td><td>&gt; 30 días o Protestos Judiciales</td><td>-1.65</td><td>-0.45</td><td><span class="hi-r mono">-214 pts</span></td><td>Castigo por morosidad previa</td></tr>
+                        <tr><td><strong>2. Mora Factoring APEFAC</strong></td><td>0 días mora en factoring de los 23 factores</td><td>+0.75</td><td>-0.52</td><td><span class="hi-b mono">+112 pts</span></td><td>Cumplimiento puntual en facturas</td></tr>
+                        <tr><td><strong>3. Enriquecimiento Sectorial FEN</strong></td><td><strong>Agroexportación Piura / Tumbes (Alerta Niño)</strong></td><td><strong>-1.85</strong></td><td><strong>-0.58</strong></td><td><span class="hi-r mono">-185 pts</span></td><td><strong>Descuento por vulnerabilidad climática</strong></td></tr>
+                        <tr style="background:#0F172A; color:#fff; font-weight:700;"><td colspan="4">SCORE TOTAL CALCULADO (EMPRESA AGRO CON MORA EN FACTORING)</td><td><span class="hi-r mono">308 Pts (D- Alto Riesgo)</span></td><td><span class="hi-r mono">RECHAZO AUTOMÁTICO</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -632,9 +686,15 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué exige la Sección 615(a) (Adverse Action Notices)?:</strong><br/>
-                        Si una entidad financiera rechaza una solicitud de crédito o le impone una tasa de interés castigada, la ley <strong>obliga por mandato federal</strong> a entregar al cliente una notificación con su puntaje y los <strong>4 factores principales de impacto negativo (Key Adverse Reason Codes)</strong>.<br/><br/>
+                        Al rechazar o castigar una solicitud, la entidad <strong>debe entregar por escrito los 4 factores principales de impacto negativo (Key Reason Codes)</strong>.<br/><br/>
                         <strong>¿Por qué hace mandatorio el Scorecard Aditivo?:</strong><br/>
-                        Porque en un Scorecard lineal, los motivos se extraen directamente ordenando los puntos de menor a mayor: $	ext{Rank} = rg\min_j(	ext{Points}_j)$. Un modelo de "caja negra" (red neuronal densa) no puede aislar los 4 motivos legalmente y es considerado <strong>ilegal para originación</strong>.
+                        Permite ordenar: $	ext{Rank} = rg\min_j(	ext{Points}_j)$ y extraer los 4 motivos sin ambigüedad. Las "cajas negras" son <strong>ilegales bajo FCRA</strong>.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Reason Code Automático:</strong><br/>
+                        1. R-104: Exposición a Sector Agroindustrial bajo alerta climática FEN (-185 pts).<br/>
+                        2. R-201: Días de mora en Factoring APEFAC &gt; 15 días (-285 pts).<br/>
+                        3. R-305: Ratio de Apalancamiento Deuda/Ventas &gt; 4.5 (-110 pts).
                     </div>
                 </div>
                 <div class="card spec-box" style="border-left: 4px solid var(--purple);">
@@ -644,11 +704,15 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                     </div>
                     <div class="concept-text">
                         <strong>Prohibición de Atributos Protegidos:</strong><br/>
-                        Está estrictamente prohibido que el algoritmo use variables de género, raza, religión, nacionalidad, estado civil o edad en desmedro de adultos mayores.<br/><br/>
+                        Prohibido usar género, raza, religión, nacionalidad o edad.<br/><br/>
                         <strong>Doctrina del Impacto Desproporcionado (Disparate Impact):</strong><br/>
-                        Incluso variables aparentemente neutrales (como código postal o profesión) que generen un sesgo estadístico contra minorías son sancionadas si no tienen justificación de solvencia.<br/><br/>
-                        <strong>Gobernanza SR 11-7 de la Reserva Federal:</strong><br/>
-                        Exige validación independiente periódica, pruebas de estrés y monitoreo de estabilidad poblacional.
+                        Variables neutrales con sesgo discriminatorio injustificado son multadas.<br/><br/>
+                        <strong>Gobernanza SR 11-7:</strong><br/>
+                        Validación independiente y auditoría obligatoria de modelos de riesgo.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Cumplimiento Legal:</strong><br/>
+                        El filtro por <em>"Sector Agroexportación"</em> es legal y válido bajo ECOA porque mide riesgo económico y solvencia demostrable, no características personales protegidas.
                     </div>
                 </div>
             </div>
@@ -684,10 +748,13 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                     </div>
                     <div class="concept-text">
                         • <strong>0 (Normal):</strong> 0 a 8 días de atraso.<br/>
-                        • <strong>1 (CPP):</strong> 9 a 30 días de mora (Problemas Potenciales).<br/>
+                        • <strong>1 (CPP):</strong> 9 a 30 días de mora.<br/>
                         • <strong>2 (Deficiente):</strong> 31 a 60 días.<br/>
                         • <strong>3 (Dudoso):</strong> 61 a 120 días.<br/>
                         • <strong>4 (Pérdida):</strong> &gt; 120 días / Cobranza judicial / Quiebra.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo:</strong> Fundo que pierde su cosecha pasa directo a Deficiente/Dudoso al mes de atraso.
                     </div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--amber);">
@@ -697,7 +764,10 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                     </div>
                     <div class="concept-text">
                         <strong>¿Cómo opera en el Perú?:</strong><br/>
-                        Si una empresa deudora cae en categoría <em>Deficiente</em> o <em>Dudoso</em> en cualquier banco del sistema financiero (ej. BCP, BBVA o Interbank), <strong>todas sus operaciones comerciales y facturas en EFIDE / Factoring se degradan automáticamente</strong> a esa misma categoría de riesgo.
+                        Si una empresa cae en <em>Deficiente</em> en cualquier banco (ej. BCP o Agrobanco), <strong>todas sus facturas en EFIDE se degradan automáticamente</strong> a esa misma categoría de riesgo.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Cross-Default:</strong> Mora en pagaré agrícola arrastra las facturas comerciales cedidas al 100%.
                     </div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--sky);">
@@ -709,7 +779,10 @@ Provisión = EAD &times; PD &times; LGD
                         </div>
                     </div>
                     <div class="concept-text">
-                        Las tasas de provisión obligatoria van desde 0.70% (Normal) hasta 100.0% (Pérdida sin garantía), afectando directamente el patrimonio y la utilidad neta de la entidad financiera.
+                        Provisiones mínimas obligatorias (0.70% a 100.0%) que castigan directamente el patrimonio y la utilidad de EFIDE.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Provisión:</strong> Factura de S/ 500k en Pérdida sin garantía exige provisionar S/ 500k de capital neto.
                     </div>
                 </div>
             </div>
@@ -719,9 +792,7 @@ Provisión = EAD &times; PD &times; LGD
                     <span class="concept-badge purple">Requisitos de Modelos Internos SBS (Res. 3780-2011 &amp; Circular G-140-2009)</span>
                 </div>
                 <div class="concept-text">
-                    • <strong>Historial Mínimo:</strong> Mínimo 5 a 7 años de datos históricos continuos para capturar ciclos económicos de auge y recesión.<br/>
-                    • <strong>Stress Testing:</strong> Simulaciones obligatorias de resistencia ante shocks macroeconómicos (devaluación, caída de PBI).<br/>
-                    • <strong>Derecho a la Explicabilidad:</strong> Todo cliente tiene derecho a conocer las razones técnicas de su evaluación crediticia.
+                    • <strong>Historial Mínimo:</strong> 5 a 7 años continuos &bull; <strong>Stress Testing Climático:</strong> Simulaciones de choque ante Fenómenos de El Niño severos &bull; <strong>Explicabilidad:</strong> Transparencia total ante la SBS.
                 </div>
             </div>
             
@@ -752,11 +823,13 @@ PD_stressed (q=0.999) = &Phi;( [ &Phi;^(-1)(PD) + &radic;&rho; &times; &Phi;^(-1
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué significa conceptualmente?:</strong><br/>
-                        • El valor de los activos de cada empresa $A_i$ depende de dos factores:<br/>
-                        &nbsp;&nbsp;1. $Z$: El estado de la economía general del país (factor común que afecta a todos).<br/>
-                        &nbsp;&nbsp;2. $\epsilon_i$: La gestión interna propia de la empresa (factor idiosincrático individual).<br/>
-                        • $ho$ es la <strong>correlación de activos</strong> entre empresas.<br/>
-                        • <strong>PD Stressed (99.9%):</strong> Calcula la probabilidad de default en el peor año macroeconómico imaginable (un escenario que ocurre 1 vez cada 1000 años).
+                        • $Z$: Estado macroeconómico general del país.<br/>
+                        • $\epsilon_i$: Gestión interna de la empresa.<br/>
+                        • $ho$: Correlación de activos sectorial.<br/>
+                        • <strong>PD Stressed (99.9%):</strong> Probabilidad de default en el peor año macroeconómico imaginable (1 vez cada 1000 años).
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo Shock Climático:</strong> Un Niño extraordinario genera $Z = -2.33$, disparando la correlación sectorial agrícola al 24% y elevando la PD Stressed de la cartera al 48%.
                     </div>
                 </div>
                 <div class="card spec-box">
@@ -770,9 +843,12 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         </div>
                     </div>
                     <div class="concept-text">
-                        <strong>¿Qué diferencia hay entre EL y K?:</strong><br/>
-                        • <strong>Pérdida Esperada (EL):</strong> Es el costo normal de hacer negocios en crédito; se cubre mensualmente con <strong>provisiones contables contra utilidades</strong>.<br/>
-                        • <strong>Capital de Solvencia ($K$):</strong> Es el <strong>colchón de patrimonio neto</strong> que los accionistas deben inmovilizar para absorber pérdidas inesperadas en crisis financieras severas sin quebrar la institución.
+                        <strong>Diferencia entre EL y K:</strong><br/>
+                        • <strong>Pérdida Esperada (EL):</strong> Costo operativo cubierto con provisiones contables mensuales.<br/>
+                        • <strong>Capital de Solvencia ($K$):</strong> Colchón de patrimonio propio para absorber crisis catastróficas sin quebrar.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo de Solvencia:</strong> Ante el shock de El Niño, EFIDE debe incrementar su Capital Regulatorio $K$ de 8% a 14.2% sobre la cartera expuesta al norte del país.
                     </div>
                 </div>
             </div>
@@ -783,7 +859,7 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                     <span class="spec-title">Evolución Temporal de Calificaciones Crediticias</span>
                 </div>
                 <div class="concept-text">
-                    El vector de distribución de riesgo de la cartera evoluciona como: $oldsymbol{\pi}_{t+1} = oldsymbol{\pi}_t 	imes \mathbf{P}$, donde $\mathbf{P}$ es la matriz de migración crediticia con la categoría <em>Pérdida</em> como estado absorbente ($P_{55} = 1.0$), permitiendo proyectar el flujo futuro de provisiones.
+                    $oldsymbol{\pi}_{t+1} = oldsymbol{\pi}_t 	imes \mathbf{P}$, donde $\mathbf{P}$ es la matriz de migración crediticia con la categoría <em>Pérdida</em> como estado absorbente ($P_{55} = 1.0$).
                 </div>
             </div>
             
@@ -809,9 +885,10 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         <div class="formula-box green">KS = sup_s |F_Bad(s) - F_Good(s)|</div>
                     </div>
                     <div class="concept-text">
-                        <strong>Umbral Regulatorio: $KS \ge 40\%$</strong><br/>
-                        Mide la <strong>máxima distancia vertical</strong> entre la curva acumulada de buenos y malos. Es el "bisturí" que determina el punto de corte óptimo de aprobación.
+                        <strong>Umbral: $KS \ge 40\%$</strong><br/>
+                        Máxima separación vertical entre la curva de buenos y malos. Es el "bisturí" de corte.
                     </div>
+                    <div class="example-box"><strong>🌾 $KS = 48.2\%$</strong> en la cartera de factoring.</div>
                 </div>
                 <div class="card spec-box">
                     <div>
@@ -820,9 +897,10 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         <div class="formula-box">Gini = 2 &times; AUC - 1</div>
                     </div>
                     <div class="concept-text">
-                        <strong>Umbral: $	ext{Gini} \ge 60\%$ (AUC $\ge 0.80$)</strong><br/>
-                        Representa la probabilidad de que un cliente moroso reciba un puntaje de riesgo inferior al de un cliente cumplidor seleccionado al azar.
+                        <strong>Umbral: $	ext{Gini} \ge 60\%$ ($	ext{AUC} \ge 0.80$)</strong><br/>
+                        Probabilidad de que un cliente moroso reciba menor score que un solvente.
                     </div>
+                    <div class="example-box"><strong>🌾 $	ext{Gini} = 68.5\%$</strong> de alta precisión.</div>
                 </div>
                 <div class="card spec-box">
                     <div>
@@ -832,8 +910,9 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                     </div>
                     <div class="concept-text">
                         <strong>Umbral: $p	ext{-value} > 0.05$</strong><br/>
-                        Prueba que la Probabilidad de Default estimada por la regresión coincide exactamente con la morosidad real observada en cada decil de la cartera.
+                        Prueba que la PD estimada coincide con la mora real observada por decil.
                     </div>
+                    <div class="example-box"><strong>🌾 $p = 0.42$</strong> (Ajuste impecable).</div>
                 </div>
                 <div class="card spec-box">
                     <div>
@@ -843,8 +922,9 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                     </div>
                     <div class="concept-text">
                         <strong>Umbral: $	ext{PSI} < 0.10$</strong><br/>
-                        Monitorea mensualmente si la población de solicitantes actuales cambió respecto a la muestra histórica con la que se entrenó el modelo.
+                        Monitorea mensualmente si la población actual cambió respecto a la histórica.
                     </div>
+                    <div class="example-box"><strong>🌾 $	ext{PSI} = 0.28$ (Alerta FEN):</strong> Avalancha de solicitudes del agro.</div>
                 </div>
             </div>
 
@@ -853,9 +933,7 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                     <span class="concept-badge green">Protocolo de Recalibración Automatizada ante Alertas de Drift</span>
                 </div>
                 <div class="concept-text">
-                    • <strong>$	ext{PSI} < 0.10$:</strong> Población Estable $ightarrow$ Operación Normal sin cambios.<br/>
-                    • <strong>$0.10 \le 	ext{PSI} < 0.25$:</strong> Alerta Amarilla de Drift $ightarrow$ Auditoría quincenal y monitoreo de aprobaciones.<br/>
-                    • <strong>$	ext{PSI} \ge 0.25$:</strong> Alerta Roja de Inestabilidad $ightarrow$ <strong>Recalibración obligatoria inmediata</strong> de coeficientes $eta$ y puntos del Scorecard.
+                    • <strong>$	ext{PSI} < 0.10$:</strong> Población Estable &bull; <strong>$0.10 \le 	ext{PSI} < 0.25$:</strong> Alerta Amarilla de Drift &bull; <strong>$	ext{PSI} \ge 0.25$:</strong> Alerta Roja (Recalibración obligatoria y contención de líneas agrícolas).
                 </div>
             </div>
             
@@ -886,8 +964,10 @@ h_i = &part;&sup2;l / &part;y_hat&sup2; = p_i(1 - p_i) (Curvatura / Certidumbre)
                     </div>
                     <div class="concept-text">
                         <strong>¿Qué hace conceptualmente?:</strong><br/>
-                        • En lugar de usar solo el gradiente (hacia dónde se equivocó el modelo anterior), XGBoost calcula también la segunda derivada (Hessiana $h_i$), midiendo <strong>cuánta curvatura o certidumbre tiene el error</strong>.<br/>
-                        • Esto permite ajustar árboles extremadamente rápidos con pasos de convergencia exactos.
+                        • Calcula la 1ra derivada ($g_i$) y 2da derivada ($h_i$), midiendo dirección y certidumbre del error para converger rápidamente.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo:</strong> XGBoost detecta patrones no lineales sutiles como: <code>Si Sector=Agro &amp; Días_Lluvia &gt; 20 &amp; Caja &lt; S/50k &rarr; PD = 92%</code>.
                     </div>
                 </div>
                 <div class="card spec-box">
@@ -902,8 +982,10 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
                     </div>
                     <div class="concept-text">
                         <strong>¿Cómo decide cada división?:</strong><br/>
-                        • Calcula la ganancia analítica de dividir una rama en izquierda ($L$) y derecha ($R$).<br/>
-                        • Si la ganancia neta supera el costo de complejidad $\gamma$, el árbol se divide; si no, se poda automáticamente evitando sobreajuste.
+                        • Divide las ramas evaluando la reducción neta de pérdida contra la penalización de complejidad $\gamma$.
+                    </div>
+                    <div class="example-box">
+                        <strong>🌾 Ejemplo:</strong> Poda ramas innecesarias para no sobreajustar a empresas agroexportadoras atípicas.
                     </div>
                 </div>
             </div>
@@ -913,8 +995,8 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
                     <span class="concept-badge purple">¿Por qué la Banca no usa XGBoost para Originación Directa? (El Dilema de TreeSHAP)</span>
                 </div>
                 <div class="concept-text">
-                    • Aunque algoritmos como <strong>TreeSHAP $\mathcal{O}(T 	imes L 	imes D^2)$</strong> permiten aproximar la importancia de variables, calcular las interacciones no lineales entre cientos de árboles es computacionalmente costoso y <strong>genera explicaciones inestables</strong> que varían con pequeñas perturbaciones.<br/>
-                    • El <strong>Scorecard Logit-WoE</strong> garantiza <strong>puntos fijos e inmutables</strong>, siendo el único estándar 100% auditable por reguladores bancarios y comités de crédito.
+                    • <strong>TreeSHAP $\mathcal{O}(T 	imes L 	imes D^2)$</strong> aproxima la importancia de variables, pero las interacciones no lineales generan explicaciones inestables.<br/>
+                    • El <strong>Scorecard Logit-WoE</strong> garantiza <strong>puntos fijos, auditables e inmutables</strong> requeridos por la SBS y el FCRA.
                 </div>
             </div>
             
@@ -942,6 +1024,7 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
                     <div class="concept-text">
                         Optimal Binning basado en <strong>Programación Lineal (MILP / Google OR-Tools)</strong>. Garantiza monotonicidad estricta y exporta tablas FICO aditivas completas.
                     </div>
+                    <div class="example-box"><strong>🌾 Ideal para:</strong> Binning monótono de variables climáticas del FEN.</div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
                     <div>
@@ -952,6 +1035,7 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
                     <div class="concept-text">
                         Port directo del ecosistema R a Python. Incluye filtros automáticos de $IV$, regresión stepwise, curvas ROC, KS y reportes de PSI en un solo comando.
                     </div>
+                    <div class="example-box"><strong>🌾 Ideal para:</strong> Auditorías rápidas de carteras comerciales.</div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--purple);">
                     <div>
@@ -962,6 +1046,7 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
                     <div class="concept-text">
                         Creado directamente por el banco global <strong>ING</strong>. Integración nativa con <em>Scikit-Learn Pipelines</em> para auditoría regulatoria de Basilea III.
                     </div>
+                    <div class="example-box"><strong>🌾 Ideal para:</strong> Integración CI/CD bancaria.</div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--amber);">
                     <div>
@@ -972,6 +1057,7 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
                     <div class="concept-text">
                         Motor de originación masiva programado en <strong>Cython/C++</strong> para evaluación en streaming de millones de solicitudes por segundo.
                     </div>
+                    <div class="example-box"><strong>🌾 Ideal para:</strong> Scoring masivo de miles de facturas/segundo.</div>
                 </div>
             </div>
 
@@ -982,7 +1068,7 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
 from optbinning import BinningProcess, Scorecard
 from sklearn.linear_model import LogisticRegression
 
-# 1. Pipeline de Coarse Classing Monótono + Regresión Logística
+# 1. Pipeline de Coarse Classing Monótono + Regresión Logística (Incluye Sector_Agro_FEN)
 binning_proc = BinningProcess(variable_names=features, max_n_bins=5, monotonic_trend="auto")
 scorecard = Scorecard(binning_process=binning_proc, estimator=LogisticRegression(penalty='l2', C=1.0),
                       scaling_method="min_max", pdo=20, target_score=600, target_odds=50)
@@ -1019,6 +1105,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                         Los datos de facturas y deudores se desencriptan exclusivamente dentro de la <strong>memoria RAM volátil del procesador</strong> mediante claves efímeras de AWS KMS.<br/><br/>
                         <strong>Cero Filtraciones:</strong> El disco duro jamás almacena información financiera en texto plano.
                     </div>
+                    <div class="example-box"><strong>🌾 Protección:</strong> RUCs y facturas de clientes agrícolas quedan 100% blindados contra fugas de datos.</div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--emerald);">
                     <div>
@@ -1030,6 +1117,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                         La evaluación del Score ($\sum 	ext{Points}_{j,i}$) se ejecuta como un producto punto de instrucciones vectoriales SIMD en microservicios Rust/C++.<br/><br/>
                         <strong>Latencia:</strong> Tiempo de respuesta P99 $< 12	ext{ ms}$ por RUC consultado.
                     </div>
+                    <div class="example-box"><strong>🌾 Escala:</strong> Evaluación instantánea de lotes de 10,000 facturas agrícolas en campañas de cosecha.</div>
                 </div>
                 <div class="card spec-box" style="border-top: 4px solid var(--purple);">
                     <div>
@@ -1041,6 +1129,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                         El sistema calcula el Population Stability Index en tiempo real con cada lote de consultas.<br/><br/>
                         <strong>Alerta Temprana:</strong> Si el $	ext{PSI} \ge 0.10$, se emite una notificación preventiva al Chief Risk Officer antes de que aumente la mora.
                     </div>
+                    <div class="example-box"><strong>🌾 Alerta FEN:</strong> Detecta el cambio en el perfil de solicitudes agrícolas antes de que venzan las facturas.</div>
                 </div>
             </div>
 
@@ -1076,7 +1165,7 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                         <span class="spec-title">Tratamiento de Información &amp; Monotonicidad</span>
                     </div>
                     <div class="concept-text">
-                        <em>"No usamos variables continuas crudas ni asumimos relaciones lineales a ciegas: aplicamos <strong>Coarse Classing supervisado mediante optimización lineal entera mixta (MILP)</strong> asegurando <strong>monotonicidad estricta</strong> en las tasas de mora, y transformamos las variables a <strong>Weight of Evidence (WoE)</strong> derivado formalmente de la <strong>divergencia de Kullback-Leibler</strong>, filtrando con <strong>Information Value ($IV \ge 0.10$)</strong> y controlando colinealidad con <strong>$VIF < 2.5$</strong>."</em>
+                        <em>"No usamos variables continuas crudas ni asumimos relaciones lineales a ciegas: aplicamos <strong>Coarse Classing supervisado mediante optimización lineal entera mixta (MILP)</strong> asegurando <strong>monotonicidad estricta</strong> en las tasas de mora, y transformamos las variables a <strong>Weight of Evidence (WoE)</strong> derivado formalmente de la <strong>divergencia de Kullback-Leibler</strong>, filtrando con <strong>Information Value ($IV \ge 0.10$)</strong> y controlando colinealidad con <strong>$VIF < 2.5$</strong> (ej. penalizando formalmente el riesgo del sector agroindustrial ante El Niño)."</em>
                     </div>
                 </div>
                 <div class="card spec-box" style="border-left: 4px solid var(--emerald);">
