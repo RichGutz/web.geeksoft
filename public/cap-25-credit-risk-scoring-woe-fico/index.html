@@ -39,9 +39,9 @@
             --text-dark:   #0F172A;
             --text-body:   #334155;
             --text-muted:  #64748B;
-            --border:      rgba(15,23,42,0.10);
-            --shadow-card: 0 4px 16px rgba(15,23,42,0.06), 0 1px 3px rgba(15,23,42,0.04);
-            --shadow-lg:   0 12px 36px rgba(15,23,42,0.12);
+            --border:      rgba(15,23,42,0.12);
+            --shadow-card: 0 4px 20px rgba(15,23,42,0.07), 0 1px 3px rgba(15,23,42,0.04);
+            --shadow-lg:   0 14px 38px rgba(15,23,42,0.14);
         }
 
         html, body {
@@ -58,7 +58,7 @@
             position: absolute; inset: 0;
             display: flex; flex-direction: column;
             justify-content: flex-start; align-items: center;
-            padding: 16px 36px 54px;
+            padding: 22px 48px 64px;
             opacity: 0; pointer-events: none;
             transition: opacity 0.3s ease, transform 0.3s ease;
             transform: translateX(40px);
@@ -68,46 +68,46 @@
         .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
 
         .slide-header {
-            width: 100%; max-width: 1400px; text-align: center;
+            width: 100%; max-width: 1540px; text-align: center;
             display: flex; flex-direction: column; align-items: center;
-            margin-bottom: 12px; flex-shrink: 0;
+            margin-bottom: 16px; flex-shrink: 0;
         }
 
         nav {
-            position: fixed; bottom: 10px; left: 50%;
+            position: fixed; bottom: 12px; left: 50%;
             transform: translateX(-50%);
-            display: flex; align-items: center; gap: 10px; z-index: 999;
-            background: rgba(15, 23, 42, 0.92);
+            display: flex; align-items: center; gap: 12px; z-index: 999;
+            background: rgba(15, 23, 42, 0.94);
             backdrop-filter: blur(16px);
-            padding: 4px 14px; border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            padding: 6px 16px; border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
         .nbtn {
-            width: 32px; height: 32px; border-radius: 50%;
+            width: 34px; height: 34px; border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1); color: #FFFFFF; font-size: 14px;
+            background: rgba(255, 255, 255, 0.12); color: #FFFFFF; font-size: 15px;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             transition: all 0.2s;
         }
         .nbtn:hover { background: var(--sky); border-color: var(--sky); transform: scale(1.08); }
         .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
         #counter {
-            font-size: 11px; color: #94A3B8;
-            font-family: 'JetBrains Mono', monospace; min-width: 80px; text-align: center; font-weight: 800;
+            font-size: 12px; color: #94A3B8;
+            font-family: 'JetBrains Mono', monospace; min-width: 85px; text-align: center; font-weight: 800;
         }
 
         .tag {
-            font-size: 10px; font-weight: 800; letter-spacing: 1.8px;
-            text-transform: uppercase; color: var(--sky); margin-bottom: 2px;
-            display: inline-flex; align-items: center; gap: 5px;
-            background: rgba(2,132,199,0.08); padding: 2px 10px; border-radius: 20px;
-            border: 1px solid rgba(2,132,199,0.2);
+            font-size: 11px; font-weight: 800; letter-spacing: 1.8px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 4px;
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(2,132,199,0.08); padding: 3px 12px; border-radius: 20px;
+            border: 1px solid rgba(2,132,199,0.22);
         }
 
-        h1 { font-size: clamp(1.5rem, 2.0vw, 1.95rem); font-weight: 900; line-height: 1.18; color: var(--navy); text-align: center; margin-bottom: 2px; }
-        h2 { font-size: clamp(1.2rem, 1.6vw, 1.55rem); font-weight: 900; line-height: 1.18; color: var(--navy); text-align: center; margin-bottom: 2px; }
-        .sub { font-size: clamp(0.80rem, 0.92vw, 0.88rem); color: var(--text-muted); font-weight: 400; text-align: center; max-width: 1200px; line-height: 1.35; }
+        h1 { font-size: clamp(1.75rem, 2.3vw, 2.35rem); font-weight: 900; line-height: 1.2; color: var(--navy); text-align: center; margin-bottom: 4px; }
+        h2 { font-size: clamp(1.4rem, 1.85vw, 1.85rem); font-weight: 900; line-height: 1.2; color: var(--navy); text-align: center; margin-bottom: 4px; }
+        .sub { font-size: clamp(0.92rem, 1.05vw, 1.05rem); color: var(--text-muted); font-weight: 400; text-align: center; max-width: 1350px; line-height: 1.42; }
         
         .hi   { color: var(--sky); }
         .hi-b { color: var(--emerald); }
@@ -117,50 +117,54 @@
         .mono { font-family: 'JetBrains Mono', monospace; }
 
         .content-container {
-            width: 100%; max-width: 1400px;
-            display: flex; flex-direction: column; gap: 10px;
-            flex: 1; justify-content: flex-start;
+            width: 100%; max-width: 1540px;
+            display: flex; flex-direction: column; gap: 14px;
+            flex: 1; justify-content: space-between;
+            min-height: 0;
         }
 
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; flex: 1; align-items: stretch; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; flex: 1; align-items: stretch; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; flex: 1; align-items: stretch; }
 
         .card {
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 10px; box-shadow: var(--shadow-card);
-            display: flex; flex-direction: column; gap: 8px;
-            padding: 12px 14px; text-align: left;
+            border-radius: 12px; box-shadow: var(--shadow-card);
+            display: flex; flex-direction: column; gap: 12px;
+            padding: 20px 22px; text-align: left;
+            height: 100%; justify-content: space-between;
             transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
         }
         .card:hover { border-color: var(--sky-brd); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
         .card-header-bar {
-            display: flex; align-items: center; justify-content: space-between; gap: 6px;
-            padding-bottom: 6px; border-bottom: 1px solid rgba(15,23,42,0.06);
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            padding-bottom: 8px; border-bottom: 1px solid rgba(15,23,42,0.08);
+            flex-shrink: 0;
         }
         .card-title {
-            font-size: 13px; font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 6px;
+            font-size: 16.5px; font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 8px;
         }
-        .card-icon { font-size: 16px; }
+        .card-icon { font-size: 20px; }
 
         .concept-badge {
-            font-size: 8.5px; font-weight: 800; text-transform: uppercase;
-            padding: 2px 7px; border-radius: 4px; background: rgba(2,132,199,0.10); color: var(--sky);
+            font-size: 10.5px; font-weight: 800; text-transform: uppercase;
+            padding: 3px 9px; border-radius: 5px; background: rgba(2,132,199,0.12); color: var(--sky);
             display: inline-block; width: fit-content;
         }
-        .concept-badge.green  { background: rgba(5,150,105,0.10); color: var(--emerald); }
-        .concept-badge.purple { background: rgba(124,58,237,0.10); color: var(--purple); }
-        .concept-badge.amber  { background: rgba(217,119,6,0.10); color: var(--amber); }
+        .concept-badge.green  { background: rgba(5,150,105,0.12); color: var(--emerald); }
+        .concept-badge.purple { background: rgba(124,58,237,0.12); color: var(--purple); }
+        .concept-badge.amber  { background: rgba(217,119,6,0.12); color: var(--amber); }
 
         .desc-text {
-            font-size: 11.2px; color: var(--text-body); line-height: 1.45; text-align: left;
+            font-size: 14px; color: var(--text-body); line-height: 1.55; text-align: left;
         }
 
         .formula-box {
             background: #0F172A; color: #38BDF8; font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px; padding: 8px 12px; border-radius: 6px; line-height: 1.45;
-            border-left: 3px solid var(--sky); margin: 2px 0; overflow-x: auto; text-align: left;
+            font-size: 13.5px; padding: 11px 15px; border-radius: 8px; line-height: 1.52;
+            border-left: 4px solid var(--sky); margin: 2px 0; overflow-x: auto; text-align: left;
+            flex-shrink: 0;
         }
         .formula-box.green  { color: #34D399; border-left-color: var(--emerald); }
         .formula-box.purple { color: #C084FC; border-left-color: var(--purple); }
@@ -168,42 +172,44 @@
         .formula-box.red    { color: #FB7185; border-left-color: var(--red); }
 
         .concept-box {
-            background: #F8FAFC; border: 1px solid rgba(15,23,42,0.06); border-radius: 6px;
-            padding: 8px 11px; font-size: 11.2px; color: #334155; line-height: 1.45; text-align: left;
+            background: #F8FAFC; border: 1px solid rgba(15,23,42,0.08); border-radius: 8px;
+            padding: 12px 15px; font-size: 13.5px; color: #334155; line-height: 1.55; text-align: left;
+            flex: 1; display: flex; flex-direction: column; justify-content: center;
         }
         .concept-box strong { color: var(--navy); }
 
         .example-box {
-            background: #FFFBEB; border: 1px solid rgba(217,119,6,0.22); border-left: 3px solid var(--amber);
-            border-radius: 6px; padding: 7px 10px; font-size: 10.8px; color: #92400E; line-height: 1.42;
-            text-align: left;
+            background: #FFFBEB; border: 1px solid rgba(217,119,6,0.25); border-left: 4px solid var(--amber);
+            border-radius: 8px; padding: 11px 14px; font-size: 13px; color: #92400E; line-height: 1.5;
+            text-align: left; flex-shrink: 0;
         }
         .example-box strong { color: #78350F; }
 
-        .table-wrap {
-            width: 100%; max-width: 1400px; background: #ffffff;
-            border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-            box-shadow: var(--shadow-card);
+        .glossary-bar {
+            background: #EEF2F6; border-radius: 8px; padding: 10px 16px;
+            font-size: 12.8px; color: #0F172A; border-left: 5px solid var(--sky);
+            text-align: left; line-height: 1.5; margin-top: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            width: 100%; flex-shrink: 0;
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 10.2px; }
-        th { background: #0F172A; color: #ffffff; padding: 6px 10px; font-weight: 700; letter-spacing: 0.3px; }
-        td { padding: 5px 10px; border-bottom: 1px solid #f1f5f9; color: var(--text-dark); }
+        .glossary-bar strong { color: var(--navy); font-weight: 800; }
+
+        .table-wrap {
+            width: 100%; max-width: 1540px; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+            box-shadow: var(--shadow-card); flex: 1; display: flex; flex-direction: column;
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; height: 100%; }
+        th { background: #0F172A; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.3px; font-size: 13.5px; }
+        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text-dark); line-height: 1.48; }
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) { background: #f8fafc; }
 
         .footnote {
-            margin-top: 8px; font-size: 9.5px; color: #64748B;
-            line-height: 1.35; width: 100%; max-width: 1400px; text-align: left;
-            border-top: 1px dashed #CBD5E1; padding-top: 4px;
-            display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;
+            margin-top: 6px; font-size: 11px; color: #64748B;
+            line-height: 1.35; width: 100%; max-width: 1540px; text-align: left;
+            border-top: 1px dashed #CBD5E1; padding-top: 5px;
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
         }
-        .footnote-row { display: flex; justify-content: space-between; align-items: center; }
-        .glossary-bar {
-            background: #F1F5F9; border-radius: 5px; padding: 4px 8px;
-            font-size: 9.2px; color: #1E293B; border-left: 3px solid var(--sky);
-            text-align: left; line-height: 1.35;
-        }
-        .glossary-bar strong { color: var(--navy); }
     </style>
 </head>
 <body>
@@ -276,11 +282,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>PD:</strong> Probabilidad de Default | <strong>WoE:</strong> Weight of Evidence | <strong>IRLS:</strong> Iteratively Reweighted Least Squares | <strong>FICO:</strong> Fair Isaac Corporation (Estándar de Calificación Crediticia) | <strong>SBS:</strong> Superintendencia de Banca y Seguros del Perú.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>PD:</strong> Probabilidad de Default | <strong>WoE:</strong> Weight of Evidence | <strong>IRLS:</strong> Iteratively Reweighted Least Squares | <strong>FICO:</strong> Fair Isaac Corporation (Estándar de Calificación Crediticia) | <strong>SBS:</strong> Superintendencia de Banca y Seguros del Perú.</div>
-                <div class="footnote-row"><span>GeekSoft Innovation Labs &bull; Nota Cuantitativa #165 &bull; EFIDE Risk Masterclass</span><span>Slide 1 / 15</span></div>
+                <span>GeekSoft Innovation Labs &bull; Nota Cuantitativa #165 &bull; EFIDE Risk Masterclass</span>
+                <span>Slide 1 / 15</span>
             </div>
         </div>
 
@@ -340,11 +350,15 @@ P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
                         </div>
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>$Y_i$:</strong> Variable binaria objetivo (1=Default, 0=Buen Pagador) | <strong>$	au_i$:</strong> Tiempo de primera parada (momento exacto del impago) | <strong>DPD:</strong> <em>Days Past Due</em> (Días de atraso en el pago) | <strong>$oldsymbol{\pi}_t$:</strong> Vector de distribución de estados de la cartera en el tiempo $t$ | <strong>Estado Absorbente:</strong> Condición irreversible en una cadena de Markov | <strong>Basilea III:</strong> Marco regulatorio bancario global.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>$Y_i$:</strong> Variable binaria objetivo (1=Default, 0=Buen Pagador) | <strong>$	au_i$:</strong> Tiempo de primera parada (momento exacto del impago) | <strong>DPD:</strong> <em>Days Past Due</em> (Días de atraso en el pago) | <strong>$oldsymbol{\pi}_t$:</strong> Vector de distribución de estados de la cartera en el tiempo $t$ | <strong>Estado Absorbente:</strong> Condición irreversible en una cadena de Markov | <strong>Basilea III:</strong> Marco regulatorio bancario global.</div>
-                <div class="footnote-row"><span>Superintendencia de Banca, Seguros y AFP (SBS Perú) &bull; Basilea III Capital Accord</span><span>Slide 2 / 15</span></div>
+                <span>Superintendencia de Banca, Seguros y AFP (SBS Perú) &bull; Basilea III Capital Accord</span>
+                <span>Slide 2 / 15</span>
             </div>
         </div>
 
@@ -408,11 +422,15 @@ P_absorbente: P_55 = P(PER | PER) = 1.0 (Estado de Default)
                         </div>
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>MILP:</strong> <em>Mixed Integer Linear Programming</em> (Programación Lineal Entera Mixta para optimización global de cortes) | <strong>Monotonicidad:</strong> Coherencia económica donde la tasa de mora evoluciona en una sola dirección continua | <strong>Fine Classing:</strong> Micro-segmentación inicial por cuantiles | <strong>Coarse Classing:</strong> Fusión supervisada final en 3-7 bins | <strong>Outlier:</strong> Valor atípico distorsionador.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>MILP:</strong> <em>Mixed Integer Linear Programming</em> (Programación Lineal Entera Mixta para optimización global de cortes) | <strong>Monotonicidad:</strong> Coherencia económica donde la tasa de mora evoluciona en una sola dirección continua | <strong>Fine Classing:</strong> Micro-segmentación inicial por cuantiles | <strong>Coarse Classing:</strong> Fusión supervisada final en 3-7 bins | <strong>Outlier:</strong> Valor atípico distorsionador.</div>
-                <div class="footnote-row"><span>OptBinning MILP Solver &bull; Guillermo Navas-Palencia (Constraint Monotonic Optimization)</span><span>Slide 3 / 15</span></div>
+                <span>OptBinning MILP Solver &bull; Guillermo Navas-Palencia (Constraint Monotonic Optimization)</span>
+                <span>Slide 3 / 15</span>
             </div>
         </div>
 
@@ -494,11 +512,15 @@ IV = D_KL(Goods || Bads) + D_KL(Bads || Goods) = &Sigma; (g_j - b_j) &times; WoE
                         </tbody>
                     </table>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>WoE:</strong> <em>Weight of Evidence</em> (Medida logarítmica de solvencia vs mora por intervalo) | <strong>IV:</strong> <em>Information Value</em> (Capacidad total de una variable para separar buenos de malos) | <strong>Divergencia Kullback-Leibler:</strong> Distancia relativa entre dos distribuciones estadísticas | <strong>Log-Odds:</strong> Logaritmo natural de la razón de probabilidades.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>WoE:</strong> <em>Weight of Evidence</em> (Medida logarítmica de solvencia vs mora por intervalo) | <strong>IV:</strong> <em>Information Value</em> (Capacidad total de una variable para separar buenos de malos) | <strong>Divergencia Kullback-Leibler:</strong> Distancia relativa entre dos distribuciones estadísticas | <strong>Log-Odds:</strong> Logaritmo natural de la razón de probabilidades.</div>
-                <div class="footnote-row"><span>Teoría de la Información (Shannon 1948, Kullback-Leibler 1951) &bull; Estándar FICO Global</span><span>Slide 4 / 15</span></div>
+                <span>Teoría de la Información (Shannon 1948, Kullback-Leibler 1951) &bull; Estándar FICO Global</span>
+                <span>Slide 4 / 15</span>
             </div>
         </div>
 
@@ -566,11 +588,15 @@ beta^(t+1) = (X' W_t X)^(-1) X' W_t z_t    donde z_t = X beta^(t) + W_t^(-1) (y 
                         • <strong>Test de Wald:</strong> $W_{	ext{Agro}} = (eta_{	ext{Agro}} / 	ext{SE})^2 = 38.4 \sim \chi^2(1)$ confirma significancia extrema ($p < 0.0001$) del factor climático.
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>MLE:</strong> <em>Maximum Likelihood Estimation</em> (Estimación de Máxima Verosimilitud) | <strong>IRLS:</strong> Mínimos Cuadrados Ponderados Iterativos | <strong>Gradiente:</strong> Vector de primeras derivadas (dirección de subida) | <strong>Hessiana:</strong> Matriz de segundas derivadas (curvatura) | <strong>Test de Wald:</strong> Prueba estadística para evaluar si un coeficiente es distinto de cero.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>MLE:</strong> <em>Maximum Likelihood Estimation</em> (Estimación de Máxima Verosimilitud) | <strong>IRLS:</strong> Mínimos Cuadrados Ponderados Iterativos | <strong>Gradiente:</strong> Vector de primeras derivadas (dirección de subida) | <strong>Hessiana:</strong> Matriz de segundas derivadas (curvatura) | <strong>Test de Wald:</strong> Prueba estadística para evaluar si un coeficiente es distinto de cero.</div>
-                <div class="footnote-row"><span>Scipy / Statsmodels &bull; Generalized Linear Models (GLM)</span><span>Slide 5 / 15</span></div>
+                <span>Scipy / Statsmodels &bull; Generalized Linear Models (GLM)</span>
+                <span>Slide 5 / 15</span>
             </div>
         </div>
 
@@ -636,11 +662,15 @@ Efecto Marginal: &part;p/&part;x_j = f(x'beta) &times; beta_j
                         • <strong>Certificación:</strong> Garantiza que el impacto del sector agroindustrial sea ortogonal e independiente del historial financiero previo.
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>ElasticNet:</strong> Híbrido de regularización Lasso (L1) y Ridge (L2) | <strong>Coordinate Descent:</strong> Algoritmo de optimización unidimensional iterativa | <strong>VIF:</strong> <em>Variance Inflation Factor</em> (Mide cuánto se infla la varianza por correlación entre variables) | <strong>Colas Pesadas:</strong> Mayor probabilidad de ocurrencia de eventos extremos de crisis.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>ElasticNet:</strong> Híbrido de regularización Lasso (L1) y Ridge (L2) | <strong>Coordinate Descent:</strong> Algoritmo de optimización unidimensional iterativa | <strong>VIF:</strong> <em>Variance Inflation Factor</em> (Mide cuánto se infla la varianza por correlación entre variables) | <strong>Colas Pesadas:</strong> Mayor probabilidad de ocurrencia de eventos extremos de crisis.</div>
-                <div class="footnote-row"><span>Friedman, Hastie &amp; Tibshirani (2010), Regularization Paths for GLMs</span><span>Slide 6 / 15</span></div>
+                <span>Friedman, Hastie &amp; Tibshirani (2010), Regularization Paths for GLMs</span>
+                <span>Slide 6 / 15</span>
             </div>
         </div>
 
@@ -720,11 +750,15 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                         </tbody>
                     </table>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>PDO:</strong> <em>Points to Double the Odds</em> (Puntos para duplicar la razón de solvencia) | <strong>Offset:</strong> Constante de escala de calibración | <strong>Scorecard Aditivo:</strong> Modelo donde el puntaje final es la suma algebraica de los puntos de cada variable | <strong>Odds:</strong> Razón de probabilidad de buen pagador vs mal pagador $(1-p)/p$.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>PDO:</strong> <em>Points to Double the Odds</em> (Puntos para duplicar la razón de solvencia) | <strong>Offset:</strong> Constante de escala de calibración | <strong>Scorecard Aditivo:</strong> Modelo donde el puntaje final es la suma algebraica de los puntos de cada variable | <strong>Odds:</strong> Razón de probabilidad de buen pagador vs mal pagador $(1-p)/p$.</div>
-                <div class="footnote-row"><span>Fair Isaac Corporation (FICO Scoring Standard) &bull; Circular SBS G-140-2009</span><span>Slide 7 / 15</span></div>
+                <span>Fair Isaac Corporation (FICO Scoring Standard) &bull; Circular SBS G-140-2009</span>
+                <span>Slide 7 / 15</span>
             </div>
         </div>
 
@@ -786,11 +820,15 @@ Points_j,i = [ (Offset/k) - Factor &times; (beta0/k) ] - Factor &times; beta_j &
                         <strong>1. Muestra Empírica Representativa:</strong> Datos históricos suficientes &bull; <strong>2. Metodología Científica:</strong> Regresión Logística / WoE &bull; <strong>3. Poder Separador Certificado:</strong> $KS \ge 40\%$ &bull; <strong>4. Validación Fuera de Muestra:</strong> Pruebas Out-of-Time (OOT) &bull; <strong>5. Monitoreo Activo:</strong> Control continuo de drift poblacional ($PSI < 0.10$).
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>FCRA:</strong> Ley de Informe Justo de Crédito | <strong>ECOA:</strong> Ley de Igualdad de Oportunidades en el Crédito | <strong>Adverse Action:</strong> Notificación formal obligatoria de rechazo o condiciones desfavorables | <strong>Reason Codes:</strong> Los 4 motivos numéricos que explican la denegación | <strong>SR 11-7:</strong> Guía de Gestión de Riesgo de Modelos de la FED.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>FCRA:</strong> Ley de Informe Justo de Crédito | <strong>ECOA:</strong> Ley de Igualdad de Oportunidades en el Crédito | <strong>Adverse Action:</strong> Notificación formal obligatoria de rechazo o condiciones desfavorables | <strong>Reason Codes:</strong> Los 4 motivos numéricos que explican la denegación | <strong>SR 11-7:</strong> Guía de Gestión de Riesgo de Modelos de la FED.</div>
-                <div class="footnote-row"><span>Consumer Financial Protection Bureau (CFPB) &bull; Federal Reserve Board &bull; OCC Standards</span><span>Slide 8 / 15</span></div>
+                <span>Consumer Financial Protection Bureau (CFPB) &bull; Federal Reserve Board &bull; OCC Standards</span>
+                <span>Slide 8 / 15</span>
             </div>
         </div>
 
@@ -861,11 +899,15 @@ Provisión = EAD &times; PD &times; LGD
                         • <strong>Historial Mínimo:</strong> 5 a 7 años continuos &bull; <strong>Stress Testing Climático:</strong> Simulaciones de choque ante Fenómenos de El Niño severos &bull; <strong>Explicabilidad:</strong> Transparencia total ante la SBS.
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>SBS:</strong> Superintendencia de Banca, Seguros y AFP | <strong>EAD:</strong> <em>Exposure at Default</em> (Saldo total expuesto al momento del incumplimiento) | <strong>LGD:</strong> <em>Loss Given Default</em> (Severidad o % de pérdida neta tras liquidar garantías) | <strong>Cross-Default:</strong> Regla de arrastre de mora entre entidades financieras peruanas.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>SBS:</strong> Superintendencia de Banca, Seguros y AFP | <strong>EAD:</strong> <em>Exposure at Default</em> (Saldo total expuesto al momento del incumplimiento) | <strong>LGD:</strong> <em>Loss Given Default</em> (Severidad o % de pérdida neta tras liquidar garantías) | <strong>Cross-Default:</strong> Regla de arrastre de mora entre entidades financieras peruanas.</div>
-                <div class="footnote-row"><span>Superintendencia de Banca, Seguros y AFP (SBS Perú) &bull; Reglamento de Gestión del Riesgo de Crédito</span><span>Slide 9 / 15</span></div>
+                <span>Superintendencia de Banca, Seguros y AFP (SBS Perú) &bull; Reglamento de Gestión del Riesgo de Crédito</span>
+                <span>Slide 9 / 15</span>
             </div>
         </div>
 
@@ -931,11 +973,15 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         $oldsymbol{\pi}_{t+1} = oldsymbol{\pi}_t 	imes \mathbf{P}$, donde $\mathbf{P}$ es la matriz de migración crediticia con la categoría <em>Pérdida</em> como estado absorbente ($P_{55} = 1.0$).
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>ASRF:</strong> <em>Asymptotic Single Risk Factor</em> (Modelo de Factor de Riesgo Único Asintótico de Vasicek) | <strong>Z:</strong> Factor macroeconómico común | <strong>$ho$:</strong> Correlación inter-empresas | <strong>EL:</strong> <em>Expected Loss</em> (Pérdida Esperada) | <strong>Capital K:</strong> Requerimiento de solvencia patrimonial para pérdidas inesperadas.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>ASRF:</strong> <em>Asymptotic Single Risk Factor</em> (Modelo de Factor de Riesgo Único Asintótico de Vasicek) | <strong>Z:</strong> Factor macroeconómico común | <strong>$ho$:</strong> Correlación inter-empresas | <strong>EL:</strong> <em>Expected Loss</em> (Pérdida Esperada) | <strong>Capital K:</strong> Requerimiento de solvencia patrimonial para pérdidas inesperadas.</div>
-                <div class="footnote-row"><span>Basilea II/III Comprehensive IRB Formula &bull; BCBS Working Paper 54</span><span>Slide 10 / 15</span></div>
+                <span>Basilea II/III Comprehensive IRB Formula &bull; BCBS Working Paper 54</span>
+                <span>Slide 10 / 15</span>
             </div>
         </div>
 
@@ -1011,11 +1057,15 @@ donde b(PD) = (0.11852 - 0.05478 &times; ln(PD))&sup2;
                         • <strong>$	ext{PSI} < 0.10$:</strong> Población Estable &bull; <strong>$0.10 \le 	ext{PSI} < 0.25$:</strong> Alerta Amarilla de Drift &bull; <strong>$	ext{PSI} \ge 0.25$:</strong> Alerta Roja (Recalibración obligatoria y contención de líneas agrícolas).
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>KS:</strong> Estadístico de Kolmogórov-Smirnov (Poder separador del punto de corte) | <strong>AUC/ROC:</strong> Área Bajo la Curva Característica Operativa | <strong>Gini:</strong> Coeficiente de concordancia de riesgo | <strong>PSI:</strong> <em>Population Stability Index</em> (Índice de estabilidad poblacional) | <strong>Hosmer-Lemeshow:</strong> Test de bondad de ajuste por deciles.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>KS:</strong> Estadístico de Kolmogórov-Smirnov (Poder separador del punto de corte) | <strong>AUC/ROC:</strong> Área Bajo la Curva Característica Operativa | <strong>Gini:</strong> Coeficiente de concordancia de riesgo | <strong>PSI:</strong> <em>Population Stability Index</em> (Índice de estabilidad poblacional) | <strong>Hosmer-Lemeshow:</strong> Test de bondad de ajuste por deciles.</div>
-                <div class="footnote-row"><span>Validación Independiente de Modelos de Riesgo &bull; Supervisory Guidance SR 11-7</span><span>Slide 11 / 15</span></div>
+                <span>Validación Independiente de Modelos de Riesgo &bull; Supervisory Guidance SR 11-7</span>
+                <span>Slide 11 / 15</span>
             </div>
         </div>
 
@@ -1078,11 +1128,15 @@ donde G_j = &Sigma;_(i in I_j) g_i ,  H_j = &Sigma;_(i in I_j) h_i
                         • El <strong>Scorecard Logit-WoE</strong> garantiza <strong>puntos fijos, auditables e inmutables</strong> requeridos por la SBS y el FCRA.
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>XGBoost:</strong> <em>Extreme Gradient Boosting</em> | <strong>$g_i$:</strong> Gradiente de primer orden | <strong>$h_i$:</strong> Hessiana de segundo orden | <strong>Split Gain:</strong> Ganancia de reducción de pérdida en un nodo | <strong>TreeSHAP:</strong> Algoritmo polinomial para cálculo de valores de Shapley en árboles.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>XGBoost:</strong> <em>Extreme Gradient Boosting</em> | <strong>$g_i$:</strong> Gradiente de primer orden | <strong>$h_i$:</strong> Hessiana de segundo orden | <strong>Split Gain:</strong> Ganancia de reducción de pérdida en un nodo | <strong>TreeSHAP:</strong> Algoritmo polinomial para cálculo de valores de Shapley en árboles.</div>
-                <div class="footnote-row"><span>Chen &amp; Guestrin (KDD 2016) &bull; Lundberg et al., Nature Machine Intelligence (2020)</span><span>Slide 12 / 15</span></div>
+                <span>Chen &amp; Guestrin (KDD 2016) &bull; Lundberg et al., Nature Machine Intelligence (2020)</span>
+                <span>Slide 12 / 15</span>
             </div>
         </div>
 
@@ -1164,11 +1218,15 @@ scorecard.fit(X_train, y_train)
 print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y variable
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>OptBinning:</strong> Framework de binning óptimo con Google OR-Tools | <strong>Scorecardpy:</strong> Biblioteca integral de minería crediticia | <strong>Toad:</strong> Framework de alta velocidad en Cython | <strong>Skorecard:</strong> Arquitectura de pipelines de Scikit-Learn desarrollada por ING Bank.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>OptBinning:</strong> Framework de binning óptimo con Google OR-Tools | <strong>Scorecardpy:</strong> Biblioteca integral de minería crediticia | <strong>Toad:</strong> Framework de alta velocidad en Cython | <strong>Skorecard:</strong> Arquitectura de pipelines de Scikit-Learn desarrollada por ING Bank.</div>
-                <div class="footnote-row"><span>GitHub: optbinning &bull; scorecardpy &bull; amphibian-dev/toad &bull; ing-bank/skorecard</span><span>Slide 13 / 15</span></div>
+                <span>GitHub: optbinning &bull; scorecardpy &bull; amphibian-dev/toad &bull; ing-bank/skorecard</span>
+                <span>Slide 13 / 15</span>
             </div>
         </div>
 
@@ -1233,11 +1291,15 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                         • <strong>Zero-Downtime Model Governance:</strong> Despliegue de nuevas versiones de Scorecard sin interrumpir el servicio bancario.
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>Confidential Computing:</strong> Cifrado de datos en uso dentro del CPU | <strong>SIMD:</strong> <em>Single Instruction Multiple Data</em> (Vectorización paralela en procesador) | <strong>Latencia P99:</strong> Tiempo en el que se atiende el 99% de las consultas más lentas | <strong>AWS KMS:</strong> Servicio de gestión de claves criptográficas.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>Confidential Computing:</strong> Cifrado de datos en uso dentro del CPU | <strong>SIMD:</strong> <em>Single Instruction Multiple Data</em> (Vectorización paralela en procesador) | <strong>Latencia P99:</strong> Tiempo en el que se atiende el 99% de las consultas más lentas | <strong>AWS KMS:</strong> Servicio de gestión de claves criptográficas.</div>
-                <div class="footnote-row"><span>Harvard MLSys Project &bull; APEFAC Confidential Risk Core Architecture</span><span>Slide 14 / 15</span></div>
+                <span>Harvard MLSys Project &bull; APEFAC Confidential Risk Core Architecture</span>
+                <span>Slide 14 / 15</span>
             </div>
         </div>
 
@@ -1293,11 +1355,15 @@ print(scorecard.table(style="detailed")) # Exporta puntos exactos por cada bin y
                         </div>
                     </div>
                 </div>
+
+                <div class="glossary-bar">
+                    <strong>🏷️ GLOSARIO CLAVE:</strong> <strong>Quality Gates:</strong> Criterios cuantitativos de aprobación de modelos | <strong>Reason Codes:</strong> Justificación legal de denegación crediticia | <strong>Confidential Enclaves:</strong> Procesamiento en memoria segura | <strong>Auditoría SBS:</strong> Validación formal de modelos de riesgo financiero.
+                </div>
             </div>
             
             <div class="footnote">
-                <div class="glossary-bar"><strong>🏷️ GLOSARIO CLAVE:</strong> <strong>Quality Gates:</strong> Criterios cuantitativos de aprobación de modelos | <strong>Reason Codes:</strong> Justificación legal de denegación crediticia | <strong>Confidential Enclaves:</strong> Procesamiento en memoria segura | <strong>Auditoría SBS:</strong> Validación formal de modelos de riesgo financiero.</div>
-                <div class="footnote-row"><span>GeekSoft Executive Risk Defense Framework &bull; Cero Humo &bull; 100% Rigor Institucional</span><span>Slide 15 / 15</span></div>
+                <span>GeekSoft Executive Risk Defense Framework &bull; Cero Humo &bull; 100% Rigor Institucional</span>
+                <span>Slide 15 / 15</span>
             </div>
         </div>
 
