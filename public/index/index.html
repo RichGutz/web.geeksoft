@@ -1,1175 +1,561 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enciclopedia & Hub de Ingeniería de Agentes de IA — GeekSoft Academy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flujogramas Maestros & Pseudocódigo del Motor | Dr. Cost Enterprise</title>
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
         }
-
-        :root {
-            --bg:          #F8FAFC;
-            --bg-card:     #FFFFFF;
-            --bg-subtle:   #F1F5F9;
-            --navy:        #0F172A;
-            --navy-mid:    #1E293B;
-            
-            --sky:         #0284C7;
-            --sky-dim:     rgba(2,132,199,0.08);
-            --sky-brd:     rgba(2,132,199,0.25);
-            
-            --emerald:     #059669;
-            --emerald-dim: rgba(5,150,105,0.08);
-            --emerald-brd: rgba(5,150,105,0.25);
-            
-            --purple:      #7C3AED;
-            --purple-dim:  rgba(124,58,237,0.08);
-            --purple-brd:  rgba(124,58,237,0.25);
-            
-            --amber:       #D97706;
-            --amber-dim:   rgba(217,119,6,0.08);
-            --amber-brd:   rgba(217,119,6,0.25);
-            
-            --text:        #0F172A;
-            --text-dim:    rgba(15,23,42,0.70);
-            --text-muted:  #64748B;
-            
-            --border:      #E2E8F0;
-            --border-wiki: #CBD5E1;
-            
-            --shadow-sm:   0 1px 3px rgba(15,23,42,0.06);
-            --shadow-md:   0 4px 14px rgba(15,23,42,0.08);
-            --shadow-lg:   0 10px 30px rgba(15,23,42,0.12);
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            padding: 0;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* ─── HEADER WIKIPEDIA / GEEKSOFT ─── */
-        .wiki-header {
-            background: #FFFFFF;
-            border-bottom: 1px solid var(--border);
-            padding: 12px 32px;
-            z-index: 100;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-shrink: 0;
-        }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .brand-logo-img {
-            height: 38px;
-            width: auto;
-            max-width: 160px;
-            object-fit: contain;
-        }
-        .brand-text h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--navy);
-            line-height: 1.2;
-        }
-        .brand-text p {
-            font-size: 11.5px;
-            color: var(--text-muted);
-        }
-
-        .header-search {
-            flex: 1;
-            max-width: 480px;
-            position: relative;
-        }
-        .search-input {
-            width: 100%;
-            padding: 8px 16px 8px 38px;
-            border-radius: 20px;
-            border: 1px solid var(--border-wiki);
-            background: var(--bg);
-            font-size: 13px;
-            font-family: 'Inter', sans-serif;
-            color: var(--navy);
-            outline: none;
-            transition: all 0.2s ease;
-        }
-        .search-input:focus {
-            background: #FFFFFF;
-            border-color: var(--sky);
-            box-shadow: 0 0 0 3px var(--sky-dim);
-        }
-        .search-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .badge-stat {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            background: var(--sky-dim);
-            color: var(--sky);
-            border: 1px solid var(--sky-brd);
-            padding: 4px 10px;
-            border-radius: 100px;
-        }
-
-        /* ─── LAYOUT 2 COLUMNAS (SIDEBAR ACORDEÓN + CUERPO ENFOCADO) ─── */
-        .wiki-container {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 360px 1fr;
-            overflow: hidden;
-            background: var(--bg);
-        }
-
-        /* ─── SIDEBAR: ACORDEÓN DE CAPÍTULOS Y CLASES ─── */
-        .wiki-sidebar {
-            background: #FFFFFF;
-            border-right: 1px solid var(--border);
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 16px 14px;
-        }
-
-        .sidebar-header {
-            padding: 4px 10px 10px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .sidebar-title {
-            font-size: 12.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--navy);
-        }
-        .sidebar-count {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--sky);
-            font-weight: 700;
-        }
-
-        /* Acordeón Simple y Minimalista Estilo Wikipedia */
-        .accordion-item {
-            border: none;
-            border-bottom: 1px solid #E2E8F0;
-            background: transparent;
-            margin-bottom: 0;
-            border-radius: 0;
-        }
-
-        .accordion-header {
-            padding: 10px 8px;
-            background: transparent;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            user-select: none;
-            transition: color 0.15s ease;
-        }
-        .accordion-header:hover {
-            background: #F8FAFC;
-        }
-        .accordion-item.active-chapter .accordion-header .acc-text {
-            color: var(--sky);
-            font-weight: 800;
-        }
-
-        .acc-title-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            min-width: 0;
-        }
-        .acc-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-muted);
-            width: auto;
-            height: auto;
-            background: transparent;
-            border: none;
-            display: inline;
-        }
-        .acc-text {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--navy);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .acc-arrow {
-            font-size: 10px;
-            color: var(--text-muted);
-            transition: transform 0.15s ease;
-            flex-shrink: 0;
-        }
-        .accordion-item.open .acc-arrow {
-            transform: rotate(90deg);
-            color: var(--navy);
-        }
-
-        .accordion-body {
-            display: none;
-            background: transparent;
-            border: none;
-            border-left: 2px solid #E2E8F0;
-            margin: 2px 0 10px 14px;
-            padding: 4px 0 6px 12px;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .accordion-item.open .accordion-body {
-            display: flex;
-        }
-
-        .acc-sub-item {
-            padding: 5px 6px;
-            border-radius: 4px;
-            font-size: 12px;
-            color: var(--text-dim);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.15s ease;
-            background: transparent;
-            border: none;
-        }
-        .acc-sub-item:hover {
-            color: var(--sky);
-            background: transparent;
-        }
-        .acc-sub-item.active-lesson {
-            color: var(--sky);
-            font-weight: 700;
-            background: transparent;
-            border: none;
-        }
-        .sub-bullet {
-            font-size: 10px;
-            color: var(--text-muted);
-            flex-shrink: 0;
-        }
-
-        /* ─── CUERPO PRINCIPAL ENFOCADO ─── */
-        .wiki-main {
-            overflow-y: auto;
-            padding: 28px 36px;
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
-
-        .chapter-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border-wiki);
-            border-radius: 12px;
-            padding: 28px 32px;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            animation: fadeIn 0.2s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .chapter-hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 18px;
-            gap: 20px;
-        }
-        .breadcrumb {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .breadcrumb strong {
-            color: var(--sky);
-        }
-        .hero-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--navy);
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-        }
-        .hero-subtitle {
-            font-size: 13.5px;
-            color: var(--text-dim);
-            margin-top: 4px;
-        }
-
-        .deck-launch-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--navy);
-            color: #FFFFFF;
-            text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 800;
-            padding: 12px 24px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            box-shadow: var(--shadow-md);
-            flex-shrink: 0;
-        }
-        .deck-launch-btn:hover {
-            background: var(--sky);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        .deck-launch-btn .play-icon {
-            font-size: 15px;
-            color: #38BDF8;
-        }
-
-        /* Secciones del Capítulo */
-        .grid-detail {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 20px;
-        }
-
-        .section-box {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 18px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .section-title {
-            font-size: 14px;
-            font-weight: 800;
-            color: var(--navy);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
-        }
-
-        /* Lista de Clases / Notas del Módulo */
-        .classes-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .class-row {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 10px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            transition: border-color 0.15s ease;
-        }
-        .class-row:hover {
-            border-color: var(--sky-brd);
-        }
-        .class-info h4 {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: var(--navy);
-        }
-        .class-info p {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-        .class-badge {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: var(--sky-dim);
-            color: var(--sky);
-            border: 1px solid var(--sky-brd);
-            white-space: nowrap;
-        }
-
-        /* Specs & Métricas */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .metric-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-        }
-        .metric-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--emerald);
-        }
-        .metric-lbl {
-            font-size: 10.5px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .summary-text {
-            font-size: 13px;
-            color: var(--text-dim);
-            line-height: 1.55;
-        }
-    </style>
+      }
+    }
+  </script>
 </head>
-<body>
+<body class="bg-[#f8fafc] text-slate-800 font-sans min-h-screen antialiased flex flex-col selection:bg-blue-600 selection:text-white">
 
-    <!-- HEADER WIKIPEDIA -->
-    <header class="wiki-header">
-        <div class="header-brand">
-            <img src="/images/Logo.Geeksoft.png" alt="GeekSoft Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='/images/CABEZA.GEEKSOFT_transparent.png';" />
-            <div class="brand-text">
-                <h1>GeekSoft AI Academy</h1>
-                <p>Enciclopedia & Hub de Ingeniería de Agentes 2026</p>
-            </div>
+  <!-- Top Navbar Compact Light -->
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold shadow-xs">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        </div>
+        <div>
+          <span class="font-display font-bold text-base tracking-tight text-slate-900 leading-none">Dr. Cost Enterprise</span>
+          <span class="text-[10px] text-blue-700 font-mono tracking-wide uppercase font-bold block mt-0.5">Metodología de Costeo Industrial & Pseudocódigo Formal · Dr. Estuardo Ramos</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 text-xs">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono font-bold text-[11px]">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          5 Flujogramas Inmutables Certificados
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    
+    <!-- Hero Compact (2 Filas: Título + Métricas) -->
+    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-blue-50 text-blue-800 text-[10px] font-mono font-bold border border-blue-200 mb-1.5">
+          ESTÁNDAR ORTOGONAL INMUTABLE (Graphviz rankdir=TB · splines=ortho)
+        </div>
+        <h1 class="text-2xl font-display font-extrabold text-slate-900 tracking-tight">
+          Índice Maestro de Flujogramas & Pseudocódigo del Motor
+        </h1>
+        <p class="text-xs text-slate-500 font-medium mt-0.5">
+          Formalización matemática de la lógica de absorción de los 3 elementos del costo (<strong class="text-slate-800">Materia Prima + Mano de Obra + CIF</strong>) e integración con el Plan Contable General Empresarial (PCGE).
+        </p>
+      </div>
+
+      <!-- Quick Metrics Grid in 1 Row -->
+      <div class="flex items-center gap-2 shrink-0">
+        <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
+          <div class="text-[9px] uppercase font-bold text-slate-500">Diagramas</div>
+          <div class="text-base font-bold font-mono text-blue-700">5 Visores</div>
+        </div>
+        <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
+          <div class="text-[9px] uppercase font-bold text-slate-500">Modelo BD</div>
+          <div class="text-base font-bold font-mono text-slate-900">67 Tablas</div>
+        </div>
+        <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
+          <div class="text-[9px] uppercase font-bold text-slate-500">Módulos</div>
+          <div class="text-base font-bold font-mono text-slate-900">01 al 07</div>
+        </div>
+        <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
+          <div class="text-[9px] uppercase font-bold text-slate-500">Balance PCGE</div>
+          <div class="text-base font-bold font-mono text-emerald-700">100% Cuadre</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 1: Grid de Exactamente 5 Cards Maestras (3 Columnas / 2 Filas) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <!-- Card 5: Pseudocódigo (Destacado en Col 1) -->
+      <div class="bg-white border-2 border-blue-500 rounded-xl p-4 space-y-3 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+              #05 · ALGORITMO
+            </span>
+            <span class="text-[10px] text-blue-600 font-mono font-bold">5 Pasos de Motor</span>
+          </div>
+          <div>
+            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
+              Pseudocódigo del Motor de Cálculo
+            </h2>
+            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
+              Lógica algorítmica de 5 fases: Precondiciones, Explosión BOM con mermas, Liquidación MOD HH, Absorción CIF por drivers, Divisor unitario $CU$ y Asientos PCGE.
+            </p>
+          </div>
+
+          <div class="p-2 bg-blue-50/70 rounded-lg border border-blue-200 text-[10px] font-mono space-y-0.5 text-slate-800">
+            <div><span class="text-blue-800 font-bold">1:</span> BOM Merma: $Q_{bruta} = Q_{neta} \cdot (1 + M)$</div>
+            <div><span class="text-blue-800 font-bold">2:</span> MOD: $Tarifa_{HH} = Planilla / HH$</div>
+            <div><span class="text-blue-800 font-bold">3:</span> CIF: $Tasa = Pool / Capacidad$</div>
+            <div><span class="text-blue-800 font-bold">4:</span> Costo Unitario: $CU = CTF / Q$</div>
+            <div><span class="text-blue-800 font-bold">5:</span> Asientos Diarios (Cta 21 / 71)</div>
+          </div>
         </div>
 
-        <div class="header-search">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="wiki-search" class="search-input" placeholder="Buscar módulo, concepto o herramienta (ej. MIFUNE, GraphRAG, Docker)...">
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+          <a
+            href="viewer_05.html"
+            target="_blank"
+            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-all shadow-2xs"
+          >
+            <span>Abrir Visor #05</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+          <a href="05_pseudocodigo_motor_calculo_costos.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
+        </div>
+      </div>
+
+      <!-- Card 1: Macro Arquitectura -->
+      <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 hover:border-blue-500/60 hover:shadow-md transition-all flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+              #01 · FULL STACK
+            </span>
+            <span class="text-[10px] text-slate-400 font-mono font-medium">4 Niveles</span>
+          </div>
+          <div>
+            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
+              Macro-Arquitectura Cloud & .NET
+            </h2>
+            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
+              Mapeo de binarios legacy CIL (.NET WinForms) hacia 67 tablas en Supabase y el frontend modular React 19 APEFAC.
+            </p>
+          </div>
+
+          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[10px] font-mono space-y-0.5 text-slate-700">
+            <div><span class="text-amber-700 font-bold">L1:</span> Legacy Core (.NET Binaries & SQL)</div>
+            <div><span class="text-blue-700 font-bold">L2:</span> Supabase Data Engine (67 Tablas)</div>
+            <div><span class="text-indigo-700 font-bold">L3:</span> TypeScript Service Layer</div>
+            <div><span class="text-purple-700 font-bold">L4:</span> Frontend Modular React 19</div>
+          </div>
         </div>
 
-        <div class="header-actions">
-            <span class="badge-stat">12 Capítulos</span>
-            <span class="badge-stat" style="color:var(--emerald); background:var(--emerald-dim); border-color:var(--emerald-brd);">12 Decks PPT 16:9</span>
-            <span class="badge-stat" style="color:var(--purple); background:var(--purple-dim); border-color:var(--purple-brd);">80+ Notas</span>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+          <a
+            href="viewer_01.html"
+            target="_blank"
+            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-xs transition-all shadow-2xs"
+          >
+            <span>Abrir Visor #01</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+          <a href="01_arquitectura_cloud_native_drcost.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
         </div>
-    </header>
+      </div>
 
-    <!-- CONTENEDOR PRINCIPAL: SIDEBAR ACORDEÓN + CUERPO DINÁMICO -->
-    <div class="wiki-container">
-        
-        <!-- SIDEBAR IZQUIERDO CON ACORDEÓN -->
-        <aside class="wiki-sidebar" id="sidebar-accordion">
-            
-            <div class="sidebar-header">
-                <span class="sidebar-title">Ejes del Programa</span>
-                <span class="sidebar-count">12 Capítulos</span>
-            </div>
+      <!-- Card 2: Motor Matemático -->
+      <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 hover:border-blue-500/60 hover:shadow-md transition-all flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+              #02 · FÓRMULAS
+            </span>
+            <span class="text-[10px] text-slate-400 font-mono font-medium">Cálculo CU</span>
+          </div>
+          <div>
+            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
+              Motor Matemático de Costeo
+            </h2>
+            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
+              Formulación de los 3 vectores ($MP + MOD + CIF$), matriz de absorción, evaluación de mermas y divisor unitario por lote.
+            </p>
+          </div>
 
-            <!-- Cap 01 -->
-            <div class="accordion-item open active-chapter" data-target="cap-01">
-                <div class="accordion-header" onclick="selectChapter('cap-01', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">01</span>
-                        <span class="acc-text">Sistemas Agénticos & Orquestación</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item active-lesson" onclick="selectLesson('cap-01', 0, event)"><span class="sub-bullet">├─</span> Multi-Agent SDLC & Canvas</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 1, event)"><span class="sub-bullet">├─</span> Anatomía del Directorio .claude</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 2, event)"><span class="sub-bullet">├─</span> Graph & Loop Engineering</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 3, event)"><span class="sub-bullet">└─</span> Patrones de Diseño Agéntico</div>
-                </div>
-            </div>
+          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[10px] font-mono space-y-0.5 text-slate-700">
+            <div><span class="text-emerald-700 font-bold">L1:</span> Vectores MD, MOD, CIF</div>
+            <div><span class="text-amber-700 font-bold">L2:</span> Convergencia en OP ($CTF$)</div>
+            <div><span class="text-purple-700 font-bold">L3:</span> Auditoría de Variaciones</div>
+            <div><span class="text-blue-700 font-bold">L4:</span> Costo Unitario Final ($S/ / UND$)</div>
+          </div>
+        </div>
 
-            <!-- Cap 02 -->
-            <div class="accordion-item" data-target="cap-02">
-                <div class="accordion-header" onclick="selectChapter('cap-02', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">02</span>
-                        <span class="acc-text">Sistemas RAG & Vector DBs</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 0, event)"><span class="sub-bullet">├─</span> GraphRAG vs Vector RAG vs Hybrid</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 1, event)"><span class="sub-bullet">├─</span> RAG Empresarial en AWS</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 2, event)"><span class="sub-bullet">├─</span> Corrective RAG (CRAG) & LangGraph</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 3, event)"><span class="sub-bullet">├─</span> Graphify Knowledge Graph</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 4, event)"><span class="sub-bullet">└─</span> Utopia RAG Sandbox</div>
-                </div>
-            </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+          <a
+            href="viewer_02.html"
+            target="_blank"
+            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-xs transition-all shadow-2xs"
+          >
+            <span>Abrir Visor #02</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+          <a href="02_motor_matematico_costeo_industrial.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
+        </div>
+      </div>
 
-            <!-- Cap 03 -->
-            <div class="accordion-item" data-target="cap-03">
-                <div class="accordion-header" onclick="selectChapter('cap-03', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">03</span>
-                        <span class="acc-text">Vibe Coding & Asistentes Dev</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 0, event)"><span class="sub-bullet">├─</span> Spec Kit & Spec-Driven Prompting</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 1, event)"><span class="sub-bullet">├─</span> OmniRoute Local Gateway</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 2, event)"><span class="sub-bullet">└─</span> GenOffice Suite Agéntica</div>
-                </div>
-            </div>
+      <!-- Card 3: Gobernanza 7 Módulos -->
+      <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 hover:border-blue-500/60 hover:shadow-md transition-all flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+              #03 · CICLO PLANTA
+            </span>
+            <span class="text-[10px] text-slate-400 font-mono font-medium">Mod 01 al 07</span>
+          </div>
+          <div>
+            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
+              Gobernanza Operativa & Ciclo de Vida
+            </h2>
+            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
+              Secuencia obligatoria de planta: Parámetros Drivers (02) y BOM (06) ➔ Liquidación OP (05) ➔ Cierre Contable (07).
+            </p>
+          </div>
 
-            <!-- Cap 04 -->
-            <div class="accordion-item" data-target="cap-04">
-                <div class="accordion-header" onclick="selectChapter('cap-04', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">04</span>
-                        <span class="acc-text">Modelos LLM & Razonamiento</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 0, event)"><span class="sub-bullet">├─</span> World Models & JEPA (LeCun)</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 1, event)"><span class="sub-bullet">├─</span> Transformer Explainer ONNX</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 2, event)"><span class="sub-bullet">└─</span> Hands-On Large Language Models</div>
-                </div>
-            </div>
+          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[10px] font-mono space-y-0.5 text-slate-700">
+            <div><span class="text-blue-700 font-bold">F1:</span> Parámetros (Mod 02 + Mod 06)</div>
+            <div><span class="text-amber-700 font-bold">F2:</span> Operación (Mod 03 + Mod 04)</div>
+            <div><span class="text-emerald-700 font-bold">F3:</span> Liquidación OP (Mod 05)</div>
+            <div><span class="text-purple-700 font-bold">F4:</span> Cierre & Dashboard (07 ➔ 01)</div>
+          </div>
+        </div>
 
-            <!-- Cap 05 -->
-            <div class="accordion-item" data-target="cap-05">
-                <div class="accordion-header" onclick="selectChapter('cap-05', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">05</span>
-                        <span class="acc-text">Curriculums & Fundamentos</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 0, event)"><span class="sub-bullet">├─</span> Multi-Agent SDLC Playbook</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 1, event)"><span class="sub-bullet">├─</span> Playbook Developer to AI Champion</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 2, event)"><span class="sub-bullet">└─</span> Code as Agent Harness (Stanford)</div>
-                </div>
-            </div>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+          <a
+            href="viewer_03.html"
+            target="_blank"
+            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-xs transition-all shadow-2xs"
+          >
+            <span>Abrir Visor #03</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+          <a href="03_gobernanza_ciclo_vida_7_modulos.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
+        </div>
+      </div>
 
-            <!-- Cap 06 -->
-            <div class="accordion-item" data-target="cap-06">
-                <div class="accordion-header" onclick="selectChapter('cap-06', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">06</span>
-                        <span class="acc-text">Diseño de Producto & UX</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-06', 0, event)"><span class="sub-bullet">├─</span> Leyes de UX (Laws of UX)</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-06', 1, event)"><span class="sub-bullet">└─</span> AG-UI Streaming Protocol</div>
-                </div>
-            </div>
+      <!-- Card 4: Cierre Contable PCGE -->
+      <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 hover:border-blue-500/60 hover:shadow-md transition-all flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+              #04 · PARTIDA DOBLE
+            </span>
+            <span class="text-[10px] text-slate-400 font-mono font-medium">Asientos PCGE</span>
+          </div>
+          <div>
+            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
+              Cierre Contable & Asientos PCGE
+            </h2>
+            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
+              Generación automática de asientos de diario, enlace con cuentas 21, 71, 69 y 79, cuadre 100% y bloqueo inmutable de Kardex.
+            </p>
+          </div>
 
-            <!-- Cap 07 -->
-            <div class="accordion-item" data-target="cap-07">
-                <div class="accordion-header" onclick="selectChapter('cap-07', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">07</span>
-                        <span class="acc-text">Infraestructura, VPS & Seguridad</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-07', 0, event)"><span class="sub-bullet">├─</span> How To Secure A Linux Server</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-07', 1, event)"><span class="sub-bullet">└─</span> Cron Job Diario & Scraping VPS</div>
-                </div>
-            </div>
+          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[10px] font-mono space-y-0.5 text-slate-700">
+            <div><span class="text-amber-700 font-bold">L1:</span> Disparadores de Cierre OP</div>
+            <div><span class="text-blue-700 font-bold">L2:</span> Asientos Cuentas 21/71 y 69/79</div>
+            <div><span class="text-emerald-700 font-bold">L3:</span> Regla de Cuadre & Bloqueo</div>
+            <div><span class="text-purple-700 font-bold">L4:</span> Comprobante de Diario Final</div>
+          </div>
+        </div>
 
-            <!-- Cap 08 -->
-            <div class="accordion-item" data-target="cap-08">
-                <div class="accordion-header" onclick="selectChapter('cap-08', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">08</span>
-                        <span class="acc-text">Radar & Vigilancia OSINT</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-08', 0, event)"><span class="sub-bullet">├─</span> Radar Automatizado GitHub & HF</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-08', 1, event)"><span class="sub-bullet">└─</span> Overwatch Earth 3D OSINT</div>
-                </div>
-            </div>
-
-            <!-- Cap 09 -->
-            <div class="accordion-item" data-target="cap-09">
-                <div class="accordion-header" onclick="selectChapter('cap-09', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">09</span>
-                        <span class="acc-text">Masterclass & Feedback Continuo</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-09', 0, event)"><span class="sub-bullet">├─</span> Super Curso Master (21 Módulos)</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-09', 1, event)"><span class="sub-bullet">└─</span> Pipeline de Retroalimentación</div>
-                </div>
-            </div>
-
-            <!-- Cap 10 -->
-            <div class="accordion-item" data-target="cap-10">
-                <div class="accordion-header" onclick="selectChapter('cap-10', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">10</span>
-                        <span class="acc-text">Arquitectura MIFUNE (Caso Real)</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 0, event)"><span class="sub-bullet">├─</span> Blueprint de Arquitectura MIFUNE</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 1, event)"><span class="sub-bullet">├─</span> Bitácora en Vivo (Pasos A-I)</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 2, event)"><span class="sub-bullet">└─</span> Suite QC de 26 Pruebas en Sandbox</div>
-                </div>
-            </div>
-
-            <!-- Cap 11 -->
-            <div class="accordion-item" data-target="cap-11">
-                <div class="accordion-header" onclick="selectChapter('cap-11', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">11</span>
-                        <span class="acc-text">Arquitectura PROPTWIN (Caso Real)</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 0, event)"><span class="sub-bullet">├─</span> Blueprint Gemelo Digital Arzobispado</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 1, event)"><span class="sub-bullet">├─</span> Software Factory & 5 Roles Agénticos</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 2, event)"><span class="sub-bullet">└─</span> Quality Gates & Sandbox Docker</div>
-                </div>
-            </div>
-
-            <!-- Cap 12 -->
-            <div class="accordion-item" data-target="cap-12">
-                <div class="accordion-header" onclick="selectChapter('cap-12', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">12</span>
-                        <span class="acc-text">Arquitectura ARBN.CPJS (Airbnb Twin)</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 0, event)"><span class="sub-bullet">├─</span> Blueprint Remodelación & Staging</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 1, event)"><span class="sub-bullet">├─</span> Motor BOQ & Despiece de Partidas</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 2, event)"><span class="sub-bullet">└─</span> Auditor Airbnb Ready 5 Estrellas</div>
-                </div>
-            </div>
-
-            <!-- Cap 13 -->
-            <div class="accordion-item" data-target="cap-13">
-                <div class="accordion-header" onclick="selectChapter('cap-13', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">13</span>
-                        <span class="acc-text">Claude Code Templates (AITMPL)</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 0, event)"><span class="sub-bullet">├─</span> Mina de Oro: +1,000 Componentes</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 1, event)"><span class="sub-bullet">├─</span> 5 Agentes Especialistas (Security, DB, Frontend)</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 2, event)"><span class="sub-bullet">└─</span> Skills & MCPs (Bright Data, Neon, Vercel)</div>
-                </div>
-            </div>
-
-            <!-- Cap 14 -->
-            <div class="accordion-item" data-target="cap-14">
-                <div class="accordion-header" onclick="selectChapter('cap-14', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">14</span>
-                        <span class="acc-text">Cómputo Distribuido en LAN UniFi</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-14', 0, event)"><span class="sub-bullet">├─</span> Parallel Computing vs Distributed vs Offloading</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-14', 1, event)"><span class="sub-bullet">├─</span> Arquitectura Thin-Client (180 ➔ 150)</div>
-                        <!-- Cap 24 -->
-            <div class="accordion-item" data-target="cap-24">
-                <div class="accordion-header" onclick="selectChapter('cap-24', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">24</span>
-                        <span class="acc-text">OpenViking & Context Databases</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 0, event)"><span class="sub-bullet">├─</span> El Colapso del Flat Vector RAG & Context Bloat</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 1, event)"><span class="sub-bullet">├─</span> Virtual Filesystem (viking://) & Comandos ls/tree/read</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 2, event)"><span class="sub-bullet">├─</span> Tiered Loading L0/L1/L2 (Ahorro 34.3% - 91% Tokens)</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 3, event)"><span class="sub-bullet">└─</span> Integración: Agente VIKINGO en ARBN.CPJS</div>
-                </div>
-            </div>
-            <!-- Cap 23 -->
-            <div class="accordion-item" data-target="cap-23">
-                <div class="accordion-header" onclick="selectChapter('cap-23', this)">
-                    <div class="acc-title-wrap">
-                        <span class="acc-num">23</span>
-                        <span class="acc-text">LevelField-1 & CAPP Industrial</span>
-                    </div>
-                    <span class="acc-arrow">▶</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 0, event)"><span class="sub-bullet">├─</span> Anatomía de LevelField-1 (9B, Qwen3.5, 100K Planos)</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 1, event)"><span class="sub-bullet">├─</span> Catálogo de 18 Operaciones CAPP & Prelación CNC</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 2, event)"><span class="sub-bullet">├─</span> Pipeline Híbrido: Mano Alzada ➔ CAD ➔ CAPP</div>
-                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 3, event)"><span class="sub-bullet">└─</span> Despliegue vLLM & Thinking Mode</div>
-                </div>
-            </div>
-
-        </aside>
-
-        <!-- CUERPO PRINCIPAL DINÁMICO (SOLO MUESTRA EL CAPÍTULO SELECCIONADO) -->
-        <main class="wiki-main" id="chapter-viewport">
-            <!-- Renderizado dinámico vía JavaScript -->
-        </main>
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+          <a
+            href="viewer_04.html"
+            target="_blank"
+            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-xs transition-all shadow-2xs"
+          >
+            <span>Abrir Visor #04</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+          <a href="04_cierre_contable_asientos_pcge.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
+        </div>
+      </div>
 
     </div>
 
-    <!-- BASE DE DATOS Y CONTROLADOR REACTIVO -->
-    <script>
-        const CHAPTER_DATA = {
-            "cap-24": {
-                id: "24",
-                title: "OpenViking y Bases de Datos de Contexto",
-                badge: "ByteDance Volcengine & Agent Memory",
-                subtitle: "Sistema de archivos virtual viking://, comandos deterministas y carga jerárquica L0-L1-L2 con ahorro del 91% en tokens.",
-                deckUrl: "cap-24-openviking-context-database.html",
-                summary: "Tratado sobre la superación del RAG vectorial plano mediante Context Databases. Se analiza cómo OpenViking organiza la memoria episódica y el conocimiento del proyecto en un árbol virtual navegable, permitiendo a los agentes leer resúmenes L0/L1 antes de volcar archivos L2 completos a la ventana de contexto.",
-                classes: [
-                    { title: "El Colapso del Flat RAG", desc: "Saturación de contexto, amnesia inter-sesión y costos exponenciales de tokens.", tag: "Nota 145" },
-                    { title: "Arquitectura VFS viking://", desc: "Organización jerárquica con knowledge/, memories/ y experiences/ navegables con ls y tree.", tag: "ByteDance" },
-                    { title: "Carga Escalonada L0 / L1 / L2", desc: "Abstract (15 tokens), Overview (150 tokens) y Full Content bajo demanda.", tag: "SOTA 2026" },
-                    { title: "Agente VIKINGO en el Squad", desc: "Broker de contexto para ARBN.CPJS y reducción de consumo de tokens en 91%.", tag: "Software Factory" }
-                ]
-            },
-            "cap-01": {
-                id: "01",
-                title: "Sistemas Agénticos & Orquestación",
-                badge: "Multi-Agent SDLC & Frameworks",
-                subtitle: "Orquestación multi-agente, desacoplamiento de roles de software, diagramación Mermaid obligatoria y runtime Claude Code.",
-                deckUrl: "cap-01-sistemas-agenticos.html",
-                summary: "En este módulo se enseña cómo transicionar del desarrollo manual aislado a la dirección de fábricas de software autónomas. Se abordan los 5 roles clave (PM, System Architect, Squad, QC Auditor y Release), bucles cerrados de retroalimentación determinista y control de calidad en sandbox.",
-                classes: [
-                    { title: "Multi-Agent SDLC & Visual Canvas", desc: "MetaGPT, ChatDev, AutoGen Studio, Langflow y OpenHands.", tag: "Nota 60" },
-                    { title: "Anatomía del Directorio .claude", desc: "Claude Code Runtime, Hooks deterministas, skills y reglas scoped.", tag: "Nota 49" },
-                    { title: "Graph & Loop Engineering", desc: "El manifiesto de Boris Cherny (Anthropic) para bucles cerrados.", tag: "Nota 73" },
-                    { title: "Patrones de Diseño Agéntico", desc: "ReAct, Single-Shot, Planner-Executor, Verifier-Gated y Guardrails.", tag: "Nota 53" }
-                ],
-                metrics: [
-                    { label: "Roles Desacoplados", val: "5 Especialistas" },
-                    { label: "Diagramación", val: "Mermaid.js" }
-                ]
-            },
-            "cap-02": {
-                id: "02",
-                title: "Sistemas RAG, Embeddings & Vector DBs",
-                badge: "GraphRAG & Recuperación Semántica",
-                subtitle: "Framework de selección entre Vector RAG, GraphRAG y Fusión Híbrida (RRF) en AWS Bedrock y OpenSearch.",
-                deckUrl: "cap-02-rag-sistemas.html",
-                summary: "Evolución de bases de conocimiento corporativas desde el chunking ingenuo hasta el modelado de grafos relacionales (Graphify) capaces de resolver consultas multi-hop sin alucinación de contexto.",
-                classes: [
-                    { title: "GraphRAG vs Vector RAG vs Hybrid RAG", desc: "Guía de arquitectura, selección y optimización de latencia.", tag: "Nota 59" },
-                    { title: "Arquitectura RAG Empresarial en AWS", desc: "Bedrock, OpenSearch Serverless, Aurora pgvector y FastAPI.", tag: "Nota 52" },
-                    { title: "Corrective RAG (CRAG) & LangGraph", desc: "Retrieval Evaluator, 3-way branching, knowledge stripping y web search con Ollama.", tag: "Nota 124" },
-                    { title: "Graphify Knowledge Graph Engine", desc: "Transformación de repositorios de código y SQL a grafos de conocimiento.", tag: "Nota 02" },
-                    { title: "Utopia Vector Store", desc: "Sandbox de experimentación y recuperación semántica de alta fidelidad.", tag: "Nota 13" }
-                ],
-                metrics: [
-                    { label: "Precisión Fusión", val: "99.2% Top-K" },
-                    { label: "Latencia AWS", val: "< 400ms" }
-                ]
-            },
-            "cap-03": {
-                id: "03",
-                title: "Vibe Coding & Asistentes de Desarrollo",
-                badge: "Harness & Especificaciones Rigurosas",
-                subtitle: "Metodología Spec-Driven Prompting, límites limpios de contexto, suites ofimáticas agénticas y gateways locales.",
-                deckUrl: "cap-03-vibe-coding.html",
-                summary: "Cómo programar con asistentes de IA sin saturar la ventana de contexto. Reglas de oro para crear especificaciones antes de codificar y ruteo económico de inferencia con OmniRoute.",
-                classes: [
-                    { title: "Spec Kit (Spec-Driven Prompting)", desc: "Metodología de especificaciones técnicas antes de generar código.", tag: "Nota 01" },
-                    { title: "OmniRoute AI Gateway", desc: "Gateway local con 352+ proveedores, failover y pool de tokens.", tag: "Nota 50" },
-                    { title: "GenOffice Suite Agéntica", desc: "Suite ofimática open source con agentes IA integrados (.xlsx, .docx).", tag: "Nota 47" }
-                ],
-                metrics: [
-                    { label: "Proveedores AI", val: "352+ Modelos" },
-                    { label: "Ahorro de Contexto", val: "70% Reducción" }
-                ]
-            },
-            "cap-04": {
-                id: "04",
-                title: "Modelos de Razonamiento, Visión & Arquitectura LLM",
-                badge: "World Models & Reasoning SOTA",
-                subtitle: "Arquitectura interna de LLMs, World Models (JEPA), simuladores WebGL y fine-tuning de modelos abiertos.",
-                deckUrl: "cap-04-modelos-llm.html",
-                summary: "Fundamentos de la arquitectura Transformer, atención multi-cabezal, cuantización (GGUF/AWQ), modelos de razonamiento profundo y la visión de Yann LeCun sobre arquitecturas basadas en energía.",
-                classes: [
-                    { title: "World Models & JEPA", desc: "Visión de Yann LeCun sobre predicción en espacio latente.", tag: "Nota 34" },
-                    { title: "Transformer Explainer", desc: "Simulador interactivo en navegador de GPT-2 124M con ONNX Web.", tag: "Nota 45" },
-                    { title: "Hands-On Large Language Models", desc: "Guía práctica de fine-tuning, MoE y despliegue local.", tag: "Nota 64" }
-                ],
-                metrics: [
-                    { label: "Simulador", val: "GPT-2 ONNX" },
-                    { label: "Modos de Inferencia", val: "MoE & Dense" }
-                ]
-            },
-            "cap-05": {
-                id: "05",
-                title: "Curriculums, Fundamentos & Guías de Ingeniería",
-                badge: "Playbooks & Harness Engineering",
-                subtitle: "Instructivo operativo de trabajo con cuadrillas de agentes y el paper fundacional de Stanford sobre Code as Harness.",
-                deckUrl: "cap-05-fundamentos-ingenieria.html",
-                summary: "Guía metodológica paso a paso para líderes técnicos y desarrolladores. Cómo pasar de programador individual a AI Champion implementando métricas DORA y gobernanza agéntica.",
-                classes: [
-                    { title: "Multi-Agent SDLC Playbook", desc: "Instructivo de trabajo operativo y reglas de gobernanza agéntica.", tag: "Nota 61" },
-                    { title: "Playbook Developer to AI Champion", desc: "Guía de Álvaro Moya / LIDR para Context & Harness Engineering.", tag: "Nota 54" },
-                    { title: "Code as Agent Harness", desc: "Paper fundacional de Stanford, Meta y UIUC.", tag: "Nota 51" }
-                ],
-                metrics: [
-                    { label: "Metodología", val: "Harness 10X" },
-                    { label: "Métricas", val: "DORA & Faros" }
-                ]
-            },
-            "cap-06": {
-                id: "06",
-                title: "Diseño de Producto, UX & Interfaces Visuales",
-                badge: "Protocolo AG-UI & Estética APEFAC",
-                subtitle: "Principios cognitivos de interfaz, protocolo streaming interactivo AG-UI y diseño visual corporativo GeekSoft.",
-                deckUrl: "cap-06-diseno-ux-interfaces.html",
-                summary: "Diseño de experiencias de usuario fluidas para productos agénticos. Manejo de estados de carga, spinners, streaming reactivo y paleta visual APEFAC de alta gama.",
-                classes: [
-                    { title: "Leyes de UX (Laws of UX)", desc: "Principios cognitivos y heurísticas de usabilidad para software.", tag: "Nota 06" },
-                    { title: "AG-UI Protocol", desc: "Protocolo de renderizado de interfaces agénticas en tiempo real.", tag: "Nota 17" }
-                ],
-                metrics: [
-                    { label: "Protocolo UI", val: "AG-UI Streaming" },
-                    { label: "Look & Feel", val: "APEFAC Light" }
-                ]
-            },
-            "cap-07": {
-                id: "07",
-                title: "Infraestructura, VPS & Seguridad en Producción",
-                badge: "Hardening, Docker & Scraping Headless",
-                subtitle: "Hardening de servidores Linux en Contabo VPS, redes Docker aisladas y cron jobs de scraping headless.",
-                deckUrl: "cap-07-infraestructura-vps.html",
-                summary: "Despliegue robusto de infraestructura en la nube. Configuración de claves SSH Ed25519, UFW Firewall, Fail2Ban, Traefik con SSL automático y workers en navegadores ultraligeros en Rust (Obscura).",
-                classes: [
-                    { title: "How To Secure A Linux Server", desc: "Las 5 capas de defensa para servidores de producción.", tag: "Nota 21" },
-                    { title: "Cron Job Diario & Scraping VPS", desc: "Automatización de recolección de datos a las 07:00 AM.", tag: "Nota 41" }
-                ],
-                metrics: [
-                    { label: "VPS Contabo", val: "Hardened Linux" },
-                    { label: "Browser Rust", val: "30MB RAM" }
-                ]
-            },
-            "cap-08": {
-                id: "08",
-                title: "Radar Tecnológico & Vigilancia Continua",
-                badge: "Vigilancia OSINT & Pipeline de Curación",
-                subtitle: "Monitoreo sistemático de GitHub Trending, Hugging Face y 11 Top Voices globales de inteligencia artificial.",
-                deckUrl: "cap-08-radar-tecnologico.html",
-                summary: "El motor de inteligencia competitiva de GeekSoft. Algoritmos de filtrado de ruido para transformar publicaciones y repositorios en notas técnicas estructuradas para la Bóveda.",
-                classes: [
-                    { title: "Radar Automatizado de GitHub & HF", desc: "Scripts headless de extracción diaria y clasificación.", tag: "Nota 36" },
-                    { title: "Overwatch Earth OSINT", desc: "Centro 3D interactivo de telemetría planetaria.", tag: "Nota 46" }
-                ],
-                metrics: [
-                    { label: "Top Voices", val: "11 Investigadores" },
-                    { label: "Frecuencia", val: "Diaria 07:00 AM" }
-                ]
-            },
-            "cap-09": {
-                id: "09",
-                title: "Masterclass & Pipeline de Aprendizaje Continuo",
-                badge: "Currículum SoTA 2026 & Feedback Loop",
-                subtitle: "Estructura de 21 módulos de producción y bucles automáticos de actualización y retroalimentación pedagógica.",
-                deckUrl: "cap-09-masterclass-pipeline.html",
-                summary: "Metodología pedagógica para mantener el curso de IA permanentemente actualizado frente a la velocidad de la industria mediante bucles cerrados y validación en sandboxes reales.",
-                classes: [
-                    { title: "Super Curso Master de Agentes", desc: "Currículum completo de 21 módulos SoTA 2026.", tag: "Nota 30" },
-                    { title: "Pipeline de Retroalimentación", desc: "Bucle cerrado de ingestión de dudas y actualización de decks.", tag: "Nota 31" }
-                ],
-                metrics: [
-                    { label: "Módulos Master", val: "21 Bloques" },
-                    { label: "Ciclo Update", val: "Continuo" }
-                ]
-            },
-            "cap-10": {
-                id: "10",
-                title: "Arquitectura MIFUNE (Caso Real en Producción)",
-                badge: "Dual-Agent Harness & Sandbox VPS",
-                subtitle: "Plataforma empresarial de modelado financiero 3-Statements con LibreOffice Headless y MinIO S3 en VPS Contabo.",
-                deckUrl: "cap-10-mifune-architecture.html",
-                summary: "Caso de estudio de nivel de producción 100% desplegado en https://mifune.geeksoft.tech. Combina arquitectura Job Runner en FastAPI, Skills Registry inmutable con SemVer, worker efímero con recálculo contable en LibreOffice y suite QC de 26 pruebas automáticas.",
-                classes: [
-                    { title: "Blueprint de Arquitectura MIFUNE", desc: "Dual-Agent Harness, HITL y ruteo económico.", tag: "Nota 48" },
-                    { title: "Bitácora de Despliegue en Vivo (Pasos A-I)", desc: "MinIO, Docker Worker, FastAPI, Redis y SSL Traefik.", tag: "Notas 58A-58I" },
-                    { title: "Suite de Pruebas QC & Recálculo Contable", desc: "26 pruebas contables deterministas con cero desvío.", tag: "Nota 56" }
-                ],
-                metrics: [
-                    { label: "Tiempo Corrida", val: "4.5 Segundos" },
-                    { label: "Suite QC", val: "26 Tests PASS" }
-                ]
-            },
-            "cap-11": {
-                id: "11",
-                title: "Arquitectura PROPTWIN (El Gemelo Digital Inmobiliario)",
-                badge: "AI Software Factory & Real Estate Twin",
-                subtitle: "Fábrica agéntica multi-rol para la gestión patrimonial, geoespacial y legal del Arzobispado de Lima.",
-                deckUrl: "cap-11-proptwin-architecture.html",
-                summary: "Arquitectura de Gemelo Digital Inmobiliario (Property Twin). Modela cientos de propiedades del Arzobispado de Lima mediante ingesta OCR de partidas Sunarp, motor geoespacial PostGIS, grafo relacional de contratos y una cuadrilla de 5 agentes gobernada por Quality Gates en Docker Sandbox.",
-                classes: [
-                    { title: "Blueprint de Arquitectura PROPTWIN", desc: "El Gemelo Digital Inmobiliario del Arzobispado de Lima.", tag: "Nota 75" },
-                    { title: "Software Factory Agéntica PROPTWIN", desc: "Roles desacoplados, contratos y Quality Gates deterministas.", tag: "Nota 76" },
-                    { title: "Stack Tecnológico & Contabo VPS Sandbox", desc: "React 19 TS + APEFAC Light UI, Python FastAPI y Supabase PostGIS.", tag: "Nota 77" }
-                ],
-                metrics: [
-                    { label: "Cuadrilla Agéntica", val: "5 Roles Desacoplados" },
-                    { label: "Quality Gates", val: "4 Barreras Docker" }
-                ]
-            },
-            "cap-12": {
-                id: "12",
-                title: "Arquitectura ARBN.CPJS (Airbnb Twin & OpenConstructionERP)",
-                badge: "Virtual Staging IA & OpenConstructionERP Engine",
-                subtitle: "Gemelo micro-inmobiliario para remodelación express, planos a mano alzada, Virtual Staging con IA y despiece BOQ a escala empresarial.",
-                deckUrl: "cap-12-arbn-cpjs-architecture.html",
-                portalUrl: "arbn-cpjs-portal.html",
-                summary: "Plataforma de remodelación integral y puesta a punto comercial para Airbnb. Ingesta multimodal de 3 vías (fotos reales, planos PDF y croquis a mano alzada), genera renders Before/After con ControlNet preservando estructuras, ejecuta el desglose de partidas WBS con OpenConstructionERP y audita el checklist 5 estrellas para Superhost.",
-                classes: [
-                    { title: "Blueprint de Arquitectura ARBN.CPJS", desc: "El Gemelo Digital de Remodelación & Ingesta Multimodal.", tag: "Nota 78" },
-                    { title: "Motor de Costos BOQ con OpenConstructionERP", desc: "Desglose WBS en 6 partidas maestras, APU y checklist 5 estrellas.", tag: "Nota 79" },
-                    { title: "Stack Tecnológico, UI APEFAC & Contabo VPS", desc: "React 19 TS, Python FastAPI, Supabase Storage y Sandbox Docker.", tag: "Nota 80" },
-                    { title: "Squad de Asistentes IA ARBN.CPJS", desc: "4 agentes especializados (Ingesta, Staging, BOQ, Hospitalidad).", tag: "Nota 81" }
-                ],
-                metrics: [
-                    { label: "Caso Piloto", val: "60 m² (Pardo 965, Miraflores)" },
-                    { label: "ERP Engine", val: "OpenConstructionERP" }
-                ]
-            },
-            "cap-13": {
-                id: "13",
-                title: "Claude Code Templates (AITMPL - +1,000 Componentes)",
-                badge: "Ecosistema Open Source & Agent Hub",
-                subtitle: "La colección de componentes, agentes, skills, hooks y MCPs para convertir Claude Code en una Software Factory a medida.",
-                deckUrl: "cap-13-claude-code-aitmpl.html",
-                summary: "Repositorio y CLI de código abierto (AITMPL by Daniel Ávila) con más de 1,000 plantillas curadas por Anthropic y la comunidad. Permite inyectar agentes especializados de seguridad, frontend, bases de datos, code review y servidores MCP (Bright Data, Neon, Vercel) con un solo comando npx sin configurar desde cero.",
-                classes: [
-                    { title: "Mina de Oro: +1,000 Componentes AITMPL", desc: "Catálogo completo, respaldo Vercel/Neon y CLI cct.", tag: "Nota 97" },
-                    { title: "5 Agentes Especialistas de Producción", desc: "Security Auditor, Frontend React 19, DB Postgres y QC.", tag: "Nota 82" },
-                    { title: "Skills, MCPs & Verification Loops", desc: "Bright Data Web Scraping, Neon Branching y reglas AGENTS.md.", tag: "Nota 85" }
-                ],
-                metrics: [
-                    { label: "Componentes", val: "+1,000 Curados" },
-                    { label: "Instalación", val: "< 30s con npx" }
-                ]
-            },
-            "cap-14": {
-                id: "14",
-                title: "Cómputo Distribuido en LAN UniFi y Offloading de Agentes",
-                badge: "Parallel Computing & Headless Worker Node",
-                subtitle: "Desacoplamiento Thin-Client (192.168.0.180) y servidor de inferencia Ollama con Qwen 2.5 Coder en ThinkPad T430s (192.168.0.150 - 12GB RAM).",
-                deckUrl: "cap-14-computo-distribuido-unifi.html",
-                summary: "Arquitectura real de ingeniería para solucionar congelamientos en la máquina de desarrollo principal. Combina red local de alta velocidad Ubiquiti UniFi (<1ms latencia), demonio systemd de Ollama escuchando en 0.0.0.0:11434 y delegación de tareas pesadas (inferencia LLM, compilación, Whisper STT, scrapers) a un nodo de 12GB RAM sin interrumpir el monitor de Netdata en su pantalla.",
-                classes: [
-                    { title: "¿Es Parallel Computing? Taxonomía", desc: "Task Parallelism, Distributed Grid y Thin-Client Offloading.", tag: "Nota 120" },
-                    { title: "Arquitectura Real UniFi (180 ➔ 150)", desc: "Mando Windows 11 + ThinkPad Ubuntu 12GB + OpenSSH.", tag: "Nota 120" },
-                    { title: "6 Casos de Uso Potentes Desbloqueados", desc: "Code completion, RAG/Embeddings, VoiceStudio, Scrapers 24/7 y FastMCP.", tag: "Nota 120" },
-                    { title: "Certificación en Vivo (3.96s Latencia)", desc: "Ejecución real de qwen2.5-coder:1.5b con 0% de uso de CPU local.", tag: "Nota 120" }
-                ],
-                metrics: [
-                    { label: "Latencia Test", val: "3.96 Segundos" },
-                    { label: "Ahorro RAM Local", val: "100% Offloaded" }
-                ]
-            },
-            "cap-23": {
-                id: "23",
-                title: "LevelField-1: Visión Multimodal para Planos 2D y CAPP Industrial",
-                badge: "Industrial VLM & Autonomous CAPP",
-                subtitle: "De dibujos técnicos en PDF/PNG a secuencias completas de 18 procesos de mecanizado con Qwen3.5-9B y Thinking Mode.",
-                deckUrl: "cap-23-levelfield-capp-industrial.html",
-                summary: "Análisis exhaustivo del modelo abierto LevelField-1 (9B) para manufactura no estándar. Entrenado con 100K planos de 16 plantas y 36 ingenieros senior (>95% concordancia). Incluye arquitectura de despliegue vLLM, catálogo de 18 operaciones CNC y resolución técnica para dibujos a mano alzada mediante pipeline híbrido en 2 fases.",
-                classes: [
-                    { title: "Anatomía de LevelField-1 (9B, Qwen3.5, 100K Planos)", desc: "Dataset industrial, thinking mode, GD&T y extracción de metadatos.", tag: "Nota 142" },
-                    { title: "Catálogo de 18 Operaciones CAPP & Prelación", desc: "Reglas de taller: torneado, fresado 5 ejes, temple, rectificado y EDM.", tag: "Nota 142" },
-                    { title: "Pipeline Híbrido: Mano Alzada ➔ CAD ➔ CAPP", desc: "Resolución del reto de bocetos libres mediante CadQuery y normalización 2D.", tag: "Nota 143" },
-                    { title: "Despliegue vLLM & Inferencia Python", desc: "Servidor local vLLM con thinking mode y cliente OpenAI en JSON.", tag: "Nota 143" }
-                ],
-                metrics: [
-                    { label: "Concordancia Senior", val: "> 95%" },
-                    { label: "Reducción Tiempo", val: "~60% Ahorro" }
-                ]
-            }
-        };
+    <!-- Section 2: Explicación Carnosa & Detallada del Motor Matemático Dr. Cost -->
+    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-6 shadow-xs">
+      
+      <!-- Encabezado de la Sección -->
+      <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <span class="text-[11px] font-mono font-bold text-blue-700 uppercase tracking-wider block">Metodología & Formulación Formal</span>
+          <h2 class="text-xl font-display font-extrabold text-slate-900 mt-0.5">
+            Análisis Técnico del Motor de Costos Industriales (Algoritmo Ramos)
+          </h2>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            Documentación exhaustiva de los fundamentos matemáticos, fórmulas de absorción, reglas contables y flujo de ejecución en Supabase.
+          </p>
+        </div>
+        <a href="viewer_05.html" target="_blank" class="px-3.5 py-2 bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-xs font-bold hover:bg-blue-100 flex items-center gap-1.5 w-fit shrink-0">
+          <span>Abrir Diagrama Vectorial #05</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+        </a>
+      </div>
 
-        function renderChapter(capId) {
-            const data = CHAPTER_DATA[capId];
-            if (!data) return;
+      <!-- 5 Bloques Explicativos "Carnosos" de cada Fase del Algoritmo -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        
+        <!-- Fase 1: MD y Merma -->
+        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">1</span>
+            <h3 class="font-bold text-slate-900 text-xs">Materia Prima (MP) & Mermas Técnicas</h3>
+          </div>
+          <p class="text-slate-600 text-[11px] leading-relaxed">
+            La cantidad de materia prima requerida no es lineal. Cada insumo en la estructura <strong class="text-slate-800">BOM</strong> tiene un factor de merma técnica inherente al proceso físico o químico de transformación:
+          </p>
+          <div class="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
+            <div class="text-emerald-700 font-bold">Q_bruta = Q_neta · (1 + %Merma / 100)</div>
+            <div>Costo_MP_OP = Σ [ Q_bruta · CU_Kardex · Cantidad_Programada ]</div>
+          </div>
+          <p class="text-slate-500 text-[10px]">
+            La valorización se conecta en tiempo real al costo estándar/promedio del Kardex valorizado registrado en <code class="text-blue-700">public.articulo_costo_estandar</code>.
+          </p>
+        </div>
 
-            const viewport = document.getElementById('chapter-viewport');
-            viewport.innerHTML = `
-                <div class="chapter-card">
-                    <div class="chapter-hero">
-                        <div>
-                            <div class="breadcrumb">
-                                GeekSoft Academy &bull; Capítulo <strong>${data.id}</strong> &bull; ${data.badge}
-                            </div>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                            <a href="${data.deckUrl}" class="deck-launch-btn">
-                                <span class="play-icon">▶</span>
-                                <span>Ver Deck Interactivo PPT</span>
-                            </a>
-                            ${data.portalUrl ? `
-                            <a href="${data.portalUrl}" class="deck-launch-btn" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
-                                <span class="play-icon">🛋️</span>
-                                <span>Abrir Portal APEFAC en Vivo</span>
-                            </a>` : ''}
-                        </div>
-                    </div>
+        <!-- Fase 2: MOD y Tarifa Efectiva -->
+        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-amber-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">2</span>
+            <h3 class="font-bold text-slate-900 text-xs">Mano de Obra Directa (MOD) & Tarifa HH Real</h3>
+          </div>
+          <p class="text-slate-600 text-[11px] leading-relaxed">
+            Se calcula la tarifa horaria ponderada por Centro de Costo, consolidando la planilla obrera bruta más las cargas sociales de ley peruana (EsSalud 9%, Gratificaciones, CTS, Vacaciones, SCTR):
+          </p>
+          <div class="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
+            <div class="text-amber-700 font-bold">Tarifa_HH(CC) = Total_Costo_Planilla(CC) / Total_HH_Efectivas(CC)</div>
+            <div>Costo_MOD_OP = Σ [ (Horas + Minutos/60) · Tarifa_HH(CC) ]</div>
+          </div>
+          <p class="text-slate-500 text-[10px]">
+            Los partes de trabajo diarios imputan las horas hombre consumidas a cada orden registrada en <code class="text-blue-700">public.utilizacion_horas_hombre</code>.
+          </p>
+        </div>
 
-                    <div class="grid-detail">
-                        <div class="section-box">
-                            <div class="section-title">
-                                <span>📚</span> Clases & Notas Técnicas del Módulo
-                            </div>
-                            <div class="classes-list">
-                                ${data.classes.map(c => `
-                                    <div class="class-row">
-                                        <div class="class-info">
-                                            <h4>${c.title}</h4>
-                                            <p>${c.desc}</p>
-                                        </div>
-                                        <span class="class-badge">${c.tag}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
+        <!-- Fase 3: CIF e Inductores -->
+        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">3</span>
+            <h3 class="font-bold text-slate-900 text-xs">Gastos de Fabricación (CIF) & Cost Drivers</h3>
+          </div>
+          <p class="text-slate-600 text-[11px] leading-relaxed">
+            Los gastos indirectos (clase 63 servicios, 65 suministros, 68 depreciación) se clasifican en Fijos y Variables. Se aplican inductores de actividad (Cost Drivers) con capacidad técnica:
+          </p>
+          <div class="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
+            <div class="text-blue-700 font-bold">Tasa_Driver = Pool_Gasto_Asignado / Capacidad_Total_Driver</div>
+            <div>Costo_CIF_OP = Total_CIF_Incurrido · (HH_OP / Total_HH_Planta)</div>
+          </div>
+          <p class="text-slate-500 text-[10px]">
+            Garantiza una distribución equitativa de energía, matricería, supervisión y mantenimiento industrial (<code class="text-blue-700">public.determinacion_cost_drivers</code>).
+          </p>
+        </div>
 
-                        <div style="display: flex; flex-direction: column; gap: 14px;">
-                            <div class="section-box">
-                                <div class="section-title">
-                                    <span>🧠</span> Resumen Ejecutivo del Capítulo
-                                </div>
-                                <p class="summary-text">${data.summary}</p>
-                            </div>
+        <!-- Fase 4: Divisor Unitario -->
+        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-purple-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">4</span>
+            <h3 class="font-bold text-slate-900 text-xs">Costo Total de Fabricación & Costo Unitario ($CU$)</h3>
+          </div>
+          <p class="text-slate-600 text-[11px] leading-relaxed">
+            Consolidación exacta de los 3 elementos en la Hoja de Costos de la Orden de Producción. Si la orden está terminada, el divisor determina el costo por unidad de producto terminado:
+          </p>
+          <div class="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
+            <div class="text-purple-700 font-bold">CTF = Total_MP + Total_MOD + Total_CIF</div>
+            <div>CU_Final = CTF / Cantidad_Terminada_Neta (Q)</div>
+          </div>
+          <p class="text-slate-500 text-[10px]">
+            Si la orden sigue en taller al cierre de mes, se clasifica como Producto en Proceso (<strong class="text-slate-700">WIP</strong>) sin aplicar divisor unitario hasta su liquidación.
+          </p>
+        </div>
 
-                            <div class="section-box">
-                                <div class="section-title">
-                                    <span>⚡</span> Especificaciones & Métricas
-                                </div>
-                                <div class="metrics-grid">
-                                    ${data.metrics.map(m => `
-                                        <div class="metric-card">
-                                            <div class="metric-val">${m.val}</div>
-                                            <div class="metric-lbl">${m.label}</div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+      </div>
 
-        function selectChapter(capId, headerEl) {
-            // Actualizar acordeón
-            document.querySelectorAll('.accordion-item').forEach(item => {
-                item.classList.remove('active-chapter');
-                if (item.getAttribute('data-target') === capId) {
-                    item.classList.add('active-chapter');
-                    item.classList.toggle('open');
-                } else {
-                    item.classList.remove('open');
-                }
-            });
+      <!-- Fase 5 & Asientos Contables PCGE -->
+      <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-indigo-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">5</span>
+            <h3 class="font-bold text-slate-900 text-xs">Generación Automática de Asientos PCGE & Bloqueo de Kardex</h3>
+          </div>
+          <span class="text-emerald-700 font-mono font-bold text-[10px] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+            Cuadre 100% Debe = Haber
+          </span>
+        </div>
+        <p class="text-slate-600 text-xs leading-relaxed">
+          Al ejecutar el cierre del periodo fiscal, el motor genera automáticamente los asientos de diario en formato contable oficial del Plan Contable General Empresarial (PCGE):
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-[11px]">
+          <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1">
+            <div class="font-bold text-blue-800 text-[11px] border-b border-slate-100 pb-1">Asiento 1: Transferencia a Existencias PT</div>
+            <div class="flex justify-between text-slate-700">
+              <span>DEBE: Cta 211101 (Productos Manufacturados)</span>
+              <span class="font-bold text-slate-900">S/ Total_CTF</span>
+            </div>
+            <div class="flex justify-between text-slate-700">
+              <span>HABER: Cta 711101 (Variación Prod. Almacenada)</span>
+              <span class="font-bold text-slate-900">S/ Total_CTF</span>
+            </div>
+          </div>
 
-            // Renderizar contenido central
-            renderChapter(capId);
-        }
+          <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1">
+            <div class="font-bold text-rose-800 text-[11px] border-b border-slate-100 pb-1">Asiento 2: Ajuste de Variación CIF / Capacidad Ociosa</div>
+            <div class="flex justify-between text-slate-700">
+              <span>DEBE: Cta 694101 (Costo de Ventas - Var. CIF)</span>
+              <span class="font-bold text-slate-900">S/ Var_CIF</span>
+            </div>
+            <div class="flex justify-between text-slate-700">
+              <span>HABER: Cta 791100 (Cargas Imputables a Costos)</span>
+              <span class="font-bold text-slate-900">S/ Var_CIF</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        function selectLesson(capId, lessonIdx, event) {
-            event.stopPropagation();
-            // Marcar lección activa
-            document.querySelectorAll('.acc-sub-item').forEach(sub => sub.classList.remove('active-lesson'));
-            event.currentTarget.classList.add('active-lesson');
+      <!-- Code Block Exhaustivo -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-slate-800">Código del Algoritmo (Pseudocódigo TypeScript / Python Core):</span>
+          <span class="text-slate-500 font-mono text-[10px]">Ejecutado en Supabase PostgREST Engine</span>
+        </div>
+        <div class="bg-slate-900 text-slate-100 rounded-xl p-5 font-mono text-[11px] overflow-x-auto border border-slate-800 leading-relaxed max-h-96">
+<pre class="text-slate-300"><span class="text-blue-400 font-bold">FUNCTION</span> <span class="text-yellow-300 font-bold">ExecuteCostEngine</span>(periodo_fiscal: Periodo, tenant_id: UUID): <span class="text-green-400 font-bold">Result</span>
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-slate-500">// 1. PRECONDICIONES & CARGA DE CATÁLOGOS RELACIONALES (67 TABLAS SUPABASE)</span>
+  <span class="text-slate-500">// =========================================================================</span>
+  OPs     = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> orden_produccion <span class="text-cyan-300">WHERE</span> periodo = periodo_fiscal <span class="text-cyan-300">AND</span> estado != 'CANCELADA'
+  BOM     = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> formula_insumos_detalle <span class="text-cyan-300">JOIN</span> formula_insumos_cabecera
+  KARDEX  = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> articulo_costo_estandar
+  NOMINA  = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> utilizacion_horas_hombre <span class="text-cyan-300">WHERE</span> periodo = periodo_fiscal
+  CIF     = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> comprobante_gastos_fabricacion <span class="text-cyan-300">WHERE</span> periodo = periodo_fiscal
+  DRIVERS = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> determinacion_cost_drivers
 
-            // Asegurar que el capítulo esté activo y renderizado
-            renderChapter(capId);
-        }
+  <span class="text-purple-400 font-bold">ASSERT</span> (COUNT(OPs) &gt; 0 <span class="text-cyan-300">AND</span> COUNT(BOM) &gt; 0) <span class="text-purple-400 font-bold">ELSE THROW</span> 'Catálogo maestro incompleto'
 
-        // Búsqueda en tiempo real
-        const searchInput = document.getElementById('wiki-search');
-        searchInput.addEventListener('input', (e) => {
-            const q = e.target.value.toLowerCase().trim();
-            const items = document.querySelectorAll('.accordion-item');
-            
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(q)) {
-                    item.style.display = 'block';
-                    if (q.length > 2) item.classList.add('open');
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-slate-500">// 2. PASO 1: ABSORCIÓN DE MATERIA PRIMA (MP) CON FACTOR DE MERMA</span>
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-blue-400 font-bold">FOR EACH</span> op <span class="text-blue-400 font-bold">IN</span> OPs:
+    op.total_mp = 0.0
+    <span class="text-blue-400 font-bold">FOR EACH</span> insumo <span class="text-blue-400 font-bold">IN</span> BOM[op.codigo_producto]:
+      q_bruta = insumo.cantidad_neta * (1.0 + (insumo.merma_porcentaje / 100.0))
+      cu_std  = KARDEX[insumo.codigo_insumo].costo_unitario
+      costo_linea = q_bruta * cu_std * op.cantidad_programada
+      op.total_mp += costo_linea
+    <span class="text-blue-400 font-bold">END FOR</span>
+  <span class="text-blue-400 font-bold">END FOR</span>
 
-        // Inicializar con Capítulo 01
-        renderChapter('cap-01');
-    </script>
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-slate-500">// 3. PASO 2: LIQUIDACIÓN DE NÓMINA MOD & TARIFA EFECTIVA POR CENTRO</span>
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-blue-400 font-bold">FOR EACH</span> cc <span class="text-blue-400 font-bold">IN</span> CentrosDeCosto:
+    total_hh_cc  = <span class="text-green-400">SUM</span>(NOMINA[cc].horas_efectivas)
+    total_mod_cc = <span class="text-green-400">SUM</span>(NOMINA[cc].costo_bruto_con_cargas) <span class="text-slate-500">// Sueldos + EsSalud 9% + CTS + Grat</span>
+    tarifa_hh[cc] = (total_hh_cc &gt; 0) ? (total_mod_cc / total_hh_cc) : 0.0
+  <span class="text-blue-400 font-bold">END FOR</span>
+
+  <span class="text-blue-400 font-bold">FOR EACH</span> op <span class="text-blue-400 font-bold">IN</span> OPs:
+    op.total_mod = 0.0
+    <span class="text-blue-400 font-bold">FOR EACH</span> parte <span class="text-blue-400 font-bold">IN</span> NOMINA[op.numero_op]:
+      hh_efectiva = parte.horas + (parte.minutos / 60.0)
+      op.total_mod += hh_efectiva * tarifa_hh[parte.centro_costo]
+    <span class="text-blue-400 font-bold">END FOR</span>
+  <span class="text-blue-400 font-bold">END FOR</span>
+
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-slate-500">// 4. PASO 3: PRORRATEO & ABSORCIÓN DE CIF SEGÚN COST DRIVERS E INDUCTORES</span>
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-blue-400 font-bold">FOR EACH</span> drv <span class="text-blue-400 font-bold">IN</span> DRIVERS:
+    tasa_driver[drv.codigo] = drv.costo_total_asignado / drv.total_capacidad
+  <span class="text-blue-400 font-bold">END FOR</span>
+
+  total_cif_incurrido = <span class="text-green-400">SUM</span>(CIF.monto_real)
+  total_hh_planta     = <span class="text-green-400">SUM</span>(NOMINA.horas_efectivas)
+
+  <span class="text-blue-400 font-bold">FOR EACH</span> op <span class="text-blue-400 font-bold">IN</span> OPs:
+    factor_op = (total_hh_planta &gt; 0) ? (op.total_hh_consumidas / total_hh_planta) : 0.0
+    op.total_cif = total_cif_incurrido * factor_op
+  <span class="text-blue-400 font-bold">END FOR</span>
+
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-slate-500">// 5. PASO 4: CONSOLIDACIÓN DE COSTO TOTAL & DIVISOR UNITARIO DETERMINISTA</span>
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-blue-400 font-bold">FOR EACH</span> op <span class="text-blue-400 font-bold">IN</span> OPs:
+    op.costo_total_produccion = op.total_mp + op.total_mod + op.total_cif
+
+    <span class="text-blue-400 font-bold">IF</span> op.cantidad_terminada &gt; 0 <span class="text-blue-400 font-bold">THEN</span>:
+      op.costo_unitario_calculado = op.costo_total_produccion / op.cantidad_terminada
+      op.md_unitario  = op.total_mp / op.cantidad_terminada
+      op.mod_unitario = op.total_mod / op.cantidad_terminada
+      op.cif_unitario = op.total_cif / op.cantidad_terminada
+      op.estado = 'LIQUIDADA'
+    <span class="text-blue-400 font-bold">ELSE</span>:
+      op.costo_unitario_calculado = 0.0
+      op.estado = 'EN_PROCESO_WIP'
+    <span class="text-blue-400 font-bold">END IF</span>
+  <span class="text-blue-400 font-bold">END FOR</span>
+
+  <span class="text-slate-500">// =========================================================================</span>
+  <span class="text-slate-500">// 6. PASO 5: GENERACIÓN DE COMPROBANTES DE DIARIO PCGE & CUADRE BALANCE</span>
+  <span class="text-slate-500">// =========================================================================</span>
+  total_pt_liquidado = <span class="text-green-400">SUM</span>(OPs[estado='LIQUIDADA'].costo_total_produccion)
+  
+  asiento_pt = {
+    numero: 'AST-2026-001',
+    tipo: 'TRANSFERENCIA_EXISTENCIAS_PT',
+    lineas: [
+      { cuenta: '211101', denominacion: 'Productos Manufacturados - PT', debe: total_pt_liquidado, haber: 0.0 },
+      { cuenta: '711101', denominacion: 'Variación de la Producción Almacenada', debe: 0.0, haber: total_pt_liquidado }
+    ]
+  }
+  <span class="text-purple-400 font-bold">ASSERT</span> (<span class="text-green-400">SUM</span>(asiento_pt.lineas.debe) == <span class="text-green-400">SUM</span>(asiento_pt.lineas.haber))
+
+  <span class="text-slate-500">// 7. Persistencia Inmutable en Supabase</span>
+  <span class="text-cyan-300 font-bold">BEGIN TRANSACTION;</span>
+    <span class="text-cyan-300">UPDATE</span> orden_produccion <span class="text-cyan-300">SET</span> ... <span class="text-cyan-300">WHERE</span> id = op.id;
+    <span class="text-cyan-300">INSERT INTO</span> asiento_contable (lineas) <span class="text-cyan-300">VALUES</span> (...);
+    <span class="text-cyan-300">UPDATE</span> cierre_kardex <span class="text-cyan-300">SET</span> cerrado = TRUE, fecha_cierre = NOW();
+  <span class="text-cyan-300 font-bold">COMMIT;</span>
+
+  <span class="text-blue-400 font-bold">RETURN</span> {
+    status: 200,
+    mensaje: 'Cierre y Liquidación de Costos Ejecutada Exitosamente',
+    total_liquidado: total_pt_liquidado,
+    ordenes_procesadas: COUNT(OPs),
+    balance_cuadrado: <span class="text-green-400 font-bold">TRUE</span>
+  }
+<span class="text-blue-400 font-bold">END FUNCTION</span>
+</pre>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Compact -->
+    <div class="p-4 bg-white border border-slate-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-500 font-mono shadow-xs">
+      <div>
+        <span>Hub Oficial: <strong class="text-slate-800">estuardo.geeksoft.tech</strong></span>
+        <span class="mx-2">·</span>
+        <span>VPS Hostinger: <strong class="text-slate-800">91.108.125.253</strong></span>
+      </div>
+      <span class="text-blue-700 font-bold">Diseñado para: Dr. Estuardo Ramos · Creador de la Metodología Dr. Cost</span>
+    </div>
+
+  </main>
 
 </body>
 </html>

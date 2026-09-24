@@ -87,7 +87,6 @@ const openWhatsApp = () => {
   if (typeof window !== "undefined") {
     const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
     if (isMobile) {
-      // Protocolo directo nativo a la aplicación instalada (evita pasar por web intermedia y Google Play)
       window.location.href = `whatsapp://send?phone=${phone}&text=${text}`;
     } else {
       window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
@@ -385,6 +384,20 @@ export default function SandboxRadarPage() {
           </span>
           <div className="pill-glow"></div>
           <div className="pill-tooltip">Seguir dormido en el inframundo PRE-IA</div>
+        </Link>
+
+        {/* ─── THE MIRROR: Centro inferior ─── */}
+        <Link
+          href="/mirror"
+          className="mirror-anchor-btn"
+          title="Autodiagnóstico de Madurez Operativa"
+        >
+          <img
+            src="/images/v_head.jpg"
+            alt="V"
+            className="mirror-anchor-avatar"
+          />
+          <span>THE MIRROR</span>
         </Link>
 
         {/* ─── RED PILL: esquina inferior derecha (Hover Popover Desktop + Modal Takeover Mobile) ─── */}

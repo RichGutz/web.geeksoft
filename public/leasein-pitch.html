@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leasein - Agente de Ventas IA B2B (WhatsApp & AWS Bedrock) | Kaizen Capital</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+        }
+
+        :root {
+            --bg:          #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #0284C7;
+            --sky-dim:     rgba(2,132,199,0.08);
+            --sky-brd:     rgba(2,132,199,0.25);
+            --emerald:     #059669;
+            --emerald-dim: rgba(5,150,105,0.08);
+            --emerald-brd: rgba(5,150,105,0.25);
+            --purple:      #7C3AED;
+            --purple-dim:  rgba(124,58,237,0.08);
+            --purple-brd:  rgba(124,58,237,0.25);
+            --amber:       #D97706;
+            --amber-dim:   rgba(217,119,6,0.08);
+            --amber-brd:   rgba(217,119,6,0.25);
+            --text:        #0F172A;
+            --text-dim:    rgba(15,23,42,0.68);
+            --border:      rgba(15,23,42,0.10);
+            --shadow:      0 4px 20px rgba(15,23,42,0.05);
+            --shadow-lg:   0 12px 35px rgba(15,23,42,0.10);
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: none; flex-direction: column;
+            padding: 24px 44px;
+            background: var(--bg);
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex; opacity: 1; transform: translateX(0);
+        }
+
+        /* Top Header */
+        .slide-header {
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1.5px solid var(--border);
+            padding-bottom: 12px; margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .brand-box {
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .badge-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: 9999px;
+            font-size: 11px; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+            background: var(--sky-dim); color: var(--sky); border: 1px solid var(--sky-brd);
+            letter-spacing: 0.5px;
+        }
+
+        .badge-emerald {
+            background: var(--emerald-dim); color: var(--emerald); border: 1px solid var(--emerald-brd);
+        }
+
+        .badge-purple {
+            background: var(--purple-dim); color: var(--purple); border: 1px solid var(--purple-brd);
+        }
+
+        .slide-title-group h1 {
+            font-size: 24px; font-weight: 900; color: var(--navy);
+            letter-spacing: -0.5px; line-height: 1.2;
+        }
+
+        .slide-title-group p {
+            font-size: 13px; color: var(--text-dim); margin-top: 2px;
+        }
+
+        /* Content Layout */
+        .content-grid {
+            display: grid; gap: 16px; flex: 1; align-content: start;
+        }
+
+        .grid-2col { grid-template-columns: 1fr 1fr; }
+        .grid-3col { grid-template-columns: repeat(3, 1fr); }
+        .grid-4col { grid-template-columns: repeat(4, 1fr); }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: var(--sky-brd);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 14px; font-weight: 800; color: var(--navy);
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .card-body {
+            font-size: 12.5px; color: var(--text-dim); line-height: 1.5;
+        }
+
+        .card-body ul {
+            padding-left: 16px; margin-top: 6px;
+        }
+
+        .card-body li {
+            margin-bottom: 4px;
+        }
+
+        /* Matrix Table */
+        .matrix-table {
+            width: 100%; border-collapse: collapse; font-size: 12px;
+            background: #fff; border-radius: 10px; overflow: hidden;
+            border: 1px solid var(--border); box-shadow: var(--shadow);
+        }
+
+        .matrix-table th {
+            background: #f1f5f9; color: var(--navy); font-weight: 800;
+            text-align: left; padding: 10px 14px; border-bottom: 1.5px solid var(--border);
+        }
+
+        .matrix-table td {
+            padding: 9px 14px; border-bottom: 1px solid var(--border);
+            color: var(--text); vertical-align: middle;
+        }
+
+        .matrix-table tr:hover td {
+            background: #f8fafc;
+        }
+
+        .tag-si {
+            display: inline-block; padding: 2px 8px; border-radius: 6px;
+            background: #ecfdf5; color: #059669; font-weight: 800; font-size: 10.5px;
+            border: 1px solid #a7f3d0; font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Bottom Controls */
+        .slide-footer {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            height: 48px; background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 44px; z-index: 999;
+        }
+
+        .nav-btn {
+            background: #fff; border: 1px solid var(--border);
+            color: var(--navy); padding: 6px 14px; border-radius: 8px;
+            font-size: 12px; font-weight: 700; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--navy); color: #fff; border-color: var(--navy);
+        }
+
+        .progress-dots {
+            display: flex; gap: 6px; align-items: center;
+        }
+
+        .dot {
+            width: 8px; height: 8px; border-radius: 9999px;
+            background: #cbd5e1; cursor: pointer; transition: all 0.2s ease;
+        }
+
+        .dot.active {
+            width: 24px; background: var(--sky);
+        }
+
+        /* Highlights */
+        .hl { color: var(--sky); font-weight: 700; }
+        .hl-green { color: var(--emerald); font-weight: 700; }
+        .hl-purple { color: var(--purple); font-weight: 700; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body>
+
+<div id="deck">
+
+    <!-- ==================================================================== -->
+    <!-- SLIDE 1: PORTADA EJECUTIVA                                            -->
+    <!-- ==================================================================== -->
+    <div class="slide active" id="slide-1">
+        <div class="slide-header">
+            <div class="brand-box">
+                <span class="badge-pill">PROPUESTA TÉCNICA 2026</span>
+                <span class="badge-pill badge-emerald">LEASEIN PERÚ • RENTING B2B</span>
+            </div>
+            <div class="mono" style="font-size: 12px; color: var(--text-dim);">KAIZEN CAPITAL • GEEKSOFT TECH</div>
+        </div>
+
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 960px; margin: 0 auto; text-align: left;">
+            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 8px; background: var(--sky-dim); color: var(--sky); border: 1px solid var(--sky-brd); font-size: 12px; font-weight: 800; width: fit-content; margin-bottom: 16px;">
+                🤖 AGENTE DE VENTAS 24/7 CON IA GENERATIVA DETERMINISTA
+            </div>
+            <h1 style="font-size: 38px; font-weight: 900; color: var(--navy); letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px;">
+                Automatización Comercial de Extremo a Extremo para Renting de Hardware en WhatsApp
+            </h1>
+            <p style="font-size: 16px; color: var(--text-dim); line-height: 1.6; margin-bottom: 28px;">
+                Calificación de prospectos B2B, scoring de riesgo SUNAT/Sentinel, cotización financiera determinista, negociación con guardrails y cierre con Payment Links en infraestructura privada AWS Bedrock.
+            </p>
+
+            <div class="grid-3col" style="margin-top: 10px;">
+                <div class="card" style="border-left: 4px solid var(--sky);">
+                    <div class="card-title">👨‍💼 Richard Gutierrez</div>
+                    <div class="card-body">
+                        Managing Partner Kaizen Capital<br>
+                        <strong>Ing. Mecánico PUCP • MBA Michigan Ross</strong><br>
+                        Ex-Banquero & Ex-Director Petroperú
+                    </div>
+                </div>
+
+                <div class="card" style="border-left: 4px solid var(--emerald);">
+                    <div class="card-title">⚙️ Stack de Producción</div>
+                    <div class="card-body">
+                        <strong>AWS Bedrock (Claude 3.5 / Llama 3)</strong><br>
+                        LangGraph Stateful Checkpoints<br>
+                        RDS pgvector + Odoo CRM API
+                    </div>
+                </div>
+
+                <div class="card" style="border-left: 4px solid var(--purple);">
+                    <div class="card-title">🔒 Compliance Total</div>
+                    <div class="card-body">
+                        <strong>Leyes 29733 (Datos) & 31814 (IA)</strong><br>
+                        Aislamiento en cuenta AWS del cliente<br>
+                        Cero alucinación en pricing
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- SLIDE 2: MATRIZ DE CAPACIDADES TÉCNICAS (8/8 SÍ)                      -->
+    <!-- ==================================================================== -->
+    <div class="slide" id="slide-2">
+        <div class="slide-header">
+            <div class="slide-title-group">
+                <h1>Matriz de Capacidades Técnicas (8 de 8 Conformes)</h1>
+                <p>Respuesta formal y sustento de ingeniería ante el pliego de requerimientos de Leasein</p>
+            </div>
+            <span class="badge-pill badge-emerald">100% CUMPLIMIENTO</span>
+        </div>
+
+        <div style="flex: 1; overflow-y: auto;">
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">#</th>
+                        <th style="width: 35%;">Requerimiento Exigido por Leasein</th>
+                        <th style="width: 10%; text-align: center;">Respuesta</th>
+                        <th style="width: 50%;">Sustento Técnico de Ingeniería & Arquitectura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono font-bold">01</td>
+                        <td><strong>WhatsApp / Instagram / Web Chat (Meta API)</strong> con continuidad.</td>
+                        <td style="text-align: center;"><span class="tag-si">SÍ</span></td>
+                        <td>Meta Cloud API v21.0 con WebSockets. Identificador unificado (RUC/Teléfono) en capa de sesión global persistente.</td>
+                    </tr>
+                    <tr>
+                        <td class="mono font-bold">02</td>
+                        <td><strong>Orquestación con LangGraph / LangChain</strong> con persistencia.</td>
+                        <td style="text-align: center;"><span class="tag-si">SÍ</span></td>
+                        <td>LangGraph StateGraphs con checkpoints deterministas en PostgreSQL/Redis, manejo de ciclos y recuperación ante caídas.</td>
+                    </tr>
+                    <tr>
+                        <td class="mono font-bold">03</td>
+                        <td><strong>Modelos LLM en AWS Bedrock</strong> conectados a Meta API.</td>
+                        <td style="text-align: center;"><span class="tag-si">SÍ</span></td>
+                        <td>Microservicio contenerizado en AWS ECS/Lambda con Claude 3.5 Sonnet / Llama 3, Bedrock Guardrails y latencia &lt; 2.2s.</td>
+                    </tr>
+                    <tr>
+                        <td class="mono font-bold">04</td>
+                        <td><strong>Base de conocimiento RAG con pgvector / Amazon RDS</strong>.</td>
+                        <td style="text-align: center;"><span class="tag-si">SÍ</span></td>
+                        <td>Búsqueda híbrida (Titan Embeddings V2 1536d + BM25 Full-Text) para catálogo de hardware y políticas contractuales.</td>
+                    </tr>
+                    <tr>
+                        <td class="mono font-bold">05</td>
+                        <td><strong>Integración API con CRM (Odoo) y terceros</strong> (lectura/escritura).</td>
+                        <td style="text-align: center;"><span class="tag-si">SÍ</span></td>
+                        <td>Conectores REST/XML-RPC a Odoo CRM (leads, cotizaciones, stock) y APIs de SUNAT / Sentinel / Equifax en tiempo real.</td>
+                    </tr>
+                    <tr>
+                        <td class="mono font-bold">06</td>
+                        <td><strong>Pasarela de pago integrada al chat</strong> (Payment Links).</td>
+                        <td style="text-align: center;"><span class="tag-si">SÍ</span></td>
+                        <td>Generación dinámica de enlaces de pago (Culqi, Niubiz, Izipay) con confirmación asíncrona vía webhook en WhatsApp.</td>
+                    </tr>
+                    <tr>
+                        <td class="mono font-bold">07</td>
+                        <td><strong>Seguimiento automático de conversaciones</strong> sin respuesta.</td>
+                        <td style="text-align: center;"><span class="tag-si">SÍ</span></td>
+                        <td>Scheduler asíncrono en AWS EventBridge + SQS para secuencias de re-engagement contextuales (T+4h, T+24h, T+72h).</td>
+                    </tr>
+                    <tr>
+                        <td class="mono font-bold">08</td>
+                        <td><strong>Despliegue en la cuenta AWS de Leasein</strong> (IaC).</td>
+                        <td style="text-align: center;"><span class="tag-si">SÍ</span></td>
+                        <td>Terraform IaC modular bajo VPC privada, roles IAM de mínimo privilegio y encriptación KMS. Datos 100% de Leasein.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- SLIDE 3: ARQUITECTURA DE 5 CAPAS                                      -->
+    <!-- ==================================================================== -->
+    <div class="slide" id="slide-3">
+        <div class="slide-header">
+            <div class="slide-title-group">
+                <h1>Arquitectura Empresarial en 5 Capas (Tenant AWS Leasein)</h1>
+                <p>Aislamiento de datos, tolerancia a fallos, idempotencia y separación de responsabilidades</p>
+            </div>
+            <span class="badge-pill">AWS BEDROCK + LANGGRAPH</span>
+        </div>
+
+        <div class="content-grid grid-2col">
+            <div class="card">
+                <div class="card-title">🌐 1. Capa Ingesta & Gateway Omnicanal</div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Meta Cloud API:</strong> Webhook seguro con firma HMAC-SHA256.</li>
+                        <li><strong>Idempotencia & Deduplicación:</strong> Filtro en DynamoDB con TTL 24h para eliminar mensajes duplicados por reintentos de Meta.</li>
+                        <li><strong>Buffer SQS FIFO:</strong> Cola por número de teléfono para garantizar orden cronológico estricto de mensajes.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🧠 2. Capa Orquestador Agéntico (LangGraph)</div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>StateGraphs Dirigidos:</strong> Máquina de estados con transiciones finitas y guardrails de comportamiento comercial.</li>
+                        <li><strong>Checkpointing Persistente:</strong> Memoria de sesión en Amazon RDS para reanudar conversaciones inactivas tras días.</li>
+                        <li><strong>Human-in-the-Loop:</strong> Escalado automático a asesores comerciales ante excepciones o solicitudes de alto volumen.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🧮 3. Capa Motor Determinista (Cero Alucinación)</div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Aislamiento Matemático:</strong> El LLM no calcula cuotas ni inventa precios. Invoca funciones Python deterministas.</li>
+                        <li><strong>Matriz de Renting:</strong> Amortización por plazo (12/24/36m), valor residual y costo de capital exacto.</li>
+                        <li><strong>Bandas de Descuento:</strong> Reglas fijas (0-2% autónomo, 2-5% condicionado, &gt;5% derivación humana).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🏢 4 & 5. Capa RAG Híbrido & Conectores Core</div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>pgvector + BM25:</strong> Búsqueda híbrida para catálogo de laptops/servidores y condiciones contractuales.</li>
+                        <li><strong>Odoo CRM:</strong> Creación y actualización de leads, adjuntos de cotización PDF y sincronización de etapas.</li>
+                        <li><strong>Riesgos & Pagos:</strong> Consulta en línea a SUNAT/Sentinel y links de pago Culqi/Niubiz por chat.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- SLIDE 4: STATEGRAPH & FLUJO CONVERSACIONAL                            -->
+    <!-- ==================================================================== -->
+    <div class="slide" id="slide-4">
+        <div class="slide-header">
+            <div class="slide-title-group">
+                <h1>StateGraph: El Flujo Comercial de Extremo a Extremo</h1>
+                <p>Desde el primer saludo en WhatsApp hasta el deal ganado y pago confirmado en Odoo CRM</p>
+            </div>
+            <span class="badge-pill badge-purple">MÁQUINA DE ESTADOS</span>
+        </div>
+
+        <div class="content-grid grid-3col">
+            <div class="card" style="border-top: 4px solid var(--sky);">
+                <div class="card-title">1. Calificación & Requerimiento</div>
+                <div class="card-body">
+                    <p><strong>• Saludo & Consentimiento:</strong> Cláusula Ley 29733 en bienvenida.</p>
+                    <p><strong>• Needs Assessment:</strong> Extrae volumen, gama (ej. 15 ThinkPads i7) y plazo.</p>
+                    <p><strong>• Hardware Matching:</strong> Consulta disponibilidad y SKUs en RAG/Odoo.</p>
+                </div>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--amber);">
+                <div class="card-title">2. Validación & Scoring B2B</div>
+                <div class="card-body">
+                    <p><strong>• Consulta RUC SUNAT:</strong> Valida estado Activo y condición Habido.</p>
+                    <p><strong>• Sentinel / Equifax:</strong> Scoring crediticio automatizado del prospecto.</p>
+                    <p><strong>• Filtro de Riesgo:</strong> Si score &lt; umbral ➔ Desk de crédito humano.</p>
+                </div>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--emerald);">
+                <div class="card-title">3. Cotización & Cierre</div>
+                <div class="card-body">
+                    <p><strong>• Cotización Determinista:</strong> PDF formal enviado al chat de WhatsApp.</p>
+                    <p><strong>• Negociación Acotada:</strong> Manejo de objeciones dentro de límites.</p>
+                    <p><strong>• Payment Link & Odoo:</strong> Cobro de garantía y pase a operaciones.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 14px; background: #f0fdf4; border: 1px solid #bbf7d0;">
+            <div style="font-size: 13px; font-weight: 800; color: #15803d; margin-bottom: 4px;">
+                ⏱️ Mecanismo de Re-Engagement Asíncrono (AWS SQS)
+            </div>
+            <div style="font-size: 12px; color: #166534; line-height: 1.4;">
+                Si el prospecto abandona tras recibir la cotización, el agente detona <strong>nudges contextualizados</strong> a las 4h ("15 equipos reservados hasta mañana") y 24h ("¿Deseas agendar con un especialista?"), recuperando hasta 35% de leads dormidos.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- SLIDE 5: LOS 3 CASOS DE ÉXITO REALES                                  -->
+    <!-- ==================================================================== -->
+    <div class="slide" id="slide-5">
+        <div class="slide-header">
+            <div class="slide-title-group">
+                <h1>Casos de Éxito Reales y Demostrables</h1>
+                <p>Experiencia probada en inteligencia determinista, riesgo financiero B2B y modelos en AWS</p>
+            </div>
+            <span class="badge-pill badge-emerald">PROYECTOS EN VIVO</span>
+        </div>
+
+        <div class="content-grid grid-3col">
+            <div class="card" style="border-left: 4px solid #0284c7;">
+                <div class="card-title">🐷 1. Caso Dr. Pork (Gemelo Digital)</div>
+                <div class="card-body">
+                    <p><strong>Alcance:</strong> Modernización de software legacy y Gemelo Digital de Don Estuardo Ramos (84 años, máxima autoridad de costos en Perú), ingiriendo 10 libros y su motor contable.</p>
+                    <p style="margin-top: 8px;"><strong>Relevancia Leasein:</strong> <span class="hl">RAG con cero alucinaciones</span>, garantizando que el agente opere bajo fórmulas exactas sin inventar datos.</p>
+                </div>
+            </div>
+
+            <div class="card" style="border-left: 4px solid #059669;">
+                <div class="card-title">📈 2. ERP Factoring & Scoring B2B</div>
+                <div class="card-body">
+                    <p><strong>Alcance:</strong> Plataforma ERP financiera con evaluación de riesgo crediticio para facturas negociables, validando RUCs, centrales de riesgo y scoring de default.</p>
+                    <p style="margin-top: 8px;"><strong>Relevancia Leasein:</strong> <span class="hl-green">Dominio del ciclo de evaluación B2B</span>, scoring de riesgo y estructuración matemática de contratos.</p>
+                </div>
+            </div>
+
+            <div class="card" style="border-left: 4px solid #7c3aed;">
+                <div class="card-title">🏛️ 3. Gemelo Inmobiliario Bedrock</div>
+                <div class="card-body">
+                    <p><strong>Alcance:</strong> Sistema multiformato (CAD, PDFs, contratos) para gestión de activos inmobiliarios con base de conocimiento privada desplegada en AWS Bedrock con KMS.</p>
+                    <p style="margin-top: 8px;"><strong>Relevancia Leasein:</strong> <span class="hl-purple">Modelos en nube privada</span>, cumpliendo estrictamente las Leyes 29733 y 31814 sin fuga de datos.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- SLIDE 6: COMPLIANCE LEGAL & GOBERNANZA EN PERÚ                        -->
+    <!-- ==================================================================== -->
+    <div class="slide" id="slide-6">
+        <div class="slide-header">
+            <div class="slide-title-group">
+                <h1>Compliance Regulatorio & IA Responsable en Perú</h1>
+                <p>Entregables concretos y blindaje legal para auditorías de la ANPDP y directiva de Leasein</p>
+            </div>
+            <span class="badge-pill">LEYES 29733 & 31814</span>
+        </div>
+
+        <div class="content-grid grid-2col">
+            <div class="card">
+                <div class="card-title">🛡️ Ley 29733 (Protección de Datos Personales)</div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Consentimiento Informado:</strong> Cláusula opt-in automática en el primer mensaje de WhatsApp.</li>
+                        <li><strong>Encriptación Robusta:</strong> Datos en reposo encriptados con AWS KMS (AES-256) y TLS 1.3 en tránsito.</li>
+                        <li><strong>Anonimización de Logs:</strong> Mascarado automático de DNI, teléfonos y datos bancarios en trazas de depuración.</li>
+                        <li><strong>Contrato de Tratamiento:</strong> Documentación formal de encargado de tratamiento de datos personales para MinJus.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">⚖️ Ley 31814 (Uso y Desarrollo de IA en Perú)</div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Transparencia:</strong> Declaración explícita al usuario de interactuar con un Agente de IA.</li>
+                        <li><strong>Supervisión Humana (HITL):</strong> Todo deal relevante pasa por la aprobación final de un ejecutivo de Leasein.</li>
+                        <li><strong>Explicabilidad & Auditoría:</strong> Registro inmutable de logs con las razones del scoring y de la cotización.</li>
+                        <li><strong>Soberanía en AWS Leasein:</strong> Cero uso de datos de Leasein para entrenamiento de modelos públicos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- SLIDE 7: ROADMAP POR FASES & KICK-OFF                                 -->
+    <!-- ==================================================================== -->
+    <div class="slide" id="slide-7">
+        <div class="slide-header">
+            <div class="slide-title-group">
+                <h1>Roadmap de Implementación por Fases & Criterios Medibles</h1>
+                <p>Plan de 8 a 10 semanas con entregables funcionales verificables en cada hito</p>
+            </div>
+            <span class="badge-pill badge-emerald">ROADMAP EJECUTIVO</span>
+        </div>
+
+        <div class="content-grid grid-4col">
+            <div class="card" style="border-top: 4px solid var(--sky);">
+                <div class="card-title">Fase 1: Core Agent</div>
+                <div class="card-body">
+                    <p class="mono font-bold">Semanas 1 - 3</p>
+                    <ul style="margin-top: 6px;">
+                        <li>VPC AWS + Bedrock.</li>
+                        <li>Meta Cloud API.</li>
+                        <li>LangGraph + pgvector.</li>
+                        <li>Demo flujo cotización.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--emerald);">
+                <div class="card-title">Fase 2: Integraciones</div>
+                <div class="card-body">
+                    <p class="mono font-bold">Semanas 4 - 6</p>
+                    <ul style="margin-top: 6px;">
+                        <li>Conectores Odoo CRM.</li>
+                        <li>SUNAT + Sentinel API.</li>
+                        <li>Motor Determinista.</li>
+                        <li>PDF cotizaciones vivo.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--purple);">
+                <div class="card-title">Fase 3: Pagos & Nudges</div>
+                <div class="card-body">
+                    <p class="mono font-bold">Semanas 7 - 8</p>
+                    <ul style="margin-top: 6px;">
+                        <li>Payment Links Culqi.</li>
+                        <li>Re-engagement SQS.</li>
+                        <li>Dossier Ley 29733/31814.</li>
+                        <li>Testing extremo a extremo.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--navy);">
+                <div class="card-title">Fase 4: Go-Live</div>
+                <div class="card-body">
+                    <p class="mono font-bold">Semanas 9 - 10</p>
+                    <ul style="margin-top: 6px;">
+                        <li>Piloto tráfico real.</li>
+                        <li>Monitoreo CloudWatch.</li>
+                        <li>Capacitación equipo.</li>
+                        <li>Soporte SLA 99.9%.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center; background: #f8fafc; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px;">
+            <span style="font-size: 14px; font-weight: 800; color: var(--navy);">
+                ¿Listos para co-construir el Agente de Ventas B2B líder del Perú?
+            </span>
+            <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">
+                Richard Gutierrez • <a href="mailto:rich@kaizencapital.pe" style="color: var(--sky); text-decoration: none; font-weight: 700;">rich@kaizencapital.pe</a> • Cel: +51 991 090 016 • <a href="http://www.kaizencapital.pe" target="_blank" style="color: var(--sky); text-decoration: none; font-weight: 700;">www.kaizencapital.pe</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ==================================================================== -->
+<!-- FOOTER & NAVEGACIÓN                                                   -->
+<!-- ==================================================================== -->
+<div class="slide-footer">
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <button class="nav-btn" onclick="prevSlide()">◀ Anterior</button>
+        <button class="nav-btn" onclick="nextSlide()">Siguiente ▶</button>
+        <span class="mono" style="font-size: 11px; color: var(--text-dim); margin-left: 8px;">[Usa Flechas ← →]</span>
+    </div>
+
+    <div class="progress-dots" id="dotsContainer"></div>
+
+    <div class="mono" style="font-size: 12px; font-weight: 800; color: var(--navy);">
+        SLIDE <span id="currentNum">1</span> / <span id="totalNum">7</span>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const dotsContainer = document.getElementById('dotsContainer');
+    const currentNum = document.getElementById('currentNum');
+    const totalNum = document.getElementById('totalNum');
+
+    totalNum.textContent = totalSlides;
+
+    // Crear dots
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+    }
+
+    const dots = document.querySelectorAll('.dot');
+
+    function updateView() {
+        slides.forEach((s, idx) => {
+            s.classList.toggle('active', idx === currentSlide);
+        });
+        dots.forEach((d, idx) => {
+            d.classList.toggle('active', idx === currentSlide);
+        });
+        currentNum.textContent = currentSlide + 1;
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            updateView();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateView();
+        }
+    }
+
+    function goToSlide(idx) {
+        currentSlide = idx;
+        updateView();
+    }
+
+    // Teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'Space') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+</script>
+
+</body>
+</html>
