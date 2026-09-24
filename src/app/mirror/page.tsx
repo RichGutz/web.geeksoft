@@ -34,6 +34,20 @@ export default function MirrorPage() {
       </div>
 
       {/* ─── CAPA 1: UI Flotante con Scroll Limpio ─────────────────────────────── */}
+      {/* Botón Volver a Geeksoft en esquina superior izquierda */}
+      <Link
+        href="/"
+        className="mirror-back-link"
+        style={{
+          position: "absolute",
+          top: "2rem",
+          left: "2.5rem",
+          zIndex: 100,
+        }}
+      >
+        ← Volver a Geeksoft
+      </Link>
+
       <div
         className="mirror-ui-container"
         style={{
@@ -44,20 +58,10 @@ export default function MirrorPage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "flex-start",
-          padding: "2rem 1.5rem 4rem 1.5rem",
+          padding: "5rem 2rem 4rem 2rem",
           overflowY: "auto",
         }}
       >
-
-        {/* Botón Volver al Home */}
-        <div style={{ width: "100%", maxWidth: "940px", display: "flex", justifyContent: "flex-start", marginBottom: "1rem" }}>
-          <Link
-            href="/"
-            className="mirror-back-link"
-          >
-            ← Volver a Geeksoft
-          </Link>
-        </div>
 
         {/* Header Principal de The Mirror */}
         <div className="mirror-hero-section">
