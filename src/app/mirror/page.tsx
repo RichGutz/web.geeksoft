@@ -49,16 +49,19 @@ export default function MirrorPage() {
         }}
       >
 
-        {/* Header Superior Compacto de The Mirror */}
-        <div className="mirror-header-bar">
+        {/* Botón Volver al Home */}
+        <div style={{ width: "100%", maxWidth: "940px", display: "flex", justifyContent: "flex-start", marginBottom: "1rem" }}>
           <Link
             href="/"
             className="mirror-back-link"
           >
             ← Volver a Geeksoft
           </Link>
+        </div>
 
-          <div className="mirror-hero-compact">
+        {/* Header Principal de The Mirror */}
+        <div className="mirror-hero-section">
+          <div className="mirror-hero-header-row">
             <div className="mirror-v-avatar-wrapper">
               <img
                 src="/images/v_head.jpg"
@@ -67,16 +70,21 @@ export default function MirrorPage() {
               />
               <div className="mirror-avatar-glow" />
             </div>
-
-            <div className="mirror-hero-text">
-              <div className="mirror-hero-top-row">
-                <span className="mirror-tagline">● THE MIRROR // SELF-ASSESSMENT</span>
-                <span className="mirror-quote-inline">"If you are looking for the guilty, look into a mirror." — V</span>
-              </div>
-              <p className="mirror-speech-bubble-compact">
-                El primer paso para transformar tu empresa no es comprar herramientas a ciegas, sino <strong>conocer la realidad de tu operación</strong>. Tómate 2 minutos para evaluar tus procesos y recibir un diagnóstico de madurez personalizado.
-              </p>
+            <div className="mirror-hero-titles">
+              <div className="mirror-tagline">● THE MIRROR // SELF-ASSESSMENT</div>
+              <blockquote className="mirror-quote">
+                "If you are looking for the guilty, look into a mirror."
+                <span className="mirror-quote-author"> — V</span>
+              </blockquote>
             </div>
+          </div>
+
+          <div className="mirror-speech-bubble">
+            <p>
+              El primer paso para transformar tu empresa no es comprar herramientas a ciegas, 
+              sino <strong>conocer la realidad de tu operación</strong>. Tómate 2 minutos para 
+              evaluar tus procesos y recibir un diagnóstico de madurez personalizado.
+            </p>
           </div>
         </div>
 
