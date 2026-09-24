@@ -252,7 +252,7 @@ export default function MirrorQuiz() {
             <p className="quiz-question-subtitle">{currentStep.subtitle}</p>
           </div>
 
-          <div className="quiz-options-grid">
+          <div className={`quiz-options-grid options-count-${currentStep.options.length}`}>
             {currentStep.options.map((option) => {
               const isSelected = answers[currentStepIndex] === option.id;
               return (

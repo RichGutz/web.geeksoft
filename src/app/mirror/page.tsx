@@ -49,43 +49,34 @@ export default function MirrorPage() {
         }}
       >
 
-        {/* Botón Volver al Home */}
-        <Link
-          href="/"
-          className="mirror-back-link"
-        >
-          ← Volver a Geeksoft
-        </Link>
+        {/* Header Superior Compacto de The Mirror */}
+        <div className="mirror-header-bar">
+          <Link
+            href="/"
+            className="mirror-back-link"
+          >
+            ← Volver a Geeksoft
+          </Link>
 
-        {/* Header Principal de The Mirror */}
-        <div className="mirror-hero-section">
-          {/* Avatar / Retrato Oficial de V */}
-          <div className="mirror-v-avatar-wrapper">
-            <img
-              src="/images/v_head.jpg"
-              alt="V - The Mirror"
-              className="mirror-v-avatar-img"
-            />
-            <div className="mirror-avatar-glow" />
-          </div>
+          <div className="mirror-hero-compact">
+            <div className="mirror-v-avatar-wrapper">
+              <img
+                src="/images/v_head.jpg"
+                alt="V - The Mirror"
+                className="mirror-v-avatar-img"
+              />
+              <div className="mirror-avatar-glow" />
+            </div>
 
-          {/* Tag & Quote de V en Inglés */}
-          <div className="mirror-tagline">
-            <span>● THE MIRROR // SELF-ASSESSMENT</span>
-          </div>
-
-          <blockquote className="mirror-quote">
-            "If you are looking for the guilty, you need only look into a mirror."
-            <footer className="mirror-quote-author">— V</footer>
-          </blockquote>
-
-          {/* Burbuja Invitación Amable & Estratégica */}
-          <div className="mirror-speech-bubble">
-            <p>
-              El primer paso para transformar tu empresa no es comprar herramientas a ciegas, 
-              sino <strong>conocer la realidad de tu operación</strong>. Tómate 2 minutos para 
-              evaluar tus procesos y recibir un diagnóstico de madurez personalizado.
-            </p>
+            <div className="mirror-hero-text">
+              <div className="mirror-hero-top-row">
+                <span className="mirror-tagline">● THE MIRROR // SELF-ASSESSMENT</span>
+                <span className="mirror-quote-inline">"If you are looking for the guilty, look into a mirror." — V</span>
+              </div>
+              <p className="mirror-speech-bubble-compact">
+                El primer paso para transformar tu empresa no es comprar herramientas a ciegas, sino <strong>conocer la realidad de tu operación</strong>. Tómate 2 minutos para evaluar tus procesos y recibir un diagnóstico de madurez personalizado.
+              </p>
+            </div>
           </div>
         </div>
 
