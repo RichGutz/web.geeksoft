@@ -173,16 +173,27 @@ export default function MirrorQuiz() {
     }
   };
 
-  const handleSubmitEmail = (e: React.FormEvent) => {
+  const handleSubmitEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes("@")) return;
 
     setIsSubmitting(true);
-    // Simulación elegante de procesamiento y envío
-    setTimeout(() => {
+    try {
+      await fetch("/api/send-mirror-diagnosis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          recommendation,
+          answers,
+        }),
+      });
+    } catch (err) {
+      console.error("Error al enviar diagnóstico:", err);
+    } finally {
       setIsSubmitting(false);
       setIsCompleted(true);
-    }, 900);
+    }
   };
 
   // Veredicto personalizado según respuestas
