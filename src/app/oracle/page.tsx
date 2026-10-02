@@ -33,58 +33,39 @@ export default function OraclePage() {
         </Canvas>
       </div>
 
-      {/* ─── CAPA 1: Botón Volver a Geeksoft en esquina superior izquierda ─────── */}
+      {/* ─── CAPA 1: Botón Volver a Geeksoft Responsivo ────────────────────────── */}
       <Link
         href="/"
-        className="mirror-back-link"
-        style={{
-          position: "absolute",
-          top: "1.5rem",
-          left: "2rem",
-          zIndex: 100,
-        }}
+        className="oracle-back-link"
       >
         ← Volver a Geeksoft
       </Link>
 
-      <div
-        className="mirror-ui-container"
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 10,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          padding: "3.5rem 1.5rem 2.5rem 1.5rem",
-          overflowY: "auto",
-        }}
-      >
+      <div className="oracle-ui-container">
 
-        {/* ─── Header Compacto de The Oracle (Avatar + Cita) ─────────────────── */}
-        <div className="mirror-hero-section" style={{ marginBottom: "1rem" }}>
-          <div className="mirror-hero-header-row" style={{ gap: "1.2rem", marginBottom: "0" }}>
-            <div className="mirror-v-avatar-wrapper" style={{ width: "85px", height: "85px", minWidth: "85px" }}>
+        {/* ─── Header Compacto de The Oracle Responsivo ───────────────────────── */}
+        <div className="oracle-hero-section">
+          <div className="oracle-hero-header-row">
+            <div className="oracle-avatar-wrapper">
               <img
                 src="/images/oracle_head.jpg"
                 alt="The Oracle"
-                className="mirror-v-avatar-img"
+                className="oracle-avatar-img"
               />
               <div className="mirror-avatar-glow" />
             </div>
-            <div className="mirror-hero-titles">
-              <div className="mirror-tagline" style={{ fontSize: "0.72rem" }}>● THE ORACLE // PROPHETIC INTELLIGENCE</div>
-              <blockquote className="mirror-quote" style={{ fontSize: "1.2rem" }}>
+            <div>
+              <div className="oracle-tagline">● THE ORACLE // PROPHETIC INTELLIGENCE</div>
+              <blockquote className="oracle-quote">
                 "Temet Nosce — Conócete a ti mismo."
-                <span className="mirror-quote-author" style={{ fontSize: "0.85rem" }}> — The Oracle</span>
+                <span className="oracle-quote-author"> — The Oracle</span>
               </blockquote>
             </div>
           </div>
         </div>
 
         {/* ─── Contenedor del Reel de Visión (Tarjeta Angosta y Centrada) ─────── */}
-        <div className="mirror-quiz-wrapper" style={{ maxWidth: "1080px", width: "100%" }}>
+        <div className="mirror-quiz-wrapper" style={{ maxWidth: "1040px", width: "100%" }}>
           <OracleQuiz />
         </div>
 

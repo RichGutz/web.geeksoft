@@ -61,28 +61,15 @@ export default function OracleQuiz() {
         style={{
           borderColor: currentVision.tagColor,
           boxShadow: `0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px ${currentVision.tagColor}15`,
-          padding: "1.25rem 1.5rem",
+          padding: "1.25rem 1.4rem",
         }}
       >
-        {/* Layout en 2 Columnas: Izquierda = Gran Burbuja + Controles + WhatsApp | Derecha = Infografía */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "380px 1fr",
-            gap: "1.5rem",
-            alignItems: "stretch",
-          }}
-        >
-          {/* ── COLUMNA IZQUIERDA: GRAN BURBUJA EXPLICATIVA + CONTROLES + WHATSAPP ── */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              gap: "1rem",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+        {/* Layout Responsivo: 2 Columnas en Desktop / 1 Columna Fluida en Móvil */}
+        <div className="oracle-layout-grid">
+          
+          {/* ── COLUMNA IZQUIERDA (Desktop) / PANEL INFERIOR (Móvil): DIAGNÓSTICO + ACCIONES ── */}
+          <div className="oracle-sidebar-col">
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
               {/* Selector de Pestañas */}
               <div style={{ display: "flex", gap: "0.4rem" }}>
                 {VISIONS.map((v, idx) => {
@@ -134,7 +121,7 @@ export default function OracleQuiz() {
                 <h3
                   className="quiz-question-title"
                   style={{
-                    fontSize: "1.15rem",
+                    fontSize: "1.12rem",
                     margin: 0,
                     letterSpacing: "-0.2px",
                     color: "#ffffff",
@@ -146,14 +133,14 @@ export default function OracleQuiz() {
                 </h3>
               </div>
 
-              {/* GRAN BURBUJA A LA IZQUIERDA DE LA INFOGRAFÍA */}
+              {/* GRAN BURBUJA DE DIAGNÓSTICO ESTRATÉGICO */}
               <div
-                className="mirror-speech-bubble"
+                className="mirror-speech-bubble oracle-speech-bubble-mobile"
                 style={{
                   background: "rgba(0, 25, 12, 0.85)",
                   border: `1px solid ${currentVision.tagColor}70`,
                   borderRadius: "12px",
-                  padding: "1rem 1.2rem",
+                  padding: "0.95rem 1.15rem",
                   boxShadow: `0 0 25px ${currentVision.tagColor}15`,
                 }}
               >
@@ -172,7 +159,7 @@ export default function OracleQuiz() {
                 </div>
                 <p
                   style={{
-                    fontSize: "0.88rem",
+                    fontSize: "0.86rem",
                     lineHeight: "1.5",
                     color: "#ffffff",
                     margin: 0,
@@ -190,7 +177,7 @@ export default function OracleQuiz() {
                   background: "rgba(0, 0, 0, 0.45)",
                   border: "1px solid rgba(255, 255, 255, 0.08)",
                   borderRadius: "10px",
-                  padding: "0.85rem 1rem",
+                  padding: "0.8rem 0.95rem",
                 }}
               >
                 <div
@@ -199,7 +186,7 @@ export default function OracleQuiz() {
                     color: currentVision.tagColor,
                     fontWeight: 800,
                     letterSpacing: "1.5px",
-                    marginBottom: "0.4rem",
+                    marginBottom: "0.35rem",
                     textTransform: "uppercase",
                     fontFamily: "var(--font-display)",
                   }}
@@ -215,7 +202,7 @@ export default function OracleQuiz() {
                     lineHeight: "1.4",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "0.3rem",
+                    gap: "0.25rem",
                     textAlign: "left",
                   }}
                 >
@@ -312,10 +299,10 @@ export default function OracleQuiz() {
                 </div>
               </div>
 
-              {/* TEXTO DE PAUSA: DEBAJO DEL REEL Y SOBRE EL BOTÓN DE WHATSAPP */}
+              {/* TEXTO DE PAUSA */}
               <div
                 style={{
-                  fontSize: "0.7rem",
+                  fontSize: "0.68rem",
                   color: isPaused ? "#ff6699" : "rgba(0, 255, 128, 0.9)",
                   textAlign: "center",
                   fontWeight: 700,
@@ -324,7 +311,7 @@ export default function OracleQuiz() {
                   padding: "2px 0",
                 }}
               >
-                {isPaused ? "⏸ Reel pausado (clic en la imagen para reanudar)" : "💡 Clic en la imagen para pausar"}
+                {isPaused ? "⏸ Reel pausado (clic en imagen para reanudar)" : "💡 Clic en la imagen para pausar"}
               </div>
 
               {/* Botón CTA a WhatsApp */}
@@ -353,40 +340,20 @@ export default function OracleQuiz() {
             </div>
           </div>
 
-          {/* ── COLUMNA DERECHA: INFOGRAFÍA MAXIMIZADA Y 100% LIMPIA ── */}
+          {/* ── COLUMNA DERECHA (Desktop) / PANEL SUPERIOR (Móvil): INFOGRAFÍA RESPONSIVA ── */}
           <div
             onClick={togglePause}
-            style={{
-              position: "relative",
-              borderRadius: "12px",
-              overflow: "hidden",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-              boxShadow: `0 0 35px rgba(0, 0, 0, 0.85), 0 0 20px ${currentVision.tagColor}15`,
-              background: "#000000",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "0.5rem",
-              cursor: "pointer",
-              minHeight: "560px",
-            }}
+            className="oracle-infographic-col"
             title={isPaused ? "Pausado. Clic para reanudar reel automático" : "Clic en la infografía para pausar"}
           >
             <img
               key={currentVision.image}
               src={currentVision.image}
               alt={currentVision.title}
-              style={{
-                maxWidth: "100%",
-                maxHeight: "680px",
-                width: "auto",
-                height: "auto",
-                objectFit: "contain",
-                display: "block",
-                borderRadius: "8px",
-              }}
+              className="oracle-infographic-img"
             />
           </div>
+
         </div>
       </div>
     </div>
