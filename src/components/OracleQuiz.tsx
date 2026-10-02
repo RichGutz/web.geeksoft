@@ -10,7 +10,7 @@ const VISIONS = [
     title: "La Organización Agéntica 2026",
     subtitle: "El salto de asistencia pasiva a ejecución de flujos",
     image: "/images/modelo_madurez_organizacion_agentica.jpg",
-    description: "Cruzar el Umbral Crítico y desplegar cuadrillas agénticas autónomas y gobernadas multiplica el impacto y el ROI del negocio de 10x a 50x.",
+    speechBubble: "El salto a la Organización Agéntica 2026 requiere cruzar el Umbral Crítico: pasar de la asistencia pasiva a cuadrillas autónomas gobernadas que multiplican el impacto y el ROI operativo del negocio de 10x a 50x.",
     keyPoints: [
       "Evolución de L0 (Manual) a L5 (Empresa Agéntica Multi-Agente).",
       "Humanos en supervisión estratégica (HITL) mientras los agentes entregan valor.",
@@ -24,7 +24,7 @@ const VISIONS = [
     title: "El Colapso por Falta de Cimientos",
     subtitle: "Tener el modelo no es tener la solución",
     image: "/images/transformacion_ia_colapso_matrix.jpg",
-    description: "Comprar licencias de modelos sin construir datos limpios, procesos digitalizados y arquitectura SaaS a medida parte el puente en el aire y quiebra la operación.",
+    speechBubble: "Comprar licencias de modelos sin construir datos limpios, procesos digitalizados y arquitectura SaaS a medida parte el puente en el aire y quiebra la operación.",
     keyPoints: [
       "85% de proyectos de IA fracasan por falta de infraestructura de datos.",
       "Desarrolladores sobrecargados intentando sostener flujos sin arquitectura.",
@@ -55,194 +55,25 @@ export default function OracleQuiz() {
   };
 
   return (
-    <div className="mirror-quiz-container">
+    <div className="mirror-quiz-container" style={{ width: "100%" }}>
       <div
         className="quiz-step-card animate-fade-in"
         style={{
           borderColor: currentVision.tagColor,
           boxShadow: `0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px ${currentVision.tagColor}15`,
+          padding: "1.25rem 1.5rem",
         }}
       >
-        {/* Cabecera interna del Reel */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingBottom: "1rem",
-            marginBottom: "1.2rem",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-            flexWrap: "wrap",
-            gap: "0.8rem",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                color: currentVision.tagColor,
-                fontFamily: "var(--font-display)",
-                fontSize: "0.75rem",
-                fontWeight: 800,
-                letterSpacing: "2.5px",
-                textTransform: "uppercase",
-                marginBottom: "3px",
-              }}
-            >
-              {currentVision.badge}
-            </div>
-            <h3
-              className="quiz-question-title"
-              style={{
-                fontSize: "1.25rem",
-                margin: 0,
-                letterSpacing: "-0.2px",
-                color: "#ffffff",
-                textAlign: "left",
-              }}
-            >
-              {currentVision.subtitle}
-            </h3>
-          </div>
-
-          {/* Controles de Navegación y Pausa */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <button
-              onClick={togglePause}
-              title={isPaused ? "Clic para reanudar reel automático" : "Clic para pausar reel"}
-              style={{
-                background: isPaused ? "rgba(255, 0, 85, 0.15)" : "rgba(0, 255, 128, 0.12)",
-                border: `1px solid ${isPaused ? "rgba(255, 0, 85, 0.5)" : "rgba(0, 255, 128, 0.5)"}`,
-                color: isPaused ? "#ff6699" : "#00ff80",
-                padding: "0.4rem 0.8rem",
-                borderRadius: "20px",
-                fontSize: "0.72rem",
-                fontWeight: 800,
-                letterSpacing: "1px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-                transition: "all 0.2s ease",
-              }}
-            >
-              <span>{isPaused ? "⏸ PAUSADO" : "▶ REEL 5s"}</span>
-            </button>
-
-            <button
-              onClick={() => setCurrentIdx((prev) => (prev - 1 + VISIONS.length) % VISIONS.length)}
-              style={{
-                background: "rgba(0, 255, 128, 0.06)",
-                border: "1px solid rgba(0, 255, 128, 0.3)",
-                color: "#00ff80",
-                padding: "0.4rem 0.75rem",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                fontFamily: "var(--font-display)",
-              }}
-            >
-              ◀ Ant
-            </button>
-
-            <span
-              style={{
-                fontSize: "0.78rem",
-                color: "rgba(255, 255, 255, 0.8)",
-                minWidth: "40px",
-                textAlign: "center",
-                fontWeight: 800,
-                fontFamily: "var(--font-display)",
-              }}
-            >
-              {currentIdx + 1} / {VISIONS.length}
-            </span>
-
-            <button
-              onClick={() => setCurrentIdx((prev) => (prev + 1) % VISIONS.length)}
-              style={{
-                background: "rgba(0, 255, 128, 0.06)",
-                border: "1px solid rgba(0, 255, 128, 0.3)",
-                color: "#00ff80",
-                padding: "0.4rem 0.75rem",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                fontFamily: "var(--font-display)",
-              }}
-            >
-              Sig ▶
-            </button>
-          </div>
-        </div>
-
-        {/* Layout en 2 Columnas: Infografía + Panel Lateral */}
+        {/* Layout en 2 Columnas: Izquierda = Gran Burbuja + Controles + WhatsApp | Derecha = Infografía */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 310px",
-            gap: "1.4rem",
+            gridTemplateColumns: "380px 1fr",
+            gap: "1.5rem",
             alignItems: "stretch",
           }}
         >
-          {/* Columna Izquierda: Infografía con Click para Pausar */}
-          <div
-            onClick={togglePause}
-            style={{
-              position: "relative",
-              borderRadius: "10px",
-              overflow: "hidden",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-              boxShadow: `0 0 30px rgba(0, 0, 0, 0.85), 0 0 20px ${currentVision.tagColor}15`,
-              background: "#000000",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "0.5rem",
-              cursor: "pointer",
-              minHeight: "480px",
-            }}
-            title={isPaused ? "Pausado. Clic para reanudar reel automático" : "Clic en la infografía para pausar"}
-          >
-            <img
-              key={currentVision.image}
-              src={currentVision.image}
-              alt={currentVision.title}
-              style={{
-                maxWidth: "100%",
-                maxHeight: "560px",
-                width: "auto",
-                height: "auto",
-                objectFit: "contain",
-                display: "block",
-                borderRadius: "6px",
-              }}
-            />
-
-            {/* Badge Flotante */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: "0.8rem",
-                left: "0.8rem",
-                background: "rgba(0, 0, 0, 0.85)",
-                border: "1px solid rgba(0, 255, 128, 0.35)",
-                borderRadius: "6px",
-                padding: "4px 8px",
-                fontSize: "0.68rem",
-                color: "#00ff80",
-                backdropFilter: "blur(6px)",
-                pointerEvents: "none",
-                fontFamily: "var(--font-display)",
-                letterSpacing: "0.5px",
-              }}
-            >
-              {isPaused ? "⏸ Pausado • Clic para reanudar" : "💡 Clic en la imagen para pausar"}
-            </div>
-          </div>
-
-          {/* Columna Derecha: Panel Descriptivo */}
+          {/* ── COLUMNA IZQUIERDA: GRAN BURBUJA EXPLICATIVA + CONTROLES + WHATSAPP ── */}
           <div
             style={{
               display: "flex",
@@ -251,7 +82,7 @@ export default function OracleQuiz() {
               gap: "1rem",
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
               {/* Selector de Pestañas */}
               <div style={{ display: "flex", gap: "0.4rem" }}>
                 {VISIONS.map((v, idx) => {
@@ -265,7 +96,7 @@ export default function OracleQuiz() {
                       }}
                       style={{
                         flex: 1,
-                        padding: "0.55rem 0.4rem",
+                        padding: "0.5rem 0.4rem",
                         background: isActive ? `${v.tagColor}18` : "rgba(255, 255, 255, 0.03)",
                         border: `1px solid ${isActive ? v.tagColor : "rgba(255, 255, 255, 0.1)"}`,
                         borderRadius: "6px",
@@ -285,14 +116,45 @@ export default function OracleQuiz() {
                 })}
               </div>
 
-              {/* Tesis de Impacto Solicitada */}
+              {/* Título de la Visión Activa */}
+              <div>
+                <div
+                  style={{
+                    color: currentVision.tagColor,
+                    fontFamily: "var(--font-display)",
+                    fontSize: "0.72rem",
+                    fontWeight: 800,
+                    letterSpacing: "2px",
+                    textTransform: "uppercase",
+                    marginBottom: "2px",
+                  }}
+                >
+                  {currentVision.badge}
+                </div>
+                <h3
+                  className="quiz-question-title"
+                  style={{
+                    fontSize: "1.15rem",
+                    margin: 0,
+                    letterSpacing: "-0.2px",
+                    color: "#ffffff",
+                    textAlign: "left",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {currentVision.subtitle}
+                </h3>
+              </div>
+
+              {/* GRAN BURBUJA A LA IZQUIERDA DE LA INFOGRAFÍA */}
               <div
+                className="mirror-speech-bubble"
                 style={{
-                  background: "rgba(0, 255, 128, 0.05)",
-                  border: `1px solid ${currentVision.tagColor}60`,
-                  borderRadius: "10px",
-                  padding: "1rem",
-                  boxShadow: `0 0 20px ${currentVision.tagColor}10`,
+                  background: "rgba(0, 25, 12, 0.85)",
+                  border: `1px solid ${currentVision.tagColor}70`,
+                  borderRadius: "12px",
+                  padding: "1rem 1.2rem",
+                  boxShadow: `0 0 25px ${currentVision.tagColor}15`,
                 }}
               >
                 <div
@@ -302,15 +164,15 @@ export default function OracleQuiz() {
                     color: currentVision.tagColor,
                     letterSpacing: "1.5px",
                     textTransform: "uppercase",
-                    marginBottom: "0.5rem",
+                    marginBottom: "0.4rem",
                     fontFamily: "var(--font-display)",
                   }}
                 >
-                  TESIS DE IMPACTO
+                  DIAGNÓSTICO ESTRATÉGICO
                 </div>
                 <p
                   style={{
-                    fontSize: "0.86rem",
+                    fontSize: "0.88rem",
                     lineHeight: "1.5",
                     color: "#ffffff",
                     margin: 0,
@@ -318,17 +180,17 @@ export default function OracleQuiz() {
                     textAlign: "left",
                   }}
                 >
-                  {currentVision.description}
+                  {currentVision.speechBubble}
                 </p>
               </div>
 
               {/* Pilares de Madurez Operativa */}
               <div
                 style={{
-                  background: "rgba(0, 0, 0, 0.4)",
+                  background: "rgba(0, 0, 0, 0.45)",
                   border: "1px solid rgba(255, 255, 255, 0.08)",
                   borderRadius: "10px",
-                  padding: "1rem",
+                  padding: "0.85rem 1rem",
                 }}
               >
                 <div
@@ -337,7 +199,7 @@ export default function OracleQuiz() {
                     color: currentVision.tagColor,
                     fontWeight: 800,
                     letterSpacing: "1.5px",
-                    marginBottom: "0.5rem",
+                    marginBottom: "0.4rem",
                     textTransform: "uppercase",
                     fontFamily: "var(--font-display)",
                   }}
@@ -348,12 +210,12 @@ export default function OracleQuiz() {
                   style={{
                     margin: 0,
                     paddingLeft: "1.1rem",
-                    fontSize: "0.76rem",
+                    fontSize: "0.75rem",
                     color: "rgba(255, 255, 255, 0.85)",
-                    lineHeight: "1.45",
+                    lineHeight: "1.4",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "0.35rem",
+                    gap: "0.3rem",
                     textAlign: "left",
                   }}
                 >
@@ -364,8 +226,93 @@ export default function OracleQuiz() {
               </div>
             </div>
 
-            {/* Botón CTA a WhatsApp */}
-            <div style={{ marginTop: "0.4rem" }}>
+            {/* ── BLOQUE DE ACCIONES: CONTROLES DEL REEL + BOTÓN WHATSAPP ── */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginTop: "0.2rem" }}>
+              {/* Controles de Navegación y Pausa SOBRE Coordinar en WhatsApp */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  background: "rgba(0, 0, 0, 0.5)",
+                  padding: "0.4rem 0.6rem",
+                  borderRadius: "8px",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                }}
+              >
+                <button
+                  onClick={togglePause}
+                  title={isPaused ? "Clic para reanudar reel automático" : "Clic para pausar reel"}
+                  style={{
+                    background: isPaused ? "rgba(255, 0, 85, 0.15)" : "rgba(0, 255, 128, 0.12)",
+                    border: `1px solid ${isPaused ? "rgba(255, 0, 85, 0.5)" : "rgba(0, 255, 128, 0.5)"}`,
+                    color: isPaused ? "#ff6699" : "#00ff80",
+                    padding: "0.35rem 0.7rem",
+                    borderRadius: "20px",
+                    fontSize: "0.7rem",
+                    fontWeight: 800,
+                    letterSpacing: "1px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <span>{isPaused ? "⏸ PAUSADO" : "▶ REEL 5s"}</span>
+                </button>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <button
+                    onClick={() => setCurrentIdx((prev) => (prev - 1 + VISIONS.length) % VISIONS.length)}
+                    style={{
+                      background: "rgba(0, 255, 128, 0.06)",
+                      border: "1px solid rgba(0, 255, 128, 0.3)",
+                      color: "#00ff80",
+                      padding: "0.35rem 0.65rem",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "0.76rem",
+                      fontWeight: 700,
+                      fontFamily: "var(--font-display)",
+                    }}
+                  >
+                    ◀ Ant
+                  </button>
+
+                  <span
+                    style={{
+                      fontSize: "0.76rem",
+                      color: "rgba(255, 255, 255, 0.85)",
+                      minWidth: "35px",
+                      textAlign: "center",
+                      fontWeight: 800,
+                      fontFamily: "var(--font-display)",
+                    }}
+                  >
+                    {currentIdx + 1} / {VISIONS.length}
+                  </span>
+
+                  <button
+                    onClick={() => setCurrentIdx((prev) => (prev + 1) % VISIONS.length)}
+                    style={{
+                      background: "rgba(0, 255, 128, 0.06)",
+                      border: "1px solid rgba(0, 255, 128, 0.3)",
+                      color: "#00ff80",
+                      padding: "0.35rem 0.65rem",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "0.76rem",
+                      fontWeight: 700,
+                      fontFamily: "var(--font-display)",
+                    }}
+                  >
+                    Sig ▶
+                  </button>
+                </div>
+              </div>
+
+              {/* Botón CTA a WhatsApp */}
               <a
                 href={`https://wa.me/51991090016?text=${encodeURIComponent(
                   `Hola Geeksoft, estuve analizando The Oracle sobre ${currentVision.title}. Quiero coordinar una sesión estratégica.`
@@ -388,6 +335,62 @@ export default function OracleQuiz() {
               >
                 Coordinar Sesión en WhatsApp ➔
               </a>
+            </div>
+          </div>
+
+          {/* ── COLUMNA DERECHA: INFOGRAFÍA MAXIMIZADA EN ALTURA ── */}
+          <div
+            onClick={togglePause}
+            style={{
+              position: "relative",
+              borderRadius: "12px",
+              overflow: "hidden",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              boxShadow: `0 0 35px rgba(0, 0, 0, 0.85), 0 0 20px ${currentVision.tagColor}15`,
+              background: "#000000",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "0.5rem",
+              cursor: "pointer",
+              minHeight: "560px",
+            }}
+            title={isPaused ? "Pausado. Clic para reanudar reel automático" : "Clic en la infografía para pausar"}
+          >
+            <img
+              key={currentVision.image}
+              src={currentVision.image}
+              alt={currentVision.title}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "680px",
+                width: "auto",
+                height: "auto",
+                objectFit: "contain",
+                display: "block",
+                borderRadius: "8px",
+              }}
+            />
+
+            {/* Badge Flotante en la esquina inferior */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "0.8rem",
+                left: "0.8rem",
+                background: "rgba(0, 0, 0, 0.85)",
+                border: "1px solid rgba(0, 255, 128, 0.35)",
+                borderRadius: "6px",
+                padding: "4px 8px",
+                fontSize: "0.68rem",
+                color: "#00ff80",
+                backdropFilter: "blur(6px)",
+                pointerEvents: "none",
+                fontFamily: "var(--font-display)",
+                letterSpacing: "0.5px",
+              }}
+            >
+              {isPaused ? "⏸ Pausado • Clic para reanudar" : "💡 Clic en la imagen para pausar"}
             </div>
           </div>
         </div>

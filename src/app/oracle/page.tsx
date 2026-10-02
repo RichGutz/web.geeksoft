@@ -33,15 +33,14 @@ export default function OraclePage() {
         </Canvas>
       </div>
 
-      {/* ─── CAPA 1: UI Flotante con Scroll Limpio ─────────────────────────────── */}
-      {/* Botón Volver a Geeksoft en esquina superior izquierda */}
+      {/* ─── CAPA 1: Botón Volver a Geeksoft en esquina superior izquierda ─────── */}
       <Link
         href="/"
         className="mirror-back-link"
         style={{
           position: "absolute",
-          top: "2rem",
-          left: "2.5rem",
+          top: "1.5rem",
+          left: "2rem",
           zIndex: 100,
         }}
       >
@@ -58,15 +57,15 @@ export default function OraclePage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "flex-start",
-          padding: "5rem 2rem 4rem 2rem",
+          padding: "3.5rem 1.5rem 2.5rem 1.5rem",
           overflowY: "auto",
         }}
       >
 
-        {/* Header Principal de The Oracle (Idéntico a The Mirror con la cara de THE ORACLE) */}
-        <div className="mirror-hero-section">
-          <div className="mirror-hero-header-row">
-            <div className="mirror-v-avatar-wrapper">
+        {/* ─── Header Compacto de The Oracle (Avatar + Cita) ─────────────────── */}
+        <div className="mirror-hero-section" style={{ marginBottom: "1rem" }}>
+          <div className="mirror-hero-header-row" style={{ gap: "1.2rem", marginBottom: "0" }}>
+            <div className="mirror-v-avatar-wrapper" style={{ width: "85px", height: "85px", minWidth: "85px" }}>
               <img
                 src="/images/oracle_head.jpg"
                 alt="The Oracle"
@@ -75,24 +74,17 @@ export default function OraclePage() {
               <div className="mirror-avatar-glow" />
             </div>
             <div className="mirror-hero-titles">
-              <div className="mirror-tagline">● THE ORACLE // PROPHETIC INTELLIGENCE</div>
-              <blockquote className="mirror-quote">
+              <div className="mirror-tagline" style={{ fontSize: "0.72rem" }}>● THE ORACLE // PROPHETIC INTELLIGENCE</div>
+              <blockquote className="mirror-quote" style={{ fontSize: "1.2rem" }}>
                 "Temet Nosce — Conócete a ti mismo."
-                <span className="mirror-quote-author"> — The Oracle</span>
+                <span className="mirror-quote-author" style={{ fontSize: "0.85rem" }}> — The Oracle</span>
               </blockquote>
             </div>
           </div>
-
-          <div className="mirror-speech-bubble">
-            <p>
-              El salto a la <strong>Organización Agéntica 2026</strong> requiere cruzar el Umbral Crítico: pasar de la asistencia pasiva a 
-              cuadrillas autónomas gobernadas que multiplican el impacto y el ROI operativo del negocio de <strong>10x a 50x</strong>.
-            </p>
-          </div>
         </div>
 
-        {/* Contenedor del Reel de Visión */}
-        <div className="mirror-quiz-wrapper">
+        {/* ─── Contenedor del Reel de Visión (Tarjeta Angosta y Centrada) ─────── */}
+        <div className="mirror-quiz-wrapper" style={{ maxWidth: "1080px", width: "100%" }}>
           <OracleQuiz />
         </div>
 
