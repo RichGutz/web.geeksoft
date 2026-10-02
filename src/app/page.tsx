@@ -403,9 +403,8 @@ export default function SandboxRadarPage() {
             <span>THE MIRROR</span>
           </Link>
 
-          <button
-            type="button"
-            onClick={() => setShowOracleModal(true)}
+          <Link
+            href="/oracle"
             className="mirror-anchor-btn oracle-anchor-btn"
             title="The Oracle // Temet Nosce (Visiones del Futuro de la IA)"
           >
@@ -415,7 +414,7 @@ export default function SandboxRadarPage() {
               className="mirror-anchor-avatar"
             />
             <span>THE ORACLE</span>
-          </button>
+          </Link>
         </div>
 
         {/* ─── RED PILL: esquina inferior derecha (Hover Popover Desktop + Modal Takeover Mobile) ─── */}
