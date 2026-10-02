@@ -99,7 +99,7 @@ export default function OraclePage() {
         ← Volver a Geeksoft
       </Link>
 
-      {/* ── CAPA 2: UI Flotante con Scroll Limpio (Estructura THE MIRROR) ── */}
+      {/* ── CAPA 2: UI Flotante Centrada (Ancho Angosto Idéntico a THE MIRROR) ── */}
       <div
         className="mirror-ui-container"
         style={{
@@ -110,49 +110,21 @@ export default function OraclePage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "flex-start",
-          padding: "5rem 2rem 4rem 2rem",
+          padding: "4.5rem 1.5rem 3.5rem 1.5rem",
           overflowY: "auto",
         }}
       >
-        {/* ── Header Principal de The Oracle (Idéntico a The Mirror) ── */}
-        <div className="mirror-hero-section">
-          <div className="mirror-hero-header-row">
-            <div className="mirror-v-avatar-wrapper" style={{ borderColor: currentVision.tagColor, boxShadow: `0 0 35px ${currentVision.tagColor}80` }}>
-              <img
-                src="/images/oracle_head.jpg"
-                alt="The Oracle"
-                className="mirror-v-avatar-img"
-              />
-              <div className="mirror-avatar-glow" style={{ borderColor: currentVision.tagColor }} />
-            </div>
-            <div className="mirror-hero-titles">
-              <div className="mirror-tagline">• THE ORACLE // PROPHETIC INTELLIGENCE</div>
-              <blockquote className="mirror-quote">
-                "Temet Nosce — Conócete a ti mismo."
-                <span className="mirror-quote-author"> — The Oracle</span>
-              </blockquote>
-            </div>
-          </div>
-
-          <div className="mirror-speech-bubble">
-            <p>
-              El salto a la <strong>Organización Agéntica 2026</strong> requiere cruzar el Umbral Crítico: pasar de la asistencia pasiva a 
-              cuadrillas autónomas gobernadas que multiplican el impacto y el ROI operativo del negocio de <strong>10x a 50x</strong>.
-            </p>
-          </div>
-        </div>
-
-        {/* ── Tarjeta Maestra de Contenido (Formato THE MIRROR) ── */}
-        <div className="mirror-quiz-wrapper" style={{ maxWidth: "1200px", width: "100%" }}>
+        {/* ── Tarjeta Maestra Central Angosta (max-width: 980px) ── */}
+        <div className="mirror-quiz-wrapper" style={{ maxWidth: "980px", width: "100%" }}>
           <div
             className="quiz-step-card animate-fade-in"
             style={{
-              background: "rgba(0, 18, 9, 0.82)",
-              border: `1px solid ${currentVision.tagColor}50`,
-              borderRadius: "16px",
-              padding: "1.75rem",
+              background: "rgba(4, 18, 10, 0.88)",
+              border: `1px solid ${currentVision.tagColor}45`,
+              borderRadius: "14px",
+              padding: "1.5rem 1.8rem",
               boxShadow: `0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px ${currentVision.tagColor}15`,
-              backdropFilter: "blur(20px)",
+              backdropFilter: "blur(25px)",
               width: "100%",
               boxSizing: "border-box",
             }}
@@ -163,11 +135,11 @@ export default function OraclePage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                paddingBottom: "1.2rem",
+                paddingBottom: "1rem",
                 marginBottom: "1.2rem",
                 borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
                 flexWrap: "wrap",
-                gap: "1rem",
+                gap: "0.8rem",
               }}
             >
               <div>
@@ -175,11 +147,11 @@ export default function OraclePage() {
                   style={{
                     color: currentVision.tagColor,
                     fontFamily: "var(--font-display)",
-                    fontSize: "0.78rem",
+                    fontSize: "0.75rem",
                     fontWeight: 800,
                     letterSpacing: "2.5px",
                     textTransform: "uppercase",
-                    marginBottom: "4px",
+                    marginBottom: "3px",
                   }}
                 >
                   {currentVision.badge}
@@ -187,9 +159,10 @@ export default function OraclePage() {
                 <h2
                   className="quiz-question-title"
                   style={{
-                    fontSize: "1.35rem",
+                    fontSize: "1.25rem",
                     margin: 0,
-                    letterSpacing: "-0.3px",
+                    letterSpacing: "-0.2px",
+                    color: "#ffffff",
                   }}
                 >
                   {currentVision.subtitle}
@@ -197,23 +170,23 @@ export default function OraclePage() {
               </div>
 
               {/* Controles de Navegación y Pausa */}
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <button
                   onClick={togglePause}
                   title={isPaused ? "Clic para reanudar reel automático" : "Clic para pausar reel"}
                   style={{
                     background: isPaused ? "rgba(255, 0, 85, 0.15)" : "rgba(0, 255, 128, 0.12)",
-                    border: `1px solid ${isPaused ? "rgba(255, 0, 85, 0.6)" : "rgba(0, 255, 128, 0.6)"}`,
+                    border: `1px solid ${isPaused ? "rgba(255, 0, 85, 0.5)" : "rgba(0, 255, 128, 0.5)"}`,
                     color: isPaused ? "#ff6699" : "#00ff80",
-                    padding: "0.45rem 0.9rem",
+                    padding: "0.4rem 0.8rem",
                     borderRadius: "20px",
-                    fontSize: "0.74rem",
+                    fontSize: "0.72rem",
                     fontWeight: 800,
                     letterSpacing: "1px",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    gap: "6px",
+                    gap: "5px",
                     transition: "all 0.2s ease",
                   }}
                 >
@@ -226,10 +199,10 @@ export default function OraclePage() {
                     background: "rgba(0, 255, 128, 0.06)",
                     border: "1px solid rgba(0, 255, 128, 0.3)",
                     color: "#00ff80",
-                    padding: "0.45rem 0.9rem",
-                    borderRadius: "8px",
+                    padding: "0.4rem 0.75rem",
+                    borderRadius: "6px",
                     cursor: "pointer",
-                    fontSize: "0.82rem",
+                    fontSize: "0.8rem",
                     fontWeight: 700,
                     fontFamily: "var(--font-display)",
                   }}
@@ -239,9 +212,9 @@ export default function OraclePage() {
 
                 <span
                   style={{
-                    fontSize: "0.82rem",
+                    fontSize: "0.78rem",
                     color: "rgba(255, 255, 255, 0.8)",
-                    minWidth: "45px",
+                    minWidth: "40px",
                     textAlign: "center",
                     fontWeight: 800,
                     fontFamily: "var(--font-display)",
@@ -256,10 +229,10 @@ export default function OraclePage() {
                     background: "rgba(0, 255, 128, 0.06)",
                     border: "1px solid rgba(0, 255, 128, 0.3)",
                     color: "#00ff80",
-                    padding: "0.45rem 0.9rem",
-                    borderRadius: "8px",
+                    padding: "0.4rem 0.75rem",
+                    borderRadius: "6px",
                     cursor: "pointer",
-                    fontSize: "0.82rem",
+                    fontSize: "0.8rem",
                     fontWeight: 700,
                     fontFamily: "var(--font-display)",
                   }}
@@ -269,12 +242,12 @@ export default function OraclePage() {
               </div>
             </div>
 
-            {/* Layout en 2 Columnas: Infografía Maximual a la Izquierda + Panel Lateral Derecho */}
+            {/* Layout en 2 Columnas: Infografía a la Izquierda + Panel Lateral Derecho */}
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 340px",
-                gap: "1.75rem",
+                gridTemplateColumns: "1fr 310px",
+                gap: "1.4rem",
                 alignItems: "stretch",
               }}
             >
@@ -283,17 +256,17 @@ export default function OraclePage() {
                 onClick={togglePause}
                 style={{
                   position: "relative",
-                  borderRadius: "12px",
+                  borderRadius: "10px",
                   overflow: "hidden",
-                  border: `1px solid rgba(255, 255, 255, 0.1)`,
-                  boxShadow: `0 0 35px rgba(0, 0, 0, 0.85), 0 0 25px ${currentVision.tagColor}15`,
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                  boxShadow: `0 0 30px rgba(0, 0, 0, 0.85), 0 0 20px ${currentVision.tagColor}15`,
                   background: "#000000",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  padding: "0.75rem",
+                  padding: "0.5rem",
                   cursor: "pointer",
-                  minHeight: "520px",
+                  minHeight: "480px",
                 }}
                 title={isPaused ? "Pausado. Clic para reanudar reel automático" : "Clic en la infografía para pausar"}
               >
@@ -303,13 +276,12 @@ export default function OraclePage() {
                   alt={currentVision.title}
                   style={{
                     maxWidth: "100%",
-                    maxHeight: "680px",
+                    maxHeight: "560px",
                     width: "auto",
                     height: "auto",
                     objectFit: "contain",
                     display: "block",
-                    borderRadius: "8px",
-                    transition: "transform 0.2s ease",
+                    borderRadius: "6px",
                   }}
                 />
 
@@ -317,13 +289,13 @@ export default function OraclePage() {
                 <div
                   style={{
                     position: "absolute",
-                    bottom: "1rem",
-                    left: "1rem",
+                    bottom: "0.8rem",
+                    left: "0.8rem",
                     background: "rgba(0, 0, 0, 0.8)",
                     border: "1px solid rgba(0, 255, 128, 0.35)",
                     borderRadius: "6px",
-                    padding: "4px 10px",
-                    fontSize: "0.7rem",
+                    padding: "3px 8px",
+                    fontSize: "0.68rem",
                     color: "#00ff80",
                     backdropFilter: "blur(6px)",
                     pointerEvents: "none",
@@ -341,12 +313,12 @@ export default function OraclePage() {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  gap: "1.2rem",
+                  gap: "1rem",
                 }}
               >
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                   {/* Selector de Pestañas */}
-                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <div style={{ display: "flex", gap: "0.4rem" }}>
                     {VISIONS.map((v, idx) => {
                       const isActive = idx === currentIdx;
                       return (
@@ -358,12 +330,12 @@ export default function OraclePage() {
                           }}
                           style={{
                             flex: 1,
-                            padding: "0.6rem 0.5rem",
+                            padding: "0.55rem 0.4rem",
                             background: isActive ? `${v.tagColor}18` : "rgba(255, 255, 255, 0.03)",
                             border: `1px solid ${isActive ? v.tagColor : "rgba(255, 255, 255, 0.1)"}`,
-                            borderRadius: "8px",
+                            borderRadius: "6px",
                             color: isActive ? "#ffffff" : "rgba(255, 255, 255, 0.6)",
-                            fontSize: "0.72rem",
+                            fontSize: "0.7rem",
                             fontWeight: 800,
                             cursor: "pointer",
                             fontFamily: "var(--font-display)",
@@ -383,19 +355,19 @@ export default function OraclePage() {
                     style={{
                       background: "rgba(0, 255, 128, 0.05)",
                       border: `1px solid ${currentVision.tagColor}60`,
-                      borderRadius: "12px",
-                      padding: "1.2rem",
-                      boxShadow: `0 0 25px ${currentVision.tagColor}12`,
+                      borderRadius: "10px",
+                      padding: "1rem",
+                      boxShadow: `0 0 20px ${currentVision.tagColor}10`,
                     }}
                   >
                     <div
                       style={{
-                        fontSize: "0.72rem",
+                        fontSize: "0.68rem",
                         fontWeight: 900,
                         color: currentVision.tagColor,
                         letterSpacing: "1.5px",
                         textTransform: "uppercase",
-                        marginBottom: "0.6rem",
+                        marginBottom: "0.5rem",
                         fontFamily: "var(--font-display)",
                       }}
                     >
@@ -403,8 +375,8 @@ export default function OraclePage() {
                     </div>
                     <p
                       style={{
-                        fontSize: "0.92rem",
-                        lineHeight: "1.55",
+                        fontSize: "0.86rem",
+                        lineHeight: "1.5",
                         color: "#ffffff",
                         margin: 0,
                         fontWeight: 600,
@@ -417,19 +389,19 @@ export default function OraclePage() {
                   {/* Pilares de Madurez Operativa */}
                   <div
                     style={{
-                      background: "rgba(0, 0, 0, 0.45)",
+                      background: "rgba(0, 0, 0, 0.4)",
                       border: "1px solid rgba(255, 255, 255, 0.08)",
-                      borderRadius: "12px",
-                      padding: "1.1rem",
+                      borderRadius: "10px",
+                      padding: "1rem",
                     }}
                   >
                     <div
                       style={{
-                        fontSize: "0.72rem",
+                        fontSize: "0.68rem",
                         color: currentVision.tagColor,
                         fontWeight: 800,
                         letterSpacing: "1.5px",
-                        marginBottom: "0.6rem",
+                        marginBottom: "0.5rem",
                         textTransform: "uppercase",
                         fontFamily: "var(--font-display)",
                       }}
@@ -439,13 +411,13 @@ export default function OraclePage() {
                     <ul
                       style={{
                         margin: 0,
-                        paddingLeft: "1.2rem",
-                        fontSize: "0.8rem",
+                        paddingLeft: "1.1rem",
+                        fontSize: "0.76rem",
                         color: "rgba(255, 255, 255, 0.85)",
-                        lineHeight: "1.5",
+                        lineHeight: "1.45",
                         display: "flex",
                         flexDirection: "column",
-                        gap: "0.45rem",
+                        gap: "0.35rem",
                       }}
                     >
                       {currentVision.keyPoints.map((pt, i) => (
@@ -456,7 +428,7 @@ export default function OraclePage() {
                 </div>
 
                 {/* Botón CTA a WhatsApp */}
-                <div style={{ marginTop: "0.5rem" }}>
+                <div style={{ marginTop: "0.4rem" }}>
                   <a
                     href={`https://wa.me/51991090016?text=${encodeURIComponent(
                       `Hola Geeksoft, estuve analizando The Oracle sobre ${currentVision.title}. Quiero coordinar una sesión estratégica.`
@@ -467,11 +439,14 @@ export default function OraclePage() {
                     style={{
                       display: "block",
                       width: "100%",
-                      padding: "0.95rem 1rem",
+                      padding: "0.85rem 0.9rem",
                       textAlign: "center",
                       textDecoration: "none",
                       boxSizing: "border-box",
-                      fontSize: "0.82rem",
+                      fontSize: "0.78rem",
+                      borderRadius: "8px",
+                      fontWeight: 800,
+                      letterSpacing: "1px",
                     }}
                   >
                     Coordinar Sesión en WhatsApp ➔
