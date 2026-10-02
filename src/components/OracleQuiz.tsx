@@ -226,9 +226,9 @@ export default function OracleQuiz() {
               </div>
             </div>
 
-            {/* ── BLOQUE DE ACCIONES: CONTROLES DEL REEL + BOTÓN WHATSAPP ── */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginTop: "0.2rem" }}>
-              {/* Controles de Navegación y Pausa SOBRE Coordinar en WhatsApp */}
+            {/* ── BLOQUE DE ACCIONES: CONTROLES DEL REEL + TEXTO PAUSA + BOTÓN WHATSAPP ── */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", marginTop: "0.2rem" }}>
+              {/* Controles de Navegación y Pausa */}
               <div
                 style={{
                   display: "flex",
@@ -312,6 +312,21 @@ export default function OracleQuiz() {
                 </div>
               </div>
 
+              {/* TEXTO DE PAUSA: DEBAJO DEL REEL Y SOBRE EL BOTÓN DE WHATSAPP */}
+              <div
+                style={{
+                  fontSize: "0.7rem",
+                  color: isPaused ? "#ff6699" : "rgba(0, 255, 128, 0.9)",
+                  textAlign: "center",
+                  fontWeight: 700,
+                  letterSpacing: "0.5px",
+                  fontFamily: "var(--font-display)",
+                  padding: "2px 0",
+                }}
+              >
+                {isPaused ? "⏸ Reel pausado (clic en la imagen para reanudar)" : "💡 Clic en la imagen para pausar"}
+              </div>
+
               {/* Botón CTA a WhatsApp */}
               <a
                 href={`https://wa.me/51991090016?text=${encodeURIComponent(
@@ -338,7 +353,7 @@ export default function OracleQuiz() {
             </div>
           </div>
 
-          {/* ── COLUMNA DERECHA: INFOGRAFÍA MAXIMIZADA EN ALTURA ── */}
+          {/* ── COLUMNA DERECHA: INFOGRAFÍA MAXIMIZADA Y 100% LIMPIA ── */}
           <div
             onClick={togglePause}
             style={{
@@ -371,27 +386,6 @@ export default function OracleQuiz() {
                 borderRadius: "8px",
               }}
             />
-
-            {/* Badge Flotante en la esquina inferior */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: "0.8rem",
-                left: "0.8rem",
-                background: "rgba(0, 0, 0, 0.85)",
-                border: "1px solid rgba(0, 255, 128, 0.35)",
-                borderRadius: "6px",
-                padding: "4px 8px",
-                fontSize: "0.68rem",
-                color: "#00ff80",
-                backdropFilter: "blur(6px)",
-                pointerEvents: "none",
-                fontFamily: "var(--font-display)",
-                letterSpacing: "0.5px",
-              }}
-            >
-              {isPaused ? "⏸ Pausado • Clic para reanudar" : "💡 Clic en la imagen para pausar"}
-            </div>
           </div>
         </div>
       </div>
