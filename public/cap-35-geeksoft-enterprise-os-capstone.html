@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capítulo 35: Capstone Enterprise: Sistema Operativo Multi-Agente GeekSoft - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #0284C7;
+            --sky-dim:     rgba(2,132,199,0.10);
+            --sky-brd:     rgba(2,132,199,0.28);
+            --emerald:     #059669;
+            --emerald-dim: rgba(5,150,105,0.10);
+            --emerald-brd: rgba(5,150,105,0.25);
+            --purple:      #7C3AED;
+            --purple-dim:  rgba(124,58,237,0.10);
+            --purple-brd:  rgba(124,58,237,0.25);
+            --amber:       #D97706;
+            --amber-dim:   rgba(217,119,6,0.10);
+            --amber-brd:   rgba(217,119,6,0.25);
+            --red:         #E11D48;
+            --red-dim:     rgba(225,29,72,0.08);
+            --text:        #0F172A;
+            --text-dim:    rgba(15,23,42,0.68);
+            --border:      rgba(15,23,42,0.12);
+            --shadow:      0 4px 20px rgba(15,23,42,0.06);
+            --shadow-lg:   0 12px 40px rgba(15,23,42,0.12);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.035; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #0f172a; transform: rotate(-25deg) scale(1.15);
+        }
+        .wm-item { padding: 30px 40px; white-space: nowrap; }
+
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 18px 48px 72px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
+
+        nav {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 14px; z-index: 999;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 6px 16px; border-radius: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+        }
+        .nbtn {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--navy); font-size: 18px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow); transition: all 0.2s;
+        }
+        .nbtn:hover { background: var(--sky-dim); border-color: var(--sky-brd); transform: scale(1.1); color: var(--sky); }
+        .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
+        #counter {
+            font-size: 13px; color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace; min-width: 65px; text-align: center; font-weight: 800;
+        }
+
+        .tag {
+            font-size: 11px; font-weight: 800; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        h1 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: var(--navy); }
+        h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
+        .sub { font-size: clamp(0.92rem, 1.35vw, 1.1rem); color: var(--text-dim); font-weight: 400; margin-bottom: 14px; text-align: center; max-width: 1050px; line-height: 1.45; }
+        .hi   { color: var(--sky); }
+        .hi-b { color: var(--emerald); }
+        .hi-p { color: var(--purple); }
+        .hi-a { color: var(--amber); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover { border-color: var(--sky-brd); }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--sky-dim); border: 1px solid var(--sky-brd);
+            border-radius: 100px; padding: 6px 18px; font-size: 12px;
+            color: var(--sky); font-weight: 800; letter-spacing: 0.5px;
+        }
+        .badge.green { background: var(--emerald-dim); border-color: var(--emerald-brd); color: var(--emerald); }
+        .badge.purple { background: var(--purple-dim); border-color: var(--purple-brd); color: var(--purple); }
+        .badge.amber { background: var(--amber-dim); border-color: var(--amber-brd); color: var(--amber); }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 1240px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; max-width: 1240px; }
+
+        .spec-box {
+            padding: 16px; display: flex; flex-direction: column; gap: 8px; text-align: left;
+        }
+        .spec-icon { font-size: 26px; }
+        .spec-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+        .spec-desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+
+        .flow-container {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
+            padding: 14px 18px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
+            margin: 6px 0; gap: 8px;
+        }
+        .flow-node {
+            flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
+            padding: 10px 8px; text-align: center; display: flex; flex-direction: column; gap: 4px;
+        }
+        .flow-node.active { border-color: var(--sky); background: #f0f9ff; }
+        .flow-node.green  { border-color: var(--emerald); background: #ecfdf5; }
+        .flow-node.purple { border-color: var(--purple); background: #f5f3ff; }
+        .flow-node.amber  { border-color: var(--amber); background: #fffbeb; }
+        .flow-node-title { font-size: 12.5px; font-weight: 800; color: var(--navy); }
+        .flow-node-desc  { font-size: 10.5px; color: var(--text-dim); }
+        .flow-arrow { font-size: 16px; color: #94a3b8; font-weight: 900; }
+
+        .table-wrap {
+            width: 100%; max-width: 1240px; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+        th { background: #0f172a; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.5px; }
+        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        .footnote {
+            margin-top: 10px; font-size: 10.5px; color: #64748b;
+            line-height: 1.4; width: 100%; max-width: 1240px; text-align: left;
+            border-top: 1px dashed #cbd5e1; padding-top: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
+        <div class="wm-item">GEEKSOFT ACADEMY 2026</div>
+        <div class="wm-item">CONFIDENCIAL &bull; PROPIEDAD INTELECTUAL</div>
+        <div class="wm-item">WWW.GEEKSOFT.TECH</div>
+        <div class="wm-item">MULTI-AGENT &bull; RAG &bull; SOTA</div>
+    </div>
+
+    <div id="deck">
+<div class="slide">
+        <div class="tag">🏆 CAPÍTULO 35 · CAPSTONE ENTERPRISE BLUEPRINT</div>
+        <h1>GeekSoft Enterprise OS: <span class="hi">El Sistema Operativo Agéntico</span></h1>
+        <p class="sub">La integración integral de producción en vivo: PETRAL BI AI + INANDES ERP + DR. COST + PROPTWIN operando como un enjambre unificado.</p>
+        <div class="grid-3" style="margin-top: 14px;">
+            <div class="card spec-box">
+                <span class="spec-icon">🚢</span>
+                <span class="spec-title">PETRAL BI AI</span>
+                <p class="spec-desc">Inteligencia Aduanera y Logística sobre 14.8M de DUAS SUNAT con motores deterministas.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">💼</span>
+                <span class="spec-title">INANDES ERP &amp; DR. COST</span>
+                <p class="spec-desc">Costeo industrial formal, balance contable PCGE y gestión porcina automatizada.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🏢</span>
+                <span class="spec-title">PROPTWIN &amp; ARBN</span>
+                <p class="spec-desc">Gemelos digitales inmobiliarios, despiece de metrados y valorizaciones automatizadas.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>GeekSoft Academy &bull; Gran Capstone Final 2026 &bull; El Ecosistema GeekSoft</span><span>Slide 1 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🗺️ ARQUITECTURA GENERAL DEL SISTEMA OPERATIVO</div>
+        <h2>El Ecosistema Unificado <span class="hi">GeekSoft Enterprise</span></h2>
+        <p class="sub">Cómo interactúan los módulos de negocio, los agentes autónomos y la infraestructura central.</p>
+        <div class="flow-container" style="margin-top: 10px;">
+            <div class="flow-node active"><span class="flow-node-title">Traefik Gateway</span><span class="flow-node-desc">SSL & Priority Routing</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node purple"><span class="flow-node-title">Multi-Agent Core</span><span class="flow-node-desc">Brigade & Antigravity</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node green"><span class="flow-node-title">Business Engines</span><span class="flow-node-desc">PETRAL / DR. COST / TWIN</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node amber"><span class="flow-node-title">Unified DB</span><span class="flow-node-desc">PostgreSQL & S3 Vectors</span></div>
+        </div>
+        <div class="footnote"><span>Arquitectura Integral: Desplegada y operativa en VPS Contabo 169.58.168.107</span><span>Slide 2 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">📊 MATRIZ DE INTEGRACIÓN DE PRODUCTOS</div>
+        <h2>Las 4 Columnas de Negocio <span class="hi">en Producción</span></h2>
+        <p class="sub">Cada producto resuelve un dominio crítico con cero solapamiento y máxima sinergia.</p>
+        <div class="table-wrap" style="margin-top: 8px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto Enterprise</th>
+                        <th>Dominio de Negocio</th>
+                        <th>Motor de IA / Determinista</th>
+                        <th>Métrica de Éxito</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>PETRAL BI AI</strong></td>
+                        <td>Comercio Exterior & Logística</td>
+                        <td>Sankey Engine + RAG DUAS SUNAT</td>
+                        <td>Búsqueda en &lt; 15ms sobre 14.8M filas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DR. COST / DR. PORK</strong></td>
+                        <td>Costeo Industrial & Agro</td>
+                        <td>Algoritmo 5 Pasos + Balance PCGE</td>
+                        <td>100% cuadre contable automático</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PROPTWIN</strong></td>
+                        <td>Gestión de Activos Inmobiliarios</td>
+                        <td>Geometry Engine + Parser DXF</td>
+                        <td>Metrados de obra con 0% error</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MIFUNE</strong></td>
+                        <td>Orquestación & Cómputo Distribuido</td>
+                        <td>Thin-Client Protocol + LAN UniFi</td>
+                        <td>Offloading de inferencia local</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footnote"><span>Sinergia Total: Los agentes comparten memoria, skills y protocolos comunes</span><span>Slide 3 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🛡️ GOBERNANZA, EVALS &amp; TELEMETRÍA EN VIVO</div>
+        <h2>El Panel de Control de la <span class="hi">Empresa Agéntica</span></h2>
+        <p class="sub">Telemetría continua de salud, latencia, costos y calidad de servicio.</p>
+        <div class="grid-3" style="margin-top: 10px;">
+            <div class="card spec-box">
+                <span class="spec-icon">📡</span>
+                <span class="spec-title">Netdata &amp; Traefik Live</span>
+                <p class="spec-desc">Monitoreo de CPU, RAM, ancho de banda y latencia P99 por microservicio en tiempo real.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🧪</span>
+                <span class="spec-title">Evals Continuos en Sandbox</span>
+                <p class="spec-desc">Ejecución nocturna de suites de regresión sobre todas las bases de datos y APIs.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🔒</span>
+                <span class="spec-title">Certificación SBS / FICO</span>
+                <p class="spec-desc">Auditoría automática de matrices WoE y estabilidad poblacional (PSI < 0.10).</p>
+            </div>
+        </div>
+        <div class="footnote"><span>Observabilidad Enterprise: Detección proactiva antes de que el usuario note una falla</span><span>Slide 4 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🎓 EL MANIFIESTO DEL INGENIERO AGÉNTICO</div>
+        <h2>De Desarrollador Tradicional a <span class="hi">AI Champion 2026</span></h2>
+        <p class="sub">Los 4 principios rectores para liderar la transformación agéntica en cualquier organización.</p>
+        <div class="grid-2" style="margin-top: 10px;">
+            <div class="card spec-box">
+                <span class="spec-title">1. El Código es el Arnés</span>
+                <p class="spec-desc">No dependas de prompts mágicos. Construye herramientas deterministas, schemas tipados y máquinas de estado con LangGraph y Pydantic AI.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-title">2. Calidad sobre Cantidad</span>
+                <p class="spec-desc">Aplica cirugía de código estricta (K0) y minimalismo (P0). El mejor sistema es el que resuelve el problema con la menor cantidad de tokens.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>GeekSoft Academy Creed: Rigor Matemático, Excelencia Visual y Estabilidad en Producción</span><span>Slide 5 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🏆 GRADUACIÓN &amp; CERTIFICACIÓN</div>
+        <h2>¡Felicidades! Has Completado el <span class="hi">Super Curso Master de Agentes</span></h2>
+        <p class="sub">35 Capítulos Maestros &bull; 252 Notas Técnicas &bull; Ecosistemas Reales en Producción.</p>
+        <div class="grid-3" style="margin-top: 14px;">
+            <div class="card spec-box">
+                <span class="spec-icon">🏛️</span>
+                <span class="spec-title">Arquitecto Agéntico</span>
+                <p class="spec-desc">Capaz de diseñar runtimes multi-agente, sistemas RAG híbridos y arneses de auto-aprendizaje.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">⚡</span>
+                <span class="spec-title">Ingeniero de Producción</span>
+                <p class="spec-desc">Dominio de VPS Hardening, Traefik Zero-Downtime, Sandboxing masivo y Evals.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">💎</span>
+                <span class="spec-title">GeekSoft Certified</span>
+                <p class="spec-desc">Acreditación oficial en la vanguardia mundial de la ingeniería agéntica 2026.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>GeekSoft Academy &bull; 35 Capítulos Completados con Éxito &bull; geeksoft.tech</span><span>Slide 6 / 6</span></div>
+    </div>
+    </div>
+
+    <nav>
+        <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
+        <div id="counter">1 / 6</div>
+        <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
+        <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
+    </nav>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const counter = document.getElementById('counter');
+        const fsBtn = document.getElementById('fs-btn');
+        let current = 0;
+
+        function updateDeck() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active');
+                if (idx === current) {
+                    slide.classList.add('active');
+                }
+            });
+            counter.textContent = `${current + 1} / ${slides.length}`;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === slides.length - 1;
+        }
+
+        function nextSlide() {
+            if (current < slides.length - 1) {
+                current++;
+                updateDeck();
+            }
+        }
+
+        function prevSlide() {
+            if (current > 0) {
+                current--;
+                updateDeck();
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'Home') {
+                current = 0;
+                updateDeck();
+            } else if (e.key === 'End') {
+                current = slides.length - 1;
+                updateDeck();
+            }
+        });
+
+        fsBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen().catch(() => {});
+            }
+        });
+
+        updateDeck();
+    </script>
+</body>
+</html>

@@ -9,6 +9,7 @@ import ContourTerrain from "@/components/webgl/ContourTerrain";
 import GreenGems from "@/components/webgl/GreenGems";
 import GreenFogVolume from "@/components/webgl/GreenFogVolume";
 import Radar from "@/components/Radar";
+import OracleReelModal from "@/components/OracleReelModal";
 
 // ─── Contenido de los paneles por categoría ───────────────────────────────────
 const PANEL_CONTENT: Record<string, {
@@ -98,6 +99,7 @@ export default function SandboxRadarPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentColor, setCurrentColor] = useState("var(--color-default)");
   const [showAwakenedModal, setShowAwakenedModal] = useState(false);
+  const [showOracleModal, setShowOracleModal] = useState(false);
   const [countdown, setCountdown] = useState(5);
   const [isTimerPaused, setIsTimerPaused] = useState(false);
   const panel = selectedCategory ? PANEL_CONTENT[selectedCategory] : null;
@@ -387,18 +389,34 @@ export default function SandboxRadarPage() {
         </Link>
 
         {/* ─── THE MIRROR: Centro inferior ─── */}
-        <Link
-          href="/mirror"
-          className="mirror-anchor-btn"
-          title="Autodiagnóstico de Madurez Operativa"
-        >
-          <img
-            src="/images/v_head.jpg"
-            alt="V"
-            className="mirror-anchor-avatar"
-          />
-          <span>THE MIRROR</span>
-        </Link>
+        <div className="bottom-center-anchors">
+          <Link
+            href="/mirror"
+            className="mirror-anchor-btn"
+            title="Autodiagnóstico de Madurez Operativa"
+          >
+            <img
+              src="/images/v_head.jpg"
+              alt="V"
+              className="mirror-anchor-avatar"
+            />
+            <span>THE MIRROR</span>
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => setShowOracleModal(true)}
+            className="mirror-anchor-btn oracle-anchor-btn"
+            title="The Oracle // Temet Nosce (Visiones del Futuro de la IA)"
+          >
+            <img
+              src="/images/oracle_head.jpg"
+              alt="The Oracle"
+              className="mirror-anchor-avatar"
+            />
+            <span>THE ORACLE</span>
+          </button>
+        </div>
 
         {/* ─── RED PILL: esquina inferior derecha (Hover Popover Desktop + Modal Takeover Mobile) ─── */}
         <div className="red-pill-wrapper">
@@ -650,6 +668,12 @@ export default function SandboxRadarPage() {
           </div>
         </div>
       )}
+          {/* 🔮 MODAL THE ORACLE: Reel de Futuros Utópicos y Distópicos */}
+      <OracleReelModal
+        isOpen={showOracleModal}
+        onClose={() => setShowOracleModal(false)}
+        onWhatsAppClick={openWhatsApp}
+      />
     </main>
   );
 }

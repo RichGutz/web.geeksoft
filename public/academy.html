@@ -1,561 +1,2638 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flujogramas Maestros & Pseudocódigo del Motor | Dr. Cost Enterprise</title>
-  <!-- Tailwind CSS & Google Fonts -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Outfit', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enciclopedia & Hub de Ingeniería de Agentes de IA — GeekSoft Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-      }
-    }
-  </script>
+
+        :root {
+            --bg:          #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --bg-subtle:   #F1F5F9;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            
+            --sky:         #0284C7;
+            --sky-dim:     rgba(2,132,199,0.08);
+            --sky-brd:     rgba(2,132,199,0.25);
+            
+            --emerald:     #059669;
+            --emerald-dim: rgba(5,150,105,0.08);
+            --emerald-brd: rgba(5,150,105,0.25);
+            
+            --purple:      #7C3AED;
+            --purple-dim:  rgba(124,58,237,0.08);
+            --purple-brd:  rgba(124,58,237,0.25);
+            
+            --amber:       #D97706;
+            --amber-dim:   rgba(217,119,6,0.08);
+            --amber-brd:   rgba(217,119,6,0.25);
+            
+            --text:        #0F172A;
+            --text-dim:    rgba(15,23,42,0.70);
+            --text-muted:  #64748B;
+            
+            --border:      #E2E8F0;
+            --border-wiki: #CBD5E1;
+            
+            --shadow-sm:   0 1px 3px rgba(15,23,42,0.06);
+            --shadow-md:   0 4px 14px rgba(15,23,42,0.08);
+            --shadow-lg:   0 10px 30px rgba(15,23,42,0.12);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ─── HEADER WIKIPEDIA / GEEKSOFT ─── */
+        .wiki-header {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border);
+            padding: 12px 32px;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .brand-logo-img {
+            height: 38px;
+            width: auto;
+            max-width: 160px;
+            object-fit: contain;
+        }
+        .brand-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+        .brand-text p {
+            font-size: 11.5px;
+            color: var(--text-muted);
+        }
+
+        .header-search {
+            flex: 1;
+            max-width: 480px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 16px 8px 38px;
+            border-radius: 20px;
+            border: 1px solid var(--border-wiki);
+            background: var(--bg);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            color: var(--navy);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .search-input:focus {
+            background: #FFFFFF;
+            border-color: var(--sky);
+            box-shadow: 0 0 0 3px var(--sky-dim);
+        }
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge-stat {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--sky-dim);
+            color: var(--sky);
+            border: 1px solid var(--sky-brd);
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        /* ─── LAYOUT 2 COLUMNAS (SIDEBAR ACORDEÓN + CUERPO ENFOCADO) ─── */
+        .wiki-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
+        /* ─── SIDEBAR: ACORDEÓN DE CAPÍTULOS Y CLASES ─── */
+        .wiki-sidebar {
+            background: #FFFFFF;
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px 14px;
+        }
+
+        .sidebar-header {
+            padding: 4px 10px 10px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sidebar-title {
+            font-size: 12.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--navy);
+        }
+        .sidebar-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--sky);
+            font-weight: 700;
+        }
+
+        /* Acordeón Simple y Minimalista Estilo Wikipedia */
+        .accordion-item {
+            border: none;
+            border-bottom: 1px solid #E2E8F0;
+            background: transparent;
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        .accordion-header {
+            padding: 10px 8px;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            user-select: none;
+            transition: color 0.15s ease;
+        }
+        .accordion-header:hover {
+            background: #F8FAFC;
+        }
+        .accordion-item.active-chapter .accordion-header .acc-text {
+            color: var(--sky);
+            font-weight: 800;
+        }
+
+        .acc-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+        .acc-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            width: auto;
+            height: auto;
+            background: transparent;
+            border: none;
+            display: inline;
+        }
+        .acc-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .acc-arrow {
+            font-size: 10px;
+            color: var(--text-muted);
+            transition: transform 0.15s ease;
+            flex-shrink: 0;
+        }
+        .accordion-item.open .acc-arrow {
+            transform: rotate(90deg);
+            color: var(--navy);
+        }
+
+        .accordion-body {
+            display: none;
+            background: transparent;
+            border: none;
+            border-left: 2px solid #E2E8F0;
+            margin: 2px 0 10px 14px;
+            padding: 4px 0 6px 12px;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .accordion-item.open .accordion-body {
+            display: flex;
+        }
+
+        .acc-sub-item {
+            padding: 5px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.15s ease;
+            background: transparent;
+            border: none;
+        }
+        .acc-sub-item:hover {
+            color: var(--sky);
+            background: transparent;
+        }
+        .acc-sub-item.active-lesson {
+            color: var(--sky);
+            font-weight: 700;
+            background: transparent;
+            border: none;
+        }
+        .sub-bullet {
+            font-size: 10px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        /* ─── CUERPO PRINCIPAL ENFOCADO ─── */
+        .wiki-main {
+            overflow-y: auto;
+            padding: 28px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .chapter-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-wiki);
+            border-radius: 12px;
+            padding: 28px 32px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chapter-hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 18px;
+            gap: 20px;
+        }
+        .breadcrumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb strong {
+            color: var(--sky);
+        }
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            font-size: 13.5px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .deck-launch-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--navy);
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 800;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
+        }
+        .deck-launch-btn:hover {
+            background: var(--sky);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        .deck-launch-btn .play-icon {
+            font-size: 15px;
+            color: #38BDF8;
+        }
+
+        /* Secciones del Capítulo */
+        .grid-detail {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+        }
+
+        .section-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        /* Lista de Clases / Notas del Módulo */
+        .classes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .class-row {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.15s ease;
+        }
+        .class-row:hover {
+            border-color: var(--sky-brd);
+        }
+        .class-info h4 {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .class-info p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .class-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--sky-dim);
+            color: var(--sky);
+            border: 1px solid var(--sky-brd);
+            white-space: nowrap;
+        }
+
+        /* Specs & Métricas */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .metric-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        .metric-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--emerald);
+        }
+        .metric-lbl {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-text {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+    </style>
 </head>
-<body class="bg-[#f8fafc] text-slate-800 font-sans min-h-screen antialiased flex flex-col selection:bg-blue-600 selection:text-white">
+<body>
 
-  <!-- Top Navbar Compact Light -->
-  <header class="border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xs">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold shadow-xs">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-          </svg>
-        </div>
-        <div>
-          <span class="font-display font-bold text-base tracking-tight text-slate-900 leading-none">Dr. Cost Enterprise</span>
-          <span class="text-[10px] text-blue-700 font-mono tracking-wide uppercase font-bold block mt-0.5">Metodología de Costeo Industrial & Pseudocódigo Formal · Dr. Estuardo Ramos</span>
-        </div>
-      </div>
-      <div class="flex items-center gap-3 text-xs">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono font-bold text-[11px]">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          5 Flujogramas Inmutables Certificados
-        </span>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content Container -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-    
-    <!-- Hero Compact (2 Filas: Título + Métricas) -->
-    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div>
-        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-blue-50 text-blue-800 text-[10px] font-mono font-bold border border-blue-200 mb-1.5">
-          ESTÁNDAR ORTOGONAL INMUTABLE (Graphviz rankdir=TB · splines=ortho)
-        </div>
-        <h1 class="text-2xl font-display font-extrabold text-slate-900 tracking-tight">
-          Índice Maestro de Flujogramas & Pseudocódigo del Motor
-        </h1>
-        <p class="text-xs text-slate-500 font-medium mt-0.5">
-          Formalización matemática de la lógica de absorción de los 3 elementos del costo (<strong class="text-slate-800">Materia Prima + Mano de Obra + CIF</strong>) e integración con el Plan Contable General Empresarial (PCGE).
-        </p>
-      </div>
-
-      <!-- Quick Metrics Grid in 1 Row -->
-      <div class="flex items-center gap-2 shrink-0">
-        <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
-          <div class="text-[9px] uppercase font-bold text-slate-500">Diagramas</div>
-          <div class="text-base font-bold font-mono text-blue-700">5 Visores</div>
-        </div>
-        <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
-          <div class="text-[9px] uppercase font-bold text-slate-500">Modelo BD</div>
-          <div class="text-base font-bold font-mono text-slate-900">67 Tablas</div>
-        </div>
-        <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
-          <div class="text-[9px] uppercase font-bold text-slate-500">Módulos</div>
-          <div class="text-base font-bold font-mono text-slate-900">01 al 07</div>
-        </div>
-        <div class="px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 text-center">
-          <div class="text-[9px] uppercase font-bold text-slate-500">Balance PCGE</div>
-          <div class="text-base font-bold font-mono text-emerald-700">100% Cuadre</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 1: Grid de Exactamente 5 Cards Maestras (3 Columnas / 2 Filas) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-      <!-- Card 5: Pseudocódigo (Destacado en Col 1) -->
-      <div class="bg-white border-2 border-blue-500 rounded-xl p-4 space-y-3 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-mono text-[10px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-              #05 · ALGORITMO
-            </span>
-            <span class="text-[10px] text-blue-600 font-mono font-bold">5 Pasos de Motor</span>
-          </div>
-          <div>
-            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
-              Pseudocódigo del Motor de Cálculo
-            </h2>
-            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
-              Lógica algorítmica de 5 fases: Precondiciones, Explosión BOM con mermas, Liquidación MOD HH, Absorción CIF por drivers, Divisor unitario $CU$ y Asientos PCGE.
-            </p>
-          </div>
-
-          <div class="p-2 bg-blue-50/70 rounded-lg border border-blue-200 text-[10px] font-mono space-y-0.5 text-slate-800">
-            <div><span class="text-blue-800 font-bold">1:</span> BOM Merma: $Q_{bruta} = Q_{neta} \cdot (1 + M)$</div>
-            <div><span class="text-blue-800 font-bold">2:</span> MOD: $Tarifa_{HH} = Planilla / HH$</div>
-            <div><span class="text-blue-800 font-bold">3:</span> CIF: $Tasa = Pool / Capacidad$</div>
-            <div><span class="text-blue-800 font-bold">4:</span> Costo Unitario: $CU = CTF / Q$</div>
-            <div><span class="text-blue-800 font-bold">5:</span> Asientos Diarios (Cta 21 / 71)</div>
-          </div>
+    <!-- HEADER WIKIPEDIA -->
+    <header class="wiki-header">
+        <div class="header-brand">
+            <img src="/images/Logo.Geeksoft.png" alt="GeekSoft Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='/images/CABEZA.GEEKSOFT_transparent.png';" />
+            <div class="brand-text">
+                <h1>GeekSoft AI Academy</h1>
+                <p>Enciclopedia & Hub de Ingeniería de Agentes 2026</p>
+            </div>
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-          <a
-            href="viewer_05.html"
-            target="_blank"
-            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-all shadow-2xs"
-          >
-            <span>Abrir Visor #05</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-          </a>
-          <a href="05_pseudocodigo_motor_calculo_costos.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
-        </div>
-      </div>
-
-      <!-- Card 1: Macro Arquitectura -->
-      <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 hover:border-blue-500/60 hover:shadow-md transition-all flex flex-col justify-between">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-mono text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-              #01 · FULL STACK
-            </span>
-            <span class="text-[10px] text-slate-400 font-mono font-medium">4 Niveles</span>
-          </div>
-          <div>
-            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
-              Macro-Arquitectura Cloud & .NET
-            </h2>
-            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
-              Mapeo de binarios legacy CIL (.NET WinForms) hacia 67 tablas en Supabase y el frontend modular React 19 APEFAC.
-            </p>
-          </div>
-
-          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[10px] font-mono space-y-0.5 text-slate-700">
-            <div><span class="text-amber-700 font-bold">L1:</span> Legacy Core (.NET Binaries & SQL)</div>
-            <div><span class="text-blue-700 font-bold">L2:</span> Supabase Data Engine (67 Tablas)</div>
-            <div><span class="text-indigo-700 font-bold">L3:</span> TypeScript Service Layer</div>
-            <div><span class="text-purple-700 font-bold">L4:</span> Frontend Modular React 19</div>
-          </div>
+        <div class="header-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="wiki-search" class="search-input" placeholder="Buscar módulo, concepto o herramienta (ej. MIFUNE, GraphRAG, Docker)...">
         </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-          <a
-            href="viewer_01.html"
-            target="_blank"
-            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-xs transition-all shadow-2xs"
-          >
-            <span>Abrir Visor #01</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-          </a>
-          <a href="01_arquitectura_cloud_native_drcost.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
+        <div class="header-actions">
+            <span class="badge-stat">35 Capítulos</span>
+            <span class="badge-stat" style="color:var(--emerald); background:var(--emerald-dim); border-color:var(--emerald-brd);">35 Decks PPT 16:9</span>
+            <span class="badge-stat" style="color:var(--purple); background:var(--purple-dim); border-color:var(--purple-brd);">252+ Notas</span>
         </div>
-      </div>
+    </header>
 
-      <!-- Card 2: Motor Matemático -->
-      <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 hover:border-blue-500/60 hover:shadow-md transition-all flex flex-col justify-between">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-mono text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-              #02 · FÓRMULAS
-            </span>
-            <span class="text-[10px] text-slate-400 font-mono font-medium">Cálculo CU</span>
-          </div>
-          <div>
-            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
-              Motor Matemático de Costeo
-            </h2>
-            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
-              Formulación de los 3 vectores ($MP + MOD + CIF$), matriz de absorción, evaluación de mermas y divisor unitario por lote.
-            </p>
-          </div>
-
-          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[10px] font-mono space-y-0.5 text-slate-700">
-            <div><span class="text-emerald-700 font-bold">L1:</span> Vectores MD, MOD, CIF</div>
-            <div><span class="text-amber-700 font-bold">L2:</span> Convergencia en OP ($CTF$)</div>
-            <div><span class="text-purple-700 font-bold">L3:</span> Auditoría de Variaciones</div>
-            <div><span class="text-blue-700 font-bold">L4:</span> Costo Unitario Final ($S/ / UND$)</div>
-          </div>
-        </div>
-
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-          <a
-            href="viewer_02.html"
-            target="_blank"
-            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-xs transition-all shadow-2xs"
-          >
-            <span>Abrir Visor #02</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-          </a>
-          <a href="02_motor_matematico_costeo_industrial.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
-        </div>
-      </div>
-
-      <!-- Card 3: Gobernanza 7 Módulos -->
-      <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 hover:border-blue-500/60 hover:shadow-md transition-all flex flex-col justify-between">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-mono text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-              #03 · CICLO PLANTA
-            </span>
-            <span class="text-[10px] text-slate-400 font-mono font-medium">Mod 01 al 07</span>
-          </div>
-          <div>
-            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
-              Gobernanza Operativa & Ciclo de Vida
-            </h2>
-            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
-              Secuencia obligatoria de planta: Parámetros Drivers (02) y BOM (06) ➔ Liquidación OP (05) ➔ Cierre Contable (07).
-            </p>
-          </div>
-
-          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[10px] font-mono space-y-0.5 text-slate-700">
-            <div><span class="text-blue-700 font-bold">F1:</span> Parámetros (Mod 02 + Mod 06)</div>
-            <div><span class="text-amber-700 font-bold">F2:</span> Operación (Mod 03 + Mod 04)</div>
-            <div><span class="text-emerald-700 font-bold">F3:</span> Liquidación OP (Mod 05)</div>
-            <div><span class="text-purple-700 font-bold">F4:</span> Cierre & Dashboard (07 ➔ 01)</div>
-          </div>
-        </div>
-
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-          <a
-            href="viewer_03.html"
-            target="_blank"
-            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-xs transition-all shadow-2xs"
-          >
-            <span>Abrir Visor #03</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-          </a>
-          <a href="03_gobernanza_ciclo_vida_7_modulos.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
-        </div>
-      </div>
-
-      <!-- Card 4: Cierre Contable PCGE -->
-      <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 hover:border-blue-500/60 hover:shadow-md transition-all flex flex-col justify-between">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-mono text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-              #04 · PARTIDA DOBLE
-            </span>
-            <span class="text-[10px] text-slate-400 font-mono font-medium">Asientos PCGE</span>
-          </div>
-          <div>
-            <h2 class="text-base font-display font-bold text-slate-900 hover:text-blue-700 transition-colors leading-tight">
-              Cierre Contable & Asientos PCGE
-            </h2>
-            <p class="text-[11px] text-slate-600 mt-1 leading-snug">
-              Generación automática de asientos de diario, enlace con cuentas 21, 71, 69 y 79, cuadre 100% y bloqueo inmutable de Kardex.
-            </p>
-          </div>
-
-          <div class="p-2 bg-slate-50 rounded-lg border border-slate-200 text-[10px] font-mono space-y-0.5 text-slate-700">
-            <div><span class="text-amber-700 font-bold">L1:</span> Disparadores de Cierre OP</div>
-            <div><span class="text-blue-700 font-bold">L2:</span> Asientos Cuentas 21/71 y 69/79</div>
-            <div><span class="text-emerald-700 font-bold">L3:</span> Regla de Cuadre & Bloqueo</div>
-            <div><span class="text-purple-700 font-bold">L4:</span> Comprobante de Diario Final</div>
-          </div>
-        </div>
-
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-          <a
-            href="viewer_04.html"
-            target="_blank"
-            class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-xs transition-all shadow-2xs"
-          >
-            <span>Abrir Visor #04</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-          </a>
-          <a href="04_cierre_contable_asientos_pcge.pdf" target="_blank" class="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-mono font-bold">PDF</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Section 2: Explicación Carnosa & Detallada del Motor Matemático Dr. Cost -->
-    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-6 shadow-xs">
-      
-      <!-- Encabezado de la Sección -->
-      <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <span class="text-[11px] font-mono font-bold text-blue-700 uppercase tracking-wider block">Metodología & Formulación Formal</span>
-          <h2 class="text-xl font-display font-extrabold text-slate-900 mt-0.5">
-            Análisis Técnico del Motor de Costos Industriales (Algoritmo Ramos)
-          </h2>
-          <p class="text-xs text-slate-500 font-medium mt-0.5">
-            Documentación exhaustiva de los fundamentos matemáticos, fórmulas de absorción, reglas contables y flujo de ejecución en Supabase.
-          </p>
-        </div>
-        <a href="viewer_05.html" target="_blank" class="px-3.5 py-2 bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-xs font-bold hover:bg-blue-100 flex items-center gap-1.5 w-fit shrink-0">
-          <span>Abrir Diagrama Vectorial #05</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-        </a>
-      </div>
-
-      <!-- 5 Bloques Explicativos "Carnosos" de cada Fase del Algoritmo -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+    <!-- CONTENEDOR PRINCIPAL: SIDEBAR ACORDEÓN + CUERPO DINÁMICO -->
+    <div class="wiki-container">
         
-        <!-- Fase 1: MD y Merma -->
-        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-          <div class="flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">1</span>
-            <h3 class="font-bold text-slate-900 text-xs">Materia Prima (MP) & Mermas Técnicas</h3>
-          </div>
-          <p class="text-slate-600 text-[11px] leading-relaxed">
-            La cantidad de materia prima requerida no es lineal. Cada insumo en la estructura <strong class="text-slate-800">BOM</strong> tiene un factor de merma técnica inherente al proceso físico o químico de transformación:
-          </p>
-          <div class="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
-            <div class="text-emerald-700 font-bold">Q_bruta = Q_neta · (1 + %Merma / 100)</div>
-            <div>Costo_MP_OP = Σ [ Q_bruta · CU_Kardex · Cantidad_Programada ]</div>
-          </div>
-          <p class="text-slate-500 text-[10px]">
-            La valorización se conecta en tiempo real al costo estándar/promedio del Kardex valorizado registrado en <code class="text-blue-700">public.articulo_costo_estandar</code>.
-          </p>
-        </div>
-
-        <!-- Fase 2: MOD y Tarifa Efectiva -->
-        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-          <div class="flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-amber-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">2</span>
-            <h3 class="font-bold text-slate-900 text-xs">Mano de Obra Directa (MOD) & Tarifa HH Real</h3>
-          </div>
-          <p class="text-slate-600 text-[11px] leading-relaxed">
-            Se calcula la tarifa horaria ponderada por Centro de Costo, consolidando la planilla obrera bruta más las cargas sociales de ley peruana (EsSalud 9%, Gratificaciones, CTS, Vacaciones, SCTR):
-          </p>
-          <div class="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
-            <div class="text-amber-700 font-bold">Tarifa_HH(CC) = Total_Costo_Planilla(CC) / Total_HH_Efectivas(CC)</div>
-            <div>Costo_MOD_OP = Σ [ (Horas + Minutos/60) · Tarifa_HH(CC) ]</div>
-          </div>
-          <p class="text-slate-500 text-[10px]">
-            Los partes de trabajo diarios imputan las horas hombre consumidas a cada orden registrada en <code class="text-blue-700">public.utilizacion_horas_hombre</code>.
-          </p>
-        </div>
-
-        <!-- Fase 3: CIF e Inductores -->
-        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-          <div class="flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">3</span>
-            <h3 class="font-bold text-slate-900 text-xs">Gastos de Fabricación (CIF) & Cost Drivers</h3>
-          </div>
-          <p class="text-slate-600 text-[11px] leading-relaxed">
-            Los gastos indirectos (clase 63 servicios, 65 suministros, 68 depreciación) se clasifican en Fijos y Variables. Se aplican inductores de actividad (Cost Drivers) con capacidad técnica:
-          </p>
-          <div class="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
-            <div class="text-blue-700 font-bold">Tasa_Driver = Pool_Gasto_Asignado / Capacidad_Total_Driver</div>
-            <div>Costo_CIF_OP = Total_CIF_Incurrido · (HH_OP / Total_HH_Planta)</div>
-          </div>
-          <p class="text-slate-500 text-[10px]">
-            Garantiza una distribución equitativa de energía, matricería, supervisión y mantenimiento industrial (<code class="text-blue-700">public.determinacion_cost_drivers</code>).
-          </p>
-        </div>
-
-        <!-- Fase 4: Divisor Unitario -->
-        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-          <div class="flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-purple-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">4</span>
-            <h3 class="font-bold text-slate-900 text-xs">Costo Total de Fabricación & Costo Unitario ($CU$)</h3>
-          </div>
-          <p class="text-slate-600 text-[11px] leading-relaxed">
-            Consolidación exacta de los 3 elementos en la Hoja de Costos de la Orden de Producción. Si la orden está terminada, el divisor determina el costo por unidad de producto terminado:
-          </p>
-          <div class="p-2.5 bg-white rounded-lg border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
-            <div class="text-purple-700 font-bold">CTF = Total_MP + Total_MOD + Total_CIF</div>
-            <div>CU_Final = CTF / Cantidad_Terminada_Neta (Q)</div>
-          </div>
-          <p class="text-slate-500 text-[10px]">
-            Si la orden sigue en taller al cierre de mes, se clasifica como Producto en Proceso (<strong class="text-slate-700">WIP</strong>) sin aplicar divisor unitario hasta su liquidación.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- Fase 5 & Asientos Contables PCGE -->
-      <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-indigo-600 text-white font-bold text-[10px] flex items-center justify-center font-mono">5</span>
-            <h3 class="font-bold text-slate-900 text-xs">Generación Automática de Asientos PCGE & Bloqueo de Kardex</h3>
-          </div>
-          <span class="text-emerald-700 font-mono font-bold text-[10px] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-            Cuadre 100% Debe = Haber
-          </span>
-        </div>
-        <p class="text-slate-600 text-xs leading-relaxed">
-          Al ejecutar el cierre del periodo fiscal, el motor genera automáticamente los asientos de diario en formato contable oficial del Plan Contable General Empresarial (PCGE):
-        </p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-[11px]">
-          <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1">
-            <div class="font-bold text-blue-800 text-[11px] border-b border-slate-100 pb-1">Asiento 1: Transferencia a Existencias PT</div>
-            <div class="flex justify-between text-slate-700">
-              <span>DEBE: Cta 211101 (Productos Manufacturados)</span>
-              <span class="font-bold text-slate-900">S/ Total_CTF</span>
+        <!-- SIDEBAR IZQUIERDO CON ACORDEÓN -->
+        <aside class="wiki-sidebar" id="sidebar-accordion">
+            
+            <div class="sidebar-header">
+                <span class="sidebar-title">Ejes del Programa</span>
+                <span class="sidebar-count">35 Capítulos</span>
             </div>
-            <div class="flex justify-between text-slate-700">
-              <span>HABER: Cta 711101 (Variación Prod. Almacenada)</span>
-              <span class="font-bold text-slate-900">S/ Total_CTF</span>
+
+            <!-- Cap 01 -->
+            <div class="accordion-item open active-chapter" data-target="cap-01">
+                <div class="accordion-header" onclick="selectChapter('cap-01', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">01</span>
+                        <span class="acc-text">Sistemas Agénticos & Orquestación</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item active-lesson" onclick="selectLesson('cap-01', 0, event)"><span class="sub-bullet">├─</span> Multi-Agent SDLC & Canvas</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 1, event)"><span class="sub-bullet">├─</span> Anatomía del Directorio .claude</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 2, event)"><span class="sub-bullet">├─</span> Graph & Loop Engineering</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-01', 3, event)"><span class="sub-bullet">└─</span> Patrones de Diseño Agéntico</div>
+                </div>
             </div>
-          </div>
 
-          <div class="p-3 bg-white rounded-lg border border-slate-200 space-y-1">
-            <div class="font-bold text-rose-800 text-[11px] border-b border-slate-100 pb-1">Asiento 2: Ajuste de Variación CIF / Capacidad Ociosa</div>
-            <div class="flex justify-between text-slate-700">
-              <span>DEBE: Cta 694101 (Costo de Ventas - Var. CIF)</span>
-              <span class="font-bold text-slate-900">S/ Var_CIF</span>
+            <!-- Cap 02 -->
+            <div class="accordion-item" data-target="cap-02">
+                <div class="accordion-header" onclick="selectChapter('cap-02', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">02</span>
+                        <span class="acc-text">Sistemas RAG & Vector DBs</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 0, event)"><span class="sub-bullet">├─</span> GraphRAG vs Vector RAG vs Hybrid</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 1, event)"><span class="sub-bullet">├─</span> RAG Empresarial en AWS</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 2, event)"><span class="sub-bullet">├─</span> Corrective RAG (CRAG) & LangGraph</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-02', 3, event)"><span class="sub-bullet">└─</span> Graphify Knowledge Graph</div>
+                </div>
             </div>
-            <div class="flex justify-between text-slate-700">
-              <span>HABER: Cta 791100 (Cargas Imputables a Costos)</span>
-              <span class="font-bold text-slate-900">S/ Var_CIF</span>
+
+            <!-- Cap 03 -->
+            <div class="accordion-item" data-target="cap-03">
+                <div class="accordion-header" onclick="selectChapter('cap-03', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">03</span>
+                        <span class="acc-text">Vibe Coding & Asistentes Dev</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 0, event)"><span class="sub-bullet">├─</span> Spec Kit & Spec-Driven Prompting</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 1, event)"><span class="sub-bullet">├─</span> OmniRoute Local Gateway</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-03', 2, event)"><span class="sub-bullet">└─</span> GenOffice Suite Agéntica</div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Code Block Exhaustivo -->
-      <div class="space-y-2">
-        <div class="flex items-center justify-between text-xs">
-          <span class="font-bold text-slate-800">Código del Algoritmo (Pseudocódigo TypeScript / Python Core):</span>
-          <span class="text-slate-500 font-mono text-[10px]">Ejecutado en Supabase PostgREST Engine</span>
-        </div>
-        <div class="bg-slate-900 text-slate-100 rounded-xl p-5 font-mono text-[11px] overflow-x-auto border border-slate-800 leading-relaxed max-h-96">
-<pre class="text-slate-300"><span class="text-blue-400 font-bold">FUNCTION</span> <span class="text-yellow-300 font-bold">ExecuteCostEngine</span>(periodo_fiscal: Periodo, tenant_id: UUID): <span class="text-green-400 font-bold">Result</span>
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-slate-500">// 1. PRECONDICIONES & CARGA DE CATÁLOGOS RELACIONALES (67 TABLAS SUPABASE)</span>
-  <span class="text-slate-500">// =========================================================================</span>
-  OPs     = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> orden_produccion <span class="text-cyan-300">WHERE</span> periodo = periodo_fiscal <span class="text-cyan-300">AND</span> estado != 'CANCELADA'
-  BOM     = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> formula_insumos_detalle <span class="text-cyan-300">JOIN</span> formula_insumos_cabecera
-  KARDEX  = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> articulo_costo_estandar
-  NOMINA  = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> utilizacion_horas_hombre <span class="text-cyan-300">WHERE</span> periodo = periodo_fiscal
-  CIF     = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> comprobante_gastos_fabricacion <span class="text-cyan-300">WHERE</span> periodo = periodo_fiscal
-  DRIVERS = <span class="text-cyan-300">SELECT</span> * <span class="text-cyan-300">FROM</span> determinacion_cost_drivers
+            <!-- Cap 04 -->
+            <div class="accordion-item" data-target="cap-04">
+                <div class="accordion-header" onclick="selectChapter('cap-04', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">04</span>
+                        <span class="acc-text">Modelos LLM & Razonamiento</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 0, event)"><span class="sub-bullet">├─</span> World Models & JEPA (LeCun)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 1, event)"><span class="sub-bullet">├─</span> Transformer Explainer ONNX</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-04', 2, event)"><span class="sub-bullet">└─</span> Hands-On Large Language Models</div>
+                </div>
+            </div>
 
-  <span class="text-purple-400 font-bold">ASSERT</span> (COUNT(OPs) &gt; 0 <span class="text-cyan-300">AND</span> COUNT(BOM) &gt; 0) <span class="text-purple-400 font-bold">ELSE THROW</span> 'Catálogo maestro incompleto'
+            <!-- Cap 05 -->
+            <div class="accordion-item" data-target="cap-05">
+                <div class="accordion-header" onclick="selectChapter('cap-05', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">05</span>
+                        <span class="acc-text">Curriculums & Fundamentos</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 0, event)"><span class="sub-bullet">├─</span> Multi-Agent SDLC Playbook</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 1, event)"><span class="sub-bullet">├─</span> Developer to AI Champion</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-05', 2, event)"><span class="sub-bullet">└─</span> Code as Agent Harness (Stanford)</div>
+                </div>
+            </div>
 
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-slate-500">// 2. PASO 1: ABSORCIÓN DE MATERIA PRIMA (MP) CON FACTOR DE MERMA</span>
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-blue-400 font-bold">FOR EACH</span> op <span class="text-blue-400 font-bold">IN</span> OPs:
-    op.total_mp = 0.0
-    <span class="text-blue-400 font-bold">FOR EACH</span> insumo <span class="text-blue-400 font-bold">IN</span> BOM[op.codigo_producto]:
-      q_bruta = insumo.cantidad_neta * (1.0 + (insumo.merma_porcentaje / 100.0))
-      cu_std  = KARDEX[insumo.codigo_insumo].costo_unitario
-      costo_linea = q_bruta * cu_std * op.cantidad_programada
-      op.total_mp += costo_linea
-    <span class="text-blue-400 font-bold">END FOR</span>
-  <span class="text-blue-400 font-bold">END FOR</span>
+            <!-- Cap 06 -->
+            <div class="accordion-item" data-target="cap-06">
+                <div class="accordion-header" onclick="selectChapter('cap-06', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">06</span>
+                        <span class="acc-text">Diseño de Producto & UX</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-06', 0, event)"><span class="sub-bullet">├─</span> Leyes de UX (Laws of UX)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-06', 1, event)"><span class="sub-bullet">└─</span> AG-UI Streaming Protocol</div>
+                </div>
+            </div>
 
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-slate-500">// 3. PASO 2: LIQUIDACIÓN DE NÓMINA MOD & TARIFA EFECTIVA POR CENTRO</span>
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-blue-400 font-bold">FOR EACH</span> cc <span class="text-blue-400 font-bold">IN</span> CentrosDeCosto:
-    total_hh_cc  = <span class="text-green-400">SUM</span>(NOMINA[cc].horas_efectivas)
-    total_mod_cc = <span class="text-green-400">SUM</span>(NOMINA[cc].costo_bruto_con_cargas) <span class="text-slate-500">// Sueldos + EsSalud 9% + CTS + Grat</span>
-    tarifa_hh[cc] = (total_hh_cc &gt; 0) ? (total_mod_cc / total_hh_cc) : 0.0
-  <span class="text-blue-400 font-bold">END FOR</span>
+            <!-- Cap 07 -->
+            <div class="accordion-item" data-target="cap-07">
+                <div class="accordion-header" onclick="selectChapter('cap-07', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">07</span>
+                        <span class="acc-text">Infraestructura, VPS & Seguridad</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-07', 0, event)"><span class="sub-bullet">├─</span> How To Secure A Linux Server</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-07', 1, event)"><span class="sub-bullet">└─</span> Cron Jobs & Scraping VPS</div>
+                </div>
+            </div>
 
-  <span class="text-blue-400 font-bold">FOR EACH</span> op <span class="text-blue-400 font-bold">IN</span> OPs:
-    op.total_mod = 0.0
-    <span class="text-blue-400 font-bold">FOR EACH</span> parte <span class="text-blue-400 font-bold">IN</span> NOMINA[op.numero_op]:
-      hh_efectiva = parte.horas + (parte.minutos / 60.0)
-      op.total_mod += hh_efectiva * tarifa_hh[parte.centro_costo]
-    <span class="text-blue-400 font-bold">END FOR</span>
-  <span class="text-blue-400 font-bold">END FOR</span>
+            <!-- Cap 08 -->
+            <div class="accordion-item" data-target="cap-08">
+                <div class="accordion-header" onclick="selectChapter('cap-08', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">08</span>
+                        <span class="acc-text">Radar & Vigilancia OSINT</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-08', 0, event)"><span class="sub-bullet">├─</span> Radar Automatizado GitHub & HF</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-08', 1, event)"><span class="sub-bullet">└─</span> Overwatch Earth 3D OSINT</div>
+                </div>
+            </div>
 
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-slate-500">// 4. PASO 3: PRORRATEO & ABSORCIÓN DE CIF SEGÚN COST DRIVERS E INDUCTORES</span>
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-blue-400 font-bold">FOR EACH</span> drv <span class="text-blue-400 font-bold">IN</span> DRIVERS:
-    tasa_driver[drv.codigo] = drv.costo_total_asignado / drv.total_capacidad
-  <span class="text-blue-400 font-bold">END FOR</span>
+            <!-- Cap 09 -->
+            <div class="accordion-item" data-target="cap-09">
+                <div class="accordion-header" onclick="selectChapter('cap-09', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">09</span>
+                        <span class="acc-text">Masterclass & Feedback Continuo</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-09', 0, event)"><span class="sub-bullet">├─</span> Super Curso Master (21 Módulos)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-09', 1, event)"><span class="sub-bullet">└─</span> Pipeline de Retroalimentación</div>
+                </div>
+            </div>
 
-  total_cif_incurrido = <span class="text-green-400">SUM</span>(CIF.monto_real)
-  total_hh_planta     = <span class="text-green-400">SUM</span>(NOMINA.horas_efectivas)
+            <!-- Cap 10 -->
+            <div class="accordion-item" data-target="cap-10">
+                <div class="accordion-header" onclick="selectChapter('cap-10', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">10</span>
+                        <span class="acc-text">Arquitectura MIFUNE (Caso Real)</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 0, event)"><span class="sub-bullet">├─</span> Blueprint de Arquitectura MIFUNE</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 1, event)"><span class="sub-bullet">├─</span> Bitácora en Vivo (Pasos A-I)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-10', 2, event)"><span class="sub-bullet">└─</span> Suite QC de 26 Pruebas en Sandbox</div>
+                </div>
+            </div>
 
-  <span class="text-blue-400 font-bold">FOR EACH</span> op <span class="text-blue-400 font-bold">IN</span> OPs:
-    factor_op = (total_hh_planta &gt; 0) ? (op.total_hh_consumidas / total_hh_planta) : 0.0
-    op.total_cif = total_cif_incurrido * factor_op
-  <span class="text-blue-400 font-bold">END FOR</span>
+            <!-- Cap 11 -->
+            <div class="accordion-item" data-target="cap-11">
+                <div class="accordion-header" onclick="selectChapter('cap-11', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">11</span>
+                        <span class="acc-text">Arquitectura PROPTWIN (Caso Real)</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 0, event)"><span class="sub-bullet">├─</span> Blueprint Gemelo Digital Arzobispado</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 1, event)"><span class="sub-bullet">├─</span> Software Factory & 5 Roles Agénticos</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-11', 2, event)"><span class="sub-bullet">└─</span> Quality Gates & Sandbox Docker</div>
+                </div>
+            </div>
 
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-slate-500">// 5. PASO 4: CONSOLIDACIÓN DE COSTO TOTAL & DIVISOR UNITARIO DETERMINISTA</span>
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-blue-400 font-bold">FOR EACH</span> op <span class="text-blue-400 font-bold">IN</span> OPs:
-    op.costo_total_produccion = op.total_mp + op.total_mod + op.total_cif
+            <!-- Cap 12 -->
+            <div class="accordion-item" data-target="cap-12">
+                <div class="accordion-header" onclick="selectChapter('cap-12', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">12</span>
+                        <span class="acc-text">Arquitectura ARBN.CPJS (Airbnb Twin)</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 0, event)"><span class="sub-bullet">├─</span> Blueprint Remodelación & Staging</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 1, event)"><span class="sub-bullet">├─</span> Motor BOQ & Despiece de Partidas</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-12', 2, event)"><span class="sub-bullet">└─</span> Auditor Airbnb Ready 5 Estrellas</div>
+                </div>
+            </div>
 
-    <span class="text-blue-400 font-bold">IF</span> op.cantidad_terminada &gt; 0 <span class="text-blue-400 font-bold">THEN</span>:
-      op.costo_unitario_calculado = op.costo_total_produccion / op.cantidad_terminada
-      op.md_unitario  = op.total_mp / op.cantidad_terminada
-      op.mod_unitario = op.total_mod / op.cantidad_terminada
-      op.cif_unitario = op.total_cif / op.cantidad_terminada
-      op.estado = 'LIQUIDADA'
-    <span class="text-blue-400 font-bold">ELSE</span>:
-      op.costo_unitario_calculado = 0.0
-      op.estado = 'EN_PROCESO_WIP'
-    <span class="text-blue-400 font-bold">END IF</span>
-  <span class="text-blue-400 font-bold">END FOR</span>
+            <!-- Cap 13 -->
+            <div class="accordion-item" data-target="cap-13">
+                <div class="accordion-header" onclick="selectChapter('cap-13', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">13</span>
+                        <span class="acc-text">Claude Code Templates (AITMPL)</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 0, event)"><span class="sub-bullet">├─</span> Mina de Oro: +1,000 Componentes</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 1, event)"><span class="sub-bullet">├─</span> 5 Agentes Especialistas</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-13', 2, event)"><span class="sub-bullet">└─</span> Skills & MCPs</div>
+                </div>
+            </div>
 
-  <span class="text-slate-500">// =========================================================================</span>
-  <span class="text-slate-500">// 6. PASO 5: GENERACIÓN DE COMPROBANTES DE DIARIO PCGE & CUADRE BALANCE</span>
-  <span class="text-slate-500">// =========================================================================</span>
-  total_pt_liquidado = <span class="text-green-400">SUM</span>(OPs[estado='LIQUIDADA'].costo_total_produccion)
-  
-  asiento_pt = {
-    numero: 'AST-2026-001',
-    tipo: 'TRANSFERENCIA_EXISTENCIAS_PT',
-    lineas: [
-      { cuenta: '211101', denominacion: 'Productos Manufacturados - PT', debe: total_pt_liquidado, haber: 0.0 },
-      { cuenta: '711101', denominacion: 'Variación de la Producción Almacenada', debe: 0.0, haber: total_pt_liquidado }
-    ]
-  }
-  <span class="text-purple-400 font-bold">ASSERT</span> (<span class="text-green-400">SUM</span>(asiento_pt.lineas.debe) == <span class="text-green-400">SUM</span>(asiento_pt.lineas.haber))
+            <!-- Cap 14 -->
+            <div class="accordion-item" data-target="cap-14">
+                <div class="accordion-header" onclick="selectChapter('cap-14', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">14</span>
+                        <span class="acc-text">Cómputo Distribuido en LAN UniFi</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-14', 0, event)"><span class="sub-bullet">├─</span> Parallel vs Distributed vs Offloading</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-14', 1, event)"><span class="sub-bullet">└─</span> Arquitectura Thin-Client (180 ➔ 150)</div>
+                </div>
+            </div>
 
-  <span class="text-slate-500">// 7. Persistencia Inmutable en Supabase</span>
-  <span class="text-cyan-300 font-bold">BEGIN TRANSACTION;</span>
-    <span class="text-cyan-300">UPDATE</span> orden_produccion <span class="text-cyan-300">SET</span> ... <span class="text-cyan-300">WHERE</span> id = op.id;
-    <span class="text-cyan-300">INSERT INTO</span> asiento_contable (lineas) <span class="text-cyan-300">VALUES</span> (...);
-    <span class="text-cyan-300">UPDATE</span> cierre_kardex <span class="text-cyan-300">SET</span> cerrado = TRUE, fecha_cierre = NOW();
-  <span class="text-cyan-300 font-bold">COMMIT;</span>
+            <!-- Cap 15 -->
+            <div class="accordion-item" data-target="cap-15">
+                <div class="accordion-header" onclick="selectChapter('cap-15', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">15</span>
+                        <span class="acc-text">Litho Terrain Architecture</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-15', 0, event)"><span class="sub-bullet">├─</span> Modelado de Terrenos Digitales</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-15', 1, event)"><span class="sub-bullet">└─</span> Integración CAD & GIS</div>
+                </div>
+            </div>
 
-  <span class="text-blue-400 font-bold">RETURN</span> {
-    status: 200,
-    mensaje: 'Cierre y Liquidación de Costos Ejecutada Exitosamente',
-    total_liquidado: total_pt_liquidado,
-    ordenes_procesadas: COUNT(OPs),
-    balance_cuadrado: <span class="text-green-400 font-bold">TRUE</span>
-  }
-<span class="text-blue-400 font-bold">END FUNCTION</span>
-</pre>
-        </div>
-      </div>
+            <!-- Cap 16 -->
+            <div class="accordion-item" data-target="cap-16">
+                <div class="accordion-header" onclick="selectChapter('cap-16', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">16</span>
+                        <span class="acc-text">Corrective RAG (CRAG) & LangGraph</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-16', 0, event)"><span class="sub-bullet">├─</span> Evaluación de Relevancia Documental</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-16', 1, event)"><span class="sub-bullet">└─</span> Bucle de Corrección con Fallback Web</div>
+                </div>
+            </div>
+
+            <!-- Cap 17 -->
+            <div class="accordion-item" data-target="cap-17">
+                <div class="accordion-header" onclick="selectChapter('cap-17', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">17</span>
+                        <span class="acc-text">Dragonfly High-Throughput Memory</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-17', 0, event)"><span class="sub-bullet">├─</span> Reemplazo de Redis con Dragonfly</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-17', 1, event)"><span class="sub-bullet">└─</span> Persistencia de Sesiones Agénticas</div>
+                </div>
+            </div>
+
+            <!-- Cap 18 -->
+            <div class="accordion-item" data-target="cap-18">
+                <div class="accordion-header" onclick="selectChapter('cap-18', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">18</span>
+                        <span class="acc-text">Content Modulator ADHD</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-18', 0, event)"><span class="sub-bullet">├─</span> Adaptación Cognitiva de Texto</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-18', 1, event)"><span class="sub-bullet">└─</span> Estructuración Visual Biónica</div>
+                </div>
+            </div>
+
+            <!-- Cap 19 -->
+            <div class="accordion-item" data-target="cap-19">
+                <div class="accordion-header" onclick="selectChapter('cap-19', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">19</span>
+                        <span class="acc-text">The Four AI Engineering Layers</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-19', 0, event)"><span class="sub-bullet">├─</span> Capas 1 y 2: Silicio & Modelos Base</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-19', 1, event)"><span class="sub-bullet">└─</span> Capas 3 y 4: Harnesses & Aplicación</div>
+                </div>
+            </div>
+
+            <!-- Cap 20 -->
+            <div class="accordion-item" data-target="cap-20">
+                <div class="accordion-header" onclick="selectChapter('cap-20', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">20</span>
+                        <span class="acc-text">RepoLens AI Code Investigator</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-20', 0, event)"><span class="sub-bullet">├─</span> Análisis Estático con LLMs</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-20', 1, event)"><span class="sub-bullet">└─</span> Mapeo de Arquitectura Automático</div>
+                </div>
+            </div>
+
+            <!-- Cap 21 -->
+            <div class="accordion-item" data-target="cap-21">
+                <div class="accordion-header" onclick="selectChapter('cap-21', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">21</span>
+                        <span class="acc-text">DeepSeek V4 Flash Architecture</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-21', 0, event)"><span class="sub-bullet">├─</span> Arquitectura MoE (Mixture of Experts)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-21', 1, event)"><span class="sub-bullet">└─</span> Multi-Head Latent Attention (MLA)</div>
+                </div>
+            </div>
+
+            <!-- Cap 22 -->
+            <div class="accordion-item" data-target="cap-22">
+                <div class="accordion-header" onclick="selectChapter('cap-22', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">22</span>
+                        <span class="acc-text">Dr. Cost Digital Twin & Costeo Industrial</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-22', 0, event)"><span class="sub-bullet">├─</span> Metodología Formal de Costeo</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-22', 1, event)"><span class="sub-bullet">└─</span> Integración con PCGE</div>
+                </div>
+            </div>
+
+            <!-- Cap 23 -->
+            <div class="accordion-item" data-target="cap-23">
+                <div class="accordion-header" onclick="selectChapter('cap-23', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">23</span>
+                        <span class="acc-text">LevelField CAPP Industrial</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 0, event)"><span class="sub-bullet">├─</span> Computer-Aided Process Planning</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-23', 1, event)"><span class="sub-bullet">└─</span> Optimización de Planta</div>
+                </div>
+            </div>
+
+            <!-- Cap 24 -->
+            <div class="accordion-item" data-target="cap-24">
+                <div class="accordion-header" onclick="selectChapter('cap-24', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">24</span>
+                        <span class="acc-text">OpenViking & Context Databases</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 0, event)"><span class="sub-bullet">├─</span> Virtual Filesystem (viking://)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-24', 1, event)"><span class="sub-bullet">└─</span> Tiered Loading L0/L1/L2</div>
+                </div>
+            </div>
+
+            <!-- Cap 25 -->
+            <div class="accordion-item" data-target="cap-25">
+                <div class="accordion-header" onclick="selectChapter('cap-25', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">25</span>
+                        <span class="acc-text">Riesgo Crediticio WoE & FICO-SBS</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-25', 0, event)"><span class="sub-bullet">├─</span> Transformación WoE & Information Value</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-25', 1, event)"><span class="sub-bullet">├─</span> Escalamiento a Puntos Score (0-1000)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-25', 2, event)"><span class="sub-bullet">└─</span> Métricas Regulatorias SBS / Basilea</div>
+                </div>
+            </div>
+
+            <!-- Cap 26 -->
+            <div class="accordion-item" data-target="cap-26">
+                <div class="accordion-header" onclick="selectChapter('cap-26', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">26</span>
+                        <span class="acc-text">SOTA HARNESS & Auto-Learning Skills</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-26', 0, event)"><span class="sub-bullet">├─</span> Taxonomía de 4 Arneses</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-26', 1, event)"><span class="sub-bullet">├─</span> autoharness & /learn</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-26', 2, event)"><span class="sub-bullet">└─</span> Impacto en Benchmarks</div>
+                </div>
+            </div>
+
+            <!-- Cap 27 -->
+            <div class="accordion-item" data-target="cap-27">
+                <div class="accordion-header" onclick="selectChapter('cap-27', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">27</span>
+                        <span class="acc-text">Brigade: Multi-Agent Runtime & Tideline</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-27', 0, event)"><span class="sub-bullet">├─</span> Org Chart Routing</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-27', 1, event)"><span class="sub-bullet">├─</span> Tideline Memory (High/Low Tide)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-27', 2, event)"><span class="sub-bullet">└─</span> Origin Scoping & PoLP</div>
+                </div>
+            </div>
+
+            <!-- Cap 28 -->
+            <div class="accordion-item" data-target="cap-28">
+                <div class="accordion-header" onclick="selectChapter('cap-28', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">28</span>
+                        <span class="acc-text">Agent Lightning: RL en Agentes</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-28', 0, event)"><span class="sub-bullet">├─</span> Zero Harness Rewrite Proxy</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-28', 1, event)"><span class="sub-bullet">├─</span> Diseño de Recompensas R(s,a)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-28', 2, event)"><span class="sub-bullet">└─</span> Fine-Tuning Especialistas</div>
+                </div>
+            </div>
+
+            <!-- Cap 29 -->
+            <div class="accordion-item" data-target="cap-29">
+                <div class="accordion-header" onclick="selectChapter('cap-29', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">29</span>
+                        <span class="acc-text">DeepSeek DSec: Sandboxing Elástico</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-29', 0, event)"><span class="sub-bullet">├─</span> 380,000 Sandboxes Concurrentes</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-29', 1, event)"><span class="sub-bullet">├─</span> Aislamiento Kernel Real (KVM)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-29', 2, event)"><span class="sub-bullet">└─</span> Benchmarking Masivo</div>
+                </div>
+            </div>
+
+            <!-- Cap 30 -->
+            <div class="accordion-item" data-target="cap-30">
+                <div class="accordion-header" onclick="selectChapter('cap-30', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">30</span>
+                        <span class="acc-text">AI-Ready Design Systems</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-30', 0, event)"><span class="sub-bullet">├─</span> Spec Files Declarativos</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-30', 1, event)"><span class="sub-bullet">├─</span> Tokens Semánticos & Linter</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-30', 2, event)"><span class="sub-bullet">└─</span> Arquitectura Modular APEFAC</div>
+                </div>
+            </div>
+
+            <!-- Cap 31 -->
+            <div class="accordion-item" data-target="cap-31">
+                <div class="accordion-header" onclick="selectChapter('cap-31', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">31</span>
+                        <span class="acc-text">AWS AI Ecosystem 2026</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-31', 0, event)"><span class="sub-bullet">├─</span> Los 6 Pilares de GenAI Ops</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-31', 1, event)"><span class="sub-bullet">├─</span> Amazon Nova 2 & S3 Vectors</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-31', 2, event)"><span class="sub-bullet">└─</span> Estrategia Híbrida Contabo + AWS</div>
+                </div>
+            </div>
+
+            <!-- Cap 32 -->
+            <div class="accordion-item" data-target="cap-32">
+                <div class="accordion-header" onclick="selectChapter('cap-32', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">32</span>
+                        <span class="acc-text">Claude Motion Graphics & Open-Slide</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-32', 0, event)"><span class="sub-bullet">├─</span> Pipeline de 3 Pasos</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-32', 1, event)"><span class="sub-bullet">├─</span> Open-Slide PPTX Nativo</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-32', 2, event)"><span class="sub-bullet">└─</span> Diagramas Vivos en Producción</div>
+                </div>
+            </div>
+
+            <!-- Cap 33 -->
+            <div class="accordion-item" data-target="cap-33">
+                <div class="accordion-header" onclick="selectChapter('cap-33', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">33</span>
+                        <span class="acc-text">Software Factory & Traefik Zero-Downtime</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-33', 0, event)"><span class="sub-bullet">├─</span> Los 9 Roles Desacoplados</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-33', 1, event)"><span class="sub-bullet">├─</span> DNS Pre-Flight Gate</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-33', 2, event)"><span class="sub-bullet">└─</span> Protocolo en 4 Pasos</div>
+                </div>
+            </div>
+
+            <!-- Cap 34 -->
+            <div class="accordion-item" data-target="cap-34">
+                <div class="accordion-header" onclick="selectChapter('cap-34', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">34</span>
+                        <span class="acc-text">Cirugía de Código & Anti-Slop</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-34', 0, event)"><span class="sub-bullet">├─</span> Decálogo Karpathy (K0)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-34', 1, event)"><span class="sub-bullet">├─</span> Minimalismo Ponytail (P0)</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-34', 2, event)"><span class="sub-bullet">└─</span> Autopsia Benoit Blanc (#126)</div>
+                </div>
+            </div>
+
+            <!-- Cap 35 -->
+            <div class="accordion-item" data-target="cap-35">
+                <div class="accordion-header" onclick="selectChapter('cap-35', this)">
+                    <div class="acc-title-wrap">
+                        <span class="acc-num">35</span>
+                        <span class="acc-text">Capstone Enterprise: GeekSoft OS</span>
+                    </div>
+                    <span class="acc-arrow">▶</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="acc-sub-item" onclick="selectLesson('cap-35', 0, event)"><span class="sub-bullet">├─</span> El Ecosistema Unificado</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-35', 1, event)"><span class="sub-bullet">├─</span> Telemetría & Evals Continuos</div>
+                    <div class="acc-sub-item" onclick="selectLesson('cap-35', 2, event)"><span class="sub-bullet">└─</span> Manifiesto AI Champion 2026</div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- CUERPO PRINCIPAL DINÁMICO (SOLO MUESTRA EL CAPÍTULO SELECCIONADO) -->
+        <main class="wiki-main" id="chapter-viewport">
+            <!-- Renderizado dinámico vía JavaScript -->
+        </main>
 
     </div>
 
-    <!-- Footer Compact -->
-    <div class="p-4 bg-white border border-slate-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-500 font-mono shadow-xs">
-      <div>
-        <span>Hub Oficial: <strong class="text-slate-800">estuardo.geeksoft.tech</strong></span>
-        <span class="mx-2">·</span>
-        <span>VPS Hostinger: <strong class="text-slate-800">91.108.125.253</strong></span>
-      </div>
-      <span class="text-blue-700 font-bold">Diseñado para: Dr. Estuardo Ramos · Creador de la Metodología Dr. Cost</span>
-    </div>
+    <!-- BASE DE DATOS Y CONTROLADOR REACTIVO -->
+    <script>
+        const CHAPTER_DATA = {
+            "cap-01": {
+                        "id": "01",
+                        "title": "Sistemas Agénticos & Orquestación",
+                        "badge": "Arquitectura & Control",
+                        "deckUrl": "/cap-01-sistemas-agenticos.html",
+                        "portalUrl": null,
+                        "summary": "Fundamentos de la ingeniería agéntica moderna. Transición de chatbots reactivos a arquitecturas de decisión cíclicas gobernadas por máquinas de estado y schemas tipados.",
+                        "classes": [
+                                    {
+                                                "title": "Multi-Agent SDLC & Canvas",
+                                                "desc": "Metodología formal de ciclo de vida agéntico y asignación de roles.",
+                                                "tag": "SDLC"
+                                    },
+                                    {
+                                                "title": "Anatomía del Directorio .claude",
+                                                "desc": "Estructura de memoria, reglas inmutables y ejecución determinista.",
+                                                "tag": "Runtime"
+                                    },
+                                    {
+                                                "title": "Graph & Loop Engineering",
+                                                "desc": "Patrones cíclicos con LangGraph y control de estado tipado.",
+                                                "tag": "LangGraph"
+                                    },
+                                    {
+                                                "title": "Patrones de Diseño Agéntico",
+                                                "desc": "Supervisor, Redactor/Crítico, Router y Enjambres especializados.",
+                                                "tag": "Patterns"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Disponibilidad",
+                                                "val": "99.9%"
+                                    },
+                                    {
+                                                "label": "Ahorro Tokens",
+                                                "val": "45%"
+                                    },
+                                    {
+                                                "label": "Concordancia",
+                                                "val": ">95%"
+                                    },
+                                    {
+                                                "label": "Latencia P99",
+                                                "val": "<50ms"
+                                    }
+                        ]
+            },
+            "cap-02": {
+                        "id": "02",
+                        "title": "Sistemas RAG & Vector DBs",
+                        "badge": "Datos & Recuperación",
+                        "deckUrl": "/cap-02-rag-sistemas.html",
+                        "portalUrl": null,
+                        "summary": "Arquitecturas avanzadas de recuperación de información sobre bases de datos vectoriales y grafos de conocimiento con corrección determinista.",
+                        "classes": [
+                                    {
+                                                "title": "GraphRAG vs Vector RAG vs Hybrid",
+                                                "desc": "Comparativa técnica de arquitecturas de recuperación de información.",
+                                                "tag": "RAG"
+                                    },
+                                    {
+                                                "title": "RAG Empresarial en AWS",
+                                                "desc": "Implementación sobre S3, OpenSearch Serverless y Bedrock.",
+                                                "tag": "AWS"
+                                    },
+                                    {
+                                                "title": "Corrective RAG (CRAG) & LangGraph",
+                                                "desc": "Evaluación de relevancia y fallback a búsqueda web.",
+                                                "tag": "CRAG"
+                                    },
+                                    {
+                                                "title": "Graphify Knowledge Graph",
+                                                "desc": "Extracción de grafos de conocimiento a partir de código.",
+                                                "tag": "Graphs"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Precisión Retrieval",
+                                                "val": "96.4%"
+                                    },
+                                    {
+                                                "label": "Latencia Query",
+                                                "val": "<30ms"
+                                    },
+                                    {
+                                                "label": "Reducción Alucinación",
+                                                "val": "92%"
+                                    },
+                                    {
+                                                "label": "Escala DB",
+                                                "val": "14.8M"
+                                    }
+                        ]
+            },
+            "cap-03": {
+                        "id": "03",
+                        "title": "Vibe Coding & Asistentes Dev",
+                        "badge": "Desarrollo Agéntico",
+                        "deckUrl": "/cap-03-vibe-coding.html",
+                        "portalUrl": null,
+                        "summary": "Herramientas y metodologías de vibe coding asistido por IA, enrutadores locales y prompting basado en especificaciones técnicas.",
+                        "classes": [
+                                    {
+                                                "title": "Spec Kit & Spec-Driven Prompting",
+                                                "desc": "Metodología de especificaciones formales previas al código.",
+                                                "tag": "SpecKit"
+                                    },
+                                    {
+                                                "title": "OmniRoute Local Gateway",
+                                                "desc": "Enrutamiento local de inferencia y balanceo de carga de LLMs.",
+                                                "tag": "Gateway"
+                                    },
+                                    {
+                                                "title": "GenOffice Suite Agéntica",
+                                                "desc": "Automatización de suites ofimáticas mediante agentes.",
+                                                "tag": "Office"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Velocidad Dev",
+                                                "val": "5x"
+                                    },
+                                    {
+                                                "label": "Reducción Bugs",
+                                                "val": "70%"
+                                    },
+                                    {
+                                                "label": "Costos API",
+                                                "val": "-60%"
+                                    },
+                                    {
+                                                "label": "Autonomía",
+                                                "val": "Alta"
+                                    }
+                        ]
+            },
+            "cap-04": {
+                        "id": "04",
+                        "title": "Modelos LLM & Razonamiento",
+                        "badge": "Modelos & Visión",
+                        "deckUrl": "/cap-04-modelos-llm.html",
+                        "portalUrl": null,
+                        "summary": "Comprensión profunda de la arquitectura Transformer, modelos de mundo y visión multimodal para agentes de razonamiento avanzado.",
+                        "classes": [
+                                    {
+                                                "title": "World Models & JEPA (LeCun)",
+                                                "desc": "Modelos de mundo basados en representaciones conjuntas.",
+                                                "tag": "JEPA"
+                                    },
+                                    {
+                                                "title": "Transformer Explainer ONNX",
+                                                "desc": "Visualización interactiva interna del mecanismo de atención.",
+                                                "tag": "ONNX"
+                                    },
+                                    {
+                                                "title": "Hands-On Large Language Models",
+                                                "desc": "Ingeniería práctica de modelos de razonamiento y visión.",
+                                                "tag": "LLMs"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Ventana Contexto",
+                                                "val": "1M+"
+                                    },
+                                    {
+                                                "label": "Latencia TTFT",
+                                                "val": "120ms"
+                                    },
+                                    {
+                                                "label": "Precisión Razonamiento",
+                                                "val": "91.2%"
+                                    },
+                                    {
+                                                "label": "Modos",
+                                                "val": "Texto/Visión"
+                                    }
+                        ]
+            },
+            "cap-05": {
+                        "id": "05",
+                        "title": "Curriculums & Fundamentos",
+                        "badge": "Ingeniería de Software",
+                        "deckUrl": "/cap-05-fundamentos-ingenieria.html",
+                        "portalUrl": null,
+                        "summary": "Marcos teóricos y metodológicos consolidados de la academia y la industria para estructurar equipos de ingeniería agéntica.",
+                        "classes": [
+                                    {
+                                                "title": "Multi-Agent SDLC Playbook",
+                                                "desc": "Guía paso a paso para ingeniería de software multi-agente.",
+                                                "tag": "Playbook"
+                                    },
+                                    {
+                                                "title": "Developer to AI Champion",
+                                                "desc": "Ruta de reconversión profesional para liderar proyectos agénticos.",
+                                                "tag": "Career"
+                                    },
+                                    {
+                                                "title": "Code as Agent Harness (Stanford)",
+                                                "desc": "El código y el entorno como soporte del razonamiento.",
+                                                "tag": "Stanford"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Metodologías",
+                                                "val": "4"
+                                    },
+                                    {
+                                                "label": "Estándar",
+                                                "val": "Enterprise"
+                                    },
+                                    {
+                                                "label": "Adopción",
+                                                "val": "100%"
+                                    },
+                                    {
+                                                "label": "ROI Dev",
+                                                "val": "3.8x"
+                                    }
+                        ]
+            },
+            "cap-06": {
+                        "id": "06",
+                        "title": "Diseño de Producto & UX",
+                        "badge": "Interfaces & Frontend",
+                        "deckUrl": "/cap-06-diseno-ux-interfaces.html",
+                        "portalUrl": null,
+                        "summary": "Diseño de interfaces humano-agente, ergonomía cognitiva, micro-animaciones y protocolos de streaming en tiempo real.",
+                        "classes": [
+                                    {
+                                                "title": "Leyes de UX (Laws of UX)",
+                                                "desc": "Principios cognitivos aplicados a interfaces de software.",
+                                                "tag": "UX"
+                                    },
+                                    {
+                                                "title": "AG-UI Streaming Protocol",
+                                                "desc": "Protocolo unificado para frontends agénticos reactivos.",
+                                                "tag": "AG-UI"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Satisfacción UX",
+                                                "val": "98%"
+                                    },
+                                    {
+                                                "label": "Latencia Render",
+                                                "val": "<16ms"
+                                    },
+                                    {
+                                                "label": "Frame Rate",
+                                                "val": "60 FPS"
+                                    },
+                                    {
+                                                "label": "Alineación",
+                                                "val": "Figma/Code"
+                                    }
+                        ]
+            },
+            "cap-07": {
+                        "id": "07",
+                        "title": "Infraestructura, VPS & Seguridad",
+                        "badge": "DevOps & Producción",
+                        "deckUrl": "/cap-07-infraestructura-vps.html",
+                        "portalUrl": null,
+                        "summary": "Aseguramiento de servidores VPS, firewalls, monitoreo de latencia y despliegues inmutables en producción.",
+                        "classes": [
+                                    {
+                                                "title": "How To Secure A Linux Server",
+                                                "desc": "Hardening de servidores VPS, SSH con llaves ED25519 y UFW.",
+                                                "tag": "Security"
+                                    },
+                                    {
+                                                "title": "Cron Jobs & Scraping VPS",
+                                                "desc": "Pipelines autónomos en segundo plano con telemetría.",
+                                                "tag": "Cron"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Uptime VPS",
+                                                "val": "99.98%"
+                                    },
+                                    {
+                                                "label": "Puertos Expuestos",
+                                                "val": "0"
+                                    },
+                                    {
+                                                "label": "SSL",
+                                                "val": "Automático"
+                                    },
+                                    {
+                                                "label": "Latencia Ping",
+                                                "val": "<8ms"
+                                    }
+                        ]
+            },
+            "cap-08": {
+                        "id": "08",
+                        "title": "Radar & Vigilancia OSINT",
+                        "badge": "Vigilancia Tecnológica",
+                        "deckUrl": "/cap-08-radar-tecnologico.html",
+                        "portalUrl": null,
+                        "summary": "Pipelines autónomos de vigilancia tecnológica, scraping de redes profesionales e ingesta continua a la base de conocimiento.",
+                        "classes": [
+                                    {
+                                                "title": "Radar Automatizado GitHub & HF",
+                                                "desc": "Scraping y síntesis diaria de repositorios y papers SoTA.",
+                                                "tag": "Radar"
+                                    },
+                                    {
+                                                "title": "Overwatch Earth 3D OSINT",
+                                                "desc": "Visualización geoespacial e inteligencia de fuentes abiertas.",
+                                                "tag": "OSINT"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Fuentes Diarias",
+                                                "val": "50+"
+                                    },
+                                    {
+                                                "label": "Tiempo Ingesta",
+                                                "val": "<5min"
+                                    },
+                                    {
+                                                "label": "Notas Creadas",
+                                                "val": "252+"
+                                    },
+                                    {
+                                                "label": "Filtro Ruido",
+                                                "val": "94%"
+                                    }
+                        ]
+            },
+            "cap-09": {
+                        "id": "09",
+                        "title": "Masterclass & Feedback Continuo",
+                        "badge": "Capacitación & Pipeline",
+                        "deckUrl": "/cap-09-masterclass-pipeline.html",
+                        "portalUrl": null,
+                        "summary": "Metodología pedagógica para transformar descubrimientos técnicos en lecciones estructuradas y presentaciones interactivas.",
+                        "classes": [
+                                    {
+                                                "title": "Super Curso Master (21 Módulos)",
+                                                "desc": "Estructura académica de transferencia de conocimiento.",
+                                                "tag": "Syllabus"
+                                    },
+                                    {
+                                                "title": "Pipeline de Retroalimentación",
+                                                "desc": "Bucle continuo de actualización a partir de casos reales.",
+                                                "tag": "Feedback"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Módulos",
+                                                "val": "21"
+                                    },
+                                    {
+                                                "label": "Slides",
+                                                "val": "23"
+                                    },
+                                    {
+                                                "label": "Interactivo",
+                                                "val": "100%"
+                                    },
+                                    {
+                                                "label": "Feedback",
+                                                "val": "Activo"
+                                    }
+                        ]
+            },
+            "cap-10": {
+                        "id": "10",
+                        "title": "Arquitectura MIFUNE (Caso Real)",
+                        "badge": "Caso Enterprise 01",
+                        "deckUrl": "/cap-10-mifune-architecture.html",
+                        "portalUrl": null,
+                        "summary": "Caso real de implementación de un sistema agéntico corporativo con bitácora forense y suite de 26 pruebas automáticas.",
+                        "classes": [
+                                    {
+                                                "title": "Blueprint de Arquitectura MIFUNE",
+                                                "desc": "Diseño general del orquestador agéntico corporativo.",
+                                                "tag": "Blueprint"
+                                    },
+                                    {
+                                                "title": "Bitácora en Vivo (Pasos A-I)",
+                                                "desc": "Historial de implementación y decisiones técnicas reales.",
+                                                "tag": "Bitácora"
+                                    },
+                                    {
+                                                "title": "Suite QC de 26 Pruebas en Sandbox",
+                                                "desc": "Validación determinista en entornos confinados.",
+                                                "tag": "QC Suite"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Pruebas QC",
+                                                "val": "26/26"
+                                    },
+                                    {
+                                                "label": "Tasa Éxito",
+                                                "val": "100%"
+                                    },
+                                    {
+                                                "label": "Sandboxes",
+                                                "val": "Docker"
+                                    },
+                                    {
+                                                "label": "Rollback",
+                                                "val": "<5s"
+                                    }
+                        ]
+            },
+            "cap-11": {
+                        "id": "11",
+                        "title": "Arquitectura PROPTWIN (Caso Real)",
+                        "badge": "Caso Enterprise 02",
+                        "deckUrl": "/cap-11-proptwin-architecture.html",
+                        "portalUrl": null,
+                        "summary": "Gemelo digital inmobiliario con despiece de planos DXF, metrados de obra automatizados y software factory multi-agente.",
+                        "classes": [
+                                    {
+                                                "title": "Blueprint Gemelo Digital Arzobispado",
+                                                "desc": "Digitalización y metrado de inmuebles históricos.",
+                                                "tag": "DigitalTwin"
+                                    },
+                                    {
+                                                "title": "Software Factory & 5 Roles Agénticos",
+                                                "desc": "Cuadrilla multi-agente para desarrollo modular.",
+                                                "tag": "Squad"
+                                    },
+                                    {
+                                                "title": "Quality Gates & Sandbox Docker",
+                                                "desc": "Compilación React 19 y verificación determinista.",
+                                                "tag": "Gates"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Precisión CAD",
+                                                "val": "Sub-mm"
+                                    },
+                                    {
+                                                "label": "Módulos",
+                                                "val": "7"
+                                    },
+                                    {
+                                                "label": "Roles Agente",
+                                                "val": "5"
+                                    },
+                                    {
+                                                "label": "Build",
+                                                "val": "tsc -b"
+                                    }
+                        ]
+            },
+            "cap-12": {
+                        "id": "12",
+                        "title": "Arquitectura ARBN.CPJS (Airbnb Twin)",
+                        "badge": "Caso Enterprise 03",
+                        "deckUrl": "/cap-12-arbn-cpjs-architecture.html",
+                        "portalUrl": null,
+                        "summary": "Gemelo digital para remodelación, staging y operación de departamentos Airbnb con despiece de costos en tiempo real.",
+                        "classes": [
+                                    {
+                                                "title": "Blueprint Remodelación & Staging",
+                                                "desc": "Plan de modernización de departamento 60m2.",
+                                                "tag": "Staging"
+                                    },
+                                    {
+                                                "title": "Motor BOQ & Despiece de Partidas",
+                                                "desc": "Presupuestos y listas de materiales automatizadas.",
+                                                "tag": "BOQ"
+                                    },
+                                    {
+                                                "title": "Auditor Airbnb Ready 5 Estrellas",
+                                                "desc": "Checklist de calidad y estándares de hospitalidad.",
+                                                "tag": "Auditor"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Presupuesto BOQ",
+                                                "val": "Exacto"
+                                    },
+                                    {
+                                                "label": "Área",
+                                                "val": "60m2"
+                                    },
+                                    {
+                                                "label": "Partidas",
+                                                "val": "32"
+                                    },
+                                    {
+                                                "label": "Retorno Est.",
+                                                "val": "+35%"
+                                    }
+                        ]
+            },
+            "cap-13": {
+                        "id": "13",
+                        "title": "Claude Code Templates (AITMPL)",
+                        "badge": "Componentes & Plantillas",
+                        "deckUrl": "/cap-13-claude-code-aitmpl.html",
+                        "portalUrl": null,
+                        "summary": "Repositorio de más de 1,000 componentes y templates para Claude Code y Antigravity con agentes especialistas.",
+                        "classes": [
+                                    {
+                                                "title": "Mina de Oro: +1,000 Componentes",
+                                                "desc": "Repositorio curado de bloques de código reutilizables.",
+                                                "tag": "Components"
+                                    },
+                                    {
+                                                "title": "5 Agentes Especialistas",
+                                                "desc": "Security, DB, Frontend, DevOps y Auditor.",
+                                                "tag": "Agents"
+                                    },
+                                    {
+                                                "title": "Skills & MCPs",
+                                                "desc": "Conectores para Bright Data, Neon, Vercel y más.",
+                                                "tag": "MCP"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Componentes",
+                                                "val": "1,000+"
+                                    },
+                                    {
+                                                "label": "Agentes",
+                                                "val": "5"
+                                    },
+                                    {
+                                                "label": "MCPs",
+                                                "val": "12+"
+                                    },
+                                    {
+                                                "label": "Reutilización",
+                                                "val": "80%"
+                                    }
+                        ]
+            },
+            "cap-14": {
+                        "id": "14",
+                        "title": "Cómputo Distribuido en LAN UniFi",
+                        "badge": "Redes & Offloading",
+                        "deckUrl": "/cap-14-computo-distribuido-unifi.html",
+                        "portalUrl": null,
+                        "summary": "Distribución de carga computacional e inferencia de modelos en red local UniFi con arquitectura thin-client.",
+                        "classes": [
+                                    {
+                                                "title": "Parallel vs Distributed vs Offloading",
+                                                "desc": "Modelos de distribución de carga en redes locales.",
+                                                "tag": "Compute"
+                                    },
+                                    {
+                                                "title": "Arquitectura Thin-Client (180 ➔ 150)",
+                                                "desc": "Offloading de inferencia pesada a nodos dedicados.",
+                                                "tag": "ThinClient"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Ancho Banda",
+                                                "val": "10Gbps"
+                                    },
+                                    {
+                                                "label": "Latencia LAN",
+                                                "val": "<1ms"
+                                    },
+                                    {
+                                                "label": "Ahorro GPU",
+                                                "val": "60%"
+                                    },
+                                    {
+                                                "label": "Nodos",
+                                                "val": "Multi"
+                                    }
+                        ]
+            },
+            "cap-15": {
+                        "id": "15",
+                        "title": "Litho Terrain Architecture",
+                        "badge": "Topografía & Datos 3D",
+                        "deckUrl": "/cap-15-litho-terrain-architecture.html",
+                        "portalUrl": null,
+                        "summary": "Procesamiento de datos topográficos, curvas de nivel y terrenos digitales para proyectos inmobiliarios y de infraestructura.",
+                        "classes": [
+                                    {
+                                                "title": "Modelado de Terrenos Digitales",
+                                                "desc": "Representación de mallas topográficas y elevaciones.",
+                                                "tag": "Terrain"
+                                    },
+                                    {
+                                                "title": "Integración CAD & GIS",
+                                                "desc": "Interoperabilidad entre planos de ingeniería y datos satelitales.",
+                                                "tag": "GIS"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Resolución Malla",
+                                                "val": "1cm"
+                                    },
+                                    {
+                                                "label": "Formatos",
+                                                "val": "DXF/GeoJSON"
+                                    },
+                                    {
+                                                "label": "Render 3D",
+                                                "val": "WebGL"
+                                    },
+                                    {
+                                                "label": "Precisión",
+                                                "val": "Alta"
+                                    }
+                        ]
+            },
+            "cap-16": {
+                        "id": "16",
+                        "title": "Corrective RAG (CRAG) & LangGraph",
+                        "badge": "RAG Avanzado",
+                        "deckUrl": "/cap-16-corrective-rag-crag.html",
+                        "portalUrl": null,
+                        "summary": "Patrón de RAG correctivo que autoevalúa los documentos recuperados y recurre a búsqueda web en caso de incertidumbre.",
+                        "classes": [
+                                    {
+                                                "title": "Evaluación de Relevancia Documental",
+                                                "desc": "Clasificación automática de documentos recuperados.",
+                                                "tag": "Scorer"
+                                    },
+                                    {
+                                                "title": "Bucle de Corrección con Fallback Web",
+                                                "desc": "Búsqueda externa determinista si el contexto es insuficiente.",
+                                                "tag": "Fallback"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Alucinaciones",
+                                                "val": "0%"
+                                    },
+                                    {
+                                                "label": "Cobertura Query",
+                                                "val": "99%"
+                                    },
+                                    {
+                                                "label": "Fallback Time",
+                                                "val": "<1.2s"
+                                    },
+                                    {
+                                                "label": "Filtro",
+                                                "val": "Estricto"
+                                    }
+                        ]
+            },
+            "cap-17": {
+                        "id": "17",
+                        "title": "Dragonfly High-Throughput Memory",
+                        "badge": "Caché & Memoria",
+                        "deckUrl": "/cap-17-dragonfly-high-throughput.html",
+                        "portalUrl": null,
+                        "summary": "Almacén en memoria de ultra-alto rendimiento para persistencia de sesiones de agentes y caché de inferencias.",
+                        "classes": [
+                                    {
+                                                "title": "Reemplazo de Redis con Dragonfly",
+                                                "desc": "Memoria multi-hilo de altísimo rendimiento.",
+                                                "tag": "In-Memory"
+                                    },
+                                    {
+                                                "title": "Persistencia de Sesiones Agénticas",
+                                                "desc": "Almacenamiento de contexto de alta frecuencia.",
+                                                "tag": "Session"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Throughput",
+                                                "val": "25x Redis"
+                                    },
+                                    {
+                                                "label": "Latencia P99",
+                                                "val": "<0.5ms"
+                                    },
+                                    {
+                                                "label": "RAM Overhead",
+                                                "val": "-30%"
+                                    },
+                                    {
+                                                "label": "Hilos",
+                                                "val": "Multi-Core"
+                                    }
+                        ]
+            },
+            "cap-18": {
+                        "id": "18",
+                        "title": "Content Modulator ADHD",
+                        "badge": "Accesibilidad Cognitiva",
+                        "deckUrl": "/cap-18-content-modulator-adhd.html",
+                        "portalUrl": null,
+                        "summary": "Sistema agéntico para adaptar contenidos técnicos complejos a formatos de alta retención y baja carga cognitiva.",
+                        "classes": [
+                                    {
+                                                "title": "Adaptación Cognitiva de Texto",
+                                                "desc": "Modulación de densidad y formato para perfiles neurodivergentes.",
+                                                "tag": "Cognitive"
+                                    },
+                                    {
+                                                "title": "Estructuración Visual Biónica",
+                                                "desc": "Resaltado de palabras clave y reducción de fatiga lectora.",
+                                                "tag": "Bionic"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Retención Lectora",
+                                                "val": "+40%"
+                                    },
+                                    {
+                                                "label": "Tiempo Lectura",
+                                                "val": "-35%"
+                                    },
+                                    {
+                                                "label": "Comprensión",
+                                                "val": "Alta"
+                                    },
+                                    {
+                                                "label": "Accesibilidad",
+                                                "val": "Universal"
+                                    }
+                        ]
+            },
+            "cap-19": {
+                        "id": "19",
+                        "title": "The Four AI Engineering Layers",
+                        "badge": "Arquitectura de Software",
+                        "deckUrl": "/cap-19-four-ai-engineering-layers.html",
+                        "portalUrl": null,
+                        "summary": "El marco taxonómico de 4 capas para clasificar cualquier componente de software en la era de la inteligencia artificial.",
+                        "classes": [
+                                    {
+                                                "title": "Capas 1 y 2: Silicio & Modelos Base",
+                                                "desc": "Hardware, cuantización e inferencia optimizada.",
+                                                "tag": "Silicon"
+                                    },
+                                    {
+                                                "title": "Capas 3 y 4: Harnesses & Aplicación",
+                                                "desc": "Arneses de ejecución, herramientas y capas de UI.",
+                                                "tag": "Application"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Capas",
+                                                "val": "4"
+                                    },
+                                    {
+                                                "label": "Cobertura Stack",
+                                                "val": "100%"
+                                    },
+                                    {
+                                                "label": "Claridad",
+                                                "val": "Total"
+                                    },
+                                    {
+                                                "label": "Alineación",
+                                                "val": "Enterprise"
+                                    }
+                        ]
+            },
+            "cap-20": {
+                        "id": "20",
+                        "title": "RepoLens AI Code Investigator",
+                        "badge": "Auditoría de Código",
+                        "deckUrl": "/cap-20-repolens-ai-investigator.html",
+                        "portalUrl": null,
+                        "summary": "Agente forense para investigar repositorios de código complejos, mapear dependencias y auditar seguridad.",
+                        "classes": [
+                                    {
+                                                "title": "Análisis Estático con LLMs",
+                                                "desc": "Exploración forense de dependencias y vulnerabilidades.",
+                                                "tag": "StaticAnalysis"
+                                    },
+                                    {
+                                                "title": "Mapeo de Arquitectura Automático",
+                                                "desc": "Generación de diagramas de componentes desde el AST.",
+                                                "tag": "AST"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Velocidad Análisis",
+                                                "val": "10k LoC/s"
+                                    },
+                                    {
+                                                "label": "Precisión AST",
+                                                "val": "100%"
+                                    },
+                                    {
+                                                "label": "Vulnerabilidades",
+                                                "val": "Detectadas"
+                                    },
+                                    {
+                                                "label": "Diagramas",
+                                                "val": "Mermaid"
+                                    }
+                        ]
+            },
+            "cap-21": {
+                        "id": "21",
+                        "title": "DeepSeek V4 Flash Architecture",
+                        "badge": "Modelos Eficientes",
+                        "deckUrl": "/cap-21-deepseek-v4-flash-architecture.html",
+                        "portalUrl": null,
+                        "summary": "Análisis profundo de las innovaciones de DeepSeek: MLA, activación dispersa MoE y entrenamiento ultra-eficiente.",
+                        "classes": [
+                                    {
+                                                "title": "Arquitectura MoE (Mixture of Experts)",
+                                                "desc": "Activación dispersa de parámetros para máxima velocidad.",
+                                                "tag": "MoE"
+                                    },
+                                    {
+                                                "title": "Multi-Head Latent Attention (MLA)",
+                                                "desc": "Compresión de KV-Cache para contextos gigantescos.",
+                                                "tag": "MLA"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Costo Inferencia",
+                                                "val": "-90%"
+                                    },
+                                    {
+                                                "label": "Parámetros Activos",
+                                                "val": "21B"
+                                    },
+                                    {
+                                                "label": "KV-Cache",
+                                                "val": "-93%"
+                                    },
+                                    {
+                                                "label": "Throughput",
+                                                "val": "300 tps"
+                                    }
+                        ]
+            },
+            "cap-22": {
+                        "id": "22",
+                        "title": "Dr. Cost Digital Twin & Costeo Industrial",
+                        "badge": "Caso Enterprise 04",
+                        "deckUrl": "/cap-22-dr-cost-digital-twin.html",
+                        "portalUrl": null,
+                        "summary": "Gemelo digital del Dr. Estuardo Ramos para enseñanza y ejecución de costeo industrial bajo normativa contable peruana.",
+                        "classes": [
+                                    {
+                                                "title": "Metodología Formal de Costeo",
+                                                "desc": "Absorción de Materia Prima, Mano de Obra y CIF.",
+                                                "tag": "Costing"
+                                    },
+                                    {
+                                                "title": "Integración con PCGE",
+                                                "desc": "Asientos contables automáticos y balance de comprobación.",
+                                                "tag": "PCGE"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Tablas BD",
+                                                "val": "67"
+                                    },
+                                    {
+                                                "label": "Cuadre Contable",
+                                                "val": "100%"
+                                    },
+                                    {
+                                                "label": "Módulos",
+                                                "val": "01 al 07"
+                                    },
+                                    {
+                                                "label": "Visores",
+                                                "val": "5"
+                                    }
+                        ]
+            },
+            "cap-23": {
+                        "id": "23",
+                        "title": "LevelField CAPP Industrial",
+                        "badge": "Planificación Industrial",
+                        "deckUrl": "/cap-23-levelfield-capp-industrial.html",
+                        "portalUrl": null,
+                        "summary": "Planificación de procesos asistida por computadora para manufactura discreta y optimización de planta industrial.",
+                        "classes": [
+                                    {
+                                                "title": "Computer-Aided Process Planning",
+                                                "desc": "Rutas de fabricación y tiempos estándar automatizados.",
+                                                "tag": "CAPP"
+                                    },
+                                    {
+                                                "title": "Optimización de Planta",
+                                                "desc": "Balanceo de líneas de ensamble y control de mermas.",
+                                                "tag": "Plant"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Eficiencia Línea",
+                                                "val": "+28%"
+                                    },
+                                    {
+                                                "label": "Mermas",
+                                                "val": "-18%"
+                                    },
+                                    {
+                                                "label": "Tiempo Ciclo",
+                                                "val": "Optimizado"
+                                    },
+                                    {
+                                                "label": "Capacidad",
+                                                "val": "Balanceada"
+                                    }
+                        ]
+            },
+            "cap-24": {
+                        "id": "24",
+                        "title": "OpenViking & Context Databases",
+                        "badge": "Gestión de Contexto",
+                        "deckUrl": "/cap-24-openviking-context-database.html",
+                        "portalUrl": null,
+                        "summary": "Base de datos de contexto con sistema de archivos virtual para agentes, eliminando el colapso del vector RAG plano.",
+                        "classes": [
+                                    {
+                                                "title": "Virtual Filesystem (viking://)",
+                                                "desc": "Navegación jerárquica de contexto con comandos ls/read.",
+                                                "tag": "VFS"
+                                    },
+                                    {
+                                                "title": "Tiered Loading L0/L1/L2",
+                                                "desc": "Carga por capas para ahorrar entre 34% y 91% de tokens.",
+                                                "tag": "Tiered"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Ahorro Tokens",
+                                                "val": "34-91%"
+                                    },
+                                    {
+                                                "label": "Protocolo",
+                                                "val": "viking://"
+                                    },
+                                    {
+                                                "label": "Niveles",
+                                                "val": "L0/L1/L2"
+                                    },
+                                    {
+                                                "label": "Latencia",
+                                                "val": "<10ms"
+                                    }
+                        ]
+            },
+            "cap-25": {
+                        "id": "25",
+                        "title": "Riesgo Crediticio WoE & FICO-SBS",
+                        "badge": "Fintech & Banca",
+                        "deckUrl": "/cap-25-credit-risk-scoring-woe-fico.html",
+                        "portalUrl": null,
+                        "summary": "Modelado cuantitativo de riesgo crediticio con Weight of Evidence (WoE), regresión calibrada y cumplimiento de la SBS.",
+                        "classes": [
+                                    {
+                                                "title": "Transformación WoE & Information Value",
+                                                "desc": "Binarización y linealización matemática de variables.",
+                                                "tag": "WoE/IV"
+                                    },
+                                    {
+                                                "title": "Escalamiento a Puntos Score (0-1000)",
+                                                "desc": "Calibración aditiva transparente para comités de crédito.",
+                                                "tag": "FICO"
+                                    },
+                                    {
+                                                "title": "Métricas Regulatorias SBS / Basilea",
+                                                "desc": "Validación con KS >= 40%, AUC >= 0.80 y PSI < 0.10.",
+                                                "tag": "SBS"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "KS Test",
+                                                "val": ">= 40%"
+                                    },
+                                    {
+                                                "label": "ROC AUC",
+                                                "val": ">= 0.80"
+                                    },
+                                    {
+                                                "label": "PSI",
+                                                "val": "< 0.10"
+                                    },
+                                    {
+                                                "label": "Escala FICO",
+                                                "val": "0-1000"
+                                    }
+                        ]
+            },
+            "cap-26": {
+                        "id": "26",
+                        "title": "SOTA HARNESS & Auto-Learning Skills",
+                        "badge": "Arneses de Ejecución",
+                        "deckUrl": "/cap-26-sota-harness-autoharness.html",
+                        "portalUrl": null,
+                        "summary": "Arneses agénticos de última generación y capas de auto-aprendizaje que capturan lecciones y evolucionan skills sin replay loops.",
+                        "classes": [
+                                    {
+                                                "title": "Taxonomía de 4 Arneses",
+                                                "desc": "Subprocess, Docker, MicroVM Sandbox y Self-Learning.",
+                                                "tag": "Taxonomy"
+                                    },
+                                    {
+                                                "title": "autoharness & /learn",
+                                                "desc": "Auto-aprendizaje pasivo, reflector y merge semántico.",
+                                                "tag": "autoharness"
+                                    },
+                                    {
+                                                "title": "Impacto en Benchmarks",
+                                                "desc": "Salto de 42% a 78% en CORE-Bench con el mismo modelo.",
+                                                "tag": "CORE-Bench"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "CORE-Bench",
+                                                "val": "42% ➔ 78%"
+                                    },
+                                    {
+                                                "label": "Tokens Ahorrados",
+                                                "val": "-70%"
+                                    },
+                                    {
+                                                "label": "Deps",
+                                                "val": "Zero (Pure Py)"
+                                    },
+                                    {
+                                                "label": "Auto-Merge",
+                                                "val": "Activo"
+                                    }
+                        ]
+            },
+            "cap-27": {
+                        "id": "27",
+                        "title": "Brigade: Multi-Agent Runtime & Tideline",
+                        "badge": "Runtimes Self-Hosted",
+                        "deckUrl": "/cap-27-brigade-multiagent-runtime.html",
+                        "portalUrl": null,
+                        "summary": "Runtime multi-agente autosuficiente y self-hosted con delegación por organigrama formal y memoria bidireccional limpia.",
+                        "classes": [
+                                    {
+                                                "title": "Org Chart Routing",
+                                                "desc": "Delegación jerárquica tipo empresa: PM ➔ Arch ➔ Dev ➔ QC.",
+                                                "tag": "OrgChart"
+                                    },
+                                    {
+                                                "title": "Tideline Memory (High/Low Tide)",
+                                                "desc": "Persistencia de estado estructurada sin context bloat.",
+                                                "tag": "Tideline"
+                                    },
+                                    {
+                                                "title": "Origin Scoping & PoLP",
+                                                "desc": "Aislamiento de privilegios de herramientas MCP por rol.",
+                                                "tag": "Security"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Self-Hosted",
+                                                "val": "100%"
+                                    },
+                                    {
+                                                "label": "Privilegios",
+                                                "val": "PoLP Scope"
+                                    },
+                                    {
+                                                "label": "Memoria",
+                                                "val": "Tideline"
+                                    },
+                                    {
+                                                "label": "Latencia Inter",
+                                                "val": "<5ms"
+                                    }
+                        ]
+            },
+            "cap-28": {
+                        "id": "28",
+                        "title": "Agent Lightning: RL en Agentes",
+                        "badge": "Post-Training Agéntico",
+                        "deckUrl": "/cap-28-agent-lightning-reinforcement-learning.html",
+                        "portalUrl": null,
+                        "summary": "Framework Open Source de Microsoft para optimización de políticas agénticas mediante Reinforcement Learning sin reescribir código.",
+                        "classes": [
+                                    {
+                                                "title": "Zero Harness Rewrite Proxy",
+                                                "desc": "Entrenamiento RL interceptando llamadas vía proxy HTTP estándar.",
+                                                "tag": "ProxyRL"
+                                    },
+                                    {
+                                                "title": "Diseño de Recompensas R(s,a)",
+                                                "desc": "Recompensas deterministas basadas en tests y concisión.",
+                                                "tag": "Rewards"
+                                    },
+                                    {
+                                                "title": "Fine-Tuning Especialistas",
+                                                "desc": "Modelos de 7B/14B superando a modelos gigantes en dominio cerrado.",
+                                                "tag": "SLMs"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Ahorro API",
+                                                "val": "90%"
+                                    },
+                                    {
+                                                "label": "Episodios/Hora",
+                                                "val": "500+"
+                                    },
+                                    {
+                                                "label": "Framework",
+                                                "val": "Microsoft"
+                                    },
+                                    {
+                                                "label": "Algoritmo",
+                                                "val": "PPO/DPO"
+                                    }
+                        ]
+            },
+            "cap-29": {
+                        "id": "29",
+                        "title": "DeepSeek DSec: Sandboxing Elástico",
+                        "badge": "Infraestructura & Sandboxes",
+                        "deckUrl": "/cap-29-deepseek-dsec-elastic-sandboxing.html",
+                        "portalUrl": null,
+                        "summary": "Infraestructura de sandboxing elástico masivo para entrenamiento, evaluación de código y ejecución segura de agentes autónomos.",
+                        "classes": [
+                                    {
+                                                "title": "380,000 Sandboxes Concurrentes",
+                                                "desc": "Arquitectura de microVMs efímeras levantadas en 20ms.",
+                                                "tag": "DSec"
+                                    },
+                                    {
+                                                "title": "Aislamiento Kernel Real (KVM)",
+                                                "desc": "Virtualización a nivel de hardware que bloquea root escapes.",
+                                                "tag": "Security"
+                                    },
+                                    {
+                                                "title": "Benchmarking Masivo",
+                                                "desc": "Ejecución paralela de suites forenses de 26+ pruebas sin fricción.",
+                                                "tag": "Evals"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Concurrencia",
+                                                "val": "380K VMs"
+                                    },
+                                    {
+                                                "label": "Boot Time",
+                                                "val": "18-35ms"
+                                    },
+                                    {
+                                                "label": "RAM Base",
+                                                "val": "5MB"
+                                    },
+                                    {
+                                                "label": "Aislamiento",
+                                                "val": "KVM"
+                                    }
+                        ]
+            },
+            "cap-30": {
+                        "id": "30",
+                        "title": "AI-Ready Design Systems",
+                        "badge": "UX & Prototipado",
+                        "deckUrl": "/cap-30-ai-ready-design-systems.html",
+                        "portalUrl": null,
+                        "summary": "Guía práctica de Atlassian (por Hardik Pandya) para estructurar sistemas de diseño que los agentes consumen con cero drift visual.",
+                        "classes": [
+                                    {
+                                                "title": "Spec Files Declarativos",
+                                                "desc": "Contratos de diseño en Markdown que guían al agente sin alucinar.",
+                                                "tag": "SpecFiles"
+                                    },
+                                    {
+                                                "title": "Tokens Semánticos & Linter",
+                                                "desc": "Prohibición de estilos inline y colores HEX directos en CI/CD.",
+                                                "tag": "Tokens"
+                                    },
+                                    {
+                                                "title": "Arquitectura Modular APEFAC",
+                                                "desc": "Estructura React 19 desacoplada en src/components/ y src/lib/.",
+                                                "tag": "React19"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Drift Visual",
+                                                "val": "0%"
+                                    },
+                                    {
+                                                "label": "Retrabajo UI",
+                                                "val": "-82%"
+                                    },
+                                    {
+                                                "label": "Velocidad Dev",
+                                                "val": "10x"
+                                    },
+                                    {
+                                                "label": "Estándar",
+                                                "val": "APEFAC"
+                                    }
+                        ]
+            },
+            "cap-31": {
+                        "id": "31",
+                        "title": "AWS AI Ecosystem 2026",
+                        "badge": "Cloud Agéntico",
+                        "deckUrl": "/cap-31-aws-ai-ecosystem-2026.html",
+                        "portalUrl": null,
+                        "summary": "Mapa arquitectónico integral de la nube agéntica: Bedrock AgentCore, S3 Vectors y guardrails de seguridad corporativa.",
+                        "classes": [
+                                    {
+                                                "title": "Los 6 Pilares de GenAI Ops",
+                                                "desc": "Silicon, Modelos, S3 Vectors, Orquestación, Guardrails y Evals.",
+                                                "tag": "6Pilares"
+                                    },
+                                    {
+                                                "title": "Amazon Nova 2 & S3 Vectors",
+                                                "desc": "Modelos multimodales ultra-rápidos y vector search serverless.",
+                                                "tag": "Nova2/S3"
+                                    },
+                                    {
+                                                "title": "Estrategia Híbrida Contabo + AWS",
+                                                "desc": "VPS dedicado de alto rendimiento + serverless bursting en nube.",
+                                                "tag": "Hybrid"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Ahorro Vectorial",
+                                                "val": "-85%"
+                                    },
+                                    {
+                                                "label": "Latencia TTFT",
+                                                "val": "<100ms"
+                                    },
+                                    {
+                                                "label": "Pilares",
+                                                "val": "6"
+                                    },
+                                    {
+                                                "label": "Cumplimiento",
+                                                "val": "SBS"
+                                    }
+                        ]
+            },
+            "cap-32": {
+                        "id": "32",
+                        "title": "Claude Motion Graphics & Open-Slide",
+                        "badge": "Motion & Presentaciones",
+                        "deckUrl": "/cap-32-claude-motion-graphics-pipeline.html",
+                        "portalUrl": null,
+                        "summary": "Generación determinista de animaciones vectoriales SVG Morphing y exportación a presentaciones ejecutivas de alta fidelidad.",
+                        "classes": [
+                                    {
+                                                "title": "Pipeline de 3 Pasos",
+                                                "desc": "Wireframe SVG ➔ Tokens de Estilo ➔ Animación CSS/GSAP.",
+                                                "tag": "Pipeline"
+                                    },
+                                    {
+                                                "title": "Open-Slide PPTX Nativo",
+                                                "desc": "Exportación automática a PowerPoint editable y visor interactivo.",
+                                                "tag": "OpenSlide"
+                                    },
+                                    {
+                                                "title": "Diagramas Vivos en Producción",
+                                                "desc": "Flujos Sankey animados en PETRAL y despiece CAD en PROPTWIN.",
+                                                "tag": "LiveFlows"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "FPS",
+                                                "val": "60 FPS"
+                                    },
+                                    {
+                                                "label": "Peso SVG",
+                                                "val": "<50KB"
+                                    },
+                                    {
+                                                "label": "Formato",
+                                                "val": "Web/PPTX"
+                                    },
+                                    {
+                                                "label": "WOW Factor",
+                                                "val": "10/10"
+                                    }
+                        ]
+            },
+            "cap-33": {
+                        "id": "33",
+                        "title": "Software Factory & Traefik Zero-Downtime",
+                        "badge": "Gobernanza & DevOps",
+                        "deckUrl": "/cap-33-software-factory-traefik-devops.html",
+                        "portalUrl": null,
+                        "summary": "Quality Gates inmutables, cuadrilla de 9 roles agénticos y protocolo Traefik Dynamic para despliegues con cero caída.",
+                        "classes": [
+                                    {
+                                                "title": "Los 9 Roles Desacoplados",
+                                                "desc": "SM, K0, P0, C0, PM, Architect, Engineer, Benoit Blanc QC y DevOps.",
+                                                "tag": "Squad"
+                                    },
+                                    {
+                                                "title": "DNS Pre-Flight Gate",
+                                                "desc": "Prohibición estricta de YAML dinámico sin resolución DNS certificada.",
+                                                "tag": "Traefik"
+                                    },
+                                    {
+                                                "title": "Protocolo en 4 Pasos",
+                                                "desc": "Contenedor aislado, verificación DNS, inyección atómica y health check.",
+                                                "tag": "Deploy"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Downtime",
+                                                "val": "0.00s"
+                                    },
+                                    {
+                                                "label": "Latencia VPS",
+                                                "val": "<10ms"
+                                    },
+                                    {
+                                                "label": "Roles",
+                                                "val": "9"
+                                    },
+                                    {
+                                                "label": "Priority",
+                                                "val": "5000"
+                                    }
+                        ]
+            },
+            "cap-34": {
+                        "id": "34",
+                        "title": "Cirugía de Código & Anti-Slop",
+                        "badge": "Calidad & Minimalismo",
+                        "deckUrl": "/cap-34-code-surgery-karpathy-ponytail.html",
+                        "portalUrl": null,
+                        "summary": "Metodología de intervención quirúrgica de código para erradicar el AI Slop y mantener codebases limpias, mantenibles y ultra-rápidas.",
+                        "classes": [
+                                    {
+                                                "title": "Decálogo Karpathy (K0)",
+                                                "desc": "Diff check obligatorio, cero refactors cosméticos y think before coding.",
+                                                "tag": "Karpathy"
+                                    },
+                                    {
+                                                "title": "Minimalismo Ponytail (P0)",
+                                                "desc": "Prioridad stdlib y reducción sistemática de código >= 50%.",
+                                                "tag": "Ponytail"
+                                    },
+                                    {
+                                                "title": "Autopsia Benoit Blanc (#126)",
+                                                "desc": "Análisis forense de causa raíz (RCA) ante cualquier regresión.",
+                                                "tag": "BenoitBlanc"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Reducción LoC",
+                                                "val": ">= 50%"
+                                    },
+                                    {
+                                                "label": "Slop Rate",
+                                                "val": "0%"
+                                    },
+                                    {
+                                                "label": "Regresiones",
+                                                "val": "0"
+                                    },
+                                    {
+                                                "label": "Rigor",
+                                                "val": "Máximo"
+                                    }
+                        ]
+            },
+            "cap-35": {
+                        "id": "35",
+                        "title": "Capstone Enterprise: GeekSoft OS",
+                        "badge": "Capstone E2E",
+                        "deckUrl": "/cap-35-geeksoft-enterprise-os-capstone.html",
+                        "portalUrl": null,
+                        "summary": "El gran Capstone final: El Sistema Operativo Agéntico de GeekSoft operando en producción real sobre VPS Contabo 169.58.168.107.",
+                        "classes": [
+                                    {
+                                                "title": "El Ecosistema Unificado",
+                                                "desc": "Integración PETRAL + INANDES + DR. COST + PROPTWIN en vivo.",
+                                                "tag": "Ecosystem"
+                                    },
+                                    {
+                                                "title": "Telemetría & Evals Continuos",
+                                                "desc": "Monitoreo Netdata, Traefik Live y suites automáticas de regresión.",
+                                                "tag": "Telemetry"
+                                    },
+                                    {
+                                                "title": "Manifiesto AI Champion 2026",
+                                                "desc": "El código es el arnés y la calidad sobre la cantidad.",
+                                                "tag": "Champion"
+                                    }
+                        ],
+                        "metrics": [
+                                    {
+                                                "label": "Capítulos",
+                                                "val": "35/35"
+                                    },
+                                    {
+                                                "label": "Notas",
+                                                "val": "252+"
+                                    },
+                                    {
+                                                "label": "Sistemas en Vivo",
+                                                "val": "4"
+                                    },
+                                    {
+                                                "label": "Certificación",
+                                                "val": "100%"
+                                    }
+                        ]
+            }
+};
 
-  </main>
+        function renderChapter(capId) {
+            const data = CHAPTER_DATA[capId];
+            if (!data) return;
+
+            const viewport = document.getElementById('chapter-viewport');
+            viewport.innerHTML = `
+                <div class="chapter-card">
+                    <div class="chapter-hero">
+                        <div>
+                            <div class="breadcrumb">
+                                GeekSoft Academy &bull; Capítulo <strong>${data.id}</strong> &bull; ${data.badge}
+                            </div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <a href="${data.deckUrl}" class="deck-launch-btn">
+                                <span class="play-icon">▶</span>
+                                <span>Ver Deck Interactivo PPT</span>
+                            </a>
+                            ${data.portalUrl ? `
+                            <a href="${data.portalUrl}" class="deck-launch-btn" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+                                <span class="play-icon">🛋️</span>
+                                <span>Abrir Portal APEFAC en Vivo</span>
+                            </a>` : ''}
+                        </div>
+                    </div>
+
+                    <div class="grid-detail">
+                        <div class="section-box">
+                            <div class="section-title">
+                                <span>📚</span> Clases & Notas Técnicas del Módulo
+                            </div>
+                            <div class="classes-list">
+                                ${data.classes.map(c => `
+                                    <div class="class-row">
+                                        <div class="class-info">
+                                            <h4>${c.title}</h4>
+                                            <p>${c.desc}</p>
+                                        </div>
+                                        <span class="class-badge">${c.tag}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 14px;">
+                            <div class="section-box">
+                                <div class="section-title">
+                                    <span>🧠</span> Resumen Ejecutivo del Capítulo
+                                </div>
+                                <p class="summary-text">${data.summary}</p>
+                            </div>
+
+                            <div class="section-box">
+                                <div class="section-title">
+                                    <span>⚡</span> Especificaciones & Métricas
+                                </div>
+                                <div class="metrics-grid">
+                                    ${data.metrics.map(m => `
+                                        <div class="metric-card">
+                                            <div class="metric-val">${m.val}</div>
+                                            <div class="metric-lbl">${m.label}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectChapter(capId, headerEl) {
+            // Actualizar acordeón
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active-chapter');
+                if (item.getAttribute('data-target') === capId) {
+                    item.classList.add('active-chapter');
+                    item.classList.toggle('open');
+                } else {
+                    item.classList.remove('open');
+                }
+            });
+
+            // Renderizar contenido central
+            renderChapter(capId);
+        }
+
+        function selectLesson(capId, lessonIdx, event) {
+            event.stopPropagation();
+            // Marcar lección activa
+            document.querySelectorAll('.acc-sub-item').forEach(sub => sub.classList.remove('active-lesson'));
+            event.currentTarget.classList.add('active-lesson');
+
+            // Asegurar que el capítulo esté activo y renderizado
+            renderChapter(capId);
+        }
+
+        // Búsqueda en tiempo real
+        const searchInput = document.getElementById('wiki-search');
+        searchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            const items = document.querySelectorAll('.accordion-item');
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(q)) {
+                    item.style.display = 'block';
+                    if (q.length > 2) item.classList.add('open');
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Inicializar con Capítulo 01
+        renderChapter('cap-01');
+    </script>
 
 </body>
 </html>

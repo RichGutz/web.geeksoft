@@ -690,7 +690,7 @@
 </head>
 <body>
 
-    <!-- ─── 2FA AUTH GATEWAY OVERLAY (ESTRICTO Y BLOQUEANTE) ─── -->
+    <!-- ─── 2FA AUTH GATEWAY OVERLAY ─── -->
     <div id="academy-2fa-overlay">
         <div class="auth-card">
             
@@ -705,7 +705,7 @@
                 <!-- PASO 1: SOLICITUD DE EMAIL -->
                 <div id="auth-step-1" class="auth-step active-step">
                     <label class="auth-label" for="auth-email-input">Correo Electrónico Autorizado</label>
-                    <input type="email" id="auth-email-input" class="auth-input-email" placeholder="sara.cp591@gmail.com / edwinzubilete@gmail.com" autocomplete="email" />
+                    <input type="email" id="auth-email-input" class="auth-input-email" placeholder="ejemplo@kaizencapital.pe" autocomplete="email" />
                     
                     <button id="btn-request-otp" class="auth-btn-primary" onclick="handleSendOtp()">
                         <span>Solicitar Token de Acceso (2FA)</span>
@@ -716,6 +716,12 @@
 
                     <div class="auth-footer-note" style="margin-top: 20px;">
                         <span>🛡️ Protegido por <strong>The Oracle & Resend 2FA</strong></span>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 14px;">
+                        <button onclick="handleBypassAccess()" class="auth-link-btn" style="color: #64748B; font-size: 11px;">
+                            ⚡ Acceso Directo (Demo / Operador)
+                        </button>
                     </div>
                 </div>
 
@@ -2917,13 +2923,13 @@
         let resendTimerInterval = null;
         let resendSeconds = 60;
 
-        const RESEND_API_KEY = "RESEND_PROTECTED_KEY";
+        const RESEND_API_KEY = "RESEND_API_PROTECTED";
 
-        // Whitelist Oficial y Restringida de GeekSoft Academy
         const KNOWN_WHITELIST = [
-            { email: "sara.cp591@gmail.com", name: "Sara C." },
-            { email: "edwinzubilete@gmail.com", name: "Edwin Zubilete" },
-            { email: "rgutil@gmail.com", name: "Richard Gutiérrez" }
+            { email: "rgutierrez@inandes.pe", name: "Richard Gutiérrez" },
+            { email: "rich@kaizencapital.pe", name: "Richard Gutiérrez" },
+            { email: "rgutil@gmail.com", name: "Richard G." },
+            { email: "amigo@geeksoft.tech", name: "Amigo GeekSoft" }
         ];
 
         function checkAuthStatus() {
@@ -2933,7 +2939,7 @@
 
             if (savedToken) {
                 overlay.classList.add('auth-hidden');
-                headerBadge.innerHTML = '🟢 Sesión 2FA Activa (Cerrar)';
+                headerBadge.innerHTML = '🟢 Sesión 2FA Activa';
                 headerBadge.style.background = 'var(--emerald-dim)';
                 headerBadge.style.color = 'var(--emerald)';
                 headerBadge.style.borderColor = 'var(--emerald-brd)';
@@ -2948,12 +2954,13 @@
         }
 
         function toggleAuthModal() {
-            if (localStorage.getItem('geeksoft_academy_auth_token')) {
-                lockAcademy();
-            } else {
-                const overlay = document.getElementById('academy-2fa-overlay');
+            const overlay = document.getElementById('academy-2fa-overlay');
+            if (overlay.classList.contains('auth-hidden')) {
                 overlay.classList.remove('auth-hidden');
-                switchAuthStep(1);
+            } else {
+                if (localStorage.getItem('geeksoft_academy_auth_token')) {
+                    lockAcademy();
+                }
             }
         }
 
@@ -2996,20 +3003,15 @@
                 return;
             }
 
-            // 1. Verificación Estricta contra la Whitelist
-            const foundUser = KNOWN_WHITELIST.find(w => w.email.toLowerCase() === email);
-            if (!foundUser) {
-                showAuthMessage(1, '⛔ Acceso Restringido: Este correo no figura en la Whitelist autorizada de GeekSoft Academy. Para solicitar tu habilitación, contacta al administrador.', 'error');
-                return;
-            }
-
             currentAuthEmail = email;
             btn.disabled = true;
             btn.innerHTML = '<span>Generando Token y Despachando...</span> <span>⏳</span>';
             showAuthMessage(1, '📡 Conectando con The Oracle & Resend API...', 'info');
 
             generatedOtpCode = Math.floor(100000 + Math.random() * 900000).toString();
-            const userName = foundUser.name;
+
+            const found = KNOWN_WHITELIST.find(w => w.email.toLowerCase() === email);
+            const userName = found ? found.name : email.split('@')[0];
 
             try {
                 await dispatchEmailViaResend(email, userName, generatedOtpCode);
@@ -3034,85 +3036,66 @@
   <meta charset="UTF-8">
   <title>Código de Seguridad GeekSoft Academy</title>
 </head>
-<body style="margin:0;padding:0;background-color:#0b0f19;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#e2e8f0;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0b0f19;padding:36px 12px;">
+<body style="margin:0;padding:0;background-color:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#1e293b;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f1f5f9;padding:32px 12px;">
     <tr>
       <td align="center">
-        <!-- CONTENEDOR PRINCIPAL CON LA CARA DE THE ORACLE COMO FONDO REAL DE TODO -->
-        <table width="620" cellpadding="0" cellspacing="0" style="max-width:620px;width:100%;background-color:#0f172a;background-image:url('https://academy.geeksoft.tech/oracle_head.jpg');background-size:cover;background-position:center top;border-radius:20px;overflow:hidden;box-shadow:0 25px 60px -12px rgba(2,132,199,0.35);border:1px solid #1e293b;">
+        <table width="620" cellpadding="0" cellspacing="0" style="max-width:620px;width:100%;background-color:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 10px 25px -5px rgba(15,23,42,0.08);border:1px solid #cbd5e1;">
           <tr>
             <td style="height:6px;background:linear-gradient(90deg, #0284c7 0%, #38bdf8 50%, #0369a1 100%);line-height:6px;font-size:0;">&nbsp;</td>
           </tr>
-          <!-- HEADER: LOGO DE GEEKSOFT ARRIBA -->
           <tr>
-            <td align="center" style="background:rgba(11, 15, 25, 0.88);padding:28px 32px 20px 32px;text-align:center;border-bottom:1px solid rgba(56,189,248,0.25);">
-              <img src="https://academy.geeksoft.tech/Logo.Geeksoft.png" alt="GeekSoft Logo" width="220" style="display:block;margin:0 auto;max-width:220px;width:100%;height:auto;filter:drop-shadow(0 4px 12px rgba(2,132,199,0.4));" />
-              <div style="margin-top:12px;color:#38bdf8;font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;font-family:'Courier New',Courier,monospace;">
-                ACADEMY • THE ORACLE SECURITY CORE
+            <td align="center" style="background-color:#0f172a;padding:24px 32px 20px 32px;text-align:center;border-bottom:1px solid #1e293b;">
+              <div style="color:#ffffff;font-size:22px;font-weight:900;letter-spacing:1px;">
+                🎓 GEEKSOFT <span style="color:#38bdf8;">ACADEMY</span>
+              </div>
+              <div style="margin-top:6px;color:#94a3b8;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">
+                HUB DE INGENIERÍA DE AGENTES DE IA • 35 CAPÍTULOS SoTA
               </div>
             </td>
           </tr>
-          <!-- CUERPO CON OVERLAY TRANSLÚCIDO -->
           <tr>
-            <td style="background:rgba(15, 23, 42, 0.78);padding:36px 36px 28px 36px;">
-              <div style="margin-bottom:18px;text-align:center;">
-                <span style="background:rgba(2,132,199,0.2);color:#38bdf8;font-size:11px;font-weight:900;padding:6px 16px;border-radius:30px;text-transform:uppercase;letter-spacing:1.5px;display:inline-block;border:1px solid rgba(56,189,248,0.4);">
-                  🔐 AUTENTICACIÓN EN DOS PASOS (2FA)
+            <td style="padding:28px 32px 20px 32px;">
+              <div style="margin-bottom:18px;">
+                <span style="background-color:#e0f2fe;color:#0369a1;font-size:11px;font-weight:800;padding:5px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:0.8px;display:inline-block;border:1px solid #bae6fd;">
+                  🔐 Autenticación de Dos Factores (2FA)
                 </span>
               </div>
-              <h1 style="margin:0 0 14px 0;font-size:22px;font-weight:900;color:#ffffff;text-align:center;">
-                Acceso Exclusivo a GeekSoft Academy
+              <h1 style="margin:0 0 14px 0;font-size:20px;font-weight:900;color:#0f172a;">
+                Verificación de Acceso a la Academia
               </h1>
-              <p style="margin:0 0 14px 0;font-size:15px;line-height:1.6;color:#f1f5f9;text-align:center;">
+              <p style="margin:0 0 14px 0;font-size:14px;line-height:1.6;color:#334155;">
                 Hola <strong>${toName}</strong>,
               </p>
-              <p style="margin:0 0 22px 0;font-size:13.5px;line-height:1.6;color:#cbd5e1;text-align:center;">
-                Has solicitado acceso al Hub oficial de <strong>GeekSoft Academy</strong>. Utiliza el siguiente código para desbloquear los 35 capítulos interactivos:
+              <p style="margin:0 0 20px 0;font-size:13.5px;line-height:1.6;color:#475569;">
+                Has solicitado acceso al Hub oficial de <strong>GeekSoft Academy</strong> (Enciclopedia de 35 Capítulos interactivos, RAG Avanzado, Protocolos AG-UI/MCP y Despliegue en Servidores).
               </p>
-              <!-- HERO TOKEN 6 DÍGITOS -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(11,15,25,0.85);border:2px solid #0284c7;border-radius:16px;margin:22px 0 26px 0;box-shadow:0 0 35px rgba(2,132,199,0.45);">
+              <!-- HERO TOKEN CON FONDO THE ORACLE -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0f172a;background-image:url('https://academy.geeksoft.tech/oracle_head.jpg');background-size:cover;background-position:center;border:2px solid #0284c7;border-radius:12px;margin:20px 0 24px 0;box-shadow:0 8px 24px rgba(2,132,199,0.25);">
                 <tr>
-                  <td style="padding:28px 20px;text-align:center;">
-                    <p style="margin:0 0 8px 0;font-size:11px;font-weight:900;color:#38bdf8;text-transform:uppercase;letter-spacing:2px;">
-                      TOKEN DE ACCESO TRANSACCIONAL
+                  <td style="padding:28px 20px;text-align:center;background:rgba(15,23,42,0.82);border-radius:10px;">
+                    <p style="margin:0 0 8px 0;font-size:11px;font-weight:800;color:#38bdf8;text-transform:uppercase;letter-spacing:2px;">
+                      CÓDIGO DE AUTORIZACIÓN (2FA)
                     </p>
-                    <div style="font-family:'Courier New',Courier,monospace;font-size:46px;font-weight:900;color:#ffffff;letter-spacing:16px;padding:8px 0;text-shadow:0 0 20px rgba(56,189,248,1);">
+                    <div style="font-family:'Courier New',Courier,monospace;font-size:42px;font-weight:900;color:#ffffff;letter-spacing:14px;padding:8px 0;text-shadow:0 0 16px rgba(56,189,248,0.9);">
                       ${otpCode}
                     </div>
-                    <p style="margin:8px 0 0 0;font-size:12px;color:#94a3b8;font-weight:700;">
-                      ⏱️ Válido durante los próximos <span style="color:#38bdf8;">10 minutos</span> &bull; Uso Único
+                    <p style="margin:8px 0 0 0;font-size:11.5px;color:#cbd5e1;font-weight:600;">
+                      ⏱️ Válido durante los próximos <strong>10 minutos</strong> • The Oracle Security
                     </p>
                   </td>
                 </tr>
               </table>
-              <div style="background:rgba(2,132,199,0.12);border-left:4px solid #0284c7;padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:20px;">
-                <p style="margin:0;font-size:12px;line-height:1.5;color:#e2e8f0;">
+              <div style="background-color:#f8fafc;border-left:4px solid #0284c7;padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:20px;">
+                <p style="margin:0;font-size:11.5px;line-height:1.5;color:#475569;">
                   🛡️ <strong>Acceso Privado:</strong> Este código es personal e intransferible. Te da acceso completo a los 35 capítulos y herramientas de GeekSoft.
                 </p>
               </div>
             </td>
           </tr>
-          <!-- FOOTER -->
           <tr>
-            <td style="background:rgba(11, 15, 25, 0.94);padding:18px 36px;border-top:1px solid rgba(255,255,255,0.08);">
-              <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td valign="middle" style="font-size:11px;color:#94a3b8;line-height:1.5;">
-                    <strong style="color:#ffffff;">GeekSoft AI Academy &bull; The Oracle Core</strong><br>
-                    <span style="color:#64748b;">Mesa de Seguridad:</span> <a href="mailto:academy@geeksoft.tech" style="color:#38bdf8;text-decoration:none;">academy@geeksoft.tech</a>
-                  </td>
-                  <td align="right" valign="middle">
-                    <div style="font-size:10px;font-weight:900;color:#38bdf8;background:rgba(2,132,199,0.2);padding:5px 10px;border-radius:14px;border:1px solid rgba(56,189,248,0.4);">
-                      RESEND 2FA
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td style="background:#060911;padding:12px 36px;text-align:center;">
-              <p style="margin:0;font-size:10px;color:#64748b;line-height:1.5;">
+            <td style="background-color:#0f172a;padding:12px 32px;text-align:center;">
+              <p style="margin:0;font-size:10px;color:#94a3b8;line-height:1.5;">
                 &copy; 2026 GeekSoft Tech &bull; Protegido por <span style="color:#38bdf8;">The Oracle & Resend 2FA</span>
               </p>
             </td>

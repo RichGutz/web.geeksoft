@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capítulo 27: Runtimes Multi-Agente Self-Hosted & Tideline Memory - GeekSoft Academy</title>
+    <link rel="icon" type="image/png" href="/FAVICON.GEEKSOFT.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box; margin: 0; padding: 0;
+            -webkit-user-select: none; user-select: none;
+        }
+
+        :root {
+            --bg:          #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --navy:        #0F172A;
+            --navy-mid:    #1E293B;
+            --sky:         #0284C7;
+            --sky-dim:     rgba(2,132,199,0.10);
+            --sky-brd:     rgba(2,132,199,0.28);
+            --emerald:     #059669;
+            --emerald-dim: rgba(5,150,105,0.10);
+            --emerald-brd: rgba(5,150,105,0.25);
+            --purple:      #7C3AED;
+            --purple-dim:  rgba(124,58,237,0.10);
+            --purple-brd:  rgba(124,58,237,0.25);
+            --amber:       #D97706;
+            --amber-dim:   rgba(217,119,6,0.10);
+            --amber-brd:   rgba(217,119,6,0.25);
+            --red:         #E11D48;
+            --red-dim:     rgba(225,29,72,0.08);
+            --text:        #0F172A;
+            --text-dim:    rgba(15,23,42,0.68);
+            --border:      rgba(15,23,42,0.12);
+            --shadow:      0 4px 20px rgba(15,23,42,0.06);
+            --shadow-lg:   0 12px 40px rgba(15,23,42,0.12);
+        }
+
+        @media print {
+            html, body { display: none !important; visibility: hidden !important; }
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+        }
+
+        #watermark-layer {
+            position: fixed; inset: 0; z-index: 99998;
+            pointer-events: none; overflow: hidden;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-content: space-around;
+            opacity: 0.035; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800;
+            color: #0f172a; transform: rotate(-25deg) scale(1.15);
+        }
+        .wm-item { padding: 30px 40px; white-space: nowrap; }
+
+        #deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 18px 48px 72px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: translateX(0) !important; }
+
+        nav {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 14px; z-index: 999;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 6px 16px; border-radius: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+        }
+        .nbtn {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--navy); font-size: 18px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow); transition: all 0.2s;
+        }
+        .nbtn:hover { background: var(--sky-dim); border-color: var(--sky-brd); transform: scale(1.1); color: var(--sky); }
+        .nbtn:disabled { opacity: 0.25; cursor: default; transform: none; }
+        #counter {
+            font-size: 13px; color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace; min-width: 65px; text-align: center; font-weight: 800;
+        }
+
+        .tag {
+            font-size: 11px; font-weight: 800; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        h1 { font-size: clamp(2.2rem, 3.6vw, 3.4rem); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: var(--navy); }
+        h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); font-weight: 900; line-height: 1.15; margin-bottom: 6px; color: var(--navy); }
+        .sub { font-size: clamp(0.92rem, 1.35vw, 1.1rem); color: var(--text-dim); font-weight: 400; margin-bottom: 14px; text-align: center; max-width: 1050px; line-height: 1.45; }
+        .hi   { color: var(--sky); }
+        .hi-b { color: var(--emerald); }
+        .hi-p { color: var(--purple); }
+        .hi-a { color: var(--amber); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover { border-color: var(--sky-brd); }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--sky-dim); border: 1px solid var(--sky-brd);
+            border-radius: 100px; padding: 6px 18px; font-size: 12px;
+            color: var(--sky); font-weight: 800; letter-spacing: 0.5px;
+        }
+        .badge.green { background: var(--emerald-dim); border-color: var(--emerald-brd); color: var(--emerald); }
+        .badge.purple { background: var(--purple-dim); border-color: var(--purple-brd); color: var(--purple); }
+        .badge.amber { background: var(--amber-dim); border-color: var(--amber-brd); color: var(--amber); }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 1240px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; max-width: 1240px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 1240px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; max-width: 1240px; }
+
+        .spec-box {
+            padding: 16px; display: flex; flex-direction: column; gap: 8px; text-align: left;
+        }
+        .spec-icon { font-size: 26px; }
+        .spec-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+        .spec-desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+
+        .flow-container {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #ffffff; border: 1px solid var(--border); border-radius: 16px;
+            padding: 14px 18px; width: 100%; max-width: 1240px; box-shadow: var(--shadow);
+            margin: 6px 0; gap: 8px;
+        }
+        .flow-node {
+            flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
+            padding: 10px 8px; text-align: center; display: flex; flex-direction: column; gap: 4px;
+        }
+        .flow-node.active { border-color: var(--sky); background: #f0f9ff; }
+        .flow-node.green  { border-color: var(--emerald); background: #ecfdf5; }
+        .flow-node.purple { border-color: var(--purple); background: #f5f3ff; }
+        .flow-node.amber  { border-color: var(--amber); background: #fffbeb; }
+        .flow-node-title { font-size: 12.5px; font-weight: 800; color: var(--navy); }
+        .flow-node-desc  { font-size: 10.5px; color: var(--text-dim); }
+        .flow-arrow { font-size: 16px; color: #94a3b8; font-weight: 900; }
+
+        .table-wrap {
+            width: 100%; max-width: 1240px; background: #ffffff;
+            border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+        th { background: #0f172a; color: #ffffff; padding: 10px 14px; font-weight: 700; letter-spacing: 0.5px; }
+        td { padding: 9px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        .footnote {
+            margin-top: 10px; font-size: 10.5px; color: #64748b;
+            line-height: 1.4; width: 100%; max-width: 1240px; text-align: left;
+            border-top: 1px dashed #cbd5e1; padding-top: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="watermark-layer">
+        <div class="wm-item">GEEKSOFT INNOVATION LABS</div>
+        <div class="wm-item">GEEKSOFT ACADEMY 2026</div>
+        <div class="wm-item">CONFIDENCIAL &bull; PROPIEDAD INTELECTUAL</div>
+        <div class="wm-item">WWW.GEEKSOFT.TECH</div>
+        <div class="wm-item">MULTI-AGENT &bull; RAG &bull; SOTA</div>
+    </div>
+
+    <div id="deck">
+<div class="slide">
+        <div class="tag">🏛️ CAPÍTULO 27 · RUNTIMES MULTI-AGENTE SELF-HOSTED</div>
+        <h1>Brigade: <span class="hi">Runtimes por Organigrama &amp; Tideline Memory</span></h1>
+        <p class="sub">Orquestación multi-agente autosuficiente con delegación jerárquica, scoping de herramientas por origen y memoria bidireccional.</p>
+        <div class="grid-3" style="margin-top: 14px;">
+            <div class="card spec-box">
+                <span class="spec-icon">🏢</span>
+                <span class="spec-title">Org Chart Routing</span>
+                <p class="spec-desc">Estructura de mando formal tipo empresa: PM &rarr; Architect &rarr; Engineers &rarr; QC Auditor.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🌊</span>
+                <span class="spec-title">Tideline Memory</span>
+                <p class="spec-desc">Persistencia de estado en marea alta/baja: retiene decisiones clave y descarta logs transitorios.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">🔒</span>
+                <span class="spec-title">Origin Scoping</span>
+                <p class="spec-desc">Agentes subordinados solo ejecutan herramientas explícitamente concedidas por su rol superior.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>GeekSoft Academy &bull; Módulo de Orquestación Enterprise &bull; Notas #244, #246</span><span>Slide 1 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🌊 ARQUITECTURA TIDELINE MEMORY</div>
+        <h2>Marea Alta vs Marea Baja: <span class="hi">Resolviendo el Context Bloat</span></h2>
+        <p class="sub">Cómo Brigade mantiene a los agentes con contexto 100% enfocado sin saturar la ventana de tokens.</p>
+        <div class="grid-2" style="margin-top: 8px;">
+            <div class="card spec-box" style="border-left: 4px solid var(--sky);">
+                <span class="spec-title">🌊 High Tide (Marea Alta - Sesión Activa)</span>
+                <p class="spec-desc">Memoria completa de ejecución: terminal outputs, diffs de código, llamadas a herramientas MCP y trazas de error inmediatas. Permite retroalimentación quirúrgica en bucle.</p>
+            </div>
+            <div class="card spec-box" style="border-left: 4px solid var(--emerald);">
+                <span class="spec-title">🏖️ Low Tide (Marea Baja - Consolidación)</span>
+                <p class="spec-desc">Al terminar la tarea, el Tideline Engine compacta la sesión en decisiones arquitectónicas inmutables, contratos JSON y lecciones. El 95% del ruido es purgado automáticamente.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>Innovación Brigade: Memoria episódica estructurada sin Vector DB overhead</span><span>Slide 2 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">👥 ORG CHART DELEGATION</div>
+        <h2>Ruteo Jerárquico: <span class="hi">Cero Caos en Swarms de Agentes</span></h2>
+        <p class="sub">Comparación entre enjambres planos desordenados vs organigramas con gobernanza formal.</p>
+        <div class="grid-2" style="margin-top: 10px;">
+            <div class="card spec-box" style="background: var(--red-dim); border-color: var(--red);">
+                <span class="spec-title">❌ Swarm Plano / Peer-to-Peer</span>
+                <p class="spec-desc">• Agentes se llaman entre sí en bucles infinitos.<br/>• Drift en las decisiones arquitectónicas.<br/>• Alto costo y nula trazabilidad de errores.<br/>• Pérdida del requerimiento original del usuario.</p>
+            </div>
+            <div class="card spec-box" style="background: var(--emerald-dim); border-color: var(--emerald);">
+                <span class="spec-title">✅ Brigade Org Chart (GeekSoft Standard)</span>
+                <p class="spec-desc">• Cadena de mando inmutable: Solo el PM habla con el usuario.<br/>• El Arquitecto define schemas OpenAPI/Pydantic.<br/>• Los Developers solo reciben tareas atómicas con test suite.<br/>• QC Auditor (Benoit Blanc) tiene poder de veto absoluto.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>Alineación con Software Factory Squad PROPTWIN (Nota #76)</span><span>Slide 3 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🔌 MCP &amp; ORIGIN SCOPING</div>
+        <h2>Aislamiento de Privilegios: <span class="hi">Seguridad en Producción</span></h2>
+        <p class="sub">Ningún subagente puede acceder a credenciales de base de datos o APIs sin firma de origen.</p>
+        <div class="table-wrap" style="margin-top: 8px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rol Agéntico</th>
+                        <th>Herramientas Permitidas (Scope)</th>
+                        <th>Herramientas Denegadas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Agente 1 (PM)</strong></td>
+                        <td>Búsqueda documental, lectura PRD, diagramas</td>
+                        <td>Modificación de código, terminal bash</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Agente 2 (Architect)</strong></td>
+                        <td>Definición Pydantic schemas, OpenAPI specs</td>
+                        <td>Acceso a producción, deploy VPS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Agente 3 (Engineering)</strong></td>
+                        <td>Lectura/escritura modular `src/`, test runners</td>
+                        <td>Bypass de tests, inyección directa a DB</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Agente 5 (DevOps)</strong></td>
+                        <td>Git semver, Docker build, Traefik check</td>
+                        <td>Refactor funcional de lógica de negocio</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footnote"><span>Principio de Mínimo Privilegio (PoLP) aplicado a Runtimes Agénticos</span><span>Slide 4 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">💼 CASO LEASEIN &amp; MOTOR DE RIESGO</div>
+        <h2>Aplicación Práctica: <span class="hi">Squad de Evaluación Financiera</span></h2>
+        <p class="sub">Implementación de Brigade para evaluación masiva de balances tributarios y estados financieros.</p>
+        <div class="flow-container" style="margin-top: 10px;">
+            <div class="flow-node active"><span class="flow-node-title">PDF Ingestion</span><span class="flow-node-desc">DJ Anual SUNAT</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node purple"><span class="flow-node-title">Parser Agent</span><span class="flow-node-desc">Extracción Casillas</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node green"><span class="flow-node-title">FCR Deterministic</span><span class="flow-node-desc">Flujo Caja Libre</span></div>
+            <span class="flow-arrow">&rarr;</span>
+            <div class="flow-node amber"><span class="flow-node-title">Risk Opinion</span><span class="flow-node-desc">Scorecard FICO</span></div>
+        </div>
+        <div class="footnote"><span>Caso Real Leasein Financial Analysis &bull; Nota #246</span><span>Slide 5 / 6</span></div>
+    </div>
+<div class="slide">
+        <div class="tag">🏁 CONCLUSIÓN &amp; ROADMAP</div>
+        <h2>El Futuro del Software Enterprise: <span class="hi">Agentes con Organigrama</span></h2>
+        <p class="sub">Por qué los runtimes auto-hospedados con memoria limpia dominan la ingeniería de software 2026.</p>
+        <div class="grid-3" style="margin-top: 12px;">
+            <div class="card spec-box">
+                <span class="spec-icon">🔒</span>
+                <span class="spec-title">100% Self-Hosted</span>
+                <p class="spec-desc">Cero fuga de propiedad intelectual o datos bancarios a nubes de terceros.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">⚡</span>
+                <span class="spec-title">Baja Latencia</span>
+                <p class="spec-desc">Comunicación inter-agente mediante sockets Unix locales o Colas Redis.</p>
+            </div>
+            <div class="card spec-box">
+                <span class="spec-icon">💎</span>
+                <span class="spec-title">Auditoría Total</span>
+                <p class="spec-desc">Logs forenses completos de cada delegación y aprobación de Quality Gate.</p>
+            </div>
+        </div>
+        <div class="footnote"><span>GeekSoft Academy &bull; Capítulo 27 Completo &bull; Brigade Multi-Agent Runtime</span><span>Slide 6 / 6</span></div>
+    </div>
+    </div>
+
+    <nav>
+        <button class="nbtn" id="prev-btn" title="Anterior">&larr;</button>
+        <div id="counter">1 / 6</div>
+        <button class="nbtn" id="next-btn" title="Siguiente">&rarr;</button>
+        <button class="nbtn" id="fs-btn" title="Pantalla Completa" style="font-size:15px;">⛶</button>
+    </nav>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const counter = document.getElementById('counter');
+        const fsBtn = document.getElementById('fs-btn');
+        let current = 0;
+
+        function updateDeck() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active');
+                if (idx === current) {
+                    slide.classList.add('active');
+                }
+            });
+            counter.textContent = `${current + 1} / ${slides.length}`;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === slides.length - 1;
+        }
+
+        function nextSlide() {
+            if (current < slides.length - 1) {
+                current++;
+                updateDeck();
+            }
+        }
+
+        function prevSlide() {
+            if (current > 0) {
+                current--;
+                updateDeck();
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'Home') {
+                current = 0;
+                updateDeck();
+            } else if (e.key === 'End') {
+                current = slides.length - 1;
+                updateDeck();
+            }
+        });
+
+        fsBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen().catch(() => {});
+            }
+        });
+
+        updateDeck();
+    </script>
+</body>
+</html>
