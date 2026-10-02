@@ -67,8 +67,6 @@ export default function OraclePage() {
         backgroundColor: "#020704",
         position: "relative",
         overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
       }}
     >
       {/* ── CAPA 0: Canvas 3D de Fondo Esmeralda & Plata ── */}
@@ -87,198 +85,217 @@ export default function OraclePage() {
         </Canvas>
       </div>
 
-      {/* ── BOTÓN FLOTANTE SUPERIOR IZQUIERDA: Volver a Geeksoft ── */}
+      {/* ── CAPA 1: Botón Volver a Geeksoft (Esquina Superior Izquierda) ── */}
       <Link
         href="/"
         className="mirror-back-link"
         style={{
           position: "absolute",
-          top: "1.2rem",
-          left: "1.5rem",
+          top: "2rem",
+          left: "2.5rem",
           zIndex: 100,
-          background: "rgba(0, 0, 0, 0.65)",
-          border: "1px solid rgba(0, 255, 128, 0.4)",
-          color: "#00ff80",
-          padding: "0.5rem 1rem",
-          borderRadius: "8px",
-          textDecoration: "none",
-          fontSize: "0.82rem",
-          fontWeight: 700,
-          letterSpacing: "1px",
-          textTransform: "uppercase",
-          backdropFilter: "blur(8px)",
-          boxShadow: "0 0 15px rgba(0, 255, 128, 0.15)",
-          transition: "all 0.2s ease",
         }}
       >
         ← Volver a Geeksoft
       </Link>
 
-      {/* ── CONTENEDOR PRINCIPAL MAXIMIZADO ── */}
+      {/* ── CAPA 2: UI Flotante con Scroll Limpio (Estructura THE MIRROR) ── */}
       <div
+        className="mirror-ui-container"
         style={{
-          position: "relative",
+          position: "absolute",
+          inset: 0,
           zIndex: 10,
-          flex: 1,
           display: "flex",
           flexDirection: "column",
-          padding: "3.6rem 1.5rem 1.2rem 1.5rem",
-          height: "100vh",
-          boxSizing: "border-box",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          padding: "5rem 2rem 4rem 2rem",
+          overflowY: "auto",
         }}
       >
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            background: "rgba(2, 10, 5, 0.88)",
-            border: `1px solid ${currentVision.tagColor}40`,
-            borderRadius: "16px",
-            overflow: "hidden",
-            boxShadow: `0 0 50px rgba(0, 0, 0, 0.9), 0 0 30px ${currentVision.tagColor}15`,
-            backdropFilter: "blur(12px)",
-          }}
-        >
-          {/* ── BARRA SUPERIOR INTEGRADA (Sin encabezado alto) ── */}
-          <div
-            style={{
-              padding: "0.85rem 1.5rem",
-              borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              background: "rgba(0, 0, 0, 0.5)",
-            }}
-          >
-            {/* Título y Subtítulo a la izquierda */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-              <span
-                style={{
-                  fontSize: "0.78rem",
-                  color: currentVision.tagColor,
-                  fontWeight: 900,
-                  letterSpacing: "2.5px",
-                  textTransform: "uppercase",
-                }}
-              >
-                {currentVision.badge}
-              </span>
-              <h1
-                style={{
-                  fontSize: "1.15rem",
-                  color: "#ffffff",
-                  fontWeight: 800,
-                  margin: 0,
-                  letterSpacing: "-0.2px",
-                }}
-              >
-                {currentVision.subtitle}
-              </h1>
+        {/* ── Header Principal de The Oracle (Idéntico a The Mirror) ── */}
+        <div className="mirror-hero-section">
+          <div className="mirror-hero-header-row">
+            <div className="mirror-v-avatar-wrapper" style={{ borderColor: currentVision.tagColor, boxShadow: `0 0 35px ${currentVision.tagColor}80` }}>
+              <img
+                src="/images/oracle_head.jpg"
+                alt="The Oracle"
+                className="mirror-v-avatar-img"
+              />
+              <div className="mirror-avatar-glow" style={{ borderColor: currentVision.tagColor }} />
             </div>
-
-            {/* Controles de Navegación + Estado de Reel */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-              {/* Indicador de Pausa / Reproducción */}
-              <button
-                onClick={togglePause}
-                title={isPaused ? "Clic para reanudar reel automático" : "Clic para pausar reel"}
-                style={{
-                  background: isPaused ? "rgba(255, 0, 85, 0.15)" : "rgba(0, 255, 128, 0.12)",
-                  border: `1px solid ${isPaused ? "rgba(255, 0, 85, 0.5)" : "rgba(0, 255, 128, 0.5)"}`,
-                  color: isPaused ? "#ff6699" : "#00ff80",
-                  padding: "0.35rem 0.75rem",
-                  borderRadius: "20px",
-                  fontSize: "0.72rem",
-                  fontWeight: 800,
-                  letterSpacing: "1px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                  transition: "all 0.2s ease",
-                }}
-              >
-                <span>{isPaused ? "⏸ PAUSADO" : "▶ REEL 5s"}</span>
-              </button>
-
-              {/* Botón Anterior */}
-              <button
-                onClick={() => setCurrentIdx((prev) => (prev - 1 + VISIONS.length) % VISIONS.length)}
-                style={{
-                  background: "rgba(255, 255, 255, 0.06)",
-                  border: "1px solid rgba(255, 255, 255, 0.15)",
-                  color: "#ffffff",
-                  padding: "0.4rem 0.8rem",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                  fontSize: "0.82rem",
-                  fontWeight: 700,
-                }}
-              >
-                ◀ Ant
-              </button>
-
-              <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.7)", minWidth: "42px", textAlign: "center", fontWeight: 700 }}>
-                {currentIdx + 1} / {VISIONS.length}
-              </span>
-
-              {/* Botón Siguiente */}
-              <button
-                onClick={() => setCurrentIdx((prev) => (prev + 1) % VISIONS.length)}
-                style={{
-                  background: "rgba(255, 255, 255, 0.06)",
-                  border: "1px solid rgba(255, 255, 255, 0.15)",
-                  color: "#ffffff",
-                  padding: "0.4rem 0.8rem",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                  fontSize: "0.82rem",
-                  fontWeight: 700,
-                }}
-              >
-                Sig ▶
-              </button>
+            <div className="mirror-hero-titles">
+              <div className="mirror-tagline">• THE ORACLE // PROPHETIC INTELLIGENCE</div>
+              <blockquote className="mirror-quote">
+                "Temet Nosce — Conócete a ti mismo."
+                <span className="mirror-quote-author"> — The Oracle</span>
+              </blockquote>
             </div>
           </div>
 
-          {/* ── CUERPO PRINCIPAL: INFOGRAFÍA MAXIMIZADA + DESCRIPCIÓN A LA DERECHA ── */}
+          <div className="mirror-speech-bubble">
+            <p>
+              El salto a la <strong>Organización Agéntica 2026</strong> requiere cruzar el Umbral Crítico: pasar de la asistencia pasiva a 
+              cuadrillas autónomas gobernadas que multiplican el impacto y el ROI operativo del negocio de <strong>10x a 50x</strong>.
+            </p>
+          </div>
+        </div>
+
+        {/* ── Tarjeta Maestra de Contenido (Formato THE MIRROR) ── */}
+        <div className="mirror-quiz-wrapper" style={{ maxWidth: "1200px", width: "100%" }}>
           <div
+            className="quiz-step-card animate-fade-in"
             style={{
-              flex: 1,
-              display: "flex",
-              overflow: "hidden",
-              position: "relative",
+              background: "rgba(0, 18, 9, 0.82)",
+              border: `1px solid ${currentVision.tagColor}50`,
+              borderRadius: "16px",
+              padding: "1.75rem",
+              boxShadow: `0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px ${currentVision.tagColor}15`,
+              backdropFilter: "blur(20px)",
+              width: "100%",
+              boxSizing: "border-box",
             }}
           >
-            {/* COLUMNA IZQUIERDA: INFOGRAFÍA MAXIMIZADA CON CLICK PARA PAUSAR */}
+            {/* Cabecera interna de la tarjeta */}
             <div
-              onClick={togglePause}
               style={{
-                flex: "1 1 72%",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                padding: "1rem",
-                position: "relative",
-                cursor: "pointer",
-                background: "rgba(0, 0, 0, 0.3)",
-                overflow: "hidden",
+                justifyContent: "space-between",
+                paddingBottom: "1.2rem",
+                marginBottom: "1.2rem",
+                borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+                flexWrap: "wrap",
+                gap: "1rem",
               }}
-              title={isPaused ? "Infografía pausada. Clic para reanudar reel automático (5s)" : "Clic para pausar y examinar la infografía"}
             >
+              <div>
+                <div
+                  style={{
+                    color: currentVision.tagColor,
+                    fontFamily: "var(--font-display)",
+                    fontSize: "0.78rem",
+                    fontWeight: 800,
+                    letterSpacing: "2.5px",
+                    textTransform: "uppercase",
+                    marginBottom: "4px",
+                  }}
+                >
+                  {currentVision.badge}
+                </div>
+                <h2
+                  className="quiz-question-title"
+                  style={{
+                    fontSize: "1.35rem",
+                    margin: 0,
+                    letterSpacing: "-0.3px",
+                  }}
+                >
+                  {currentVision.subtitle}
+                </h2>
+              </div>
+
+              {/* Controles de Navegación y Pausa */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <button
+                  onClick={togglePause}
+                  title={isPaused ? "Clic para reanudar reel automático" : "Clic para pausar reel"}
+                  style={{
+                    background: isPaused ? "rgba(255, 0, 85, 0.15)" : "rgba(0, 255, 128, 0.12)",
+                    border: `1px solid ${isPaused ? "rgba(255, 0, 85, 0.6)" : "rgba(0, 255, 128, 0.6)"}`,
+                    color: isPaused ? "#ff6699" : "#00ff80",
+                    padding: "0.45rem 0.9rem",
+                    borderRadius: "20px",
+                    fontSize: "0.74rem",
+                    fontWeight: 800,
+                    letterSpacing: "1px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <span>{isPaused ? "⏸ PAUSADO" : "▶ REEL 5s"}</span>
+                </button>
+
+                <button
+                  onClick={() => setCurrentIdx((prev) => (prev - 1 + VISIONS.length) % VISIONS.length)}
+                  style={{
+                    background: "rgba(0, 255, 128, 0.06)",
+                    border: "1px solid rgba(0, 255, 128, 0.3)",
+                    color: "#00ff80",
+                    padding: "0.45rem 0.9rem",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    fontSize: "0.82rem",
+                    fontWeight: 700,
+                    fontFamily: "var(--font-display)",
+                  }}
+                >
+                  ◀ Ant
+                </button>
+
+                <span
+                  style={{
+                    fontSize: "0.82rem",
+                    color: "rgba(255, 255, 255, 0.8)",
+                    minWidth: "45px",
+                    textAlign: "center",
+                    fontWeight: 800,
+                    fontFamily: "var(--font-display)",
+                  }}
+                >
+                  {currentIdx + 1} / {VISIONS.length}
+                </span>
+
+                <button
+                  onClick={() => setCurrentIdx((prev) => (prev + 1) % VISIONS.length)}
+                  style={{
+                    background: "rgba(0, 255, 128, 0.06)",
+                    border: "1px solid rgba(0, 255, 128, 0.3)",
+                    color: "#00ff80",
+                    padding: "0.45rem 0.9rem",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    fontSize: "0.82rem",
+                    fontWeight: 700,
+                    fontFamily: "var(--font-display)",
+                  }}
+                >
+                  Sig ▶
+                </button>
+              </div>
+            </div>
+
+            {/* Layout en 2 Columnas: Infografía Maximual a la Izquierda + Panel Lateral Derecho */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 340px",
+                gap: "1.75rem",
+                alignItems: "stretch",
+              }}
+            >
+              {/* Columna Izquierda: Infografía con Click para Pausar */}
               <div
+                onClick={togglePause}
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  position: "relative",
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  border: `1px solid rgba(255, 255, 255, 0.1)`,
+                  boxShadow: `0 0 35px rgba(0, 0, 0, 0.85), 0 0 25px ${currentVision.tagColor}15`,
+                  background: "#000000",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  borderRadius: "10px",
-                  overflow: "hidden",
-                  boxShadow: `0 0 35px rgba(0, 0, 0, 0.8), 0 0 20px ${currentVision.tagColor}20`,
-                  border: `1px solid rgba(255, 255, 255, 0.08)`,
+                  padding: "0.75rem",
+                  cursor: "pointer",
+                  minHeight: "520px",
                 }}
+                title={isPaused ? "Pausado. Clic para reanudar reel automático" : "Clic en la infografía para pausar"}
               >
                 <img
                   key={currentVision.image}
@@ -286,185 +303,180 @@ export default function OraclePage() {
                   alt={currentVision.title}
                   style={{
                     maxWidth: "100%",
-                    maxHeight: "100%",
+                    maxHeight: "680px",
                     width: "auto",
                     height: "auto",
                     objectFit: "contain",
                     display: "block",
                     borderRadius: "8px",
+                    transition: "transform 0.2s ease",
                   }}
                 />
+
+                {/* Badge Flotante en la esquina inferior */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "1rem",
+                    left: "1rem",
+                    background: "rgba(0, 0, 0, 0.8)",
+                    border: "1px solid rgba(0, 255, 128, 0.35)",
+                    borderRadius: "6px",
+                    padding: "4px 10px",
+                    fontSize: "0.7rem",
+                    color: "#00ff80",
+                    backdropFilter: "blur(6px)",
+                    pointerEvents: "none",
+                    fontFamily: "var(--font-display)",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  {isPaused ? "⏸ Pausado • Clic para reanudar" : "💡 Clic en la imagen para pausar"}
+                </div>
               </div>
 
-              {/* Badge Flotante de Ayuda de Clic */}
+              {/* Columna Derecha: Panel Descriptivo y Acciones */}
               <div
                 style={{
-                  position: "absolute",
-                  bottom: "1.2rem",
-                  left: "1.5rem",
-                  background: "rgba(0, 0, 0, 0.75)",
-                  border: "1px solid rgba(255, 255, 255, 0.2)",
-                  borderRadius: "6px",
-                  padding: "4px 10px",
-                  fontSize: "0.68rem",
-                  color: "rgba(255, 255, 255, 0.8)",
-                  backdropFilter: "blur(6px)",
-                  pointerEvents: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  gap: "1.2rem",
                 }}
               >
-                {isPaused ? "⏸ Pausado para lectura • Clic para reanudar" : "💡 Clic en la imagen para pausar"}
-              </div>
-            </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+                  {/* Selector de Pestañas */}
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    {VISIONS.map((v, idx) => {
+                      const isActive = idx === currentIdx;
+                      return (
+                        <button
+                          key={v.id}
+                          onClick={() => {
+                            setCurrentIdx(idx);
+                            setIsPaused(true);
+                          }}
+                          style={{
+                            flex: 1,
+                            padding: "0.6rem 0.5rem",
+                            background: isActive ? `${v.tagColor}18` : "rgba(255, 255, 255, 0.03)",
+                            border: `1px solid ${isActive ? v.tagColor : "rgba(255, 255, 255, 0.1)"}`,
+                            borderRadius: "8px",
+                            color: isActive ? "#ffffff" : "rgba(255, 255, 255, 0.6)",
+                            fontSize: "0.72rem",
+                            fontWeight: 800,
+                            cursor: "pointer",
+                            fontFamily: "var(--font-display)",
+                            letterSpacing: "1px",
+                            textTransform: "uppercase",
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          {v.id === "utopia" ? "02 // EXPONENCIAL" : "01 // FALLIDO"}
+                        </button>
+                      );
+                    })}
+                  </div>
 
-            {/* COLUMNA DERECHA: DESCRIPCIÓN LATERAL DENTRO DEL CONTENEDOR */}
-            <div
-              style={{
-                flex: "0 0 28%",
-                maxWidth: "380px",
-                minWidth: "280px",
-                borderLeft: "1px solid rgba(255, 255, 255, 0.08)",
-                background: "rgba(0, 5, 2, 0.65)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                padding: "1.5rem",
-                overflowY: "auto",
-                boxSizing: "border-box",
-              }}
-            >
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
-                {/* Selector de visión / Tabs */}
-                <div style={{ display: "flex", gap: "0.5rem" }}>
-                  {VISIONS.map((v, idx) => {
-                    const isActive = idx === currentIdx;
-                    return (
-                      <button
-                        key={v.id}
-                        onClick={() => {
-                          setCurrentIdx(idx);
-                          setIsPaused(true);
-                        }}
-                        style={{
-                          flex: 1,
-                          padding: "0.55rem 0.6rem",
-                          background: isActive ? `${v.tagColor}18` : "rgba(255, 255, 255, 0.03)",
-                          border: `1px solid ${isActive ? v.tagColor : "rgba(255, 255, 255, 0.1)"}`,
-                          borderRadius: "8px",
-                          color: isActive ? "#ffffff" : "rgba(255, 255, 255, 0.6)",
-                          fontSize: "0.72rem",
-                          fontWeight: 700,
-                          cursor: "pointer",
-                          transition: "all 0.2s ease",
-                        }}
-                      >
-                        {v.id === "utopia" ? "02 // EXPONENCIAL" : "01 // FALLIDO"}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* BLOQUE DESCRIPTIVO PRINCIPAL SOLICITADO */}
-                <div
-                  style={{
-                    background: "rgba(0, 255, 128, 0.05)",
-                    border: `1px solid ${currentVision.tagColor}50`,
-                    borderRadius: "12px",
-                    padding: "1.1rem",
-                    boxShadow: `0 0 20px ${currentVision.tagColor}10`,
-                  }}
-                >
+                  {/* Tesis de Impacto Solicitada */}
                   <div
                     style={{
-                      fontSize: "0.7rem",
-                      fontWeight: 800,
-                      color: currentVision.tagColor,
-                      letterSpacing: "1.5px",
-                      textTransform: "uppercase",
-                      marginBottom: "0.5rem",
+                      background: "rgba(0, 255, 128, 0.05)",
+                      border: `1px solid ${currentVision.tagColor}60`,
+                      borderRadius: "12px",
+                      padding: "1.2rem",
+                      boxShadow: `0 0 25px ${currentVision.tagColor}12`,
                     }}
                   >
-                    TESIS DE IMPACTO
+                    <div
+                      style={{
+                        fontSize: "0.72rem",
+                        fontWeight: 900,
+                        color: currentVision.tagColor,
+                        letterSpacing: "1.5px",
+                        textTransform: "uppercase",
+                        marginBottom: "0.6rem",
+                        fontFamily: "var(--font-display)",
+                      }}
+                    >
+                      TESIS DE IMPACTO
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "0.92rem",
+                        lineHeight: "1.55",
+                        color: "#ffffff",
+                        margin: 0,
+                        fontWeight: 600,
+                      }}
+                    >
+                      {currentVision.description}
+                    </p>
                   </div>
-                  <p
-                    style={{
-                      fontSize: "0.86rem",
-                      lineHeight: "1.55",
-                      color: "#ffffff",
-                      margin: 0,
-                      fontWeight: 600,
-                    }}
-                  >
-                    {currentVision.description}
-                  </p>
-                </div>
 
-                {/* DIAGNÓSTICO DE IMPACTO / PUNTOS CLAVE */}
-                <div
-                  style={{
-                    background: "rgba(0, 0, 0, 0.4)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
-                    borderRadius: "10px",
-                    padding: "1rem",
-                  }}
-                >
+                  {/* Pilares de Madurez Operativa */}
                   <div
                     style={{
-                      fontSize: "0.7rem",
-                      color: currentVision.tagColor,
-                      fontWeight: 800,
-                      letterSpacing: "1.5px",
-                      marginBottom: "0.6rem",
-                      textTransform: "uppercase",
+                      background: "rgba(0, 0, 0, 0.45)",
+                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                      borderRadius: "12px",
+                      padding: "1.1rem",
                     }}
                   >
-                    Pilares de Madurez:
+                    <div
+                      style={{
+                        fontSize: "0.72rem",
+                        color: currentVision.tagColor,
+                        fontWeight: 800,
+                        letterSpacing: "1.5px",
+                        marginBottom: "0.6rem",
+                        textTransform: "uppercase",
+                        fontFamily: "var(--font-display)",
+                      }}
+                    >
+                      Pilares de Madurez:
+                    </div>
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingLeft: "1.2rem",
+                        fontSize: "0.8rem",
+                        color: "rgba(255, 255, 255, 0.85)",
+                        lineHeight: "1.5",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.45rem",
+                      }}
+                    >
+                      {currentVision.keyPoints.map((pt, i) => (
+                        <li key={i}>{pt}</li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul
+                </div>
+
+                {/* Botón CTA a WhatsApp */}
+                <div style={{ marginTop: "0.5rem" }}>
+                  <a
+                    href={`https://wa.me/51991090016?text=${encodeURIComponent(
+                      `Hola Geeksoft, estuve analizando The Oracle sobre ${currentVision.title}. Quiero coordinar una sesión estratégica.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="quiz-whatsapp-cta"
                     style={{
-                      margin: 0,
-                      paddingLeft: "1.2rem",
-                      fontSize: "0.76rem",
-                      color: "rgba(255, 255, 255, 0.8)",
-                      lineHeight: "1.5",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.4rem",
+                      display: "block",
+                      width: "100%",
+                      padding: "0.95rem 1rem",
+                      textAlign: "center",
+                      textDecoration: "none",
+                      boxSizing: "border-box",
+                      fontSize: "0.82rem",
                     }}
                   >
-                    {currentVision.keyPoints.map((pt, i) => (
-                      <li key={i}>{pt}</li>
-                    ))}
-                  </ul>
+                    Coordinar Sesión en WhatsApp ➔
+                  </a>
                 </div>
-              </div>
-
-              {/* Botón WhatsApp de contacto directo */}
-              <div style={{ marginTop: "1.2rem" }}>
-                <a
-                  href={`https://wa.me/51991090016?text=${encodeURIComponent(
-                    `Hola Geeksoft, estuve revisando The Oracle sobre ${currentVision.title}. Quiero coordinar una sesión estratégica.`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    padding: "0.85rem",
-                    background: "linear-gradient(90deg, #00ff80 0%, #00cc66 100%)",
-                    color: "#001a08",
-                    textAlign: "center",
-                    textDecoration: "none",
-                    fontWeight: 800,
-                    fontSize: "0.78rem",
-                    letterSpacing: "1.5px",
-                    textTransform: "uppercase",
-                    borderRadius: "8px",
-                    boxShadow: "0 0 20px rgba(0, 255, 128, 0.3)",
-                    boxSizing: "border-box",
-                  }}
-                >
-                  Coordinar Sesión en WhatsApp ➔
-                </a>
               </div>
             </div>
           </div>
