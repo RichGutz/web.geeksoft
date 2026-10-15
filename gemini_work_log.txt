@@ -21,3 +21,4 @@ RESUMEN DE LOGROS EN LA SESIÓN:
 
 ESTADO: SESIÓN CERRADA CORRECTAMENTE. INGESTA DUA COMPLETADA AL 100%.
 ===============================================================================
+[2026-10-15 12:58:30] [MOBILE RESPONSIVE / RADAR ZERO-SCROLL] Calibrada la distancia vertical entre el titulo GEEKSOFT y el radar en mobile (< 768px). Capa flotante .floating-ui-layer alineada al top con padding calc(env(safe-area-inset-top) + 3.4rem) reduciendo el espacio muerto a ~16px-20px. Escala del radar ajustada a min(88vw, 360px) en Radar.tsx y globals.css. Blindado contenedor con height 100dvh y overflow hidden. Las 4 pills (Blue Pill, The Mirror, The Oracle, Red Pill) ahora se visualizan al 100% en el primer pantallazo sin necesidad de scroll vertical. Validado con Open JEV ThinkPad (:8888, cert=0.98), compilado con Turbopack (exit code 0, 17/17 rutas) y etiquetado con tag inmutable V2.1.2.STABLE.RADAR.ZERO.SCROLL.
