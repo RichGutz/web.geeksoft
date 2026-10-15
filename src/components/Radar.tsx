@@ -25,7 +25,7 @@ export default function Radar({ onCategorySelect, onColorChange }: RadarProps) {
   useEffect(() => {
     const updateScale = () => {
       if (typeof window !== "undefined" && window.innerWidth <= 768) {
-        const targetWidth = Math.min(window.innerWidth * 0.94, 430);
+        const targetWidth = Math.min(window.innerWidth * 0.88, 360);
         setScale(targetWidth / 750);
       } else {
         setScale(1);

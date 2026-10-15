@@ -711,22 +711,43 @@ body {
    RESPONSIVIDAD MÓVIL AISLADA (PORTRAIT < 768px)
    ========================================= */
 @media (max-width: 768px) {
+  /* Blindaje Zero-Scroll del contenedor principal en móvil */
+  main {
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
   .header-brand-box {
-    top: calc(env(safe-area-inset-top, 0px) + 1.2rem) !important;
+    top: calc(env(safe-area-inset-top, 0px) + 0.9rem) !important;
     left: 1.2rem !important;
   }
 
   .header-brand-title {
-    font-size: 1.6rem !important;
+    font-size: 1.55rem !important;
     letter-spacing: 0.1em !important;
   }
 
-  /* Radar escalado en móvil al ancho completo del celular */
+  /* Capa flotante: alinear al inicio (top) con padding calibrado para ubicar el radar directamente bajo GEEKSOFT */
+  .floating-ui-layer {
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 3.4rem) !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+  }
+
+  .radar-block-wrapper {
+    margin-top: 0 !important;
+  }
+
+  /* Radar escalado en móvil al tamaño calibrado (máx 360px / 88vw) para dejar holgura total a las 4 pills */
   .radar-viewport-box {
-    width: min(94vw, 430px) !important;
-    height: min(94vw, 430px) !important;
-    max-width: 94vw !important;
-    max-height: 94vw !important;
+    width: min(88vw, 360px) !important;
+    height: min(88vw, 360px) !important;
+    max-width: 88vw !important;
+    max-height: 360px !important;
     position: relative !important;
     display: flex !important;
     align-items: center !important;

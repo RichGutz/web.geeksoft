@@ -177,7 +177,9 @@ export default function SandboxRadarPage() {
       </div>
 
       {/* ─── CAPA 1: UI flotante ────────────────────────────────────────────── */}
-      <div style={{
+      <div 
+        className="floating-ui-layer"
+        style={{
         position: "absolute",
         inset: 0,
         zIndex: 10,
@@ -189,6 +191,7 @@ export default function SandboxRadarPage() {
 
         {/* BLOQUE CENTRAL: Radar con Viewport Box Adaptativo */}
         <div
+          className="radar-block-wrapper"
           style={{
             pointerEvents: "auto",
             display: "flex",
