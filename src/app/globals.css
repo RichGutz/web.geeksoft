@@ -731,23 +731,35 @@ body {
 
   /* Capa flotante: alinear al inicio (top) con padding calibrado para ubicar el radar directamente bajo GEEKSOFT */
   .floating-ui-layer {
-    align-items: flex-start !important;
-    justify-content: center !important;
-    padding-top: calc(env(safe-area-inset-top, 0px) + 3.4rem) !important;
+    position: absolute !important;
+    inset: 0 !important;
     height: 100dvh !important;
     overflow: hidden !important;
+    pointer-events: none !important;
   }
 
+  /* Bloque del Radar: Centrado vertical exacto entre GEEKSOFT y la primera fila de pills (The Mirror / The Oracle) */
   .radar-block-wrapper {
-    margin-top: 0 !important;
+    position: absolute !important;
+    top: calc(env(safe-area-inset-top, 0px) + 2.8rem) !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 7.0rem) !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: auto !important;
+    z-index: 20 !important;
   }
 
-  /* Radar escalado en móvil al tamaño calibrado (máx 360px / 88vw) para dejar holgura total a las 4 pills */
+  /* Radar escalado en móvil al tamaño calibrado (máx 340px / 84vw) centrado simétricamente */
   .radar-viewport-box {
-    width: min(88vw, 360px) !important;
-    height: min(88vw, 360px) !important;
-    max-width: 88vw !important;
-    max-height: 360px !important;
+    width: min(84vw, 340px) !important;
+    height: min(84vw, 340px) !important;
+    max-width: 84vw !important;
+    max-height: 340px !important;
     position: relative !important;
     display: flex !important;
     align-items: center !important;
