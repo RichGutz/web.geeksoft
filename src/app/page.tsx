@@ -210,9 +210,17 @@ export default function SandboxRadarPage() {
           </div>
         </div>
 
-        {/* PANEL LATERAL — aparece desde la derecha al seleccionar un nodo */}
+        {/* Backdrop táctil exclusivo para cierre en móvil cuando está abierto el Hub de Agentes */}
+        {selectedCategory === "ai" && (
+          <div
+            className="agents-sheet-backdrop"
+            onClick={() => setSelectedCategory(null)}
+          />
+        )}
+
+        {/* PANEL LATERAL / BOTTOM SHEET (Modo Agentes en móvil) */}
         <div
-          className="category-panel-mobile"
+          className={`category-panel-mobile ${selectedCategory === "ai" ? "agents-sheet-mode" : ""}`}
           style={{
             pointerEvents: selectedCategory ? "auto" : "none",
             position: "absolute",
@@ -261,120 +269,210 @@ export default function SandboxRadarPage() {
 
           {panel && (
             <>
-              {/* Indicador de categoría */}
-              <div style={{
-                fontSize: "0.7rem",
-                letterSpacing: "3px",
-                textTransform: "uppercase",
-                color: panel.color,
-                marginBottom: "0.75rem",
-                fontFamily: "var(--font-display)",
-              }}>
-                ● GEEKSOFT SOLUTIONS
-              </div>
-
-              {/* Título */}
-              <h2 style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "2rem",
-                fontWeight: 700,
-                color: "#fff",
-                marginBottom: "0.5rem",
-                textShadow: `0 0 30px ${panel.color}`,
-                lineHeight: 1.2,
-              }}>
-                {panel.title}
-              </h2>
-
-              {/* Tagline */}
-              <p style={{
-                color: panel.color,
-                fontSize: "0.95rem",
-                marginBottom: "2.5rem",
-                fontFamily: "var(--font-body)",
-                letterSpacing: "0.5px",
-              }}>
-                {panel.tagline}
-              </p>
-
-              {/* Cards de servicios */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                {panel.items.map((item, i) => (
+              {selectedCategory === "ai" ? (
+                <div className="agents-hub-container">
+                  {/* Barra táctil de arrastre (Solo visible en Mobile) */}
                   <div
-                    key={i}
-                    style={{
-                      background: "rgba(255,255,255,0.03)",
-                      border: `1px solid rgba(255,255,255,0.08)`,
-                      borderRadius: "8px",
-                      padding: "1rem 1.25rem",
-                      display: "flex",
-                      gap: "1rem",
-                      alignItems: "flex-start",
-                      transition: "border-color 0.2s ease, background 0.2s ease",
-                    }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLDivElement).style.borderColor = panel.color;
-                      (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.06)";
-                    }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.08)";
-                      (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.03)";
-                    }}
-                  >
-                    <span style={{ fontSize: "1.4rem", lineHeight: 1 }}>{item.icon}</span>
-                    <div>
-                      <div style={{
-                        color: "#fff",
-                        fontFamily: "var(--font-display)",
-                        fontSize: "0.8rem",
-                        letterSpacing: "1px",
-                        marginBottom: "0.3rem",
-                      }}>
-                        {item.title}
-                      </div>
-                      <div style={{
-                        color: "rgba(255,255,255,0.55)",
-                        fontFamily: "var(--font-body)",
-                        fontSize: "0.82rem",
-                        lineHeight: 1.5,
-                      }}>
-                        {item.desc}
-                      </div>
+                    className="sheet-drag-handle"
+                    onClick={() => setSelectedCategory(null)}
+                    title="Cerrar visor"
+                  />
+
+                  {/* Header con estatus en vivo */}
+                  <div className="agents-hub-header">
+                    <div className="agents-status-chip">
+                      <span className="agents-status-dot" />
+                      <span className="agents-status-text">SYSTEM ONLINE // CLUSTER</span>
+                    </div>
+                    <div className="agents-ssl-badge">
+                      <span className="ssl-lock-icon">🔒</span>
+                      <span>SSL 443 VERIFIED</span>
                     </div>
                   </div>
-                ))}
-              </div>
 
-              {/* CTA */}
-              <button
-                style={{
-                  marginTop: "2rem",
-                  padding: "0.85rem 2rem",
-                  background: panel.color,
-                  border: "none",
-                  borderRadius: "4px",
-                  color: "#000",
-                  fontFamily: "var(--font-display)",
-                  fontSize: "0.75rem",
-                  letterSpacing: "2px",
-                  textTransform: "uppercase",
-                  cursor: "pointer",
-                  fontWeight: 700,
-                  alignSelf: "flex-start",
-                  transition: "opacity 0.2s ease, transform 0.2s ease",
-                }}
-                onClick={openWhatsApp}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
-                  (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLButtonElement).style.opacity = "1";
-                  (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
-                }}
-              >
-                Solicitar Demo →
-              </button>
+                  {/* Título de la Plataforma */}
+                  <h2 className="agents-hub-title">
+                    AGENTS<span className="agents-title-dot">.</span>GEEKSOFT<span className="agents-title-dot">.</span>TECH
+                  </h2>
+
+                  <p className="agents-hub-tagline">
+                    Enterprise Agentic Orchestration Platform & DeepSeek Swarms
+                  </p>
+
+                  {/* Snapshot Interactivo en Miniatura */}
+                  <a
+                    href="https://agents.geeksoft.tech"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="agents-preview-anchor"
+                    title="Acceder a AGENTS.GEEKSOFT.TECH"
+                  >
+                    <div className="agents-preview-frame">
+                      <img
+                        src="/images/agents_platform_preview.webp"
+                        alt="Agents Geeksoft Platform Preview"
+                        className="agents-preview-image"
+                      />
+                      <div className="agents-preview-overlay">
+                        <div className="agents-preview-cta-chip">
+                          <span>EXPLORAR PLATAFORMA</span>
+                          <span className="agents-arrow-icon">↗</span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  {/* Capacidades clave */}
+                  <div className="agents-features-strip">
+                    <div className="agents-feature-chip">
+                      <span className="feat-bullet">◈</span> ReAct Single-Agent
+                    </div>
+                    <div className="agents-feature-chip">
+                      <span className="feat-bullet">◈</span> Multi-Agent Swarms
+                    </div>
+                    <div className="agents-feature-chip">
+                      <span className="feat-bullet">◈</span> DeepSeek Gateway
+                    </div>
+                  </div>
+
+                  {/* Botones de Acción */}
+                  <div className="agents-actions-group">
+                    <a
+                      href="https://agents.geeksoft.tech"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="agents-main-launch-btn"
+                    >
+                      <span>ENTRAR A LA PLATAFORMA AGÉNTICA</span>
+                      <span className="launch-btn-arrow">↗</span>
+                    </a>
+
+                    <button
+                      onClick={openWhatsApp}
+                      className="agents-secondary-wa-btn"
+                    >
+                      ¿Requieres agentes a medida para tu empresa? Habla con nosotros
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* Indicador de categoría */}
+                  <div style={{
+                    fontSize: "0.7rem",
+                    letterSpacing: "3px",
+                    textTransform: "uppercase",
+                    color: panel.color,
+                    marginBottom: "0.75rem",
+                    fontFamily: "var(--font-display)",
+                  }}>
+                    ● GEEKSOFT SOLUTIONS
+                  </div>
+
+                  {/* Título */}
+                  <h2 style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "2rem",
+                    fontWeight: 700,
+                    color: "#fff",
+                    marginBottom: "0.5rem",
+                    textShadow: `0 0 30px ${panel.color}`,
+                    lineHeight: 1.2,
+                  }}>
+                    {panel.title}
+                  </h2>
+
+                  {/* Tagline */}
+                  <p style={{
+                    color: panel.color,
+                    fontSize: "0.95rem",
+                    marginBottom: "2.5rem",
+                    fontFamily: "var(--font-body)",
+                    letterSpacing: "0.5px",
+                  }}>
+                    {panel.tagline}
+                  </p>
+
+                  {/* Cards de servicios */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    {panel.items.map((item, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          background: "rgba(255,255,255,0.03)",
+                          border: `1px solid rgba(255,255,255,0.08)`,
+                          borderRadius: "8px",
+                          padding: "1rem 1.25rem",
+                          display: "flex",
+                          gap: "1rem",
+                          alignItems: "flex-start",
+                          transition: "border-color 0.2s ease, background 0.2s ease",
+                        }}
+                        onMouseEnter={e => {
+                          (e.currentTarget as HTMLDivElement).style.borderColor = panel.color;
+                          (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.06)";
+                        }}
+                        onMouseLeave={e => {
+                          (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.08)";
+                          (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.03)";
+                        }}
+                      >
+                        <span style={{ fontSize: "1.4rem", lineHeight: 1 }}>{item.icon}</span>
+                        <div>
+                          <div style={{
+                            color: "#fff",
+                            fontFamily: "var(--font-display)",
+                            fontSize: "0.8rem",
+                            letterSpacing: "1px",
+                            marginBottom: "0.3rem",
+                          }}>
+                            {item.title}
+                          </div>
+                          <div style={{
+                            color: "rgba(255,255,255,0.55)",
+                            fontFamily: "var(--font-body)",
+                            fontSize: "0.82rem",
+                            lineHeight: 1.5,
+                          }}>
+                            {item.desc}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* CTA */}
+                  <button
+                    style={{
+                      marginTop: "2rem",
+                      padding: "0.85rem 2rem",
+                      background: panel.color,
+                      border: "none",
+                      borderRadius: "4px",
+                      color: "#000",
+                      fontFamily: "var(--font-display)",
+                      fontSize: "0.75rem",
+                      letterSpacing: "2px",
+                      textTransform: "uppercase",
+                      cursor: "pointer",
+                      fontWeight: 700,
+                      alignSelf: "flex-start",
+                      transition: "opacity 0.2s ease, transform 0.2s ease",
+                    }}
+                    onClick={openWhatsApp}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLButtonElement).style.opacity = "0.85";
+                      (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLButtonElement).style.opacity = "1";
+                      (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+                    }}
+                  >
+                    Solicitar Demo →
+                  </button>
+                </>
+              )}
             </>
           )}
         </div>
